@@ -1,0 +1,5 @@
+style:
+  ForbiddenComment:
+    active: false
+    # O projeto usa TODO propositalmente para marcar limitações conhecidas da API
+    # (ver AGENTS.md, seção "Limitações conhecidas") — não é debt a ser cobrado pelo lint.

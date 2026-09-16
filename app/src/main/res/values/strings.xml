@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">marvel</string>
+
+    <string name="login_title">Marvel App</string>
+    <string name="login_email_hint">E-mail</string>
+    <string name="login_password_hint">Senha</string>
+    <string name="login_button">Entrar</string>
+
+    <string name="home_title">Personagens</string>
+    <string name="home_search_hint">Buscar personagem</string>
+    <string name="home_filter_all">Todos</string>
+    <string name="home_filter_heroes">Heróis</string>
+    <string name="home_filter_villains">Vilões</string>
+    <string name="home_teams_action">Times</string>
+    <string name="home_error_retry">Tentar de novo</string>
+    <string name="home_empty">Nenhum personagem encontrado.</string>
+
+    <string name="detail_title">Detalhe</string>
+    <string name="detail_no_description">Sem descrição disponível.</string>
+
+    <string name="teams_title">Times</string>
+    <string name="teams_empty">Nenhum time encontrado.</string>
+    <string name="teams_member_count">%d membros</string>
+
+    <string name="content_description_back">Voltar</string>
+    <string name="content_description_character_image">Imagem do personagem</string>
+    <string name="content_description_team_image">Imagem do time</string>
 </resources>

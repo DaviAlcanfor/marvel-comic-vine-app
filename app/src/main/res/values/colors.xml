@@ -2,4 +2,18 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Design tokens: docs/design-reference/DESIGN_TOKENS.md -->
+    <color name="background">#121223</color>
+    <color name="surface">#1A1A2E</color>
+    <color name="surface_variant">#22223A</color>
+    <color name="border">#33334D</color>
+    <color name="text_primary">#F5F5F7</color>
+    <color name="text_secondary">#A0A0B8</color>
+    <color name="primary">#C0101A</color>
+    <color name="primary_variant">#8C0C13</color>
+    <color name="accent">#E6B800</color>
+    <color name="team_blue">#1565C0</color>
+    <color name="team_green">#2E7D32</color>
+    <color name="scrim">#0A0A14</color>
 </resources>

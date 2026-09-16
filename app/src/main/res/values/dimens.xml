@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Design tokens: docs/design-reference/DESIGN_TOKENS.md -->
+    <dimen name="space_xs">4dp</dimen>
+    <dimen name="space_sm">8dp</dimen>
+    <dimen name="space_md">16dp</dimen>
+    <dimen name="space_lg">24dp</dimen>
+    <dimen name="space_xl">32dp</dimen>
+
+    <dimen name="radius_small">10dp</dimen>
+    <dimen name="radius_large">16dp</dimen>
+
+    <dimen name="input_height">40dp</dimen>
+    <dimen name="filter_pill_height">31dp</dimen>
+    <dimen name="avatar_size">56dp</dimen>
+    <dimen name="avatar_size_hero">100dp</dimen>
+    <dimen name="thumbnail_size">40dp</dimen>
+</resources>

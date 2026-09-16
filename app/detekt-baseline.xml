@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:ApiClient.kt$ApiClient$30</ID>
+    <ID>NewLineAtEndOfFile:ExampleUnitTest.kt$com.projeto.marvel.ExampleUnitTest.kt</ID>
+    <ID>WildcardImport:ExampleUnitTest.kt$import org.junit.Assert.*</ID>
+  </CurrentIssues>
+</SmellBaseline>
