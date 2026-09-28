@@ -16,7 +16,7 @@ sealed interface DetailUiState {
     data class Error(val message: String) : DetailUiState
 }
 
-class CharacterDetailViewModel(
+class CharacterDetailViewModel @JvmOverloads constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: ComicVineRepository = ComicVineRepository()
 ) : ViewModel() {
