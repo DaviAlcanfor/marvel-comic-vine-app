@@ -1,6 +1,7 @@
 package com.projeto.marvel.ui.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,7 +11,8 @@ import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.databinding.ItemCharacterBinding
 
 class CharacterAdapter(
-    private val onClick: (CharacterSummary) -> Unit
+    /** Recebe também a View do card: origem da transição de container até o Detalhe. */
+    private val onClick: (CharacterSummary, View) -> Unit
 ) : ListAdapter<CharacterSummary, CharacterAdapter.ViewHolder>(Diff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,8 +28,9 @@ class CharacterAdapter(
         fun bind(character: CharacterSummary) {
             binding.name.text = character.name
             binding.subtitle.text = character.realName ?: character.deck.orEmpty()
-            binding.thumbnail.load(character.image?.mediumUrl)
-            binding.root.setOnClickListener { onClick(character) }
+            binding.thumbnail.load(character.image?.mediumUrl) { crossfade(true) }
+            binding.root.transitionName = "character_${character.id}"
+            binding.root.setOnClickListener { onClick(character, binding.root) }
         }
     }
 

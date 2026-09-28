@@ -27,7 +27,7 @@ class TeamAdapter : ListAdapter<Team, TeamAdapter.ViewHolder>(Diff) {
             binding.memberCount.text = team.memberCount?.let {
                 binding.root.context.getString(R.string.teams_member_count, it)
             }.orEmpty()
-            binding.thumbnail.load(team.image?.mediumUrl)
+            binding.thumbnail.load(team.image?.mediumUrl) { crossfade(true) }
         }
     }
 

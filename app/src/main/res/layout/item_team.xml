@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:background="@color/surface_variant"
-        android:contentDescription="@string/content_description_team_image"
+        android:importantForAccessibility="no"
         android:scaleType="centerCrop" />
 
     <TextView

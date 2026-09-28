@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Voltar: tela anterior volta de "perto" até o lugar. Gerado com keyframes em degrau: 4 poses em 300ms, estilo flipbook de HQ. -->
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="@integer/motion_duration"
+    android:interpolator="@android:interpolator/linear">
+        <propertyValuesHolder android:propertyName="alpha" android:valueType="floatType">
+            <keyframe android:fraction="0.0" android:value="0.0" />
+            <keyframe android:fraction="0.001" android:value="0.4375" />
+            <keyframe android:fraction="0.25" android:value="0.4375" />
+            <keyframe android:fraction="0.251" android:value="0.75" />
+            <keyframe android:fraction="0.5" android:value="0.75" />
+            <keyframe android:fraction="0.501" android:value="0.9375" />
+            <keyframe android:fraction="0.75" android:value="0.9375" />
+            <keyframe android:fraction="0.751" android:value="1.0" />
+            <keyframe android:fraction="1.0" android:value="1.0" />
+        </propertyValuesHolder>
+        <propertyValuesHolder android:propertyName="scaleX" android:valueType="floatType">
+            <keyframe android:fraction="0.0" android:value="1.04" />
+            <keyframe android:fraction="0.001" android:value="1.0225" />
+            <keyframe android:fraction="0.25" android:value="1.0225" />
+            <keyframe android:fraction="0.251" android:value="1.01" />
+            <keyframe android:fraction="0.5" android:value="1.01" />
+            <keyframe android:fraction="0.501" android:value="1.0025" />
+            <keyframe android:fraction="0.75" android:value="1.0025" />
+            <keyframe android:fraction="0.751" android:value="1.0" />
+            <keyframe android:fraction="1.0" android:value="1.0" />
+        </propertyValuesHolder>
+        <propertyValuesHolder android:propertyName="scaleY" android:valueType="floatType">
+            <keyframe android:fraction="0.0" android:value="1.04" />
+            <keyframe android:fraction="0.001" android:value="1.0225" />
+            <keyframe android:fraction="0.25" android:value="1.0225" />
+            <keyframe android:fraction="0.251" android:value="1.01" />
+            <keyframe android:fraction="0.5" android:value="1.01" />
+            <keyframe android:fraction="0.501" android:value="1.0025" />
+            <keyframe android:fraction="0.75" android:value="1.0025" />
+            <keyframe android:fraction="0.751" android:value="1.0" />
+            <keyframe android:fraction="1.0" android:value="1.0" />
+        </propertyValuesHolder>
+</objectAnimator>
