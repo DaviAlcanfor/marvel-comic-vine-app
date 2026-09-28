@@ -21,6 +21,9 @@ private const val DEFENSE_DIVISOR = 10
 private const val INTELLIGENCE_DIVISOR = 5
 private const val SPEED_DIVISOR = 2
 private const val PERCENT = 100
+private const val CRITICAL_PERCENT = 15
+private const val CRITICAL_NUMERATOR = 3
+private const val CRITICAL_DENOMINATOR = 2
 
 fun Fighter.maxHp() = BASE_HP + stats.getValue(Stat.DEFENSE)
 
@@ -36,11 +39,17 @@ data class Combatant(
 
 enum class Outcome { HIT, MISS, POISONED, HEAL, GUARD, DODGE, POISON_TICK }
 
-data class Resolution(val actor: Combatant, val target: Combatant, val outcome: Outcome, val amount: Int = 0)
+data class Resolution(
+    val actor: Combatant,
+    val target: Combatant,
+    val outcome: Outcome,
+    val amount: Int = 0,
+    val critical: Boolean = false
+)
 
 /**
- * Aplica [move] de [actor] em [target]. [roll] (0..99) decide erro da Rajada e sucesso da
- * esquiva — recebido de fora para o teste ser determinístico.
+ * Aplica [move] de [actor] em [target]. [roll] (0..99) decide erro da Rajada, sucesso da
+ * esquiva e golpe crítico — recebido de fora para o teste ser determinístico.
  *
  * Defesa e esquiva duram até o próximo golpe recebido ou até a próxima ação de quem usou.
  */
@@ -64,11 +73,14 @@ private fun attack(type: MoveType, actor: Combatant, target: Combatant, roll: In
     if (roll < missChance) return Resolution(actor, target.copy(dodging = false), Outcome.MISS)
 
     val attack = actor.stat(Stat.ATTACK)
-    val raw = when (type) {
+    val base = when (type) {
         MoveType.BLAST -> BLAST_BASE + attack / ATTACK_DIVISOR_BLAST
         MoveType.POISON -> POISON_HIT
         else -> STRIKE_BASE + attack / ATTACK_DIVISOR_STRIKE
     }
+    // Dado alto = crítico (o baixo já é o erro). Veneno não critica: o dano dele vem nos turnos.
+    val critical = type != MoveType.POISON && roll >= PERCENT - CRITICAL_PERCENT
+    val raw = if (critical) base * CRITICAL_NUMERATOR / CRITICAL_DENOMINATOR else base
     val damage = ((if (target.guarding) raw / 2 else raw) - target.stat(Stat.DEFENSE) / DEFENSE_DIVISOR)
         .coerceAtLeast(1)
     val hit = target.copy(
@@ -77,7 +89,7 @@ private fun attack(type: MoveType, actor: Combatant, target: Combatant, roll: In
         dodging = false,
         poisonTurns = if (type == MoveType.POISON) POISON_TURNS else target.poisonTurns
     )
-    return Resolution(actor, hit, if (type == MoveType.POISON) Outcome.POISONED else Outcome.HIT, damage)
+    return Resolution(actor, hit, if (type == MoveType.POISON) Outcome.POISONED else Outcome.HIT, damage, critical)
 }
 
 fun poisonTick(combatant: Combatant) = combatant.copy(

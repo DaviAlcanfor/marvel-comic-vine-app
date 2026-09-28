@@ -19,7 +19,8 @@ import com.google.android.material.transition.Hold
 import com.projeto.marvel.R
 import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.databinding.FragmentHomeBinding
-import com.projeto.marvel.ui.animateItemsIn
+import com.projeto.marvel.ui.onEndReached
+import com.projeto.marvel.ui.submitAnimated
 import com.projeto.marvel.ui.fadeVisible
 import kotlinx.coroutines.launch
 
@@ -49,6 +50,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.onEndReached { viewModel.loadMore() }
 
         binding.logoutButton.setOnClickListener {
             viewModel.signOut()
@@ -82,8 +84,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         when (state) {
             is HomeUiState.Success -> {
-                val isNewList = adapter.currentList != state.characters
-                adapter.submitList(state.characters) { if (isNewList) binding.recyclerView.animateItemsIn() }
+                adapter.submitAnimated(state.characters, binding.recyclerView)
                 if (isEmptySuccess) binding.errorText.text = getString(R.string.home_empty)
             }
             is HomeUiState.Error -> binding.errorText.text = getString(R.string.home_error_retry) + "\n" + state.message

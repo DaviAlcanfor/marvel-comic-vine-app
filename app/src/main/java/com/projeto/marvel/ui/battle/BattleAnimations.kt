@@ -16,9 +16,10 @@ import com.projeto.marvel.ui.comicInterpolator
 import com.projeto.marvel.ui.shake
 import kotlin.random.Random
 
-// Tudo "em twos" (ver ui/Animations.kt): as poses pulam como quadros de HQ.
+// Só a Batalha anima em degraus de COMIC_FPS (ver ui/Animations.kt): poses pulam como quadros de HQ.
 
-private const val STEP_MILLIS = 170L
+/** Duração de um "passo" (avanço do golpe); os efeitos de impacto começam depois dele. */
+internal const val STEP_MILLIS = 170L
 private const val HURT_MILLIS = 400L
 private const val POPUP_MILLIS = 700L
 private const val ENTER_MILLIS = 500L
@@ -47,7 +48,7 @@ fun View.lunge(direction: Float) {
 
 /** Treme e pisca: recebeu dano. Começa depois do [lunge] de quem atacou. */
 fun View.hurt() {
-    shake(startDelay = STEP_MILLIS)
+    shake(startDelay = STEP_MILLIS, interpolator = comicInterpolator(HURT_MILLIS))
     ObjectAnimator.ofFloat(this, View.ALPHA, 1f, BLINK_ALPHA, 1f, BLINK_ALPHA, 1f).apply {
         duration = HURT_MILLIS
         startDelay = STEP_MILLIS
@@ -95,7 +96,7 @@ fun TextView.popup(text: String, @ColorInt textColor: Int) {
 
 /**
  * Onomatopeia de HQ ("POW!") numa explosão serrilhada: surge torta, estoura em 3 quadros com
- * exagero (overshoot), segura, e some. Enquanto está na tela, o contorno "ferve" a 12 fps.
+ * exagero (overshoot), segura, e some. Enquanto está na tela, o contorno "ferve" a cada quadro (COMIC_FPS).
  */
 fun TextView.burst(word: String, @ColorInt fillColor: Int, startDelay: Long = STEP_MILLIS) {
     val drawable = BurstDrawable(

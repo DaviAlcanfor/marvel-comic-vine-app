@@ -26,4 +26,9 @@
     <!-- Tema HQ: espessura do contorno de nanquim e deslocamento da sombra dura (sem desfoque). -->
     <dimen name="ink_width">2dp</dimen>
     <dimen name="hard_shadow">4dp</dimen>
+    <dimen name="projectile_size">28dp</dimen>
+
+    <!-- Login.svg: arte de HQ no topo (~280 de 812) dissolvendo no fundo. -->
+    <dimen name="login_header_height">280dp</dimen>
+    <dimen name="login_header_fade">120dp</dimen>
 </resources>

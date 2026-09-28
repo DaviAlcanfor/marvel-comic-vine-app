@@ -7,6 +7,7 @@ import com.projeto.marvel.data.remote.ComicVineService
 import com.projeto.marvel.data.remote.Issue
 import com.projeto.marvel.data.remote.IssueResponse
 import com.projeto.marvel.data.remote.Power
+import com.projeto.marvel.data.remote.TeamDetailResponse
 import com.projeto.marvel.data.remote.TeamListResponse
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -25,11 +26,14 @@ class ComicVineRepositoryTest {
             filter: String?,
             limit: Int,
             offset: Int,
-            sort: String?
+            fieldList: String?
         ): CharacterListResponse =
             error("não usado neste teste")
 
-        override suspend fun getCharacterDetail(url: String): CharacterDetailResponse =
+        override suspend fun getCharacterDetail(url: String, fieldList: String?): CharacterDetailResponse =
+            error("não usado neste teste")
+
+        override suspend fun getTeamDetail(url: String, fieldList: String?): TeamDetailResponse =
             error("não usado neste teste")
 
         override suspend fun getTeams(filter: String?, limit: Int, offset: Int): TeamListResponse =

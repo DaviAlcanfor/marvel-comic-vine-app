@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.projeto.marvel.R
 import kotlin.math.ceil
 
-// Movimento de HQ: tudo anima "em twos" (~12 quadros/s, cada pose segura por 2 quadros de 24),
-// como flipbook/stop motion (é o truque do Aranhaverso). Suave demais = parece app genérico.
+// O app anima suave (taxa da tela). Só a Batalha usa movimento de HQ: animação em degraus a
+// COMIC_FPS, como flipbook/stop motion — no app inteiro isso parecia travamento.
 //
 // ViewPropertyAnimator guarda duration/startDelay/interpolator entre chamadas na mesma View:
 // toda função aqui define os três explicitamente para não herdar os de uma animação anterior.
 
-const val COMIC_FPS = 12
+/** Quadros por segundo das animações da Batalha. 12 = "em twos" (bem HQ), 24 = cinema. */
+const val COMIC_FPS = 24
 private const val MILLIS_PER_SECOND = 1000
 
 private const val FADE_MILLIS = 250L
@@ -28,6 +29,8 @@ private const val SHAKE = 20f
 private const val SHAKE_SMALL = 12f
 private const val LIST_STAGGER = 0.15f
 
+private val smooth = DecelerateInterpolator()
+
 /** Congela o tempo em [steps] degraus: a animação "pula" de pose em pose em vez de deslizar. */
 class SteppedInterpolator(
     private val steps: Int,
@@ -37,7 +40,7 @@ class SteppedInterpolator(
     override fun getInterpolation(input: Float): Float = base.getInterpolation(ceil(input * steps) / steps)
 }
 
-/** Interpolador em twos para uma animação de [durationMillis] (mínimo de 1 degrau). */
+/** Interpolador em degraus de [COMIC_FPS] para uma animação de [durationMillis] (só na Batalha). */
 fun comicInterpolator(durationMillis: Long): Interpolator =
     SteppedInterpolator(maxOf(1, (durationMillis * COMIC_FPS / MILLIS_PER_SECOND).toInt()))
 
@@ -48,10 +51,10 @@ fun View.fadeVisible(visible: Boolean) {
             alpha = 0f
             visibility = View.VISIBLE
         }
-        animate().alpha(1f).setStartDelay(0).setDuration(FADE_MILLIS).setInterpolator(comicInterpolator(FADE_MILLIS))
+        animate().alpha(1f).setStartDelay(0).setDuration(FADE_MILLIS).setInterpolator(smooth)
     } else if (visibility == View.VISIBLE) {
         // Se um fade-in começar no meio, alpha != 0 no fim e a View continua visível.
-        animate().alpha(0f).setStartDelay(0).setDuration(FADE_MILLIS).setInterpolator(comicInterpolator(FADE_MILLIS))
+        animate().alpha(0f).setStartDelay(0).setDuration(FADE_MILLIS).setInterpolator(smooth)
             .withEndAction { if (alpha == 0f) visibility = View.GONE }
     }
 }
@@ -64,16 +67,16 @@ fun staggerIn(views: List<View>) {
         view.animate().alpha(1f).translationY(0f)
             .setStartDelay(index * STAGGER_MILLIS)
             .setDuration(ENTER_MILLIS)
-            .setInterpolator(comicInterpolator(ENTER_MILLIS))
+            .setInterpolator(smooth)
     }
 }
 
-/** Treme na horizontal: erro (login) ou dano (batalha). Já é "quadro a quadro" por natureza. */
-fun View.shake(startDelay: Long = 0) {
+/** Treme na horizontal: erro (login) ou dano (batalha, que passa o interpolador em degraus). */
+fun View.shake(startDelay: Long = 0, interpolator: TimeInterpolator = smooth) {
     ObjectAnimator.ofFloat(this, View.TRANSLATION_X, 0f, SHAKE, -SHAKE, SHAKE_SMALL, -SHAKE_SMALL, 0f).apply {
         duration = SHAKE_MILLIS
         this.startDelay = startDelay
-        interpolator = comicInterpolator(SHAKE_MILLIS)
+        this.interpolator = interpolator
     }.start()
 }
 
@@ -82,9 +85,7 @@ fun View.shake(startDelay: Long = 0) {
  * cascata repetiria toda vez que a View fosse recriada — ex.: ao voltar do Detalhe.
  */
 fun RecyclerView.animateItemsIn() {
-    val itemAnimation = AnimationUtils.loadAnimation(context, R.anim.item_enter).apply {
-        interpolator = comicInterpolator(duration)
-    }
+    val itemAnimation = AnimationUtils.loadAnimation(context, R.anim.item_enter)
     layoutAnimation = LayoutAnimationController(itemAnimation, LIST_STAGGER)
     scheduleLayoutAnimation()
 }

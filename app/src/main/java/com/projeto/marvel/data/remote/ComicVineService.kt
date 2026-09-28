@@ -24,13 +24,20 @@ interface ComicVineService {
         @Query("filter") filter: String? = null,
         @Query("limit") limit: Int = 20,
         @Query("offset") offset: Int = 0,
-        /** Formato `campo:asc|desc`, ex. `count_of_issue_appearances:desc`. */
-        @Query("sort") sort: String? = null
+        /** Campos a devolver, separados por vírgula. Sem isso vem tudo (inclusive HTML longo). */
+        @Query("field_list") fieldList: String? = null
     ): CharacterListResponse
 
     /** [url] é o `api_detail_url` já absoluto devolvido pela listagem de personagens. */
     @GET
-    suspend fun getCharacterDetail(@Url url: String): CharacterDetailResponse
+    suspend fun getCharacterDetail(
+        @Url url: String,
+        @Query("field_list") fieldList: String? = null
+    ): CharacterDetailResponse
+
+    /** [url] é o `api_detail_url` já absoluto devolvido pela listagem de times. */
+    @GET
+    suspend fun getTeamDetail(@Url url: String, @Query("field_list") fieldList: String? = null): TeamDetailResponse
 
     @GET("teams/")
     suspend fun getTeams(

@@ -21,4 +21,6 @@
     <!-- Tema HQ (não está nos SVGs): "nanquim" dos contornos e sombras duras; texto sobre dourado. -->
     <color name="ink">#000000</color>
     <color name="poison">#8E44AD</color>
+    <!-- Linhas de ação ao fundo da arena: dourado bem transparente para não brigar com o conteúdo. -->
+    <color name="speed_lines">#14E6B800</color>
 </resources>

@@ -83,5 +83,5 @@ Não está nos SVGs; acrescentado para dar identidade de quadrinhos.
 |-------------------|------------------|--------------------------------------------------|
 | `ink_width`       | 2dp              | Contorno de nanquim (painéis, botões, legendas)  |
 | `hard_shadow`     | 4dp              | Sombra dura deslocada, sem desfoque              |
-| `COMIC_FPS`       | 12               | Animação "em twos" (`ui/Animations.kt`)          |
+| `COMIC_FPS`       | 24               | Animação em degraus, só na Batalha (`ui/Animations.kt`) |
 | Bangers (OFL)     | `res/font/bangers.ttf` | Só onomatopeias ("POW!", "K.O.!")          |

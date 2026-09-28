@@ -7,6 +7,17 @@
     android:background="@drawable/bg_screen"
     android:padding="@dimen/space_lg">
 
+    <!-- Fundo da arena: linhas de ação de HQ (SpeedLinesDrawable, posto em código). -->
+    <View
+        android:id="@+id/arenaBackdrop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toTopOf="@id/movesBarrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
     <ImageButton
         android:id="@+id/backButton"
         android:layout_width="@dimen/touch_target"
@@ -283,6 +294,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Bola de energia da Rajada: posicionada e animada em código (fireProjectile). -->
+    <View
+        android:id="@+id/projectile"
+        android:layout_width="@dimen/projectile_size"
+        android:layout_height="@dimen/projectile_size"
+        android:background="@drawable/bg_projectile"
+        android:importantForAccessibility="no"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- "Quadro de impacto": pisca na cor do golpe por 2 quadros. Não recebe toque. -->
     <View
         android:id="@+id/impactFlash"
@@ -301,7 +323,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="cpuImage,cpuName,cpuHpBar,cpuHpText,cpuStatus,logText,playerImage,playerName,playerHpBar,playerHpText,playerStatus" />
+        app:constraint_referenced_ids="arenaBackdrop,cpuImage,cpuName,cpuHpBar,cpuHpText,cpuStatus,logText,playerImage,playerName,playerHpBar,playerHpText,playerStatus" />
 
     <ProgressBar
         android:id="@+id/progressBar"

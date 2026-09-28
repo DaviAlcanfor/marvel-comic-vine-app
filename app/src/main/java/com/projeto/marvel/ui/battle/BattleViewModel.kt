@@ -9,6 +9,7 @@ import com.projeto.marvel.data.BattleRecordStore
 import com.projeto.marvel.data.ComicVineRepository
 import com.projeto.marvel.data.Fighter
 import com.projeto.marvel.data.Move
+import com.projeto.marvel.data.MoveType
 import com.projeto.marvel.data.Stat
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -21,7 +22,15 @@ import kotlin.random.Random
 enum class Side { PLAYER, CPU }
 
 /** [id] cresce a cada evento: a View anima só eventos que ainda não viu. */
-data class BattleEvent(val id: Int, val side: Side, val moveName: String?, val outcome: Outcome, val amount: Int)
+data class BattleEvent(
+    val id: Int,
+    val side: Side,
+    val moveName: String?,
+    val outcome: Outcome,
+    val amount: Int,
+    val moveType: MoveType? = null,
+    val critical: Boolean = false
+)
 
 sealed interface BattleUiState {
     data object Loading : BattleUiState
@@ -118,8 +127,16 @@ class BattleViewModel @JvmOverloads constructor(
     private fun act(game: BattleUiState.Success, side: Side, move: Move): BattleUiState.Success {
         val other = if (side == Side.PLAYER) Side.CPU else Side.PLAYER
         val result = resolve(move, game.combatant(side), game.combatant(other), random.nextInt(ROLL_MAX))
-        return game.with(side, result.actor).with(other, result.target)
-            .copy(event = BattleEvent(++eventId, side, move.name, result.outcome, result.amount))
+        val event = BattleEvent(
+            id = ++eventId,
+            side = side,
+            moveName = move.name,
+            outcome = result.outcome,
+            amount = result.amount,
+            moveType = move.type,
+            critical = result.critical
+        )
+        return game.with(side, result.actor).with(other, result.target).copy(event = event)
     }
 
     private fun poison(game: BattleUiState.Success, side: Side): BattleUiState.Success {

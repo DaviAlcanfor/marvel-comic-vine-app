@@ -19,7 +19,6 @@ import com.google.android.material.transition.MaterialContainerTransform
 import com.projeto.marvel.R
 import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.databinding.FragmentCharacterDetailBinding
-import com.projeto.marvel.ui.comicInterpolator
 import com.projeto.marvel.ui.fadeVisible
 import com.projeto.marvel.ui.staggerIn
 import kotlinx.coroutines.launch
@@ -37,7 +36,6 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.nav_host_fragment
             duration = resources.getInteger(R.integer.motion_duration).toLong()
-            interpolator = comicInterpolator(duration)
             scrimColor = Color.TRANSPARENT
             setAllContainerColors(ContextCompat.getColor(requireContext(), R.color.background))
         }

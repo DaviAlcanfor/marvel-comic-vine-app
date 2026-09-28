@@ -51,8 +51,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         if (savedInstanceState == null) {
             staggerIn(
                 listOf(
+                    binding.header,
                     binding.title,
+                    binding.subtitle,
+                    binding.emailLabel,
                     binding.emailInput,
+                    binding.passwordLabel,
                     binding.passwordInput,
                     binding.loginButton,
                     binding.googleButton,

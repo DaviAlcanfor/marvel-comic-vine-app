@@ -56,7 +56,34 @@
     <fragment
         android:id="@+id/teamsFragment"
         android:name="com.projeto.marvel.ui.teams.TeamsFragment"
-        android:label="Times" />
+        android:label="Times">
+        <action
+            android:id="@+id/action_teams_to_team_detail"
+            app:destination="@id/teamDetailFragment"
+            app:enterAnim="@animator/nav_enter"
+            app:exitAnim="@animator/nav_exit"
+            app:popEnterAnim="@animator/nav_pop_enter"
+            app:popExitAnim="@animator/nav_pop_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/teamDetailFragment"
+        android:name="com.projeto.marvel.ui.teams.TeamDetailFragment"
+        android:label="Time">
+        <argument
+            android:name="apiDetailUrl"
+            app:argType="string" />
+        <argument
+            android:name="teamName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_team_detail_to_character"
+            app:destination="@id/characterDetailFragment"
+            app:enterAnim="@animator/nav_enter"
+            app:exitAnim="@animator/nav_exit"
+            app:popEnterAnim="@animator/nav_pop_enter"
+            app:popExitAnim="@animator/nav_pop_exit" />
+    </fragment>
 
     <!-- Mesma tela nos dois passos: sem playerUrl escolhe o jogador; com ele, o adversário. -->
     <fragment

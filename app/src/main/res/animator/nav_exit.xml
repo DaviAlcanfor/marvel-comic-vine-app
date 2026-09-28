@@ -1,39 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Tela antiga sai: avança na direção do leitor e some. Gerado com keyframes em degrau: 4 poses em 300ms, estilo flipbook de HQ. -->
+<!-- Transição de tela suave (alpha + escala). Só a Batalha usa animação em degraus de HQ. -->
 <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="@integer/motion_duration"
-    android:interpolator="@android:interpolator/linear">
-        <propertyValuesHolder android:propertyName="alpha" android:valueType="floatType">
-            <keyframe android:fraction="0.0" android:value="1.0" />
-            <keyframe android:fraction="0.001" android:value="0.5625" />
-            <keyframe android:fraction="0.25" android:value="0.5625" />
-            <keyframe android:fraction="0.251" android:value="0.25" />
-            <keyframe android:fraction="0.5" android:value="0.25" />
-            <keyframe android:fraction="0.501" android:value="0.0625" />
-            <keyframe android:fraction="0.75" android:value="0.0625" />
-            <keyframe android:fraction="0.751" android:value="0.0" />
-            <keyframe android:fraction="1.0" android:value="0.0" />
-        </propertyValuesHolder>
-        <propertyValuesHolder android:propertyName="scaleX" android:valueType="floatType">
-            <keyframe android:fraction="0.0" android:value="1.0" />
-            <keyframe android:fraction="0.001" android:value="1.0175" />
-            <keyframe android:fraction="0.25" android:value="1.0175" />
-            <keyframe android:fraction="0.251" android:value="1.03" />
-            <keyframe android:fraction="0.5" android:value="1.03" />
-            <keyframe android:fraction="0.501" android:value="1.0375" />
-            <keyframe android:fraction="0.75" android:value="1.0375" />
-            <keyframe android:fraction="0.751" android:value="1.04" />
-            <keyframe android:fraction="1.0" android:value="1.04" />
-        </propertyValuesHolder>
-        <propertyValuesHolder android:propertyName="scaleY" android:valueType="floatType">
-            <keyframe android:fraction="0.0" android:value="1.0" />
-            <keyframe android:fraction="0.001" android:value="1.0175" />
-            <keyframe android:fraction="0.25" android:value="1.0175" />
-            <keyframe android:fraction="0.251" android:value="1.03" />
-            <keyframe android:fraction="0.5" android:value="1.03" />
-            <keyframe android:fraction="0.501" android:value="1.0375" />
-            <keyframe android:fraction="0.75" android:value="1.0375" />
-            <keyframe android:fraction="0.751" android:value="1.04" />
-            <keyframe android:fraction="1.0" android:value="1.04" />
-        </propertyValuesHolder>
+    android:interpolator="@android:interpolator/fast_out_slow_in">
+    <propertyValuesHolder
+        android:propertyName="alpha"
+        android:valueFrom="1.0"
+        android:valueTo="0.0"
+        android:valueType="floatType" />
+    <propertyValuesHolder
+        android:propertyName="scaleX"
+        android:valueFrom="1.0"
+        android:valueTo="1.04"
+        android:valueType="floatType" />
+    <propertyValuesHolder
+        android:propertyName="scaleY"
+        android:valueFrom="1.0"
+        android:valueTo="1.04"
+        android:valueType="floatType" />
 </objectAnimator>

@@ -1,5 +1,6 @@
 package com.projeto.marvel.ui.battle
 
+import android.animation.Animator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,8 @@ import coil.load
 import com.projeto.marvel.R
 import com.projeto.marvel.data.MoveType
 import com.projeto.marvel.databinding.FragmentBattleBinding
+import com.projeto.marvel.ui.SpeedLinesDrawable
+import com.projeto.marvel.ui.comicInterpolator
 import com.projeto.marvel.ui.fadeVisible
 import com.projeto.marvel.ui.shake
 import kotlinx.coroutines.launch
@@ -28,6 +31,9 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
     // -1 = primeira renderização desta View: sincroniza sem animar (evita repetir a última
     // animação ao voltar de rotação/background).
     private var lastEventId = -1
+
+    // Animações infinitas (fundo e respiração): canceladas junto com a View.
+    private val loops = mutableListOf<Animator>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +53,10 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
         binding.backButton.setOnClickListener { findNavController().navigateUp() }
         binding.errorText.setOnClickListener { viewModel.load() }
         binding.rematchButton.setOnClickListener { viewModel.rematch() }
+
+        loops += binding.arenaBackdrop.startSpeedLines(SpeedLinesDrawable(color(R.color.speed_lines)))
+        loops += binding.cpuImage.idleSway()
+        loops += binding.playerImage.idleSway(startDelay = SWAY_OFFSET_MILLIS)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -136,7 +146,7 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
 
     private fun logText(game: BattleUiState.Success, event: BattleEvent): String {
         val res = when (event.outcome) {
-            Outcome.HIT -> R.string.battle_log_hit
+            Outcome.HIT -> if (event.critical) R.string.battle_log_critical else R.string.battle_log_hit
             Outcome.MISS -> R.string.battle_log_miss
             Outcome.POISONED -> R.string.battle_log_poisoned
             Outcome.HEAL -> R.string.battle_log_heal
@@ -155,19 +165,33 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
 
         when (event.outcome) {
             Outcome.HIT, Outcome.POISONED -> {
-                actor.image.lunge(direction)
+                if (event.moveType == MoveType.BLAST) {
+                    binding.projectile.fireProjectile(from = actor.image, to = target.image)
+                } else {
+                    actor.image.lunge(direction)
+                }
                 target.image.hurt()
                 target.popup.popup("−${event.amount}", color(R.color.primary_text))
                 if (event.outcome == Outcome.HIT) {
-                    target.burst.burst(resources.getStringArray(R.array.battle_sfx_hit).random(), color(R.color.accent))
+                    if (event.critical) {
+                        target.burst.burst(getString(R.string.battle_sfx_critical), color(R.color.primary))
+                        binding.root.punchZoom()
+                    } else {
+                        val word = resources.getStringArray(R.array.battle_sfx_hit).random()
+                        target.burst.burst(word, color(R.color.accent))
+                    }
                     binding.impactFlash.impactFrame()
-                    binding.root.shake(startDelay = IMPACT_SHAKE_DELAY_MILLIS)
+                    binding.root.shake(IMPACT_SHAKE_DELAY_MILLIS, comicInterpolator(IMPACT_SHAKE_MILLIS))
                 } else {
                     target.burst.burst(getString(R.string.battle_sfx_poison), color(R.color.poison))
                 }
             }
             Outcome.MISS -> {
-                actor.image.lunge(direction)
+                if (event.moveType == MoveType.BLAST) {
+                    binding.projectile.fireProjectile(from = actor.image, to = target.image)
+                } else {
+                    actor.image.lunge(direction)
+                }
                 target.burst.burst(getString(R.string.battle_sfx_miss), color(R.color.text_secondary))
             }
             Outcome.HEAL -> {
@@ -195,6 +219,8 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        loops.forEach { it.cancel() }
+        loops.clear()
         binding = null
     }
 }
@@ -216,6 +242,8 @@ private fun FragmentBattleBinding.views(side: Side) = FighterViews(this, side)
 private const val PERCENT = 100
 private const val KO_DELAY_MILLIS = 700L
 private const val IMPACT_SHAKE_DELAY_MILLIS = 170L
+private const val IMPACT_SHAKE_MILLIS = 400L
+private const val SWAY_OFFSET_MILLIS = 700L
 private const val HP_HIGH_PERCENT = 50
 private const val HP_LOW_PERCENT = 20
 

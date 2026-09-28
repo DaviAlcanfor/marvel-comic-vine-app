@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Tipografia do Design_System.svg. São estilos de View (style=), não textAppearance:
-         o fontFamily do tema tem precedência sobre textAppearance, mas não sobre style. -->
+    <!-- Tipografia do Design_System.svg. Estilos com fonte própria declaram android:fontFamily E
+         fontFamily (AppCompat): o AppCompat lê primeiro o fontFamily do tema (Inter) e ignoraria
+         o android:fontFamily do estilo. -->
 
     <!-- Display / Bebas Neue: títulos de tela ("MARVEL HEROES"). -->
     <style name="Widget.Marvel.ScreenTitle" parent="">
         <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="fontFamily">@font/bebas_neue</item>
         <item name="android:textSize">32sp</item>
         <item name="android:letterSpacing">0.02</item>
         <item name="android:textColor">@color/text_primary</item>
@@ -68,6 +70,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="fontFamily">@font/bebas_neue</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/accent</item>
     </style>
@@ -100,6 +103,7 @@
         <item name="android:background">@drawable/bg_button_comic_primary</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="fontFamily">@font/bebas_neue</item>
         <item name="android:textSize">22sp</item>
         <item name="android:letterSpacing">0.06</item>
         <item name="android:textAllCaps">true</item>
@@ -123,6 +127,7 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:rotation">-2</item>
         <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="fontFamily">@font/bebas_neue</item>
         <item name="android:textSize">22sp</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:textColor">@color/ink</item>
@@ -135,6 +140,7 @@
         <item name="android:paddingHorizontal">28dp</item>
         <item name="android:paddingVertical">22dp</item>
         <item name="android:fontFamily">@font/bangers</item>
+        <item name="fontFamily">@font/bangers</item>
         <item name="android:textSize">30sp</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:textColor">@color/ink</item>

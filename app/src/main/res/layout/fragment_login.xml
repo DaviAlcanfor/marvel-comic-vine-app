@@ -1,128 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Segue Login.svg: arte de HQ tingida de vermelho no topo, boas-vindas, rótulos acima dos campos. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_screen"
-    android:padding="@dimen/space_lg">
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/Widget.Marvel.ScreenTitle"
-        android:textColor="@color/primary_text"
-        android:textSize="48sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_title"
-        app:layout_constraintBottom_toTopOf="@id/emailInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <EditText
-        android:id="@+id/emailInput"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/input_height"
-        android:layout_marginTop="@dimen/space_xl"
-        android:autofillHints="emailAddress"
-        android:background="@drawable/bg_input"
-        android:hint="@string/login_email_hint"
-        android:inputType="textEmailAddress"
-        android:paddingHorizontal="@dimen/space_md"
-        android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary"
-        app:layout_constraintBottom_toTopOf="@id/passwordInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
-
-    <EditText
-        android:id="@+id/passwordInput"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/input_height"
-        android:layout_marginTop="@dimen/space_md"
-        android:autofillHints="password"
-        android:background="@drawable/bg_input"
-        android:hint="@string/login_password_hint"
-        android:inputType="textPassword"
-        android:paddingHorizontal="@dimen/space_md"
-        android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary"
-        app:layout_constraintBottom_toTopOf="@id/errorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailInput" />
-
-    <TextView
-        android:id="@+id/errorText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_sm"
-        android:accessibilityLiveRegion="polite"
-        android:textColor="@color/primary_text"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/loginButton"
-        app:layout_constraintTop_toBottomOf="@id/passwordInput" />
+        android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/loginButton"
-        style="@style/Widget.Marvel.ComicButton"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/space_lg"
-        android:text="@string/login_button"
-        app:layout_constraintBottom_toTopOf="@id/googleButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/errorText" />
+        <FrameLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_header_height">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/googleButton"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/input_height"
-        android:layout_marginTop="@dimen/space_sm"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/login_google"
-        android:textColor="@color/text_primary"
-        app:cornerRadius="@dimen/radius_large"
-        app:icon="@drawable/ic_google"
-        app:iconGravity="textStart"
-        app:iconTint="@null"
-        app:layout_constraintBottom_toTopOf="@id/signUpButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginButton"
-        app:strokeColor="@color/border" />
+            <!-- Arte em tons de cinza; o tint multiplica e deixa branco -> vermelho, preto -> preto. -->
+            <ImageView
+                android:id="@+id/headerImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.9"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:src="@drawable/login_panels"
+                android:tint="@color/primary"
+                android:tintMode="multiply" />
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:indicatorColor="@color/text_primary"
-        app:indicatorSize="@dimen/space_lg"
-        app:layout_constraintBottom_toBottomOf="@id/loginButton"
-        app:layout_constraintEnd_toEndOf="@id/loginButton"
-        app:layout_constraintStart_toStartOf="@id/loginButton"
-        app:layout_constraintTop_toTopOf="@id/loginButton" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_header_fade"
+                android:layout_gravity="bottom"
+                android:background="@drawable/bg_fade_to_background" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/signUpButton"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_sm"
-        android:text="@string/login_signup"
-        android:textAllCaps="false"
-        android:textColor="@color/text_secondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/googleButton" />
+        </FrameLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_xl"
+            android:paddingBottom="@dimen/space_lg">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/Widget.Marvel.H1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_welcome"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:text="@string/login_subtitle"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/emailLabel"
+                style="@style/Widget.Marvel.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg"
+                android:labelFor="@id/emailInput"
+                android:text="@string/login_email_label" />
+
+            <EditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginTop="@dimen/space_sm"
+                android:autofillHints="emailAddress"
+                android:background="@drawable/bg_input"
+                android:hint="@string/login_email_hint"
+                android:inputType="textEmailAddress"
+                android:paddingHorizontal="@dimen/space_md"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/passwordLabel"
+                style="@style/Widget.Marvel.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:labelFor="@id/passwordInput"
+                android:text="@string/login_password_label" />
+
+            <EditText
+                android:id="@+id/passwordInput"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginTop="@dimen/space_sm"
+                android:autofillHints="password"
+                android:background="@drawable/bg_input"
+                android:hint="@string/login_password_hint"
+                android:inputType="textPassword"
+                android:paddingHorizontal="@dimen/space_md"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/errorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:accessibilityLiveRegion="polite"
+                android:textColor="@color/primary_text"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/loginButton"
+                    style="@style/Widget.Marvel.ComicButton"
+                    android:layout_width="match_parent"
+                    android:text="@string/login_button" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    app:indicatorColor="@color/text_primary"
+                    app:indicatorSize="@dimen/space_lg" />
+
+            </FrameLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/googleButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginTop="@dimen/space_sm"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/login_google"
+                android:textColor="@color/text_primary"
+                app:cornerRadius="@dimen/radius_large"
+                app:icon="@drawable/ic_google"
+                app:iconGravity="textStart"
+                app:iconTint="@null"
+                app:strokeColor="@color/border" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/signUpButton"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/space_sm"
+                android:text="@string/login_signup"
+                android:textAllCaps="false"
+                android:textColor="@color/accent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

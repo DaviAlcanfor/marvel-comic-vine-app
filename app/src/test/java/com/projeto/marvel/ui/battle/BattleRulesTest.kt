@@ -37,6 +37,15 @@ class BattleRulesTest {
     }
 
     @Test
+    fun `dado alto e critico e tira metade a mais`() {
+        // base 18; crítico 18 * 3 / 2 = 27; defesa 10/10 = 1 -> 26
+        val result = resolve(punch, Combatant(fighter()), Combatant(fighter()), roll = 99)
+        assertTrue(result.critical)
+        assertEquals(26, result.amount)
+        assertFalse(resolve(punch, Combatant(fighter()), Combatant(fighter()), roll = 84).critical)
+    }
+
+    @Test
     fun `defesa corta o dano pela metade e e consumida`() {
         val guarded = Combatant(fighter(), guarding = true)
         val result = resolve(punch, Combatant(fighter()), guarded, roll = 0)

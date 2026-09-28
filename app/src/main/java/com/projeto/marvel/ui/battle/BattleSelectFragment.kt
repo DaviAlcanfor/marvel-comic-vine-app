@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.projeto.marvel.R
 import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.databinding.FragmentBattleSelectBinding
-import com.projeto.marvel.ui.animateItemsIn
+import com.projeto.marvel.ui.onEndReached
+import com.projeto.marvel.ui.submitAnimated
 import com.projeto.marvel.ui.fadeVisible
 import com.projeto.marvel.ui.home.CharacterAdapter
 import com.projeto.marvel.ui.home.HomeUiState
@@ -62,6 +63,7 @@ class BattleSelectFragment : Fragment(R.layout.fragment_battle_select) {
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.onEndReached { viewModel.loadMore() }
         binding.backButton.setOnClickListener { findNavController().navigateUp() }
         binding.errorText.setOnClickListener { viewModel.retry() }
         binding.searchInput.addTextChangedListener(object : TextWatcher {
@@ -88,8 +90,7 @@ class BattleSelectFragment : Fragment(R.layout.fragment_battle_select) {
 
         when (state) {
             is HomeUiState.Success -> {
-                val isNewList = adapter.currentList != state.characters
-                adapter.submitList(state.characters) { if (isNewList) binding.recyclerView.animateItemsIn() }
+                adapter.submitAnimated(state.characters, binding.recyclerView)
                 if (isEmptySuccess) binding.errorText.text = getString(R.string.home_empty)
             }
             is HomeUiState.Error -> binding.errorText.text = getString(R.string.home_error_retry) + "\n" + state.message

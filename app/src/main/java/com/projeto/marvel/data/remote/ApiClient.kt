@@ -29,7 +29,8 @@ object ApiClient {
         .addInterceptor(authInterceptor)
         .addInterceptor(
             HttpLoggingInterceptor().setLevel(
-                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+                // BASIC: uma linha por requisição. BODY imprimia respostas de megabytes e deixava o app lento.
+                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BASIC
                 else HttpLoggingInterceptor.Level.NONE
             )
         )

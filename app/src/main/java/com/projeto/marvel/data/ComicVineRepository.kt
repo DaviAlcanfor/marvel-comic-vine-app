@@ -5,10 +5,11 @@ import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.data.remote.ComicVineService
 import com.projeto.marvel.data.remote.Issue
 import com.projeto.marvel.data.remote.Team
+import com.projeto.marvel.data.remote.TeamDetail
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlin.math.log10
-import kotlin.random.Random
 
 /**
  * Única porta de entrada para dados da Comic Vine. A ViewModel fala com ela, nunca com o Retrofit.
@@ -32,18 +33,18 @@ class ComicVineRepository(
         }
 
     /**
-     * [query] nula/vazia lista os personagens mais recentes.
+     * Busca por nome, paginada ([PAGE_SIZE] por página; página menor que isso = fim).
      *
-     * TODO: a Comic Vine não tem filtro nativo de `publisher` neste endpoint (ele existe
-     * para outros recursos, mas exigiria descobrir o id numérico da editora Marvel e não
-     * está documentado de forma estável). Por isso a lista pode trazer personagens de
-     * outras editoras. Quando esse filtro for definido, aplicar aqui.
+     * TODO: a Comic Vine ignora o filtro por `publisher` neste endpoint (testado), então a busca
+     * pode trazer personagens de outras editoras. Sem busca, a Home usa [popularCharacters].
      */
-    suspend fun searchCharacters(query: String? = null, offset: Int = 0): Result<List<CharacterSummary>> =
+    suspend fun searchCharacters(query: String, offset: Int = 0): Result<List<CharacterSummary>> =
         runCatching {
             val response = service.getCharacters(
-                filter = query?.takeIf { it.isNotBlank() }?.let { "name:$it" },
-                offset = offset
+                filter = "name:$query",
+                limit = PAGE_SIZE,
+                offset = offset,
+                fieldList = LIST_FIELDS
             )
             check(response.error == null || response.error == "OK") {
                 "Comic Vine: ${response.error}"
@@ -51,9 +52,49 @@ class ComicVineRepository(
             response.results.orEmpty()
         }
 
+    /**
+     * Personagens populares da Marvel: os membros dos Vingadores (~255), buscados por id em
+     * blocos de [PAGE_SIZE] em paralelo e ordenados por aparições. A lista padrão da API
+     * (sem filtro) começa por personagens da DC e ignora `sort`/`publisher`, por isso o time.
+     *
+     * Guardada em memória: Home e seleção da Batalha usam a mesma lista (são 4 requisições).
+     */
+    suspend fun popularCharacters(): Result<List<CharacterSummary>> =
+        runCatching {
+            popularCache?.let { return@runCatching it }
+            val members = service.getTeamDetail(AVENGERS_URL, fieldList = "characters").let { response ->
+                check(response.error == null || response.error == "OK") { "Comic Vine: ${response.error}" }
+                response.result?.members.orEmpty()
+            }
+            coroutineScope {
+                members.map { it.id }.chunked(PAGE_SIZE).map { ids ->
+                    async {
+                        val response = service.getCharacters(
+                            filter = "id:${ids.joinToString("|")}",
+                            limit = PAGE_SIZE,
+                            fieldList = LIST_FIELDS
+                        )
+                        check(response.error == null || response.error == "OK") {
+                            "Comic Vine: ${response.error}"
+                        }
+                        response.results.orEmpty()
+                    }
+                }.awaitAll().flatten().sortedByDescending { it.issueAppearances ?: 0 }
+            }.also { popularCache = it }
+        }
+
+    suspend fun getTeamDetail(apiDetailUrl: String): Result<TeamDetail> =
+        runCatching {
+            val response = service.getTeamDetail(apiDetailUrl)
+            check(response.error == null || response.error == "OK") {
+                "Comic Vine: ${response.error}"
+            }
+            response.result ?: error("Time não encontrado")
+        }
+
     suspend fun getCharacterDetail(apiDetailUrl: String): Result<CharacterSummary> =
         runCatching {
-            val response = service.getCharacterDetail(apiDetailUrl)
+            val response = service.getCharacterDetail(apiDetailUrl, DETAIL_FIELDS)
             check(response.error == null || response.error == "OK") {
                 "Comic Vine: ${response.error}"
             }
@@ -71,9 +112,8 @@ class ComicVineRepository(
         }
 
     /**
-     * Carrega os dois lutadores em paralelo. Sem [opponentUrl], sorteia o adversário entre os
-     * personagens mais populares (ordenados por aparições, para não cair em personagens
-     * obscuros sem imagem nem poderes). Os poderes só vêm no endpoint de detalhe.
+     * Carrega os dois lutadores em paralelo. Sem [opponentUrl], sorteia um adversário de
+     * [OPPONENT_ROSTER]. Os poderes só vêm no endpoint de detalhe.
      */
     suspend fun getFighters(playerUrl: String, opponentUrl: String?): Result<Pair<Fighter, Fighter>> =
         runCatching {
@@ -86,21 +126,53 @@ class ComicVineRepository(
             }
         }
 
+    /**
+     * A Comic Vine ignora `sort` e o filtro por editora em `characters/` (testado: devolve
+     * sempre a mesma lista, começando por personagens da DC). O filtro por nome funciona, então
+     * o sorteio é de um nome conhecido e fica o resultado da Marvel com mais aparições.
+     */
     private suspend fun randomOpponentUrl(except: String): String {
-        val response = service.getCharacters(
-            offset = Random.nextInt(OPPONENT_POOL_OFFSET),
-            sort = "count_of_issue_appearances:desc"
-        )
-        check(response.error == null || response.error == "OK") {
-            "Comic Vine: ${response.error}"
+        // Mais de uma tentativa: o nome sorteado pode ser o do próprio jogador.
+        for (name in OPPONENT_ROSTER.shuffled().take(MAX_OPPONENT_TRIES)) {
+            val response = service.getCharacters(filter = "name:$name")
+            check(response.error == null || response.error == "OK") {
+                "Comic Vine: ${response.error}"
+            }
+            response.results.orEmpty()
+                .filter { it.publisher?.name == MARVEL && it.apiDetailUrl != null && it.apiDetailUrl != except }
+                .maxByOrNull { it.issueAppearances ?: 0 }
+                ?.apiDetailUrl
+                ?.let { return it }
         }
-        return response.results.orEmpty().mapNotNull { it.apiDetailUrl }.filter { it != except }.randomOrNull()
-            ?: error("Nenhum adversário encontrado")
+        error("Nenhum adversário encontrado")
     }
 
-    private companion object {
-        // Offset máximo do sorteio: a página cai sempre entre os ~100 mais populares.
-        const val OPPONENT_POOL_OFFSET = 80
+    companion object {
+        const val PAGE_SIZE = 100 // máximo aceito pela Comic Vine
+        private const val AVENGERS_URL = "https://comicvine.gamespot.com/api/team/4060-3806/"
+
+        /** Só o que a lista/card usa; o detalhe busca o resto. */
+        private const val LIST_FIELDS =
+            "id,name,real_name,deck,image,publisher,api_detail_url,count_of_issue_appearances"
+
+        /**
+         * Sem isso o detalhe traz as listas de todas as aparições (milhares no Homem-Aranha):
+         * megabytes por personagem, e a arena demorava ~10 s para abrir.
+         */
+        private const val DETAIL_FIELDS = "$LIST_FIELDS,description,powers,origin,teams"
+
+        // ponytail: cache só em memória (some ao fechar o app); persistir se a API ficar lenta demais.
+        @Volatile private var popularCache: List<CharacterSummary>? = null
+        private const val MARVEL = "Marvel"
+        private const val MAX_OPPONENT_TRIES = 3
+
+        /** Heróis e vilões populares da Marvel para o adversário aleatório. */
+        private val OPPONENT_ROSTER = listOf(
+            "Spider-Man", "Iron Man", "Captain America", "Thor", "Hulk", "Black Widow",
+            "Wolverine", "Storm", "Deadpool", "Doctor Strange", "Black Panther", "Captain Marvel",
+            "Scarlet Witch", "Daredevil", "Thanos", "Loki", "Magneto", "Doctor Doom",
+            "Green Goblin", "Venom", "Ultron", "Red Skull"
+        )
     }
 }
 

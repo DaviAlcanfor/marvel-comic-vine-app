@@ -138,13 +138,12 @@ abrir. `ViewModelConstructorsTest` cobre isso.
 
 O Design System é a base (cores, fontes, espaçamento); o tema de HQ vai por cima:
 
-- **Movimento "em twos"** (~12 fps, cada pose segura 2 quadros, como flipbook/Aranhaverso):
-  `SteppedInterpolator` / `comicInterpolator()` em `ui/Animations.kt`, usado por todos os
-  helpers (`fadeVisible`, `staggerIn`, `shake`, `animateItemsIn`), pela transição de container
-  Home → Detalhe e pelas animações da arena. Transições de tela: `res/animator/nav_*.xml`
-  (XML não aceita interpolador customizado, então os degraus são keyframes duplicados).
+- **Movimento:** o app anima suave (helpers de `ui/Animations.kt`, transições de tela em
+  `res/animator/nav_*.xml`, transição de container Home → Detalhe). Só a **Batalha** anima em
+  degraus de `COMIC_FPS` (24 fps, ar de flipbook/stop motion) via `SteppedInterpolator` /
+  `comicInterpolator()` — no app inteiro isso parecia travamento.
 - **Arena:** onomatopeias ("POW!") em `BurstDrawable` (explosão serrilhada cujo contorno
-  "ferve" a 12 fps), quadro de impacto, tremor de tela e K.O. final — `ui/battle/BattleAnimations.kt`.
+  "ferve" a cada quadro), quadro de impacto, tremor de tela e K.O. final — `ui/battle/BattleAnimations.kt`.
 - **Visual:** fundo com retícula (`bg_screen`), painéis com contorno de nanquim (`bg_card`),
   botões com sombra dura que afundam ao apertar (`Widget.Marvel.ComicButton`) e títulos de
   seção em caixa de legenda amarela (`Widget.Marvel.CaptionBox`).

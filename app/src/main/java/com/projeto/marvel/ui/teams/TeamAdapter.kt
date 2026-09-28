@@ -10,7 +10,9 @@ import com.projeto.marvel.R
 import com.projeto.marvel.data.remote.Team
 import com.projeto.marvel.databinding.ItemTeamBinding
 
-class TeamAdapter : ListAdapter<Team, TeamAdapter.ViewHolder>(Diff) {
+class TeamAdapter(
+    private val onClick: (Team) -> Unit
+) : ListAdapter<Team, TeamAdapter.ViewHolder>(Diff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemTeamBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,6 +30,7 @@ class TeamAdapter : ListAdapter<Team, TeamAdapter.ViewHolder>(Diff) {
                 binding.root.context.getString(R.string.teams_member_count, it)
             }.orEmpty()
             binding.thumbnail.load(team.image?.mediumUrl) { crossfade(true) }
+            binding.root.setOnClickListener { onClick(team) }
         }
     }
 

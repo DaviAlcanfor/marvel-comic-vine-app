@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import com.projeto.marvel.ui.battle.BattleViewModel
 import com.projeto.marvel.ui.detail.CharacterDetailViewModel
+import com.projeto.marvel.ui.teams.TeamDetailViewModel
 import org.junit.Test
 
 /**
@@ -16,6 +17,11 @@ class ViewModelConstructorsTest {
     @Test
     fun `detalhe tem construtor que o factory padrao encontra`() {
         CharacterDetailViewModel::class.java.getConstructor(SavedStateHandle::class.java)
+    }
+
+    @Test
+    fun `detalhe do time tem construtor que o factory padrao encontra`() {
+        TeamDetailViewModel::class.java.getConstructor(SavedStateHandle::class.java)
     }
 
     @Test

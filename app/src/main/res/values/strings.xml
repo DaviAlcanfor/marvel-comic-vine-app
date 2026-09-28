@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">Marvel App</string>
 
-    <string name="login_title">Marvel App</string>
-    <string name="login_email_hint">E-mail</string>
-    <string name="login_password_hint">Senha</string>
+    <string name="login_welcome">Bem-vindo(a) de volta</string>
+    <string name="login_subtitle">Entre pra continuar explorando o universo Marvel</string>
+    <string name="login_email_label">E-mail</string>
+    <string name="login_email_hint">seuemail@exemplo.com</string>
+    <string name="login_password_label">Senha</string>
+    <string name="login_password_hint">Sua senha</string>
     <string name="login_button">Entrar</string>
     <string name="login_google">Entrar com Google</string>
-    <string name="login_signup">Não tem conta? Criar conta</string>
+    <string name="login_signup">Novo por aqui? Criar conta</string>
 
     <string name="home_title">Personagens</string>
     <string name="home_search_hint">Buscar personagem</string>
@@ -27,6 +30,12 @@
     <string name="teams_title">Times</string>
     <string name="teams_empty">Nenhum time encontrado.</string>
     <string name="teams_member_count">%d membros</string>
+    <string name="team_back">Times</string>
+    <string name="team_stat_members">Membros</string>
+    <string name="team_stat_enemies">Inimigos</string>
+    <string name="team_section_members">Membros</string>
+    <string name="team_section_enemies">Inimigos</string>
+    <string name="team_member_action">Ver %1$s</string>
 
     <string name="nav_home">Início</string>
     <string name="nav_teams">Times</string>
@@ -44,6 +53,7 @@
     <string name="battle_your_turn">O que %1$s vai fazer?</string>
     <string name="battle_winner">%1$s venceu a batalha!</string>
     <string name="battle_log_hit">%1$s usou %2$s! −%3$d</string>
+    <string name="battle_log_critical">%1$s usou %2$s! GOLPE CRÍTICO! −%3$d</string>
     <string name="battle_log_miss">%1$s usou %2$s… mas errou!</string>
     <string name="battle_log_poisoned">%1$s usou %2$s! −%3$d e envenenou o adversário</string>
     <string name="battle_log_heal">%1$s usou %2$s e recuperou %3$d de vida</string>
@@ -59,6 +69,7 @@
         <item>THWACK!</item>
     </string-array>
     <string name="battle_sfx_miss">WHOOSH!</string>
+    <string name="battle_sfx_critical">CRÍTICO!</string>
     <string name="battle_sfx_poison">SPLAT!</string>
     <string name="battle_sfx_poison_tick">SSSS!</string>
     <string name="battle_sfx_heal">SHING!</string>
