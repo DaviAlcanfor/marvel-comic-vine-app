@@ -3,29 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/bg_screen"
     android:paddingHorizontal="@dimen/space_lg"
     android:paddingTop="@dimen/space_lg">
 
     <TextView
         android:id="@+id/title"
+        style="@style/Widget.Marvel.ScreenTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/home_title"
-        android:textColor="@color/text_primary"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/teamsButton"
+        app:layout_constraintEnd_toStartOf="@id/logoutButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+
     <ImageButton
-        android:id="@+id/teamsButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:id="@+id/logoutButton"
+        android:layout_width="@dimen/touch_target"
+        android:layout_height="@dimen/touch_target"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/home_teams_action"
-        android:src="@drawable/ic_group"
+        android:contentDescription="@string/home_logout_action"
+        android:src="@drawable/ic_logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,46 +47,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/filterGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_sm"
-        app:layout_constraintTop_toBottomOf="@id/searchInput"
-        app:singleSelection="true">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipAll"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checkable="true"
-            android:checked="true"
-            android:text="@string/home_filter_all"
-            android:textColor="@color/chip_text_color"
-            app:chipBackgroundColor="@color/chip_background" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipHeroes"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checkable="true"
-            android:text="@string/home_filter_heroes"
-            android:textColor="@color/chip_text_color"
-            app:chipBackgroundColor="@color/chip_background" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipVillains"
-            style="@style/Widget.Material3.Chip.Filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checkable="true"
-            android:text="@string/home_filter_villains"
-            android:textColor="@color/chip_text_color"
-            app:chipBackgroundColor="@color/chip_background" />
-
-    </com.google.android.material.chip.ChipGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -99,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/filterGroup"
+        app:layout_constraintTop_toBottomOf="@id/searchInput"
         app:spanCount="2" />
 
     <ProgressBar

@@ -6,16 +6,21 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.transition.Hold
 import com.projeto.marvel.R
 import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.databinding.FragmentHomeBinding
+import com.projeto.marvel.ui.animateItemsIn
+import com.projeto.marvel.ui.fadeVisible
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -38,11 +43,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
 
+        // Na volta do Detalhe, o card de destino da transição só existe depois do layout da lista.
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerView.adapter = adapter
 
-        binding.teamsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_home_to_teams)
+        binding.logoutButton.setOnClickListener {
+            viewModel.signOut()
+            exitTransition = null
+            findNavController().navigate(R.id.action_home_to_login)
         }
 
         binding.searchInput.addTextChangedListener(object : TextWatcher {
@@ -52,9 +63,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 viewModel.search(s?.toString())
             }
         })
-
-        // TODO: a Comic Vine não expõe um campo de classificação herói/vilão, então estes
-        // chips são apenas visuais por enquanto — só "Todos" reflete a lista real carregada.
 
         binding.errorText.setOnClickListener { viewModel.retry() }
 
@@ -68,14 +76,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun render(state: HomeUiState) {
         val binding = binding ?: return
         val isEmptySuccess = state is HomeUiState.Success && state.characters.isEmpty()
-        binding.progressBar.visibility = if (state is HomeUiState.Loading) View.VISIBLE else View.GONE
-        binding.errorText.visibility = if (state is HomeUiState.Error || isEmptySuccess) View.VISIBLE else View.GONE
-        val showList = state is HomeUiState.Success && !isEmptySuccess
-        binding.recyclerView.visibility = if (showList) View.VISIBLE else View.GONE
+        binding.progressBar.fadeVisible(state is HomeUiState.Loading)
+        binding.errorText.fadeVisible(state is HomeUiState.Error || isEmptySuccess)
+        binding.recyclerView.fadeVisible(state is HomeUiState.Success && !isEmptySuccess)
 
         when (state) {
             is HomeUiState.Success -> {
-                adapter.submitList(state.characters)
+                val isNewList = adapter.currentList != state.characters
+                adapter.submitList(state.characters) { if (isNewList) binding.recyclerView.animateItemsIn() }
                 if (isEmptySuccess) binding.errorText.text = getString(R.string.home_empty)
             }
             is HomeUiState.Error -> binding.errorText.text = getString(R.string.home_error_retry) + "\n" + state.message
@@ -83,13 +91,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun openDetail(character: CharacterSummary) {
+    private fun openDetail(character: CharacterSummary, card: View) {
         val apiDetailUrl = character.apiDetailUrl ?: return
         val args = Bundle().apply {
             putString("apiDetailUrl", apiDetailUrl)
             putString("characterName", character.name)
+            putString("transitionName", card.transitionName)
         }
-        findNavController().navigate(R.id.action_home_to_detail, args)
+        // Hold: a Home fica parada por baixo enquanto o card se expande no Detalhe.
+        exitTransition = Hold().apply { duration = resources.getInteger(R.integer.motion_duration).toLong() }
+        findNavController().navigate(
+            R.id.action_home_to_detail,
+            args,
+            null,
+            FragmentNavigatorExtras(card to card.transitionName)
+        )
     }
 
     override fun onDestroyView() {

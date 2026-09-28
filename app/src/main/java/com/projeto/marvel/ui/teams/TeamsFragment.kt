@@ -9,10 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.projeto.marvel.R
 import com.projeto.marvel.databinding.FragmentTeamsBinding
+import com.projeto.marvel.ui.animateItemsIn
+import com.projeto.marvel.ui.fadeVisible
 import kotlinx.coroutines.launch
 
 class TeamsFragment : Fragment(R.layout.fragment_teams) {
@@ -37,7 +38,6 @@ class TeamsFragment : Fragment(R.layout.fragment_teams) {
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerView.adapter = adapter
-        binding.backButton.setOnClickListener { findNavController().navigateUp() }
         binding.errorText.setOnClickListener { viewModel.load() }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -50,14 +50,14 @@ class TeamsFragment : Fragment(R.layout.fragment_teams) {
     private fun render(state: TeamsUiState) {
         val binding = binding ?: return
         val isEmptySuccess = state is TeamsUiState.Success && state.teams.isEmpty()
-        binding.progressBar.visibility = if (state is TeamsUiState.Loading) View.VISIBLE else View.GONE
-        binding.errorText.visibility = if (state is TeamsUiState.Error || isEmptySuccess) View.VISIBLE else View.GONE
-        val showList = state is TeamsUiState.Success && !isEmptySuccess
-        binding.recyclerView.visibility = if (showList) View.VISIBLE else View.GONE
+        binding.progressBar.fadeVisible(state is TeamsUiState.Loading)
+        binding.errorText.fadeVisible(state is TeamsUiState.Error || isEmptySuccess)
+        binding.recyclerView.fadeVisible(state is TeamsUiState.Success && !isEmptySuccess)
 
         when (state) {
             is TeamsUiState.Success -> {
-                adapter.submitList(state.teams)
+                val isNewList = adapter.currentList != state.teams
+                adapter.submitList(state.teams) { if (isNewList) binding.recyclerView.animateItemsIn() }
                 if (isEmptySuccess) binding.errorText.text = getString(R.string.teams_empty)
             }
             is TeamsUiState.Error -> binding.errorText.text = state.message

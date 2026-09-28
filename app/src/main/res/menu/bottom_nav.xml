@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ids iguais aos destinos do nav_graph: o NavigationUI navega pelo id do item. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/nav_home" />
+    <item
+        android:id="@+id/teamsFragment"
+        android:icon="@drawable/ic_group"
+        android:title="@string/nav_teams" />
+    <item
+        android:id="@+id/battleSelectFragment"
+        android:icon="@drawable/ic_bolt"
+        android:title="@string/nav_battle" />
+</menu>
