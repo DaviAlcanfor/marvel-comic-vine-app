@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mesma estrutura do Detalhe do Personagem: imagem, nome, números em dourado e seções Membros/Inimigos. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/backButton"
+        style="@style/Widget.Material3.Button.TextButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/touch_target"
+        android:layout_marginStart="@dimen/space_sm"
+        android:layout_marginTop="@dimen/space_sm"
+        android:text="@string/team_back"
+        android:textAllCaps="false"
+        android:textColor="@color/text_secondary"
+        app:icon="@drawable/ic_arrow_back"
+        app:iconTint="@color/text_secondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButton">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_lg"
+            android:paddingBottom="@dimen/space_xl">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/avatar_size_hero"
+                android:layout_height="@dimen/avatar_size_hero"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_card"
+                android:clipToOutline="true"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/Widget.Marvel.H1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:gravity="center"
+                tools:text="Avengers" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                android:gravity="center"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                tools:text="Marvel" />
+
+            <LinearLayout
+                android:id="@+id/stats"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg"
+                android:background="@drawable/bg_card"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/space_md">
+
+                <LinearLayout style="@style/Widget.Marvel.Stat">
+
+                    <TextView
+                        android:id="@+id/membersValue"
+                        style="@style/Widget.Marvel.StatValue"
+                        tools:text="255" />
+
+                    <TextView
+                        style="@style/Widget.Marvel.StatLabel"
+                        android:text="@string/team_stat_members" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Widget.Marvel.Stat">
+
+                    <TextView
+                        android:id="@+id/enemiesValue"
+                        style="@style/Widget.Marvel.StatValue"
+                        tools:text="40" />
+
+                    <TextView
+                        style="@style/Widget.Marvel.StatLabel"
+                        android:text="@string/team_stat_enemies" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/aboutTitle"
+                android:visibility="gone"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/detail_section_about" />
+
+            <TextView
+                android:id="@+id/description"
+                android:visibility="gone"
+                style="@style/Widget.Marvel.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm" />
+
+            <TextView
+                android:id="@+id/membersTitle"
+                android:visibility="gone"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/team_section_members" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/membersGroup"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                app:chipSpacingHorizontal="@dimen/space_sm"
+                app:chipSpacingVertical="@dimen/space_sm" />
+
+            <TextView
+                android:id="@+id/enemiesTitle"
+                android:visibility="gone"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/team_section_enemies" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/enemiesGroup"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                app:chipSpacingHorizontal="@dimen/space_sm"
+                app:chipSpacingVertical="@dimen/space_sm" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/space_xl" />
+
+            <TextView
+                android:id="@+id/errorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xl"
+                android:gravity="center"
+                android:textColor="@color/text_secondary"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
