@@ -23,8 +23,18 @@ data class CharacterSummary(
     @SerializedName("description") val description: String?,
     @SerializedName("image") val image: ComicVineImage?,
     @SerializedName("publisher") val publisher: Publisher?,
-    @SerializedName("api_detail_url") val apiDetailUrl: String?
+    @SerializedName("api_detail_url") val apiDetailUrl: String?,
+    @SerializedName("count_of_issue_appearances") val issueAppearances: Int? = null,
+    /** Só vêm no endpoint de detalhe; na listagem são sempre nulos. */
+    @SerializedName("powers") val powers: List<Power>? = null,
+    @SerializedName("origin") val origin: NamedResource? = null,
+    @SerializedName("teams") val teams: List<NamedResource>? = null
 )
+
+/** Referência resumida a outro recurso (ex.: origem "Human", time "Avengers"). */
+data class NamedResource(@SerializedName("name") val name: String?)
+
+data class Power(@SerializedName("name") val name: String)
 
 data class Publisher(@SerializedName("name") val name: String?)
 

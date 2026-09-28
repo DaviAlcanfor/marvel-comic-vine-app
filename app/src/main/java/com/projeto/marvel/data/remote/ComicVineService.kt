@@ -23,7 +23,9 @@ interface ComicVineService {
     suspend fun getCharacters(
         @Query("filter") filter: String? = null,
         @Query("limit") limit: Int = 20,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
+        /** Formato `campo:asc|desc`, ex. `count_of_issue_appearances:desc`. */
+        @Query("sort") sort: String? = null
     ): CharacterListResponse
 
     /** [url] é o `api_detail_url` já absoluto devolvido pela listagem de personagens. */

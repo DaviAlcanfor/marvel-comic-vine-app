@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:padding="@dimen/space_lg">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="@dimen/touch_target"
+        android:layout_height="@dimen/touch_target"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/content_description_back"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/title" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/Widget.Marvel.ScreenTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_sm"
+        android:text="@string/battle_title"
+        app:layout_constraintEnd_toStartOf="@id/recordText"
+        app:layout_constraintStart_toEndOf="@id/backButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Placar salvo no aparelho (SharedPreferences). -->
+    <TextView
+        android:id="@+id/recordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_badge"
+        android:paddingHorizontal="@dimen/space_md"
+        android:paddingVertical="@dimen/space_xs"
+        android:textColor="@color/background"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/title"
+        tools:text="3V · 1D" />
+
+    <!-- Adversário: canto superior esquerdo -->
+
+    <ImageView
+        android:id="@+id/cpuImage"
+        android:layout_width="@dimen/fighter_size"
+        android:layout_height="@dimen/fighter_size"
+        android:layout_marginTop="@dimen/space_lg"
+        android:background="@drawable/bg_circle"
+        android:clipToOutline="true"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <TextView
+        android:id="@+id/cpuPopup"
+        style="@style/Widget.Marvel.BattlePopup"
+        app:layout_constraintBottom_toBottomOf="@id/cpuImage"
+        app:layout_constraintEnd_toEndOf="@id/cpuImage"
+        app:layout_constraintStart_toStartOf="@id/cpuImage"
+        app:layout_constraintTop_toTopOf="@id/cpuImage" />
+
+    <TextView
+        android:id="@+id/cpuName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_md"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cpuImage"
+        app:layout_constraintTop_toTopOf="@id/cpuImage"
+        tools:text="Iron Man" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/cpuHpBar"
+        style="@style/Widget.Marvel.HpBar"
+        app:layout_constraintEnd_toEndOf="@id/cpuName"
+        app:layout_constraintStart_toStartOf="@id/cpuName"
+        app:layout_constraintTop_toBottomOf="@id/cpuName" />
+
+    <TextView
+        android:id="@+id/cpuHpText"
+        style="@style/Widget.Marvel.BattleCaption"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintStart_toStartOf="@id/cpuName"
+        app:layout_constraintTop_toBottomOf="@id/cpuHpBar"
+        tools:text="87/110" />
+
+    <TextView
+        android:id="@+id/cpuStatus"
+        style="@style/Widget.Marvel.BattleCaption"
+        android:textColor="@color/accent"
+        app:layout_constraintStart_toStartOf="@id/cpuName"
+        app:layout_constraintTop_toBottomOf="@id/cpuHpText"
+        tools:text="Envenenado" />
+
+    <!-- Narração do turno -->
+
+    <TextView
+        android:id="@+id/logText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:accessibilityLiveRegion="polite"
+        android:background="@drawable/bg_caption"
+        android:gravity="center"
+        android:minHeight="72dp"
+        android:paddingStart="@dimen/space_md"
+        android:paddingTop="@dimen/space_md"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp"
+        android:rotation="-1"
+        android:textColor="@color/ink"
+        android:textFontWeight="600"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/playerImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cpuImage"
+        tools:text="Spider-Man usou Wall Crawling! −12" />
+
+    <!-- Jogador: canto inferior direito -->
+
+    <ImageView
+        android:id="@+id/playerImage"
+        android:layout_width="@dimen/fighter_size"
+        android:layout_height="@dimen/fighter_size"
+        android:layout_marginBottom="@dimen/space_lg"
+        android:background="@drawable/bg_circle"
+        android:clipToOutline="true"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/movesBarrier"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/playerPopup"
+        style="@style/Widget.Marvel.BattlePopup"
+        app:layout_constraintBottom_toBottomOf="@id/playerImage"
+        app:layout_constraintEnd_toEndOf="@id/playerImage"
+        app:layout_constraintStart_toStartOf="@id/playerImage"
+        app:layout_constraintTop_toTopOf="@id/playerImage" />
+
+    <TextView
+        android:id="@+id/playerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_md"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:maxLines="1"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/playerImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/playerImage"
+        tools:text="Spider-Man" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/playerHpBar"
+        style="@style/Widget.Marvel.HpBar"
+        app:layout_constraintEnd_toEndOf="@id/playerName"
+        app:layout_constraintStart_toStartOf="@id/playerName"
+        app:layout_constraintTop_toBottomOf="@id/playerName" />
+
+    <TextView
+        android:id="@+id/playerHpText"
+        style="@style/Widget.Marvel.BattleCaption"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintEnd_toEndOf="@id/playerName"
+        app:layout_constraintTop_toBottomOf="@id/playerHpBar"
+        tools:text="120/130" />
+
+    <TextView
+        android:id="@+id/playerStatus"
+        style="@style/Widget.Marvel.BattleCaption"
+        android:textColor="@color/accent"
+        app:layout_constraintEnd_toEndOf="@id/playerName"
+        app:layout_constraintTop_toBottomOf="@id/playerHpText"
+        tools:text="Defendendo" />
+
+    <!-- Golpes (2x2) ou, no fim da luta, revanche -->
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/movesBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="moves,rematchButton" />
+
+    <LinearLayout
+        android:id="@+id/moves"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/move1"
+                style="@style/Widget.Marvel.MoveButton"
+                android:layout_marginEnd="@dimen/space_xs" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/move2"
+                style="@style/Widget.Marvel.MoveButton"
+                android:layout_marginStart="@dimen/space_xs" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/move3"
+                style="@style/Widget.Marvel.MoveButton"
+                android:layout_marginEnd="@dimen/space_xs" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/move4"
+                style="@style/Widget.Marvel.MoveButton"
+                android:layout_marginStart="@dimen/space_xs" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/rematchButton"
+        style="@style/Widget.Marvel.ComicButton"
+        android:layout_width="0dp"
+        android:text="@string/battle_rematch"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Onomatopeias ("POW!") por cima de cada lutador, e o K.O. final no centro. -->
+    <TextView
+        android:id="@+id/cpuBurst"
+        style="@style/Widget.Marvel.Onomatopoeia"
+        app:layout_constraintBottom_toBottomOf="@id/cpuImage"
+        app:layout_constraintStart_toStartOf="@id/cpuImage"
+        app:layout_constraintTop_toTopOf="@id/cpuImage" />
+
+    <TextView
+        android:id="@+id/playerBurst"
+        style="@style/Widget.Marvel.Onomatopoeia"
+        app:layout_constraintBottom_toBottomOf="@id/playerImage"
+        app:layout_constraintEnd_toEndOf="@id/playerImage"
+        app:layout_constraintTop_toTopOf="@id/playerImage" />
+
+    <TextView
+        android:id="@+id/koBurst"
+        style="@style/Widget.Marvel.Onomatopoeia"
+        android:paddingHorizontal="48dp"
+        android:paddingVertical="36dp"
+        android:text="@string/battle_ko"
+        android:textColor="@color/text_primary"
+        android:textSize="64sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- "Quadro de impacto": pisca na cor do golpe por 2 quadros. Não recebe toque. -->
+    <View
+        android:id="@+id/impactFlash"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0"
+        android:background="@color/primary"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/arena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="cpuImage,cpuName,cpuHpBar,cpuHpText,cpuStatus,logText,playerImage,playerName,playerHpBar,playerHpText,playerStatus" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/space_lg"
+        android:textColor="@color/text_secondary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

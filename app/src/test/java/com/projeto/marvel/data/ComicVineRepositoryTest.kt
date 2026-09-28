@@ -2,9 +2,11 @@ package com.projeto.marvel.data
 
 import com.projeto.marvel.data.remote.CharacterDetailResponse
 import com.projeto.marvel.data.remote.CharacterListResponse
+import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.data.remote.ComicVineService
 import com.projeto.marvel.data.remote.Issue
 import com.projeto.marvel.data.remote.IssueResponse
+import com.projeto.marvel.data.remote.Power
 import com.projeto.marvel.data.remote.TeamListResponse
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -19,7 +21,12 @@ class ComicVineRepositoryTest {
             return response()
         }
 
-        override suspend fun getCharacters(filter: String?, limit: Int, offset: Int): CharacterListResponse =
+        override suspend fun getCharacters(
+            filter: String?,
+            limit: Int,
+            offset: Int,
+            sort: String?
+        ): CharacterListResponse =
             error("não usado neste teste")
 
         override suspend fun getCharacterDetail(url: String): CharacterDetailResponse =
@@ -55,5 +62,46 @@ class ComicVineRepositoryTest {
         assertEquals(null, lastFilter)
         repo.searchIssues("batman")
         assertEquals("name:batman", lastFilter)
+    }
+
+    private fun character(powers: List<String>?, appearances: Int?) = CharacterSummary(
+        id = 1, name = "Thor", realName = null, deck = null, description = null, image = null,
+        publisher = null, apiDetailUrl = null, issueAppearances = appearances, powers = powers?.map(::Power)
+    )
+
+    @Test
+    fun `poderes somam pontos no atributo correspondente`() {
+        val powers = listOf("Super Strength", "Unarmed Combat", "Flight")
+        val stats = character(powers, appearances = 999).toFighter().stats
+        assertEquals(50, stats[Stat.ATTACK])
+        assertEquals(30, stats[Stat.SPEED])
+        assertEquals(10, stats[Stat.DEFENSE])
+        assertEquals(75, stats[Stat.FAME])
+    }
+
+    @Test
+    fun `sem poderes nem aparicoes fica tudo no minimo`() {
+        val stats = character(powers = null, appearances = null).toFighter().stats
+        assertEquals(Stat.entries.associateWith { 10 }, stats)
+    }
+
+    @Test
+    fun `um golpe por tipo, na ordem dos poderes`() {
+        val powers = listOf("Super Strength", "Unarmed Combat", "Flight", "Healing", "Telepathy")
+        val moves = character(powers, appearances = 0).toFighter().moves
+        assertEquals(
+            listOf(
+                Move("Super Strength", MoveType.STRIKE),
+                Move("Flight", MoveType.DODGE),
+                Move("Healing", MoveType.HEAL)
+            ),
+            moves
+        )
+    }
+
+    @Test
+    fun `sem golpe de dano ganha um soco basico`() {
+        val moves = character(listOf("Flight"), appearances = 0).toFighter().moves
+        assertEquals(listOf(MoveType.STRIKE, MoveType.DODGE), moves.map { it.type })
     }
 }

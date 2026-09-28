@@ -1,28 +1,79 @@
 <resources>
-    <string name="app_name">marvel</string>
+    <string name="app_name">Marvel App</string>
 
     <string name="login_title">Marvel App</string>
     <string name="login_email_hint">E-mail</string>
     <string name="login_password_hint">Senha</string>
     <string name="login_button">Entrar</string>
+    <string name="login_google">Entrar com Google</string>
+    <string name="login_signup">Não tem conta? Criar conta</string>
 
     <string name="home_title">Personagens</string>
     <string name="home_search_hint">Buscar personagem</string>
-    <string name="home_filter_all">Todos</string>
-    <string name="home_filter_heroes">Heróis</string>
-    <string name="home_filter_villains">Vilões</string>
-    <string name="home_teams_action">Times</string>
+    <string name="home_logout_action">Sair</string>
     <string name="home_error_retry">Tentar de novo</string>
     <string name="home_empty">Nenhum personagem encontrado.</string>
 
     <string name="detail_title">Detalhe</string>
     <string name="detail_no_description">Sem descrição disponível.</string>
+    <string name="detail_back">Personagens</string>
+    <string name="detail_stat_appearances">Aparições</string>
+    <string name="detail_stat_teams">Times</string>
+    <string name="detail_stat_powers">Poderes</string>
+    <string name="detail_section_about">Sobre</string>
+    <string name="detail_section_powers">Poderes</string>
+    <string name="detail_section_teams">Times</string>
 
     <string name="teams_title">Times</string>
     <string name="teams_empty">Nenhum time encontrado.</string>
     <string name="teams_member_count">%d membros</string>
 
+    <string name="nav_home">Início</string>
+    <string name="nav_teams">Times</string>
+    <string name="nav_battle">Batalha</string>
+    <string name="battle_title">Batalha</string>
+    <string name="battle_select_player">Escolha seu lutador</string>
+    <string name="battle_select_opponent">Escolha o adversário</string>
+    <string name="battle_selected_player">Você: %1$s</string>
+    <string name="battle_random_opponent">Adversário aleatório</string>
+    <string name="battle_rematch">Revanche</string>
+    <string name="battle_record">%1$dV · %2$dD</string>
+    <string name="battle_record_description">Seu placar: %1$d vitórias e %2$d derrotas</string>
+    <string name="battle_hp">%1$d/%2$d</string>
+    <string name="battle_move">%1$s\n%2$s</string>
+    <string name="battle_your_turn">O que %1$s vai fazer?</string>
+    <string name="battle_winner">%1$s venceu a batalha!</string>
+    <string name="battle_log_hit">%1$s usou %2$s! −%3$d</string>
+    <string name="battle_log_miss">%1$s usou %2$s… mas errou!</string>
+    <string name="battle_log_poisoned">%1$s usou %2$s! −%3$d e envenenou o adversário</string>
+    <string name="battle_log_heal">%1$s usou %2$s e recuperou %3$d de vida</string>
+    <string name="battle_log_guard">%1$s usou %2$s e se prepara pra defender</string>
+    <string name="battle_log_dodge">%1$s usou %2$s e se prepara pra esquivar</string>
+    <string name="battle_log_poison_tick">%1$s sofre %3$d de dano do veneno</string>
+    <!-- Onomatopeias de HQ (efeito sonoro visual; ficam em "inglês de quadrinho" de propósito). -->
+    <string-array name="battle_sfx_hit">
+        <item>POW!</item>
+        <item>BAM!</item>
+        <item>WHAM!</item>
+        <item>KRAK!</item>
+        <item>THWACK!</item>
+    </string-array>
+    <string name="battle_sfx_miss">WHOOSH!</string>
+    <string name="battle_sfx_poison">SPLAT!</string>
+    <string name="battle_sfx_poison_tick">SSSS!</string>
+    <string name="battle_sfx_heal">SHING!</string>
+    <string name="battle_sfx_guard">CLANK!</string>
+    <string name="battle_sfx_dodge">ZIP!</string>
+    <string name="battle_ko">K.O.!</string>
+    <string name="battle_status_poisoned">Envenenado</string>
+    <string name="battle_status_guarding">Defendendo</string>
+    <string name="battle_status_dodging">Esquivando</string>
+    <string name="move_type_strike">Soco</string>
+    <string name="move_type_blast">Rajada</string>
+    <string name="move_type_poison">Veneno</string>
+    <string name="move_type_heal">Cura</string>
+    <string name="move_type_guard">Defesa</string>
+    <string name="move_type_dodge">Esquiva</string>
+
     <string name="content_description_back">Voltar</string>
-    <string name="content_description_character_image">Imagem do personagem</string>
-    <string name="content_description_team_image">Imagem do time</string>
 </resources>
