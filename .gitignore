@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+# Config do Firebase (baixada do console, específica do projeto de cada um)
+google-services*.json

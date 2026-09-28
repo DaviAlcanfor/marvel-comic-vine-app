@@ -6,6 +6,12 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
+// O google-services.json vem do console do Firebase e não é versionado (ver README). Sem ele o
+// plugin quebraria o build; o app compila e o login só avisa que o Firebase não está configurado.
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}
+
 // Lê o local.properties (que NÃO vai para o GitHub)
 val localProperties = Properties()
 val localPropertiesFile = rootProject.file("local.properties")
@@ -76,6 +82,14 @@ dependencies {
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp.logging)
     implementation(libs.coil)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.kotlinx.coroutines.play.services)
+    // Login com Google: seletor de contas nativo (Credential Manager) + token do Google ID
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services)
+    implementation(libs.googleid)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

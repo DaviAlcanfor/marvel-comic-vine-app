@@ -2,6 +2,7 @@ package com.projeto.marvel.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.projeto.marvel.data.AuthRepository
 import com.projeto.marvel.data.ComicVineRepository
 import com.projeto.marvel.data.remote.CharacterSummary
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,8 @@ sealed interface HomeUiState {
 }
 
 class HomeViewModel(
-    private val repository: ComicVineRepository = ComicVineRepository()
+    private val repository: ComicVineRepository = ComicVineRepository(),
+    private val auth: AuthRepository = AuthRepository()
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
@@ -38,4 +40,6 @@ class HomeViewModel(
     }
 
     fun retry() = search(lastQuery)
+
+    fun signOut() = auth.signOut()
 }

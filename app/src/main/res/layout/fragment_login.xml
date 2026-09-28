@@ -3,34 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/bg_screen"
     android:padding="@dimen/space_lg">
 
     <TextView
         android:id="@+id/title"
+        style="@style/Widget.Marvel.ScreenTitle"
+        android:textColor="@color/primary_text"
+        android:textSize="48sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_title"
-        android:textColor="@color/primary"
-        android:textSize="28sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/emailInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35" />
+        app:layout_constraintVertical_bias="0.35"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
         android:id="@+id/emailInput"
         android:layout_width="match_parent"
         android:layout_height="@dimen/input_height"
         android:layout_marginTop="@dimen/space_xl"
+        android:autofillHints="emailAddress"
         android:background="@drawable/bg_input"
         android:hint="@string/login_email_hint"
         android:inputType="textEmailAddress"
         android:paddingHorizontal="@dimen/space_md"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_secondary"
+        app:layout_constraintBottom_toTopOf="@id/passwordInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />
@@ -40,27 +43,86 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/input_height"
         android:layout_marginTop="@dimen/space_md"
+        android:autofillHints="password"
         android:background="@drawable/bg_input"
         android:hint="@string/login_password_hint"
         android:inputType="textPassword"
         android:paddingHorizontal="@dimen/space_md"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_secondary"
+        app:layout_constraintBottom_toTopOf="@id/errorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailInput" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/loginButton"
+    <TextView
+        android:id="@+id/errorText"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/input_height"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:accessibilityLiveRegion="polite"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/loginButton"
+        app:layout_constraintTop_toBottomOf="@id/passwordInput" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginButton"
+        style="@style/Widget.Marvel.ComicButton"
+        android:layout_width="match_parent"
         android:layout_marginTop="@dimen/space_lg"
-        android:backgroundTint="@color/primary"
         android:text="@string/login_button"
-        android:textColor="@color/text_primary"
-        app:cornerRadius="@dimen/radius_large"
+        app:layout_constraintBottom_toTopOf="@id/googleButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/passwordInput" />
+        app:layout_constraintTop_toBottomOf="@id/errorText" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/googleButton"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/input_height"
+        android:layout_marginTop="@dimen/space_sm"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/login_google"
+        android:textColor="@color/text_primary"
+        app:cornerRadius="@dimen/radius_large"
+        app:icon="@drawable/ic_google"
+        app:iconGravity="textStart"
+        app:iconTint="@null"
+        app:layout_constraintBottom_toTopOf="@id/signUpButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginButton"
+        app:strokeColor="@color/border" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="@color/text_primary"
+        app:indicatorSize="@dimen/space_lg"
+        app:layout_constraintBottom_toBottomOf="@id/loginButton"
+        app:layout_constraintEnd_toEndOf="@id/loginButton"
+        app:layout_constraintStart_toStartOf="@id/loginButton"
+        app:layout_constraintTop_toTopOf="@id/loginButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signUpButton"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:text="@string/login_signup"
+        android:textAllCaps="false"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/googleButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
