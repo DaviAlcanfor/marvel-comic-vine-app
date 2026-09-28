@@ -53,7 +53,7 @@ viewLifecycleOwner.lifecycleScope.launch {
 }
 ```
 
-Telas sem estado/lógica de negócio (ex.: `LoginFragment`) não têm ViewModel — não criar
+Telas sem estado/lógica de negócio não têm ViewModel — não criar
 um `ViewModel` vazio só para seguir o padrão.
 
 ## Erro e loading
@@ -84,6 +84,9 @@ um `ViewModel` vazio só para seguir o padrão.
 
 - Um único `nav_graph.xml` (`res/navigation/nav_graph.xml`), `MainActivity` só
   hospeda o `NavHostFragment` (`activity_main.xml`).
+- Barra inferior (`BottomNavigationView` na `MainActivity`) ligada ao NavController via
+  `setupWithNavController`: os ids do `res/menu/bottom_nav.xml` são os ids dos destinos
+  (`homeFragment`, `teamsFragment`, `battleSelectFragment`). Ela some fora dessas 3 telas.
 - Sem Safe Args (evita mais um plugin Gradle para 1 argumento). Argumentos declarados
   no grafo (`<argument>`) são lidos via `Bundle` normal na Fragment
   (`arguments?.getString(...)`) ou via `SavedStateHandle` na ViewModel
@@ -109,11 +112,42 @@ app/src/main/java/com/projeto/marvel/
 
 app/src/main/res/
   layout/
-    fragment_home.xml        // título, busca, chips de filtro, RecyclerView, loading/erro
+    fragment_home.xml        // título, busca, RecyclerView, loading/erro
     item_character.xml       // card usado pelo CharacterAdapter
   navigation/
     nav_graph.xml            // destino homeFragment + actions para detail/teams
 ```
 
-O mesmo padrão se repete para `detail` e `teams`; `login` só tem `LoginFragment` +
-`fragment_login.xml` (sem ViewModel/Adapter, por não ter estado nem lista).
+O mesmo padrão se repete para `detail`, `teams`, `login` (falando com `AuthRepository`,
+Firebase Auth) e `battle`.
+
+## ViewModel com `SavedStateHandle`
+
+O factory padrão de `by viewModels()` só encontra construtores com assinatura exata
+`(SavedStateHandle)` ou `(Application, SavedStateHandle)`. Com parâmetros extras com valor
+default (injeção manual), o construtor precisa de `@JvmOverloads` — senão a tela crasha ao
+abrir. `ViewModelConstructorsTest` cobre isso.
+
+## Persistência local
+
+- Sessão de login: guardada pelo próprio Firebase Auth.
+- Placar da Batalha: `data/BattleRecordStore.kt` (SharedPreferences), lido/gravado só pela
+  `BattleViewModel` (`AndroidViewModel`, para ter o `Context`).
+
+## Animações e tema HQ
+
+O Design System é a base (cores, fontes, espaçamento); o tema de HQ vai por cima:
+
+- **Movimento "em twos"** (~12 fps, cada pose segura 2 quadros, como flipbook/Aranhaverso):
+  `SteppedInterpolator` / `comicInterpolator()` em `ui/Animations.kt`, usado por todos os
+  helpers (`fadeVisible`, `staggerIn`, `shake`, `animateItemsIn`), pela transição de container
+  Home → Detalhe e pelas animações da arena. Transições de tela: `res/animator/nav_*.xml`
+  (XML não aceita interpolador customizado, então os degraus são keyframes duplicados).
+- **Arena:** onomatopeias ("POW!") em `BurstDrawable` (explosão serrilhada cujo contorno
+  "ferve" a 12 fps), quadro de impacto, tremor de tela e K.O. final — `ui/battle/BattleAnimations.kt`.
+- **Visual:** fundo com retícula (`bg_screen`), painéis com contorno de nanquim (`bg_card`),
+  botões com sombra dura que afundam ao apertar (`Widget.Marvel.ComicButton`) e títulos de
+  seção em caixa de legenda amarela (`Widget.Marvel.CaptionBox`).
+
+Tudo respeita a escala de animação do sistema (desligar animações nas configurações desliga
+aqui também).

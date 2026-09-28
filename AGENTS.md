@@ -15,7 +15,7 @@ do Personagem, Times) seguindo um design system dark fornecido em
   (`buildFeatures.viewBinding = true` em `app/build.gradle.kts`). Nada de
   `findViewById` manual, nada de Data Binding.
 - **Navigation Component** (Fragments + um único `nav_graph.xml`), single-Activity
-  (`MainActivity` só hospeda o `NavHostFragment`).
+  (`MainActivity` só hospeda o `NavHostFragment` e a barra inferior Início · Times · Batalha).
 - **MVVM** — detalhes em [ARCHITECTURE.md](ARCHITECTURE.md).
 - **Coroutines/Flow** para assincronismo (`viewModelScope`, `StateFlow`).
 - **Retrofit + OkHttp + Gson** para a API (já existia no scaffold inicial, ver
@@ -25,6 +25,9 @@ do Personagem, Times) seguindo um design system dark fornecido em
 - **Sem DI framework.** Construtor com valor default (`ComicVineRepository()`,
   `ComicVineRepository = ComicVineRepository()` no service) faz o papel de injeção
   manual simples. Não trazer Hilt/Koin sem pedido explícito.
+- **Firebase Auth** (e-mail/senha e Google, este via Credential Manager) para o login, via `data/AuthRepository.kt`. O
+  `google-services.json` não é versionado; sem ele o plugin não é aplicado e o app
+  compila normalmente (o login só mostra "Firebase não configurado").
 - **Sem Safe Args.** Argumentos de navegação são lidos via `Bundle`/`SavedStateHandle`
   (ver `CharacterDetailViewModel`) para não adicionar mais um plugin Gradle.
 
@@ -32,14 +35,14 @@ do Personagem, Times) seguindo um design system dark fornecido em
 
 ```
 app/src/main/java/com/projeto/marvel/
-  MainActivity.kt              // host do NavHostFragment, nada de lógica de tela
+  MainActivity.kt              // NavHostFragment + barra inferior, nada de lógica de tela
   data/
     remote/                    // DTOs (Gson) + ComicVineService (Retrofit) + ApiClient/ApiConstants
     ComicVineRepository.kt     // única porta de entrada de dados; ViewModels só falam com ela
   ui/
-    <feature>/                 // um pacote por tela: login, home, detail, teams
+    <feature>/                 // um pacote por tela: login, home, detail, teams, battle
       <Feature>Fragment.kt
-      <Feature>ViewModel.kt    // ausente quando a tela não tem estado/lógica (ex.: login)
+      <Feature>ViewModel.kt    // ausente quando a tela não tem estado/lógica
       <Feature>Adapter.kt      // quando a tela tem uma lista (ListAdapter + DiffUtil)
 ```
 
@@ -105,9 +108,11 @@ Aplicadas via ferramenta, não de memória:
   `teams/` de forma simples/documentada — a lista pode incluir personagens/times de
   editoras além da Marvel. Marcado com `TODO` em
   `data/ComicVineRepository.kt`.
-- Os chips "Heróis"/"Vilões" na Home são apenas visuais (a API não expõe essa
-  classificação); só "Todos" reflete dados reais. Marcado com `TODO` em
-  `ui/home/HomeFragment.kt`.
+- A Comic Vine não tem atributos numéricos de combate nem tipos de poder. A Batalha
+  (`ui/battle/`) usa atributos e golpes **derivados** de dados reais — nomes dos
+  `powers` (palavra-chave → atributo / tipo de golpe) e `count_of_issue_appearances`
+  (FAMA) — em `toFighter()` no `data/ComicVineRepository.kt`. Regras de dano/turno
+  ficam em `ui/battle/BattleRules.kt` (funções puras, testadas em `BattleRulesTest`).
 
 ## Outras convenções
 
