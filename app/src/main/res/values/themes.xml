@@ -15,6 +15,11 @@
         <item name="colorOnPrimary">@color/text_primary</item>
         <item name="android:statusBarColor">@color/background</item>
         <item name="android:navigationBarColor">@color/background</item>
+        <!-- Inter como fonte padrão de todo texto; títulos usam Bebas Neue via Widget.Marvel.ScreenTitle. -->
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="fontFamily">@font/inter</item>
+        <!-- Botões: maiúsculas e semibold, como "ENTRAR" / "CRIAR CONTA" no Design System. -->
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Marvel.Button</item>
     </style>
 
     <style name="Theme.Marvel" parent="Base.Theme.Marvel" />

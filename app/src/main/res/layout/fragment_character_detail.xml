@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Segue "Detalhe do Personagem.svg": avatar, nome, linha de números em dourado e seções Sobre/Poderes/Times. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@drawable/bg_screen">
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/backButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="@dimen/space_sm"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/content_description_back"
-        android:src="@drawable/ic_arrow_back"
+        style="@style/Widget.Material3.Button.TextButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/touch_target"
+        android:layout_marginStart="@dimen/space_sm"
+        android:layout_marginTop="@dimen/space_sm"
+        android:text="@string/detail_back"
+        android:textAllCaps="false"
+        android:textColor="@color/text_secondary"
+        app:icon="@drawable/ic_arrow_back"
+        app:iconTint="@color/text_secondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,85 +30,144 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backButton">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/space_lg">
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_lg"
+            android:paddingBottom="@dimen/space_xl">
 
             <ImageView
                 android:id="@+id/avatar"
                 android:layout_width="@dimen/avatar_size_hero"
                 android:layout_height="@dimen/avatar_size_hero"
+                android:layout_gravity="center_horizontal"
                 android:background="@drawable/bg_circle"
                 android:clipToOutline="true"
-                android:contentDescription="@string/content_description_character_image"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/name"
+                style="@style/Widget.Marvel.H1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_md"
                 android:gravity="center"
-                android:textColor="@color/text_primary"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/avatar"
-                tools:text="Peter Parker"
-                xmlns:tools="http://schemas.android.com/tools" />
+                tools:text="Spider-Man" />
 
+            <!-- "Peter Parker · Human · Marvel" -->
             <TextView
-                android:id="@+id/realName"
+                android:id="@+id/subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_xs"
                 android:gravity="center"
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/name" />
+                tools:text="Peter Parker · Human · Marvel" />
 
-            <TextView
-                android:id="@+id/publisherBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_sm"
-                android:background="@drawable/bg_badge"
-                android:paddingHorizontal="@dimen/space_md"
-                android:paddingVertical="@dimen/space_xs"
-                android:textColor="@color/background"
-                android:textSize="12sp"
-                android:textStyle="bold"
+            <LinearLayout
+                android:id="@+id/stats"
                 android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/realName" />
-
-            <TextView
-                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_lg"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/publisherBadge" />
+                android:background="@drawable/bg_card"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/space_md">
+
+                <LinearLayout style="@style/Widget.Marvel.Stat">
+
+                    <TextView
+                        android:id="@+id/appearancesValue"
+                        style="@style/Widget.Marvel.StatValue"
+                        tools:text="1.643" />
+
+                    <TextView
+                        style="@style/Widget.Marvel.StatLabel"
+                        android:text="@string/detail_stat_appearances" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Widget.Marvel.Stat">
+
+                    <TextView
+                        android:id="@+id/teamsValue"
+                        style="@style/Widget.Marvel.StatValue"
+                        tools:text="6" />
+
+                    <TextView
+                        style="@style/Widget.Marvel.StatLabel"
+                        android:text="@string/detail_stat_teams" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Widget.Marvel.Stat">
+
+                    <TextView
+                        android:id="@+id/powersValue"
+                        style="@style/Widget.Marvel.StatValue"
+                        tools:text="12" />
+
+                    <TextView
+                        style="@style/Widget.Marvel.StatLabel"
+                        android:text="@string/detail_stat_powers" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/aboutTitle"
+                android:visibility="gone"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/detail_section_about" />
+
+            <TextView
+                android:id="@+id/description"
+                android:visibility="gone"
+                style="@style/Widget.Marvel.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm" />
+
+            <TextView
+                android:id="@+id/powersTitle"
+                android:visibility="gone"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/detail_section_powers" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/powersGroup"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                app:chipSpacingHorizontal="@dimen/space_sm"
+                app:chipSpacingVertical="@dimen/space_sm" />
+
+            <TextView
+                android:id="@+id/teamsTitle"
+                android:visibility="gone"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/detail_section_teams" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/teamsGroup"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                app:chipSpacingHorizontal="@dimen/space_sm"
+                app:chipSpacingVertical="@dimen/space_sm" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_xl"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/space_xl" />
 
             <TextView
                 android:id="@+id/errorText"
@@ -111,12 +176,9 @@
                 android:layout_marginTop="@dimen/space_xl"
                 android:gravity="center"
                 android:textColor="@color/text_secondary"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description" />
+                android:visibility="gone" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </ScrollView>
 

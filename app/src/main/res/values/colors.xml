@@ -12,8 +12,13 @@
     <color name="text_secondary">#A0A0B8</color>
     <color name="primary">#C0101A</color>
     <color name="primary_variant">#8C0C13</color>
+    <!-- Vermelho só para TEXTO sobre o fundo escuro: o primary dá 2,9:1 (reprova WCAG); este dá 5,7:1. -->
+    <color name="primary_text">#FF4D55</color>
     <color name="accent">#E6B800</color>
     <color name="team_blue">#1565C0</color>
     <color name="team_green">#2E7D32</color>
     <color name="scrim">#0A0A14</color>
+    <!-- Tema HQ (não está nos SVGs): "nanquim" dos contornos e sombras duras; texto sobre dourado. -->
+    <color name="ink">#000000</color>
+    <color name="poison">#8E44AD</color>
 </resources>

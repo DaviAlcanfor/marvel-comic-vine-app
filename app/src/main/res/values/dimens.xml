@@ -10,9 +10,20 @@
     <dimen name="radius_small">10dp</dimen>
     <dimen name="radius_large">16dp</dimen>
 
-    <dimen name="input_height">40dp</dimen>
+    <!-- Design_System.svg usa 40dp; subido para 48dp = alvo de toque mínimo (Material/WCAG). -->
+    <dimen name="input_height">48dp</dimen>
+    <dimen name="touch_target">48dp</dimen>
     <dimen name="filter_pill_height">31dp</dimen>
     <dimen name="avatar_size">56dp</dimen>
     <dimen name="avatar_size_hero">100dp</dimen>
     <dimen name="thumbnail_size">40dp</dimen>
+
+    <!-- Batalha: sem SVG dedicado, derivados da escala do Design_System (avatar hero ~100dp). -->
+    <dimen name="fighter_size">96dp</dimen>
+    <dimen name="hp_bar_height">8dp</dimen>
+    <dimen name="move_button_height">56dp</dimen>
+
+    <!-- Tema HQ: espessura do contorno de nanquim e deslocamento da sombra dura (sem desfoque). -->
+    <dimen name="ink_width">2dp</dimen>
+    <dimen name="hard_shadow">4dp</dimen>
 </resources>
