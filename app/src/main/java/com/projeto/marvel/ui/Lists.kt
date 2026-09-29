@@ -20,3 +20,12 @@ fun <T> ListAdapter<T, *>.submitAnimated(list: List<T>, recyclerView: RecyclerVi
     val isNewList = currentList.firstOrNull() != list.firstOrNull()
     submitList(list) { if (isNewList) recyclerView.animateItemsIn() }
 }
+
+/**
+ * Carrossel horizontal: lista nova (outro primeiro item) volta ao começo. Sem isso o
+ * RecyclerView mantinha a rolagem do item âncora anterior e o 1º card nascia cortado.
+ */
+fun <T> ListAdapter<T, *>.submitCarousel(list: List<T>, recyclerView: RecyclerView) {
+    val isNewList = currentList.firstOrNull() != list.firstOrNull()
+    submitList(list) { if (isNewList) recyclerView.scrollToPosition(0) }
+}

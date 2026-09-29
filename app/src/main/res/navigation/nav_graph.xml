@@ -22,17 +22,25 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.projeto.marvel.ui.home.HomeFragment"
-        android:label="Personagens">
+        android:label="Início">
         <action
             android:id="@+id/action_home_to_detail"
-            app:destination="@id/characterDetailFragment" />
-        <action
-            android:id="@+id/action_home_to_login"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@animator/nav_pop_enter"
-            app:exitAnim="@animator/nav_pop_exit"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/characterDetailFragment"
+            app:enterAnim="@animator/nav_enter"
+            app:exitAnim="@animator/nav_exit"
+            app:popEnterAnim="@animator/nav_pop_enter"
+            app:popExitAnim="@animator/nav_pop_exit" />
+    </fragment>
+
+    <!-- Lista/busca de personagens. Com pickHero, vira seletor do herói preferido do Perfil. -->
+    <fragment
+        android:id="@+id/charactersFragment"
+        android:name="com.projeto.marvel.ui.characters.CharactersFragment"
+        android:label="Personagens">
+        <argument
+            android:name="pickHero"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
 
     <fragment
@@ -45,7 +53,14 @@
         <argument
             android:name="characterName"
             app:argType="string" />
-        <!-- Casa com o transitionName do card na Home (transição de container). -->
+        <action
+            android:id="@+id/action_detail_to_chat"
+            app:destination="@id/chatFragment"
+            app:enterAnim="@animator/nav_enter"
+            app:exitAnim="@animator/nav_exit"
+            app:popEnterAnim="@animator/nav_pop_enter"
+            app:popExitAnim="@animator/nav_pop_exit" />
+        <!-- Casa com o transitionName do card na lista (transição de container). -->
         <argument
             android:name="transitionName"
             android:defaultValue="@null"
@@ -53,17 +68,26 @@
             app:nullable="true" />
     </fragment>
 
+    <!-- Personagens, Times, Criadores e Filmes em abas; as páginas navegam pelo id do destino. -->
     <fragment
-        android:id="@+id/teamsFragment"
-        android:name="com.projeto.marvel.ui.teams.TeamsFragment"
-        android:label="Times">
-        <action
-            android:id="@+id/action_teams_to_team_detail"
-            app:destination="@id/teamDetailFragment"
-            app:enterAnim="@animator/nav_enter"
-            app:exitAnim="@animator/nav_exit"
-            app:popEnterAnim="@animator/nav_pop_enter"
-            app:popExitAnim="@animator/nav_pop_exit" />
+        android:id="@+id/discoverFragment"
+        android:name="com.projeto.marvel.ui.discover.DiscoverFragment"
+        android:label="Descobrir" />
+
+    <!-- Detalhe de criador ou de filme (kind = creator | movie). -->
+    <fragment
+        android:id="@+id/infoDetailFragment"
+        android:name="com.projeto.marvel.ui.info.InfoDetailFragment"
+        android:label="Detalhe">
+        <argument
+            android:name="kind"
+            app:argType="string" />
+        <argument
+            android:name="apiDetailUrl"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -83,6 +107,13 @@
             app:exitAnim="@animator/nav_exit"
             app:popEnterAnim="@animator/nav_pop_enter"
             app:popExitAnim="@animator/nav_pop_exit" />
+        <action
+            android:id="@+id/action_team_detail_to_battle_select"
+            app:destination="@id/battleSelectFragment"
+            app:enterAnim="@animator/nav_enter"
+            app:exitAnim="@animator/nav_exit"
+            app:popEnterAnim="@animator/nav_pop_enter"
+            app:popExitAnim="@animator/nav_pop_exit" />
     </fragment>
 
     <!-- Mesma tela nos dois passos: sem playerUrl escolhe o jogador; com ele, o adversário. -->
@@ -97,6 +128,17 @@
             app:nullable="true" />
         <argument
             android:name="playerName"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <!-- Trilha de um time: sem adversário a escolher, enfrenta os membros em sequência. -->
+        <argument
+            android:name="teamUrl"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="teamName"
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
@@ -126,6 +168,137 @@
         <!-- Nulo = adversário sorteado. -->
         <argument
             android:name="opponentUrl"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <!-- 2 jogadores no mesmo aparelho: o adversário também é controlado por alguém. -->
+        <argument
+            android:name="pvp"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <!-- 3×3: urls do trio separadas por vírgula (playerUrl é a primeira). -->
+        <argument
+            android:name="playerUrls"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <!-- Trilha de um time: sem adversário a escolher, enfrenta os membros em sequência. -->
+        <argument
+            android:name="teamUrl"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="teamName"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.projeto.marvel.ui.profile.ProfileFragment"
+        android:label="Perfil">
+        <action
+            android:id="@+id/action_profile_to_comic_search"
+            app:destination="@id/comicSearchFragment"
+            app:enterAnim="@animator/nav_enter"
+            app:exitAnim="@animator/nav_exit"
+            app:popEnterAnim="@animator/nav_pop_enter"
+            app:popExitAnim="@animator/nav_pop_exit" />
+        <action
+            android:id="@+id/action_profile_to_pick_hero"
+            app:destination="@id/charactersFragment"
+            app:enterAnim="@animator/nav_enter"
+            app:exitAnim="@animator/nav_exit"
+            app:popEnterAnim="@animator/nav_pop_enter"
+            app:popExitAnim="@animator/nav_pop_exit" />
+        <action
+            android:id="@+id/action_profile_to_login"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@animator/nav_pop_enter"
+            app:exitAnim="@animator/nav_pop_exit"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Com pickSeries, busca séries (volumes) e devolve a escolhida ao Perfil. -->
+    <fragment
+        android:id="@+id/comicSearchFragment"
+        android:name="com.projeto.marvel.ui.comics.ComicSearchFragment"
+        android:label="Adicionar HQ">
+        <argument
+            android:name="pickSeries"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
+
+    <!-- Geek: agente de IA que consulta a Comic Vine (ver data/GeekAgent.kt). -->
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.projeto.marvel.ui.chat.ChatFragment"
+        android:label="Geek">
+        <!-- Assunto inicial (ex. personagem do Detalhe); nulo = conversa livre. -->
+        <argument
+            android:name="topic"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <!-- "Com qual herói você parece?" (aba Jogos). -->
+    <fragment
+        android:id="@+id/lookAlikeFragment"
+        android:name="com.projeto.marvel.ui.lookalike.LookAlikeFragment"
+        android:label="Com qual herói você parece?" />
+
+    <!-- Comparar dois personagens (botão no Detalhe, depois do seletor). -->
+    <fragment
+        android:id="@+id/compareFragment"
+        android:name="com.projeto.marvel.ui.compare.CompareFragment"
+        android:label="Comparar">
+        <argument
+            android:name="leftUrl"
+            app:argType="string" />
+        <argument
+            android:name="rightUrl"
+            app:argType="string" />
+    </fragment>
+
+    <!-- Aba Jogos: capas do "Quem é esse herói?" e do quiz. -->
+    <fragment
+        android:id="@+id/gamesFragment"
+        android:name="com.projeto.marvel.ui.games.GamesFragment"
+        android:label="Jogos" />
+
+    <!-- Aba Álbum de figurinhas. -->
+    <fragment
+        android:id="@+id/albumFragment"
+        android:name="com.projeto.marvel.ui.album.AlbumFragment"
+        android:label="Álbum" />
+
+    <!-- "Quem é esse herói?" (atalho no Início). -->
+    <fragment
+        android:id="@+id/guessFragment"
+        android:name="com.projeto.marvel.ui.guess.GuessFragment"
+        android:label="Quem é esse herói?" />
+
+    <!-- Quiz "Que herói é você?" (atalho no Início). -->
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.projeto.marvel.ui.quiz.QuizFragment"
+        android:label="Quiz" />
+
+    <!-- Foto com o personagem (adesivo arrastável + legenda), aberta pelo Detalhe. -->
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.projeto.marvel.ui.photo.PhotoFragment"
+        android:label="Foto">
+        <argument
+            android:name="characterName"
+            app:argType="string" />
+        <argument
+            android:name="imageUrl"
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />

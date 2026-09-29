@@ -1,87 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+  Início, de cima para baixo: cabeçalho (saudação, seu herói e o avatar que abre o Perfil), herói do
+  dia com os filmes dele, atalhos em blocos, trilha do dia e o que é seu (leitura, resenha, estreias).
+  Sem SVG dedicado: tokens do Design System.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_screen"
-    android:paddingHorizontal="@dimen/space_lg"
-    android:paddingTop="@dimen/space_lg">
+    android:background="@drawable/bg_screen">
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/Widget.Marvel.ScreenTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/home_title"
-        app:layout_constraintEnd_toStartOf="@id/logoutButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-
-    <ImageButton
-        android:id="@+id/logoutButton"
-        android:layout_width="@dimen/touch_target"
-        android:layout_height="@dimen/touch_target"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/home_logout_action"
-        android:src="@drawable/ic_logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/searchInput"
+    <LinearLayout
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/input_height"
-        android:layout_marginTop="@dimen/space_md"
-        android:background="@drawable/bg_input"
-        android:drawablePadding="@dimen/space_sm"
-        android:drawableStart="@drawable/ic_search"
-        android:hint="@string/home_search_hint"
-        android:inputType="text"
-        android:maxLines="1"
-        android:paddingHorizontal="@dimen/space_md"
-        android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/space_md"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/space_lg"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchInput"
-        app:spanCount="2" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/recyclerView"
-        app:layout_constraintEnd_toEndOf="@id/recyclerView"
-        app:layout_constraintStart_toStartOf="@id/recyclerView"
-        app:layout_constraintTop_toTopOf="@id/recyclerView" />
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/space_lg"
+        android:paddingTop="@dimen/space_lg"
+        android:paddingBottom="@dimen/space_xl">
 
-    <TextView
-        android:id="@+id/errorText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/space_lg"
-        android:textColor="@color/text_secondary"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/recyclerView"
-        app:layout_constraintEnd_toEndOf="@id/recyclerView"
-        app:layout_constraintStart_toStartOf="@id/recyclerView"
-        app:layout_constraintTop_toTopOf="@id/recyclerView" />
+        <!-- Cabeçalho -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/greeting"
+                    style="@style/Widget.Marvel.ScreenTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Olá, Peter!" />
+
+                <!-- "Seu herói: X" (herói preferido do Perfil) ou o convite a escolher um. -->
+                <TextView
+                    android:id="@+id/favoriteLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingVertical="@dimen/space_xs"
+                    android:textColor="@color/text_secondary"
+                    tools:text="Seu herói: Spider-Man" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="@dimen/avatar_size"
+                android:layout_height="@dimen/avatar_size"
+                android:layout_marginStart="@dimen/space_md"
+                android:background="@drawable/bg_sticker"
+                android:clipToOutline="true"
+                android:contentDescription="@string/home_open_profile"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_person" />
+        </LinearLayout>
+
+        <!-- Herói do dia: imagem grande com o nome por cima; some se a API falhar. -->
+        <FrameLayout
+            android:id="@+id/heroCard"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_hero_height"
+            android:layout_marginTop="@dimen/space_lg"
+            android:background="@drawable/bg_card"
+            android:clipToOutline="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/heroImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_fade_to_background" />
+
+            <TextView
+                android:id="@+id/heroCaption"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_margin="@dimen/space_md"
+                android:text="@string/home_hero_of_the_day" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:padding="@dimen/space_md">
+
+                <TextView
+                    android:id="@+id/heroName"
+                    style="@style/Widget.Marvel.H1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Spider-Man" />
+
+                <TextView
+                    android:id="@+id/heroDeck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/text_primary"
+                    tools:text="Bitten by a radioactive spider…" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/heroMoviesTitle"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_marginTop="@dimen/space_lg"
+            android:text="@string/home_hero_movies"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/heroMoviesList"
+            style="@style/Widget.Marvel.Carousel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <!-- Atalhos: 4 blocos iguais numa fileira. -->
+        <TextView
+            android:id="@+id/shortcutsTitle"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_marginTop="@dimen/space_lg"
+            android:text="@string/home_shortcuts" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tileBattle"
+                style="@style/Widget.Marvel.HomeTile"
+                android:drawableTop="@drawable/ic_swords"
+                android:text="@string/nav_battle" />
+
+            <TextView
+                android:id="@+id/tileGames"
+                style="@style/Widget.Marvel.HomeTile"
+                android:drawableTop="@drawable/ic_games"
+                android:text="@string/nav_games" />
+
+            <TextView
+                android:id="@+id/tileAlbum"
+                style="@style/Widget.Marvel.HomeTile"
+                android:drawableTop="@drawable/ic_album"
+                android:text="@string/nav_album" />
+
+            <TextView
+                android:id="@+id/tileShelf"
+                style="@style/Widget.Marvel.HomeTile"
+                android:layout_marginEnd="0dp"
+                android:drawableTop="@drawable/ic_shelf"
+                android:text="@string/home_shelf_short" />
+        </LinearLayout>
+
+        <!-- Trilha do dia: time do dia e os adversários em fileira (chefe no fim). -->
+        <TextView
+            android:id="@+id/dailyTrailTitle"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_marginTop="@dimen/space_lg"
+            android:text="@string/home_daily_trail"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/dailyTrailCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="@dimen/space_md"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/dailyTrailTeam"
+                style="@style/Widget.Marvel.H2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Sinister Six" />
+
+            <TextView
+                android:id="@+id/dailyTrailHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_secondary" />
+
+            <LinearLayout
+                android:id="@+id/dailyTrailRivals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/dailyTrailButton"
+                style="@style/Widget.Marvel.ComicButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_md"
+                android:text="@string/home_daily_trail_start" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/readingTitle"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_marginTop="@dimen/space_lg"
+            android:text="@string/home_continue_reading"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/readingList"
+            style="@style/Widget.Marvel.Carousel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <TextView
+            android:id="@+id/debutsTitle"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_marginTop="@dimen/space_lg"
+            android:text="@string/home_debuted_today"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/debutsList"
+            style="@style/Widget.Marvel.Carousel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <!-- Última resenha escrita pelo usuário (Perfil → estante). -->
+        <TextView
+            android:id="@+id/reviewTitle"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_marginTop="@dimen/space_lg"
+            android:text="@string/home_last_reviews"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/reviewList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

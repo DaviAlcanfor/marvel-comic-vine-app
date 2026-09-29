@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Máscara de herói (aba Heróis): os olhos são furos (evenOdd). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/white"
+        android:fillType="evenOdd"
+        android:pathData="M2,8C2,6 5,5 12,7C19,5 22,6 22,8C22,13 19,16 16,16C14,16 13,14 12,14C11,14 10,16 8,16C5,16 2,13 2,8zM5.5,10.5a2.2,1.4 0 1,0 4.4,0a2.2,1.4 0 1,0 -4.4,0zM14.1,10.5a2.2,1.4 0 1,0 4.4,0a2.2,1.4 0 1,0 -4.4,0z" />
+</vector>

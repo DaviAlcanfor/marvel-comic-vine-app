@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Botão redondo de compartilhar: amarelo com contorno de nanquim. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/accent" />
+    <stroke
+        android:width="@dimen/ink_width"
+        android:color="@color/ink" />
+</shape>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Balão do fã no chat: dourado do tema. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="@dimen/hard_shadow"
+        android:top="@dimen/hard_shadow">
+        <shape>
+            <solid android:color="@color/ink" />
+            <corners android:radius="@dimen/balloon_radius" />
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/hard_shadow"
+        android:right="@dimen/hard_shadow">
+        <shape>
+            <solid android:color="@color/accent" />
+            <stroke
+                android:width="@dimen/ink_width"
+                android:color="@color/ink" />
+            <corners android:radius="@dimen/balloon_radius" />
+        </shape>
+    </item>
+</layer-list>

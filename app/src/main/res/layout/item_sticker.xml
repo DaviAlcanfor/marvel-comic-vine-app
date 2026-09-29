@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figurinha do álbum: moldura na cor da raridade (em código), foto, nome, número e "×2" das repetidas. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_xs"
+    android:clipToOutline="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="@dimen/space_xs">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="96dp">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/missing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="\?"
+            android:textColor="@color/text_secondary"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <!-- Número da figurinha no álbum (#07), como nas de banca. -->
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:background="@color/ink"
+            android:fontFamily="@font/bebas_neue"
+            android:paddingHorizontal="@dimen/space_xs"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            tools:text="#07" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:background="@drawable/bg_badge"
+            android:paddingHorizontal="@dimen/space_xs"
+            android:textColor="@color/text_primary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            tools:text="×2" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/text_primary"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        tools:text="Hulk" />
+</LinearLayout>

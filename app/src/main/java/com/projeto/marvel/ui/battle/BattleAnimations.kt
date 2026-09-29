@@ -2,12 +2,16 @@ package com.projeto.marvel.ui.battle
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.graphics.PorterDuff
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import com.projeto.marvel.R
 import com.projeto.marvel.ui.BurstDrawable
 import com.projeto.marvel.ui.COMIC_FPS
@@ -37,6 +41,9 @@ private const val BURST_POP_STEPS = 3
 private const val BURST_MAX_TILT = 14
 private const val IMPACT_ALPHA = 0.28f
 private const val MILLIS_PER_SECOND = 1000
+private const val GLOW_MILLIS = 500L
+private const val GLOW_MAX_ALPHA = 140
+private const val SIDESTEP_FACTOR = 2
 
 /** Avança na direção do alvo e volta. [direction] -1 = cima/esquerda, 1 = baixo/direita. */
 fun View.lunge(direction: Float) {
@@ -61,6 +68,29 @@ fun View.pulse() {
     animate().scaleX(PULSE_SCALE).scaleY(PULSE_SCALE).setStartDelay(0).setDuration(STEP_MILLIS)
         .setInterpolator(comicInterpolator(STEP_MILLIS))
         .withEndAction { animate().scaleX(1f).scaleY(1f).setDuration(STEP_MILLIS) }
+}
+
+/** Aura na cor do golpe (cura, defesa, veneno): o lutador se tinge e volta ao normal. */
+fun ImageView.glow(@ColorInt tint: Int, startDelay: Long = 0) {
+    ValueAnimator.ofInt(0, GLOW_MAX_ALPHA, 0).apply {
+        duration = GLOW_MILLIS
+        this.startDelay = startDelay
+        interpolator = comicInterpolator(GLOW_MILLIS)
+        addUpdateListener {
+            val alpha = it.animatedValue as Int
+            setColorFilter(ColorUtils.setAlphaComponent(tint, alpha), PorterDuff.Mode.SRC_ATOP)
+        }
+        doOnEnd { clearColorFilter() }
+        start()
+    }
+}
+
+/** Esquiva: pula de lado (perpendicular ao ataque) e volta. */
+fun View.sidestep(direction: Float) {
+    val distance = resources.getDimension(R.dimen.space_xl) * SIDESTEP_FACTOR * direction
+    animate().translationX(-distance).alpha(BLINK_ALPHA).setStartDelay(0).setDuration(STEP_MILLIS)
+        .setInterpolator(comicInterpolator(STEP_MILLIS))
+        .withEndAction { animate().translationX(0f).alpha(1f).setDuration(STEP_MILLIS) }
 }
 
 /** Entrada no início da luta: desliza do canto [direction] (-1 = cima/esquerda) até o lugar. */

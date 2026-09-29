@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Descobrir: Personagens, Times, Criadores e Filmes em abas (cada aba é o seu Fragment). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/space_lg"
+        android:paddingTop="@dimen/space_lg">
+
+        <TextView
+            style="@style/Widget.Marvel.ScreenTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:text="@string/discover_title" />
+
+        <!-- Balão de ação de HQ com a chamada da aba atual (texto e fundo em código). -->
+        <TextView
+            android:id="@+id/actionBalloon"
+            android:layout_width="wrap_content"
+            android:maxWidth="@dimen/action_balloon_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:fontFamily="@font/bebas_neue"
+            android:gravity="center"
+            android:maxLines="3"
+            android:paddingHorizontal="@dimen/space_lg"
+            android:paddingVertical="@dimen/space_md"
+            android:textColor="@color/ink"
+            android:textSize="15sp"
+            app:fontFamily="@font/bebas_neue" />
+    </FrameLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:tabGravity="start"
+        app:tabIndicatorColor="@color/accent"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/accent"
+        app:tabTextColor="@color/text_secondary" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

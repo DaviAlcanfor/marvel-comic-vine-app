@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Busca de HQs para a estante: mesmo cabeçalho da Home, grade de capas. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:paddingHorizontal="@dimen/space_lg"
+    android:paddingTop="@dimen/space_lg">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="@dimen/touch_target"
+        android:layout_height="@dimen/touch_target"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/content_description_back"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/title" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/Widget.Marvel.ScreenTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_sm"
+        android:text="@string/comics_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/backButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/searchInput"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/input_height"
+        android:layout_marginTop="@dimen/space_md"
+        android:background="@drawable/bg_input"
+        android:drawablePadding="@dimen/space_sm"
+        android:drawableStart="@drawable/ic_search"
+        android:hint="@string/comics_search_hint"
+        android:imeOptions="actionSearch"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/space_md"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <!-- Histórico de buscas (só com o campo vazio). -->
+    <HorizontalScrollView
+        android:id="@+id/recentScroll"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:scrollbars="none"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchInput">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/recentGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true" />
+
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_md"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/space_lg"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recentScroll"
+        app:spanCount="3" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerView"
+        app:layout_constraintEnd_toEndOf="@id/recyclerView"
+        app:layout_constraintStart_toStartOf="@id/recyclerView"
+        app:layout_constraintTop_toTopOf="@id/recyclerView" />
+
+    <TextView
+        android:id="@+id/messageText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/space_lg"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerView"
+        app:layout_constraintEnd_toEndOf="@id/recyclerView"
+        app:layout_constraintStart_toStartOf="@id/recyclerView"
+        app:layout_constraintTop_toTopOf="@id/recyclerView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,129 @@
          o android:fontFamily do estilo. -->
 
     <!-- Display / Bebas Neue: títulos de tela ("MARVEL HEROES"). -->
+    <!-- "Com qual herói você parece?": sua foto e o card do herói, lado a lado, em pé. -->
+    <style name="Widget.Marvel.LookAlikeCard" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/look_alike_card_height</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:clipToOutline">true</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <!-- Onomatopeia que estoura na tela de carregamento. -->
+    <style name="Widget.Marvel.LoadingWord" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:alpha">0</item>
+    </style>
+
+    <!-- Botão flutuante do Geek: bolha redonda. -->
+    <style name="ShapeAppearance.Marvel.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Botão – / + do painel de melhorias da carta. -->
+    <style name="Widget.Marvel.UpgradeButton" parent="">
+        <item name="android:layout_width">@dimen/touch_target</item>
+        <item name="android:layout_height">@dimen/touch_target</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.Marvel.PackTile" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:clipChildren">false</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:paddingVertical">@dimen/space_xs</item>
+    </style>
+
+    <style name="Widget.Marvel.PackCount" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_sm</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.Marvel.VersusName" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_sm</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Widget.Marvel.VersusSquad" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Bloco de atalho da Início: ícone em cima, rótulo embaixo, 4 por fileira. -->
+    <style name="Widget.Marvel.HomeTile" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginEnd">@dimen/space_sm</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/space_md</item>
+        <item name="android:paddingBottom">@dimen/space_sm</item>
+        <item name="android:drawablePadding">@dimen/space_xs</item>
+        <item name="android:drawableTint">@color/accent</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Capa de jogo na aba Jogos: banner, como jogar, recorde e o botão. -->
+    <style name="Widget.Marvel.GameCard" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_lg</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:clipToOutline">true</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Widget.Marvel.GameText" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">@dimen/space_md</item>
+        <item name="android:layout_marginTop">@dimen/space_md</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+    </style>
+
+    <style name="Widget.Marvel.GameStat" parent="Widget.Marvel.GameText">
+        <item name="android:layout_marginTop">@dimen/space_sm</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Widget.Marvel.ScreenTitle" parent="">
         <item name="android:fontFamily">@font/bebas_neue</item>
         <item name="fontFamily">@font/bebas_neue</item>
@@ -13,6 +136,11 @@
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
+        <!-- Letreiro de capa: sombra dura vermelha (raio ~0 = sem desfoque). -->
+        <item name="android:shadowColor">@color/primary</item>
+        <item name="android:shadowDx">3</item>
+        <item name="android:shadowDy">3</item>
+        <item name="android:shadowRadius">0.01</item>
     </style>
 
     <!-- H1 / Inter Bold 28 -->
@@ -55,6 +183,117 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textFontWeight">500</item>
         <item name="android:textColor">@color/text_primary</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <!-- Busca recente na Home: mesma pílula da Tag, mas clicável e com X para remover. -->
+    <style name="Widget.Marvel.RecentChip" parent="Widget.Material3.Chip.Input">
+        <item name="chipBackgroundColor">@color/surface_variant</item>
+        <item name="chipStrokeColor">@color/border</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipCornerRadius">100dp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="closeIconTint">@color/text_secondary</item>
+        <item name="chipIcon">@drawable/ic_search</item>
+        <item name="chipIconTint">@color/text_secondary</item>
+        <item name="chipIconVisible">true</item>
+        <item name="android:checkable">false</item>
+    </style>
+
+    <!-- Card de favorito no Perfil (herói / série): imagem, rótulo e nome; clicável. -->
+    <style name="Widget.Marvel.FavoriteCard" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/space_md</item>
+    </style>
+
+    <style name="Widget.Marvel.FavoriteImage" parent="">
+        <item name="android:layout_width">@dimen/favorite_image_size</item>
+        <item name="android:layout_height">@dimen/favorite_image_size</item>
+        <item name="android:layout_marginBottom">@dimen/space_sm</item>
+        <item name="android:background">@drawable/bg_circle</item>
+        <item name="android:clipToOutline">true</item>
+        <item name="android:importantForAccessibility">no</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="Widget.Marvel.FavoriteName" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Filtro da estante por status (Já li / Lendo / Quero ler). -->
+    <style name="Widget.Marvel.FilterChip" parent="Widget.Material3.Chip.Filter">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="chipBackgroundColor">@color/filter_chip_background</item>
+        <item name="chipStrokeColor">@color/border</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="checkedIconTint">@color/background</item>
+    </style>
+
+    <!-- Biografia/descrição como caixa de narração de HQ: papel e texto de nanquim. -->
+    <style name="Widget.Marvel.Narration" parent="Widget.Marvel.Body">
+        <item name="android:background">@drawable/bg_narration</item>
+        <item name="android:paddingStart">@dimen/space_md</item>
+        <item name="android:paddingTop">@dimen/space_md</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:textColor">@color/ink</item>
+    </style>
+
+    <!-- Carrossel horizontal: vai até a borda da tela (margem negativa) mas o 1º card alinha com o
+         conteúdo (padding igual + clipToPadding false). O card cortado fica na borda, não no meio. -->
+    <style name="Widget.Marvel.Carousel" parent="">
+        <item name="android:layout_marginStart">@dimen/carousel_bleed</item>
+        <item name="android:layout_marginEnd">@dimen/carousel_bleed</item>
+        <item name="android:paddingStart">@dimen/space_lg</item>
+        <item name="android:paddingEnd">@dimen/space_lg</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+    <!-- Barra de energia da ultimate: fina, na cor da magia (rosa), embaixo da vida. -->
+    <style name="Widget.Marvel.EnergyBar" parent="Widget.Material3.LinearProgressIndicator">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/space_xs</item>
+        <item name="android:max">100</item>
+        <item name="trackThickness">@dimen/energy_bar_height</item>
+        <item name="trackCornerRadius">@dimen/space_xs</item>
+        <item name="indicatorColor">@color/move_magic</item>
+        <item name="trackColor">@color/surface_variant</item>
+        <!-- Sem o pontinho no fim do trilho nem o vão entre cheio e vazio (padrão do M3). -->
+        <item name="trackStopIndicatorSize">0dp</item>
+        <item name="indicatorTrackGapSize">0dp</item>
+    </style>
+
+    <!-- Botão da ultimate: largo, vermelho, com o nome do poder. -->
+    <style name="Widget.Marvel.UltimateButton" parent="Widget.Material3.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/touch_target</item>
+        <item name="android:layout_marginBottom">@dimen/space_sm</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:textSize">20sp</item>
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="cornerRadius">@dimen/radius_small</item>
+        <item name="strokeColor">@color/move_magic</item>
+        <item name="strokeWidth">@dimen/ink_width</item>
     </style>
 
     <!-- Linha de números do Detalhe ("1.643 Aparições"): colunas iguais, valor em dourado. -->
@@ -169,6 +408,9 @@
         <item name="android:textColor">@color/text_primary</item>
         <item name="cornerRadius">@dimen/radius_large</item>
         <item name="strokeColor">@color/border</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconSize">18dp</item>
+        <item name="iconPadding">@dimen/space_xs</item>
     </style>
 
     <style name="Widget.Marvel.HpBar" parent="Widget.Material3.LinearProgressIndicator">
@@ -179,6 +421,9 @@
         <item name="trackCornerRadius">@dimen/space_xs</item>
         <item name="trackColor">@color/surface_variant</item>
         <item name="indicatorColor">@color/team_green</item>
+        <!-- Sem o pontinho no fim do trilho nem o vão entre cheio e vazio (padrão do M3). -->
+        <item name="trackStopIndicatorSize">0dp</item>
+        <item name="indicatorTrackGapSize">0dp</item>
     </style>
 
     <style name="Widget.Marvel.BattleCaption" parent="">

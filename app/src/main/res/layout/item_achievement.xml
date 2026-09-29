@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Medalha de conquista no Perfil: ícone na cor dela (cinza se bloqueada), nome e progresso. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/space_xs">
+
+    <ImageView
+        android:id="@+id/medal"
+        android:layout_width="@dimen/medal_size"
+        android:layout_height="@dimen/medal_size"
+        android:background="@drawable/bg_medal"
+        android:importantForAccessibility="no"
+        android:padding="@dimen/space_md" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:gravity="center"
+        android:maxLines="2"
+        android:textColor="@color/text_primary"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        tools:text="Primeira vitória" />
+
+    <TextView
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/text_secondary"
+        android:textSize="11sp"
+        tools:text="1/1" />
+</LinearLayout>

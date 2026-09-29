@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Medalha: círculo com contorno de nanquim; a cor da conquista entra por backgroundTint em código. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/white" />
+    <stroke
+        android:width="@dimen/ink_width"
+        android:color="@color/ink" />
+</shape>

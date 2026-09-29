@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Antes de cada luta: os dois lutadores entram dos lados, o VS carimba no meio e os atributos
+     aparecem lado a lado. "LUTAR!" fecha e a luta começa. Cobre a arena (clicável: nada vaza). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/versusRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F20B0B10"
+    android:clickable="true"
+    android:focusable="true"
+    android:visibility="gone">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_halftone" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="@dimen/space_lg">
+
+            <TextView
+                android:id="@+id/versusTitle"
+                style="@style/Widget.Marvel.ScreenTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                tools:text="Luta 2 de 5" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/versusLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/versusLeftImage"
+                            android:layout_width="@dimen/versus_portrait"
+                            android:layout_height="@dimen/versus_portrait"
+                            android:background="@drawable/bg_card"
+                            android:clipToOutline="true"
+                            android:importantForAccessibility="no"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            android:id="@+id/versusLeftName"
+                            style="@style/Widget.Marvel.VersusName"
+                            tools:text="Spider-Man" />
+
+                        <!-- 3×3: o resto do trio, em miniatura. -->
+                        <LinearLayout
+                            android:id="@+id/versusLeftSquad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_sm"
+                            android:orientation="horizontal"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/versusRight"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/versusRightImage"
+                            android:layout_width="@dimen/versus_portrait"
+                            android:layout_height="@dimen/versus_portrait"
+                            android:background="@drawable/bg_card"
+                            android:clipToOutline="true"
+                            android:importantForAccessibility="no"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            android:id="@+id/versusRightName"
+                            style="@style/Widget.Marvel.VersusName"
+                            tools:text="Doctor Doom" />
+
+                        <!-- 3×3: o resto do trio, em miniatura. -->
+                        <LinearLayout
+                            android:id="@+id/versusRightSquad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_sm"
+                            android:orientation="horizontal"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/versusBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/versus_badge_top"
+                    android:fontFamily="@font/bebas_neue"
+                    android:text="@string/compare_versus"
+                    android:textSize="34sp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/versusRows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg"
+                android:orientation="vertical" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/versusFight"
+                style="@style/Widget.Marvel.ComicButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/versus_fight" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

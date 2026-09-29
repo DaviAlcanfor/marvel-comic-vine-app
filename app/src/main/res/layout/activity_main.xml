@@ -18,6 +18,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
+    <!-- Geek flutuando sobre a barra: abre o chat de qualquer aba (some junto com a barra). -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/geekFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_md"
+        android:contentDescription="@string/geek_open"
+        android:src="@drawable/ic_geek"
+        android:visibility="gone"
+        app:backgroundTint="@color/accent"
+        app:maxImageSize="34dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Marvel.Circle"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/ink" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         style="@style/Widget.Marvel.BottomNav"
@@ -28,5 +44,75 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav" />
+
+    <!-- Carregamento de HQ na abertura (ui/ComicLoading.kt): por cima de tudo até os dados chegarem. -->
+    <FrameLayout
+        android:id="@+id/loading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/background"
+        android:clickable="true"
+        android:elevation="30dp"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/loadingLines"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:background="@drawable/bg_halftone" />
+
+        <TextView
+            android:id="@+id/loadingPow"
+            style="@style/Widget.Marvel.LoadingWord"
+            android:layout_gravity="top|start"
+            android:layout_marginStart="@dimen/space_lg"
+            android:layout_marginTop="@dimen/loading_word_top"
+            android:text="@string/loading_pow" />
+
+        <TextView
+            android:id="@+id/loadingBam"
+            style="@style/Widget.Marvel.LoadingWord"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="@dimen/loading_word_top_far"
+            android:layout_marginEnd="@dimen/space_lg"
+            android:text="@string/loading_bam" />
+
+        <TextView
+            android:id="@+id/loadingZap"
+            style="@style/Widget.Marvel.LoadingWord"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="@dimen/space_xl"
+            android:layout_marginBottom="@dimen/loading_word_bottom"
+            android:text="@string/loading_zap" />
+
+        <TextView
+            android:id="@+id/loadingLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/bebas_neue"
+            android:text="@string/pack_brand"
+            android:textSize="54sp" />
+
+        <TextView
+            android:id="@+id/loadingBalloon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/loading_balloon_bottom"
+            android:fontFamily="@font/bebas_neue"
+            android:minWidth="@dimen/loading_balloon_width"
+            android:textSize="22sp" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

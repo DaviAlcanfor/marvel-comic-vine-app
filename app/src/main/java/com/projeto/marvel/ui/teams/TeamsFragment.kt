@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.projeto.marvel.R
+import com.projeto.marvel.ui.discover.fitInDiscover
 import com.projeto.marvel.data.remote.Team
 import com.projeto.marvel.databinding.FragmentTeamsBinding
 import com.projeto.marvel.ui.submitAnimated
@@ -37,6 +38,7 @@ class TeamsFragment : Fragment(R.layout.fragment_teams) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
+        fitInDiscover(binding.root, binding.title)
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerView.adapter = adapter
@@ -72,7 +74,7 @@ class TeamsFragment : Fragment(R.layout.fragment_teams) {
             putString("apiDetailUrl", apiDetailUrl)
             putString("teamName", team.name)
         }
-        findNavController().navigate(R.id.action_teams_to_team_detail, args)
+        findNavController().navigate(R.id.teamDetailFragment, args)
     }
 
     override fun onDestroyView() {

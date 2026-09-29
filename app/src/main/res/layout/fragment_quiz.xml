@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Quiz "Que herói é você?": uma pergunta por vez (4 respostas) e o resultado com o personagem. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/space_lg"
+        android:paddingTop="@dimen/space_sm"
+        android:paddingBottom="@dimen/space_xl">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="@dimen/touch_target"
+            android:layout_height="@dimen/touch_target"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/content_description_back"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            style="@style/Widget.Marvel.ScreenTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/quiz_title" />
+
+        <!-- Pergunta -->
+        <LinearLayout
+            android:id="@+id/questionGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/progress"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                tools:text="Pergunta 1 de 5" />
+
+            <TextView
+                android:id="@+id/question"
+                style="@style/Widget.Marvel.Narration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:textSize="20sp"
+                tools:text="Numa briga, você…" />
+
+            <!-- Quatro respostas, uma por atributo (texto e ação em código). -->
+            <LinearLayout
+                android:id="@+id/answers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/space_xl"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:gravity="center"
+            android:textColor="@color/text_secondary"
+            android:visibility="gone" />
+
+        <!-- Resultado -->
+        <LinearLayout
+            android:id="@+id/resultGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/resultImage"
+                android:layout_width="@dimen/info_image_width"
+                android:layout_height="@dimen/info_image_height"
+                android:layout_marginTop="@dimen/space_lg"
+                android:background="@drawable/bg_card"
+                android:clipToOutline="true"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/resultTitle"
+                style="@style/Widget.Marvel.ScreenTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:textSize="40sp"
+                tools:text="Você é Spider-Man!" />
+
+            <TextView
+                android:id="@+id/resultHint"
+                style="@style/Widget.Marvel.Narration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/openButton"
+                style="@style/Widget.Marvel.ComicButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/quiz_open" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/heroButton"
+                style="@style/Widget.Marvel.ComicButton.Secondary"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_sm"
+                android:text="@string/quiz_set_hero" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/restartButton"
+                style="@style/Widget.Marvel.ComicButton.Secondary"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_sm"
+                android:text="@string/quiz_restart" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

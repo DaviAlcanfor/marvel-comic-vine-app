@@ -31,6 +31,8 @@
         app:layout_constraintTop_toBottomOf="@id/backButton">
 
         <LinearLayout
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -102,6 +104,15 @@
 
             </LinearLayout>
 
+            <!-- Trilha: luta contra os membros mais famosos, o último é o chefe. -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/challengeButton"
+                style="@style/Widget.Marvel.ComicButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/team_challenge"
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/aboutTitle"
                 android:visibility="gone"
@@ -112,7 +123,7 @@
             <TextView
                 android:id="@+id/description"
                 android:visibility="gone"
-                style="@style/Widget.Marvel.Body"
+                style="@style/Widget.Marvel.Narration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_sm" />
@@ -124,14 +135,16 @@
                 android:layout_marginTop="@dimen/space_lg"
                 android:text="@string/team_section_members" />
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/membersGroup"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/membersList"
+                style="@style/Widget.Marvel.Carousel"
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_sm"
-                app:chipSpacingHorizontal="@dimen/space_sm"
-                app:chipSpacingVertical="@dimen/space_sm" />
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <TextView
                 android:id="@+id/enemiesTitle"
@@ -140,14 +153,16 @@
                 android:layout_marginTop="@dimen/space_lg"
                 android:text="@string/team_section_enemies" />
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/enemiesGroup"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/enemiesList"
+                style="@style/Widget.Marvel.Carousel"
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_sm"
-                app:chipSpacingHorizontal="@dimen/space_sm"
-                app:chipSpacingVertical="@dimen/space_sm" />
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <ProgressBar
                 android:id="@+id/progressBar"

@@ -11,7 +11,8 @@ interface ComicVineService {
     suspend fun getIssues(
         @Query("filter") filter: String? = null,
         @Query("limit") limit: Int = 20,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
+        @Query("field_list") fieldList: String? = null
     ): IssueResponse
 
     /**
@@ -38,6 +39,15 @@ interface ComicVineService {
     /** [url] é o `api_detail_url` já absoluto devolvido pela listagem de times. */
     @GET
     suspend fun getTeamDetail(@Url url: String, @Query("field_list") fieldList: String? = null): TeamDetailResponse
+
+    /** Busca textual da Comic Vine. [resources]: tipo do resultado (ex. `issue`); mesmo formato de lista. */
+    @GET("search/")
+    suspend fun search(
+        @Query("query") query: String,
+        @Query("resources") resources: String,
+        @Query("limit") limit: Int = 30,
+        @Query("field_list") fieldList: String? = null
+    ): IssueResponse
 
     @GET("teams/")
     suspend fun getTeams(

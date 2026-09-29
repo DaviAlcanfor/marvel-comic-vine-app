@@ -15,12 +15,46 @@
     <!-- Vermelho só para TEXTO sobre o fundo escuro: o primary dá 2,9:1 (reprova WCAG); este dá 5,7:1. -->
     <color name="primary_text">#FF4D55</color>
     <color name="accent">#E6B800</color>
-    <color name="team_blue">#1565C0</color>
+
+    <!-- Figurinhas: metal da moldura por raridade (claro, escuro) e papel das páginas do álbum. -->
+    <color name="card_common_light">#D5D9DE</color>
+    <color name="card_common_dark">#7B828C</color>
+    <color name="card_rare_light">#8FD3FF</color>
+    <color name="card_rare_dark">#1F5FAE</color>
+    <color name="card_legendary_light">#FFE27A</color>
+    <color name="card_legendary_dark">#C27C0E</color>
+    <color name="comic_paper">#F3E7C9</color>
+
+    <!-- Pacotes de figurinha (papel metalizado: início, brilho do meio, fim). -->
+    <color name="pack_basic_start">#1E5AA8</color>
+    <color name="pack_basic_mid">#7FB2F0</color>
+    <color name="pack_basic_end">#123A6E</color>
+    <color name="pack_silver_start">#8C939E</color>
+    <color name="pack_silver_mid">#F2F4F7</color>
+    <color name="pack_silver_end">#5B616B</color>
+    <color name="pack_gold_start">#B8860B</color>
+    <color name="pack_gold_mid">#FFE58A</color>
+    <color name="pack_gold_end">#8A6206</color>
     <color name="team_green">#2E7D32</color>
     <color name="scrim">#0A0A14</color>
     <!-- Tema HQ (não está nos SVGs): "nanquim" dos contornos e sombras duras; texto sobre dourado. -->
     <color name="ink">#000000</color>
-    <color name="poison">#8E44AD</color>
+    <!-- Papel das caixas de narração. -->
+    <color name="paper">#FFF3C4</color>
+    <!-- Trilho das barras em cima do papel (resumo da luta). -->
+    <color name="result_track">#33000000</color>
     <!-- Linhas de ação ao fundo da arena: dourado bem transparente para não brigar com o conteúdo. -->
     <color name="speed_lines">#14E6B800</color>
+    <!-- Um tom por tipo de golpe (ícone, contorno do botão, efeitos). Claros o bastante para
+         passar 4,5:1 sobre surface, já que também colorem texto. -->
+    <color name="move_strike">#FF4D55</color>
+    <color name="move_blast">#E6B800</color>
+    <color name="move_poison">#B97AD6</color>
+    <color name="move_heal">#5CC762</color>
+    <color name="move_guard">#B0BEC5</color>
+    <color name="move_dodge">#FF9F43</color>
+    <color name="move_freeze">#A8E6FF</color>
+    <color name="move_water">#4D9DFF</color>
+    <color name="move_magic">#FF5CD6</color>
+    <color name="move_drain">#2EC4B6</color>
 </resources>

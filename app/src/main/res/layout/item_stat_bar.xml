@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Um atributo na ficha de lutador: rótulo, barra (0–99) e valor. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="@dimen/space_xs">
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="@dimen/stat_label_width"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        tools:text="Ataque" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:max="99"
+        app:indicatorColor="@color/accent"
+        app:trackColor="@color/surface_variant"
+        app:trackCornerRadius="@dimen/space_xs"
+        app:trackStopIndicatorSize="0dp"
+        app:indicatorTrackGapSize="0dp"
+        app:trackThickness="@dimen/hp_bar_height" />
+
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="@dimen/stat_value_width"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textColor="@color/text_primary"
+        android:textStyle="bold"
+        tools:text="67" />
+</LinearLayout>

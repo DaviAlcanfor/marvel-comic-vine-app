@@ -12,9 +12,11 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
 
-private const val SPIKES = 12
-private const val INNER_RATIO = 0.68f
-private const val JITTER = 0.14f
+private const val SPIKES = 14
+
+// Vales rasos e pouco tremor: o texto (retângulo) precisa caber dentro da parte "cheia".
+private const val INNER_RATIO = 0.84f
+private const val JITTER = 0.06f
 
 /**
  * Explosão serrilhada de onomatopeia de HQ ("POW!"), elíptica para caber no texto.

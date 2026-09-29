@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reflexo holográfico da carta: faixa de arco-íris bem translúcida na diagonal, que some nas pontas. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="45"
+        android:centerColor="#3380E0FF"
+        android:endColor="#00FFB0F0"
+        android:startColor="#00FFF36B"
+        android:type="linear" />
+</shape>

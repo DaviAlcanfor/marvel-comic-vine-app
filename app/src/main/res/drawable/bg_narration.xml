@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Caixa de narração de HQ ("Enquanto isso..."): papel amarelado com contorno de nanquim. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="@dimen/hard_shadow"
+        android:top="@dimen/hard_shadow">
+        <shape>
+            <solid android:color="@color/primary_variant" />
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/hard_shadow"
+        android:right="@dimen/hard_shadow">
+        <shape>
+            <solid android:color="@color/paper" />
+            <stroke
+                android:width="@dimen/ink_width"
+                android:color="@color/ink" />
+        </shape>
+    </item>
+</layer-list>

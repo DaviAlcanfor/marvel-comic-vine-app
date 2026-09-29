@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pacote de figurinhas: corpo metalizado (cor do tipo, em código), faixa de rasgar em cima e um
+     brilho que passa. O tamanho vem de quem inclui (miniatura na aba, grande na abertura). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false">
+
+    <FrameLayout
+        android:id="@+id/packBody"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToOutline="true">
+
+        <!-- Desenho do pacote: um herói da raridade do tipo (Ouro = lendário etc.). -->
+        <ImageView
+            android:id="@+id/packArt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.9"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_halftone"
+            android:alpha="0.35" />
+
+        <LinearLayout
+            android:id="@+id/packPlate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/space_xs">
+
+            <TextView
+                android:id="@+id/packBrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/primary"
+                android:fontFamily="@font/bebas_neue"
+                android:paddingHorizontal="@dimen/space_xs"
+                android:text="@string/pack_brand"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/packName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:fontFamily="@font/bebas_neue"
+                android:gravity="center"
+                android:textColor="@color/ink"
+                tools:text="OURO" />
+
+            <TextView
+                android:id="@+id/packInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/ink"
+                android:textStyle="bold"
+                tools:text="1 lendária garantida" />
+        </LinearLayout>
+
+        <!-- Brilho diagonal que atravessa o pacote. -->
+        <View
+            android:id="@+id/packShine"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@drawable/bg_pack_shine"
+            android:rotation="18"
+            android:scaleY="1.4" />
+    </FrameLayout>
+
+    <!-- Faixa serrilhada do topo: é ela que "rasga" na abertura. -->
+    <View
+        android:id="@+id/packTop"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="top" />
+</FrameLayout>

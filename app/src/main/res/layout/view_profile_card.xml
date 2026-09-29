@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cartão do perfil para compartilhar: desenhado fora da tela (ver ProfileCard.kt), nunca exibido. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_screen"
+    android:orientation="vertical"
+    android:padding="@dimen/space_lg">
+
+    <TextView
+        style="@style/Widget.Marvel.CaptionBox"
+        android:text="@string/profile_card_caption" />
+
+    <ImageView
+        android:id="@+id/heroImage"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginTop="@dimen/space_md"
+        android:background="@drawable/bg_card"
+        android:clipToOutline="true"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:textColor="@color/text_primary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="Davi" />
+
+    <TextView
+        android:id="@+id/heroName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        tools:text="Herói favorito: Homem-Aranha" />
+
+    <TextView
+        android:id="@+id/stats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:lineSpacingExtra="4dp"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        tools:text="📚 12 HQs lidas\n⚔️ 8V · 3D\n🏅 4/10 conquistas" />
+
+    <TextView
+        android:id="@+id/genres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:textColor="@color/accent"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="Ação · Sci-fi · Mistério" />
+
+    <LinearLayout
+        android:id="@+id/medals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:orientation="horizontal" />
+</LinearLayout>

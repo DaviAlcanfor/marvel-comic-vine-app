@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Uma fala no chat; o lado (gravity) e o balão são definidos no ChatMessageAdapter. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/space_xs">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_sm"
+        android:maxWidth="@dimen/balloon_max_width"
+        android:paddingHorizontal="@dimen/space_md"
+        android:paddingTop="@dimen/space_sm"
+        android:paddingBottom="@dimen/space_md"
+        android:textIsSelectable="true"
+        android:textSize="15sp"
+        tools:background="@drawable/bg_balloon_character"
+        tools:text="Olá, fã! Aqui é seu amigão da vizinhança." />
+
+</FrameLayout>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Comparar dois personagens: fotos, atributos lado a lado, estreia e o que têm em comum. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/space_lg"
+        android:paddingTop="@dimen/space_sm"
+        android:paddingBottom="@dimen/space_xl">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="@dimen/touch_target"
+            android:layout_height="@dimen/touch_target"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/content_description_back"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            style="@style/Widget.Marvel.ScreenTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/compare_title" />
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/space_xl" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xl"
+            android:gravity="center"
+            android:textColor="@color/text_secondary"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/leftImage"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card"
+                    android:clipToOutline="true"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    style="@style/Widget.Marvel.CaptionBox"
+                    android:layout_marginHorizontal="@dimen/space_sm"
+                    android:text="@string/compare_versus" />
+
+                <ImageView
+                    android:id="@+id/rightImage"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card"
+                    android:clipToOutline="true"
+                    android:importantForAccessibility="no"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/leftName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/rightName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:orientation="vertical" />
+
+            <TextView
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/compare_debut_title" />
+
+            <TextView
+                android:id="@+id/debut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:textColor="@color/text_primary" />
+
+            <TextView
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/compare_common_powers" />
+
+            <TextView
+                android:id="@+id/commonPowers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:textColor="@color/text_primary" />
+
+            <TextView
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/compare_common_teams" />
+
+            <TextView
+                android:id="@+id/commonTeams"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:textColor="@color/text_primary" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fightButton"
+                style="@style/Widget.Marvel.ComicButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/compare_fight" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

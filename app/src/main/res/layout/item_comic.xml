@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Capa de HQ (estante, busca, filmes). Na estante vira em 3D: frente = capa, verso = sua resenha. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_xs">
+
+    <LinearLayout
+        android:id="@+id/front"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card"
+        android:clipToOutline="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:stateListAnimator="@animator/press_scale">
+
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/comic_cover_height"
+            android:background="@color/surface_variant"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_sm"
+            android:layout_marginTop="@dimen/space_xs"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textColor="@color/text_primary"
+            android:textSize="12sp"
+            tools:text="The Amazing Spider-Man #35" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_sm"
+            android:layout_marginBottom="@dimen/space_xs"
+            android:textColor="@color/accent"
+            android:textSize="12sp"
+            tools:text="★★★★☆" />
+    </LinearLayout>
+
+    <!-- Verso (só na estante): mesmo tamanho da frente, papel de narração com a resenha. -->
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_narration"
+        android:orientation="vertical"
+        android:padding="@dimen/space_sm"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/backRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:textSize="14sp"
+            tools:text="★★★★☆" />
+
+        <TextView
+            android:id="@+id/backReview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_xs"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:textColor="@color/ink"
+            android:textSize="12sp"
+            tools:text="Clássico absoluto." />
+
+        <TextView
+            android:id="@+id/backEdit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_target"
+            android:gravity="center"
+            android:text="@string/comics_edit"
+            android:textAllCaps="true"
+            android:textColor="@color/primary"
+            android:textStyle="bold" />
+    </LinearLayout>
+</FrameLayout>

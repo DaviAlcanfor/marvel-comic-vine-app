@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Card escolhido (trio do 3×3): véu e contorno grosso amarelos por cima do card. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#40E6B800" />
+    <stroke
+        android:width="4dp"
+        android:color="@color/accent" />
+    <corners android:radius="@dimen/radius_large" />
+</shape>

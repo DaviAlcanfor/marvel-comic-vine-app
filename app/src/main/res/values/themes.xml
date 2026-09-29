@@ -23,4 +23,11 @@
     </style>
 
     <style name="Theme.Marvel" parent="Base.Theme.Marvel" />
+
+    <!-- Splash: fundo escuro do app e o ícone; depois vira o tema normal (postSplashScreenTheme). -->
+    <style name="Theme.Marvel.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_blank</item>
+        <item name="postSplashScreenTheme">@style/Theme.Marvel</item>
+    </style>
 </resources>

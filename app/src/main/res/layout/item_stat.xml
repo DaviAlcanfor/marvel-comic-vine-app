@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Um número da linha de números (valor em dourado + rótulo), inflado em código. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Marvel.Stat">
+
+    <TextView
+        android:id="@+id/value"
+        style="@style/Widget.Marvel.StatValue"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="20sp"
+        tools:text="US$ 890,9 mi" />
+
+    <TextView
+        android:id="@+id/label"
+        style="@style/Widget.Marvel.StatLabel"
+        tools:text="Bilheteria" />
+</LinearLayout>

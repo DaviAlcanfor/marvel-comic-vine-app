@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Arquivos que o app entrega a outros apps (câmera grava aqui; compartilhar lê daqui). -->
+<paths>
+    <cache-path
+        name="photos"
+        path="photos/" />
+</paths>

@@ -13,12 +13,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.projeto.marvel.R
-import com.projeto.marvel.data.remote.CharacterRef
-import com.projeto.marvel.data.remote.TeamDetail
+import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.databinding.FragmentTeamDetailBinding
-import com.projeto.marvel.databinding.ItemTagLinkBinding
 import com.projeto.marvel.ui.fadeVisible
+import com.projeto.marvel.ui.characters.CharacterAdapter
 import com.projeto.marvel.ui.staggerIn
+import com.projeto.marvel.ui.submitCarousel
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Locale
@@ -27,6 +27,8 @@ class TeamDetailFragment : Fragment(R.layout.fragment_team_detail) {
 
     private val viewModel: TeamDetailViewModel by viewModels()
     private var binding: FragmentTeamDetailBinding? = null
+    private var membersAdapter: CharacterAdapter? = null
+    private var enemiesAdapter: CharacterAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +46,19 @@ class TeamDetailFragment : Fragment(R.layout.fragment_team_detail) {
         binding.name.text = arguments?.getString("teamName")
         binding.backButton.setOnClickListener { findNavController().navigateUp() }
         binding.errorText.setOnClickListener { viewModel.load() }
+        binding.challengeButton.setOnClickListener {
+            val args = Bundle().apply {
+                putString("teamUrl", arguments?.getString("apiDetailUrl"))
+                putString("teamName", binding.name.text.toString())
+            }
+            findNavController().navigate(R.id.action_team_detail_to_battle_select, args)
+        }
+
+        val cardWidth = resources.getDimensionPixelSize(R.dimen.member_card_width)
+        membersAdapter = CharacterAdapter(cardWidth) { character, _ -> openCharacter(character) }
+            .also { binding.membersList.adapter = it }
+        enemiesAdapter = CharacterAdapter(cardWidth) { character, _ -> openCharacter(character) }
+            .also { binding.enemiesList.adapter = it }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -57,64 +72,53 @@ class TeamDetailFragment : Fragment(R.layout.fragment_team_detail) {
         binding.progressBar.fadeVisible(state is TeamDetailUiState.Loading)
         binding.errorText.fadeVisible(state is TeamDetailUiState.Error)
         when (state) {
-            is TeamDetailUiState.Success -> bindTeam(state.team)
+            is TeamDetailUiState.Success -> bindTeam(state)
             is TeamDetailUiState.Error ->
                 binding.errorText.text = getString(R.string.home_error_retry) + "\n" + state.message
             TeamDetailUiState.Loading -> Unit
         }
     }
 
-    private fun bindTeam(team: TeamDetail) {
+    private fun bindTeam(state: TeamDetailUiState.Success) {
         val binding = binding ?: return
+        val team = state.team
         binding.name.text = team.name
         binding.subtitle.text = team.publisher?.name.orEmpty()
         binding.image.load(team.image?.mediumUrl) { crossfade(true) }
 
-        val members = team.members.orEmpty()
-        val enemies = team.enemies.orEmpty()
+        val members = state.members
+        val enemies = state.enemies
         val numbers = NumberFormat.getIntegerInstance(Locale.forLanguageTag("pt-BR"))
         binding.membersValue.text = numbers.format(team.memberCount ?: members.size)
-        binding.enemiesValue.text = numbers.format(enemies.size)
+        binding.enemiesValue.text = numbers.format(team.enemies.orEmpty().size)
 
         // `deck` é o resumo curto; `description` vem como HTML longo.
         binding.description.text = team.deck?.takeIf { it.isNotBlank() }
             ?: team.description?.let { HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_COMPACT) }
             ?: getString(R.string.detail_no_description)
 
-        bindPeople(binding.membersGroup, members)
-        bindPeople(binding.enemiesGroup, enemies)
+        membersAdapter?.submitCarousel(members, binding.membersList)
+        enemiesAdapter?.submitCarousel(enemies, binding.enemiesList)
 
-        val sections = listOf(binding.stats, binding.aboutTitle, binding.description) +
-            listOf(binding.membersTitle, binding.membersGroup).takeIf { members.isNotEmpty() }.orEmpty() +
-            listOf(binding.enemiesTitle, binding.enemiesGroup).takeIf { enemies.isNotEmpty() }.orEmpty()
+        val sections = listOf(binding.stats, binding.challengeButton, binding.aboutTitle, binding.description) +
+            listOf(binding.membersTitle, binding.membersList).takeIf { members.isNotEmpty() }.orEmpty() +
+            listOf(binding.enemiesTitle, binding.enemiesList).takeIf { enemies.isNotEmpty() }.orEmpty()
         sections.forEach { it.visibility = View.VISIBLE }
         staggerIn(listOf(binding.name, binding.subtitle) + sections)
     }
 
-    /** Cada pessoa vira uma tag clicável que abre o detalhe do personagem. */
-    private fun bindPeople(group: ViewGroup, people: List<CharacterRef>) {
-        group.removeAllViews()
-        people.forEach { person ->
-            val name = person.name ?: return@forEach
-            val url = person.apiDetailUrl ?: return@forEach
-            ItemTagLinkBinding.inflate(layoutInflater, group, true).root.apply {
-                text = name
-                contentDescription = getString(R.string.team_member_action, name)
-                setOnClickListener { openCharacter(url, name) }
-            }
-        }
-    }
-
-    private fun openCharacter(apiDetailUrl: String, name: String) {
+    private fun openCharacter(character: CharacterSummary) {
         val args = Bundle().apply {
-            putString("apiDetailUrl", apiDetailUrl)
-            putString("characterName", name)
+            putString("apiDetailUrl", character.apiDetailUrl ?: return)
+            putString("characterName", character.name)
         }
         findNavController().navigate(R.id.action_team_detail_to_character, args)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        membersAdapter = null
+        enemiesAdapter = null
         binding = null
     }
 }

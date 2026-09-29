@@ -1,89 +1,124 @@
 package com.projeto.marvel.ui.home
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.projeto.marvel.data.AuthRepository
+import com.projeto.marvel.data.CatalogRepository
 import com.projeto.marvel.data.ComicVineRepository
+import com.projeto.marvel.data.Favorite
+import com.projeto.marvel.data.ReadComic
+import com.projeto.marvel.data.ReadingStatus
+import com.projeto.marvel.data.ReadingStore
 import com.projeto.marvel.data.remote.CharacterSummary
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import com.projeto.marvel.data.remote.Movie
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
-sealed interface HomeUiState {
-    data object Loading : HomeUiState
-    data class Success(val characters: List<CharacterSummary>) : HomeUiState
-    data class Error(val message: String) : HomeUiState
-}
+/**
+ * Página inicial. Saudação, estante e favorito vêm do aparelho na hora; o herói do dia vem da
+ * API e chega depois (null enquanto carrega ou se falhar — o card só some, a Home segue).
+ */
+data class HomeUiState(
+    val userName: String?,
+    val userPhoto: String? = null,
+    val reading: List<ReadComic>,
+    val favoriteHero: Favorite?,
+    /** Últimas resenhas do usuário: a da HQ e a do filme mais recentes (com capa/pôster). */
+    val reviews: List<HomeReview> = emptyList(),
+    val heroOfTheDay: CharacterSummary? = null,
+    val heroMovies: List<Movie> = emptyList(),
+    /** Populares que estrearam nas HQs neste dia do ano. */
+    val debutedToday: List<CharacterSummary> = emptyList(),
+    val dailyTrail: DailyTrail? = null
+)
 
-/** Sem busca: populares da Marvel. Com busca: resultados por nome, paginados ao rolar. */
-class HomeViewModel(
+/** Resenha na Início; [movie] muda o ícone (🎬 × 📚). */
+data class HomeReview(val title: String, val rating: Int, val text: String, val imageUrl: String?, val movie: Boolean)
+
+/** Trilha do dia: um time por dia e os adversários que a trilha vai ter (do menos famoso ao chefe). */
+data class DailyTrail(val teamName: String, val teamUrl: String, val rivals: List<CharacterSummary>)
+
+class HomeViewModel @JvmOverloads constructor(
+    application: Application,
     private val repository: ComicVineRepository = ComicVineRepository(),
-    private val auth: AuthRepository = AuthRepository()
-) : ViewModel() {
+    private val auth: AuthRepository = AuthRepository(),
+    private val store: ReadingStore = ReadingStore(application, auth.currentUser?.uid),
+    private val catalog: CatalogRepository = CatalogRepository()
+) : AndroidViewModel(application) {
 
-    private val _state = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
+    private val _state = MutableStateFlow(local())
     val state: StateFlow<HomeUiState> = _state.asStateFlow()
 
-    private var query = ""
-    private var job: Job? = null
-    private var nextOffset = 0
-    private var endReached = true
-    private var loadingMore = false
-
-    init { load("") }
-
-    fun search(query: String?) {
-        val trimmed = query?.trim().orEmpty()
-        // O EditText reaplica o texto ao recriar a View: mesma busca já carregada não recarrega.
-        if (trimmed == this.query && _state.value is HomeUiState.Success) return
-        load(trimmed)
-    }
-
-    fun retry() = load(query)
-
-    /** Chamado quando a lista chega ao fim. Falha aqui é silenciosa: rolar de novo tenta outra vez. */
-    fun loadMore() {
-        val current = (_state.value as? HomeUiState.Success)?.characters ?: return
-        if (endReached || loadingMore) return
-        loadingMore = true
-        job = viewModelScope.launch {
-            try {
-                repository.searchCharacters(query, nextOffset).onSuccess { page ->
-                    nextOffset += page.size
-                    endReached = page.size < ComicVineRepository.PAGE_SIZE
-                    _state.value = HomeUiState.Success(current + page)
-                }
-            } finally {
-                loadingMore = false
-            }
+    init {
+        viewModelScope.launch {
+            val all = repository.popularCharacters().getOrNull().orEmpty()
+            val today = LocalDate.now()
+            val hero = heroOfTheDay(all, today) ?: return@launch
+            val debuted = all.filter { debutedOn(it.birth, today) }
+            _state.update { it.copy(heroOfTheDay = hero, debutedToday = debuted) }
+            loadHeroMovies(hero)
         }
+        viewModelScope.launch { loadDailyTrail() }
     }
 
-    fun signOut() = auth.signOut()
-
-    private fun load(query: String) {
-        this.query = query
-        job?.cancel()
-        job = viewModelScope.launch {
-            // Espera parar de digitar: sem isso, cada letra virava uma requisição (limite da API).
-            if (query.isNotEmpty()) delay(SEARCH_DEBOUNCE_MILLIS)
-            _state.value = HomeUiState.Loading
-            val result = if (query.isEmpty()) repository.popularCharacters() else repository.searchCharacters(query)
-            _state.value = result.fold(
-                onSuccess = { page ->
-                    nextOffset = page.size
-                    endReached = query.isEmpty() || page.size < ComicVineRepository.PAGE_SIZE
-                    HomeUiState.Success(page)
-                },
-                onFailure = { HomeUiState.Error(it.message ?: "Falha ao carregar personagens") }
+    /** Estante e favorito mudam no Perfil: relê ao voltar para a Home. */
+    fun refresh() {
+        _state.update {
+            local().copy(
+                heroOfTheDay = it.heroOfTheDay,
+                heroMovies = it.heroMovies,
+                debutedToday = it.debutedToday,
+                dailyTrail = it.dailyTrail
             )
         }
     }
 
+    /** Os filmes só vêm no detalhe do personagem; os pôsteres, numa busca por id. */
+    private suspend fun loadHeroMovies(hero: CharacterSummary) {
+        val url = hero.apiDetailUrl ?: return
+        val ids = repository.getCharacterDetail(url).getOrNull()?.movies.orEmpty().map { it.id }
+        if (ids.isEmpty()) return
+        val movies = catalog.moviesByIds(ids).getOrNull().orEmpty()
+        _state.update { it.copy(heroMovies = movies) }
+    }
+
+    /** Mesmos adversários que a trilha vai ter (ver `getFighters` com teamUrl): os mais famosos. */
+    private suspend fun loadDailyTrail() {
+        val url = DAILY_TEAMS[LocalDate.now().toEpochDay().mod(DAILY_TEAMS.size)]
+        val team = repository.getTeamDetail(url).getOrNull() ?: return
+        val rivals = repository.charactersByIds(team.members.orEmpty().map { it.id }).getOrNull().orEmpty()
+            .take(ComicVineRepository.GAUNTLET_SIZE)
+            .reversed()
+        if (rivals.isEmpty()) return
+        _state.update { it.copy(dailyTrail = DailyTrail(team.name, url, rivals)) }
+    }
+
+    private fun local(): HomeUiState {
+        val shelf = store.get()
+        return HomeUiState(
+            userName = auth.currentUser?.name?.takeIf { it.isNotBlank() }?.substringBefore(' '),
+            userPhoto = auth.currentUser?.photoUrl,
+            reading = shelf.filter { it.status == ReadingStatus.READING },
+            favoriteHero = store.preferences().hero,
+            reviews = listOfNotNull(
+                shelf.firstOrNull { it.status == ReadingStatus.READ && !it.review.isNullOrBlank() }
+                    ?.let { HomeReview(it.title, it.rating, it.review.orEmpty(), it.coverUrl, movie = false) },
+                store.movies().firstOrNull { !it.review.isNullOrBlank() }
+                    ?.let { HomeReview(it.title, it.rating, it.review.orEmpty(), it.posterUrl, movie = true) }
+            )
+        )
+    }
+
     private companion object {
-        const val SEARCH_DEBOUNCE_MILLIS = 400L
+        /** Times e grupos de vilões da Marvel que se revezam na trilha do dia. */
+        private val DAILY_TEAMS = listOf(
+            "4060-3806", "4060-3173", "4060-3804", "4060-25956", "4060-40429", "4060-7582",
+            "4060-26333", "4060-23977", "4060-40421", "4060-11427", "4060-13357", "4060-42520"
+        ).map { "https://comicvine.gamespot.com/api/team/$it/" }
     }
 }

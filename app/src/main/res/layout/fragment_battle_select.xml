@@ -59,6 +59,20 @@
         android:textColorHint="@color/text_secondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lockHint" />
+
+    <!-- Escolhendo o seu lutador: só os do álbum lutam, repetidas sobem o nível. -->
+    <TextView
+        android:id="@+id/lockHint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:text="@string/battle_lock_hint"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/selectedPlayer" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -70,6 +84,26 @@
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/searchInput" />
 
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/squadSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:text="@string/battle_squad_switch"
+        android:textColor="@color/text_primary"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/pvpSwitch" />
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/pvpSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:text="@string/battle_pvp_switch"
+        android:textColor="@color/text_primary"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/randomButton" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -80,16 +114,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/randomButton" />
+        app:layout_constraintTop_toBottomOf="@id/squadSwitch" />
 
-    <ProgressBar
+    <!-- Mesmas restrições da lista (não presas a ela, que fica GONE enquanto carrega). -->
+    <com.projeto.marvel.ui.SkeletonView
         android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/recyclerView"
-        app:layout_constraintEnd_toEndOf="@id/recyclerView"
-        app:layout_constraintStart_toStartOf="@id/recyclerView"
-        app:layout_constraintTop_toTopOf="@id/recyclerView" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_md"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/squadSwitch" />
 
     <TextView
         android:id="@+id/errorText"

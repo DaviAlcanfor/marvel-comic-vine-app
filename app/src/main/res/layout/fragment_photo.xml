@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Foto com o personagem: a foto do usuário, o personagem como adesivo arrastável e a legenda. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:orientation="vertical"
+    android:padding="@dimen/space_md">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="@dimen/touch_target"
+            android:layout_height="@dimen/touch_target"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/content_description_back"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/Widget.Marvel.ScreenTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Foto com Spider-Man" />
+    </LinearLayout>
+
+    <!-- Tudo aqui dentro vira a imagem final (salvar / compartilhar). -->
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_sm"
+        android:layout_weight="1"
+        android:background="@drawable/bg_card"
+        android:clipChildren="true"
+        android:clipToOutline="true">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/photo_description"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/emptyHint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/space_lg"
+            android:text="@string/photo_empty"
+            android:textColor="@color/text_secondary" />
+
+        <ImageView
+            android:id="@+id/sticker"
+            android:layout_width="@dimen/photo_sticker_size"
+            android:layout_height="@dimen/photo_sticker_size"
+            android:layout_gravity="end|top"
+            android:layout_margin="@dimen/space_md"
+            android:background="@drawable/bg_sticker"
+            android:clipToOutline="true"
+            android:contentDescription="@string/photo_sticker_description"
+            android:padding="@dimen/ink_width"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/caption"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="@dimen/space_md"
+            tools:text="Eu &amp; Spider-Man!" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cameraButton"
+            style="@style/Widget.Marvel.ComicButton"
+            android:layout_width="0dp"
+            android:layout_marginEnd="@dimen/space_xs"
+            android:layout_weight="1"
+            android:text="@string/photo_camera" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/galleryButton"
+            style="@style/Widget.Marvel.ComicButton.Secondary"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/space_xs"
+            android:layout_weight="1"
+            android:text="@string/photo_gallery" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/saveButton"
+            style="@style/Widget.Marvel.ComicButton.Secondary"
+            android:layout_width="0dp"
+            android:layout_marginEnd="@dimen/space_xs"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/photo_save" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/shareButton"
+            style="@style/Widget.Marvel.ComicButton.Secondary"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/space_xs"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/photo_share" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Aba Álbum: progresso, os 3 tipos de pacote (com quantos tem) e a grade numerada. Por cima:
+  - a abertura: o pacote grande gira com o dedo e com a inclinação do celular, rasga puxando a
+    faixa de cima (ou com um toque) e as 4 figurinhas viram uma a uma;
+  - a carta em 3D: tocar numa figurinha que você tem abre ela grande (gira e vira para o verso).
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_lg"
+            android:paddingTop="@dimen/space_lg"
+            android:paddingBottom="@dimen/space_xl">
+
+            <TextView
+                style="@style/Widget.Marvel.ScreenTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/album_title" />
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_xl" />
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xl"
+                android:gravity="center"
+                android:textColor="@color/text_secondary"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/progress"
+                    style="@style/Widget.Marvel.CaptionBox"
+                    android:layout_marginTop="@dimen/space_sm" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:text="@string/album_packs_hint"
+                    android:textColor="@color/text_secondary" />
+
+                <!-- Pacotes: Básico, Prata e Ouro -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_md"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/tileBasic"
+                        style="@style/Widget.Marvel.PackTile">
+
+                        <include
+                            android:id="@+id/packBasic"
+                            layout="@layout/view_pack"
+                            android:layout_width="@dimen/pack_small_width"
+                            android:layout_height="@dimen/pack_small_height" />
+
+                        <TextView
+                            android:id="@+id/countBasic"
+                            style="@style/Widget.Marvel.PackCount" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/tileSilver"
+                        style="@style/Widget.Marvel.PackTile">
+
+                        <include
+                            android:id="@+id/packSilver"
+                            layout="@layout/view_pack"
+                            android:layout_width="@dimen/pack_small_width"
+                            android:layout_height="@dimen/pack_small_height" />
+
+                        <TextView
+                            android:id="@+id/countSilver"
+                            style="@style/Widget.Marvel.PackCount" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/tileGold"
+                        style="@style/Widget.Marvel.PackTile">
+
+                        <include
+                            android:id="@+id/packGold"
+                            layout="@layout/view_pack"
+                            android:layout_width="@dimen/pack_small_width"
+                            android:layout_height="@dimen/pack_small_height" />
+
+                        <TextView
+                            android:id="@+id/countGold"
+                            style="@style/Widget.Marvel.PackCount" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Missões diárias e semanais: outro jeito de ganhar pacotes. -->
+                <TextView
+                    style="@style/Widget.Marvel.CaptionBox"
+                    android:layout_marginTop="@dimen/space_lg"
+                    android:text="@string/mission_section" />
+
+                <LinearLayout
+                    android:id="@+id/missionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs"
+                    android:orientation="vertical" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_lg"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="3" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Abertura do pacote (por cima de tudo; clicável para nada vazar). -->
+    <FrameLayout
+        android:id="@+id/opening"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F20B0B10"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <View
+            android:id="@+id/flash"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/openingTitle"
+            style="@style/Widget.Marvel.ScreenTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginTop="@dimen/space_xl"
+            android:gravity="center" />
+
+        <include
+            android:id="@+id/bigPack"
+            layout="@layout/view_pack"
+            android:layout_width="@dimen/pack_large_width"
+            android:layout_height="@dimen/pack_large_height"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/openingHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/space_xl"
+            android:text="@string/album_how_to_open"
+            android:textColor="@color/text_secondary" />
+
+        <LinearLayout
+            android:id="@+id/openedCards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_xl"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/cardsTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/cardsBottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </LinearLayout>
+
+        <!-- Fora do grupo das cartas: elas inclinam com o celular, o botão fica parado. -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/keepButton"
+            style="@style/Widget.Marvel.ComicButton"
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_margin="@dimen/space_xl"
+            android:text="@string/album_keep"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!-- Carta em 3D: frente (trading card) e verso (informações); gira com o dedo e o celular. -->
+    <FrameLayout
+        android:id="@+id/viewer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F20B0B10"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <!-- Carta em cima e, embaixo, o painel de melhorias (pontos e dourada). -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/viewer_scroll_top"
+            android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_lg"
+            android:paddingTop="@dimen/space_lg"
+            android:paddingBottom="@dimen/space_xl">
+
+        <!-- Palco da carta: a aura (brilho, raios e faíscas) atrás, maior que ela. -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/aura_size"
+            android:clipChildren="false">
+
+        <com.projeto.marvel.ui.album.AuraView
+            android:id="@+id/aura"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no" />
+
+        <FrameLayout
+            android:id="@+id/viewerCard"
+            android:layout_width="@dimen/viewer_card_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <include
+                android:id="@+id/viewerFront"
+                layout="@layout/item_trading_card" />
+
+            <!-- Verso: mesma medida da frente (preenche a moldura). -->
+            <LinearLayout
+                android:id="@+id/viewerBack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/space_xs"
+                android:background="@drawable/bg_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/space_md"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/backNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/ink"
+                    android:fontFamily="@font/bebas_neue"
+                    android:paddingHorizontal="@dimen/space_sm"
+                    android:textColor="@color/accent"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/backName"
+                    style="@style/Widget.Marvel.H2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/backInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:gravity="center"
+                    android:lineSpacingExtra="4dp"
+                    android:textColor="@color/text_primary" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/backOpen"
+                    style="@style/Widget.Marvel.ComicButton"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/space_md"
+                    android:text="@string/look_alike_open" />
+            </LinearLayout>
+        </FrameLayout>
+        </FrameLayout>
+
+        <!-- Fechado por padrão: o painel só abre ao tocar para editar. -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/upgradeToggle"
+            style="@style/Widget.Marvel.ComicButton.Secondary"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/space_md" />
+
+        <LinearLayout
+            android:id="@+id/upgradePanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:visibility="gone"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="@dimen/space_md">
+
+            <TextView
+                android:id="@+id/upgradeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bebas_neue"
+                android:textColor="@color/accent"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/upgradeHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/upgradeRows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:orientation="vertical" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/evolveButton"
+                style="@style/Widget.Marvel.ComicButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_md" />
+        </LinearLayout>
+        </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="@dimen/viewer_hint_top"
+            android:text="@string/album_viewer_hint"
+            android:textColor="@color/text_secondary" />
+
+        <ImageButton
+            android:id="@+id/viewerClose"
+            android:layout_width="@dimen/touch_target"
+            android:layout_height="@dimen/touch_target"
+            android:layout_gravity="top|end"
+            android:layout_margin="@dimen/space_md"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/album_viewer_close"
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_primary" />
+    </FrameLayout>
+</FrameLayout>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Detalhe de criador ou filme: mesma estrutura do Detalhe do Personagem (imagem, números, narração, personagens). -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="@dimen/touch_target"
+        android:layout_height="@dimen/touch_target"
+        android:layout_marginStart="@dimen/space_sm"
+        android:layout_marginTop="@dimen/space_sm"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/content_description_back"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButton">
+
+        <LinearLayout
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_lg"
+            android:paddingBottom="@dimen/space_xl">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/info_image_width"
+                android:layout_height="@dimen/info_image_height"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_card"
+                android:clipToOutline="true"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/Widget.Marvel.H1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:gravity="center"
+                tools:text="Stan Lee" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                style="@style/Widget.Marvel.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                android:gravity="center"
+                tools:text="New York City · United States" />
+
+            <!-- Números preenchidos em código (a quantidade varia: filme tem 4, criador 2 ou 3). -->
+            <LinearLayout
+                android:id="@+id/stats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_lg"
+                android:background="@drawable/bg_card"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/space_md"
+                android:visibility="gone" />
+
+            <!-- Só em filmes: avaliar (estante de filmes do Perfil). -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/rateButton"
+                style="@style/Widget.Marvel.ComicButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_lg"
+                android:visibility="gone" />
+
+            <!-- Só em lugares reais: abre no app de mapas. -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mapButton"
+                style="@style/Widget.Marvel.ComicButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/info_map"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/aboutTitle"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/detail_section_about"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/description"
+                style="@style/Widget.Marvel.Narration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:maxLines="12"
+                android:ellipsize="end"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/charactersTitle"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/characters"
+                style="@style/Widget.Marvel.Carousel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/space_lg"
+        android:textColor="@color/text_secondary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

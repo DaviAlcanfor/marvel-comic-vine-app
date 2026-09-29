@@ -4,6 +4,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.tasks.await
 
+data class UserProfile(val uid: String, val name: String?, val email: String?, val photoUrl: String?)
+
 /** Login no Firebase Auth (e-mail/senha ou Google). A sessão fica salva pelo próprio Firebase. */
 class AuthRepository {
 
@@ -13,6 +15,12 @@ class AuthRepository {
 
     val isLoggedIn: Boolean
         get() = runCatching { auth.currentUser != null }.getOrDefault(false)
+
+    /** Usuário logado (null sem login ou sem Firebase configurado). */
+    val currentUser: UserProfile?
+        get() = runCatching { auth.currentUser }.getOrNull()?.let {
+            UserProfile(it.uid, it.displayName, it.email, it.photoUrl?.toString())
+        }
 
     suspend fun signIn(email: String, password: String): Result<Unit> =
         runCatching { auth.signInWithEmailAndPassword(email, password).await() }.map { }

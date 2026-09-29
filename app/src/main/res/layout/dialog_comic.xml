@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Diálogo da HQ (busca e estante): status de leitura, nota e resenha. Nota/resenha só em "Já li". -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/space_lg"
+    android:paddingTop="@dimen/space_md">
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/statusGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <Button
+            android:id="@+id/wantButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reading_status_want" />
+
+        <Button
+            android:id="@+id/readingButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reading_status_reading" />
+
+        <Button
+            android:id="@+id/readButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reading_status_read" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="?android:attr/ratingBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/space_md"
+        android:numStars="5"
+        android:progressTint="@color/accent"
+        android:stepSize="1" />
+
+    <EditText
+        android:id="@+id/reviewInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:background="@drawable/bg_input"
+        android:gravity="top|start"
+        android:hint="@string/comics_review_hint"
+        android:importantForAutofill="no"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLength="1000"
+        android:minLines="3"
+        android:padding="@dimen/space_md"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
+
+</LinearLayout>

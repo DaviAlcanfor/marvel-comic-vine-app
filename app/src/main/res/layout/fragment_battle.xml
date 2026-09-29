@@ -8,6 +8,17 @@
     android:padding="@dimen/space_lg">
 
     <!-- Fundo da arena: linhas de ação de HQ (SpeedLinesDrawable, posto em código). -->
+    <!-- Ringue 3D (OpenGL) atrás de tudo; as linhas de ação e os lutadores ficam por cima. -->
+    <com.projeto.marvel.ui.battle.ArenaView
+        android:id="@+id/arena3d"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toTopOf="@id/movesBarrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBarrier" />
+
     <View
         android:id="@+id/arenaBackdrop"
         android:layout_width="0dp"
@@ -16,7 +27,7 @@
         app:layout_constraintBottom_toTopOf="@id/movesBarrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/topBarrier" />
 
     <ImageButton
         android:id="@+id/backButton"
@@ -56,6 +67,67 @@
         app:layout_constraintTop_toTopOf="@id/title"
         tools:text="3V · 1D" />
 
+    <!-- 2 jogadores: golpes do P2 em cima, virados para quem está do outro lado da mesa. -->
+    <LinearLayout
+        android:id="@+id/p2Moves"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:orientation="vertical"
+        android:rotation="180"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/p2Ultimate"
+            style="@style/Widget.Marvel.UltimateButton"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/p2Move1"
+                style="@style/Widget.Marvel.MoveButton"
+                android:layout_marginEnd="@dimen/space_xs" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/p2Move2"
+                style="@style/Widget.Marvel.MoveButton"
+                android:layout_marginStart="@dimen/space_xs" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/p2Move3"
+                style="@style/Widget.Marvel.MoveButton"
+                android:layout_marginEnd="@dimen/space_xs" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/p2Move4"
+                style="@style/Widget.Marvel.MoveButton"
+                android:layout_marginStart="@dimen/space_xs" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/topBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="title,p2Moves" />
+
     <!-- Adversário: canto superior esquerdo -->
 
     <ImageView
@@ -68,7 +140,7 @@
         android:importantForAccessibility="no"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/topBarrier" />
 
     <TextView
         android:id="@+id/cpuPopup"
@@ -100,12 +172,23 @@
         app:layout_constraintStart_toStartOf="@id/cpuName"
         app:layout_constraintTop_toBottomOf="@id/cpuName" />
 
+    <!-- Barra de energia da ultimate (enche com dano causado e recebido). -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/cpuEnergyBar"
+        style="@style/Widget.Marvel.EnergyBar"
+        app:layout_constraintEnd_toEndOf="@id/cpuName"
+        app:layout_constraintStart_toStartOf="@id/cpuName"
+        app:layout_constraintTop_toBottomOf="@id/cpuHpBar" />
+
     <TextView
         android:id="@+id/cpuHpText"
+        android:drawableStart="@drawable/ic_heart"
+        android:drawablePadding="@dimen/space_xs"
+        android:gravity="center_vertical"
         style="@style/Widget.Marvel.BattleCaption"
         android:textColor="@color/text_secondary"
         app:layout_constraintStart_toStartOf="@id/cpuName"
-        app:layout_constraintTop_toBottomOf="@id/cpuHpBar"
+        app:layout_constraintTop_toBottomOf="@id/cpuEnergyBar"
         tools:text="87/110" />
 
     <TextView
@@ -115,6 +198,17 @@
         app:layout_constraintStart_toStartOf="@id/cpuName"
         app:layout_constraintTop_toBottomOf="@id/cpuHpText"
         tools:text="Envenenado" />
+
+    <!-- 3×3: o trio rival (ativo primeiro). -->
+    <LinearLayout
+        android:id="@+id/cpuSquad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/cpuName"
+        app:layout_constraintTop_toBottomOf="@id/cpuStatus" />
 
     <!-- Narração do turno -->
 
@@ -185,12 +279,23 @@
         app:layout_constraintStart_toStartOf="@id/playerName"
         app:layout_constraintTop_toBottomOf="@id/playerName" />
 
+    <!-- Barra de energia da ultimate (enche com dano causado e recebido). -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/playerEnergyBar"
+        style="@style/Widget.Marvel.EnergyBar"
+        app:layout_constraintEnd_toEndOf="@id/playerName"
+        app:layout_constraintStart_toStartOf="@id/playerName"
+        app:layout_constraintTop_toBottomOf="@id/playerHpBar" />
+
     <TextView
         android:id="@+id/playerHpText"
+        android:drawableStart="@drawable/ic_heart"
+        android:drawablePadding="@dimen/space_xs"
+        android:gravity="center_vertical"
         style="@style/Widget.Marvel.BattleCaption"
         android:textColor="@color/text_secondary"
         app:layout_constraintEnd_toEndOf="@id/playerName"
-        app:layout_constraintTop_toBottomOf="@id/playerHpBar"
+        app:layout_constraintTop_toBottomOf="@id/playerEnergyBar"
         tools:text="120/130" />
 
     <TextView
@@ -200,6 +305,17 @@
         app:layout_constraintEnd_toEndOf="@id/playerName"
         app:layout_constraintTop_toBottomOf="@id/playerHpText"
         tools:text="Defendendo" />
+
+    <!-- 3×3: o trio do jogador (ativo primeiro). -->
+    <LinearLayout
+        android:id="@+id/playerSquad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/playerName"
+        app:layout_constraintTop_toBottomOf="@id/playerStatus" />
 
     <!-- Golpes (2x2) ou, no fim da luta, revanche -->
 
@@ -218,6 +334,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Aparece quando a barra de energia do jogador enche. -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ultimateButton"
+            style="@style/Widget.Marvel.UltimateButton"
+            android:visibility="gone" />
+
+        <!-- 3×3: troca pelo próximo do trio (gasta a vez). -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/swapButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_sm"
+            android:text="@string/battle_swap"
+            android:textAllCaps="false"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -318,12 +451,223 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Legenda de turno ("TURNO 3 · SUA VEZ!") que salta no meio da arena. -->
+    <TextView
+        android:id="@+id/turnBanner"
+        style="@style/Widget.Marvel.CaptionBox"
+        android:textSize="28sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/arena3d"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/arena3d" />
+
+    <!-- Cena da ultimate: tela escurece e entra o quadro do lutador com o nome do poder. -->
+    <View
+        android:id="@+id/ultimateScrim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0"
+        android:background="@color/scrim"
+        android:clickable="false"
+        android:importantForAccessibility="no"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ultimatePanel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_lg"
+        android:background="@drawable/bg_narration"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_md"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ultimateImage"
+            android:layout_width="@dimen/avatar_size_hero"
+            android:layout_height="@dimen/avatar_size_hero"
+            android:background="@drawable/bg_circle"
+            android:clipToOutline="true"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Widget.Marvel.ScreenTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/battle_ultimate"
+                android:textColor="@color/primary" />
+
+            <TextView
+                android:id="@+id/ultimateName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ink"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Resultado da luta como página de HQ: título em explosão, confronto numa legenda, os números
+         em quadrinhos coloridos e as conquistas num balão. Compartilhar = ícone no canto de cima,
+         longe dos botões (tocava sem querer). -->
+    <FrameLayout
+        android:id="@+id/resultPanel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_lg"
+        android:clipChildren="false"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/rematchButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <LinearLayout
+            android:id="@+id/resultCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:background="@drawable/bg_result_page"
+            android:clipChildren="false"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_md"
+            android:paddingTop="@dimen/space_md"
+            android:paddingBottom="@dimen/space_lg">
+
+            <!-- Troféu 3D (OpenGL), só na vitória. -->
+            <com.projeto.marvel.ui.battle.TrophyView
+                android:id="@+id/resultTrophy"
+                android:layout_width="@dimen/trophy_size"
+                android:layout_height="@dimen/trophy_size"
+                android:importantForAccessibility="no"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/resultTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bebas_neue"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/resultVersus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Quadrinhos dos números, 2 por fileira (montados em código). -->
+            <LinearLayout
+                android:id="@+id/resultRows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:clipChildren="false"
+                android:orientation="vertical" />
+
+            <!-- Conquistas desbloqueadas nesta luta (balão de fala). -->
+            <TextView
+                android:id="@+id/resultAchievements"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/shareResultButton"
+            android:layout_width="@dimen/touch_target"
+            android:layout_height="@dimen/touch_target"
+            android:layout_gravity="top|end"
+            android:layout_marginEnd="@dimen/space_sm"
+            android:background="@drawable/bg_share_bubble"
+            android:contentDescription="@string/result_share_title"
+            android:src="@drawable/ic_share"
+            app:tint="@color/ink" />
+    </FrameLayout>
+
+    <!-- Confete da vitória, por cima de tudo (não recebe toque). -->
+    <com.projeto.marvel.ui.battle.ConfettiView
+        android:id="@+id/confetti"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.Group
         android:id="@+id/arena"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="arenaBackdrop,cpuImage,cpuName,cpuHpBar,cpuHpText,cpuStatus,logText,playerImage,playerName,playerHpBar,playerHpText,playerStatus" />
+        app:constraint_referenced_ids="arena3d,arenaBackdrop,cpuImage,cpuName,cpuHpBar,cpuEnergyBar,cpuHpText,cpuStatus,logText,playerImage,playerName,playerHpBar,playerEnergyBar,playerHpText,playerStatus" />
+
+    <!-- Trilha do time antes de cada luta: onde você está, quem já caiu e o chefe no topo. -->
+    <LinearLayout
+        android:id="@+id/trailOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_screen"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="@dimen/space_lg"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/trailTitle"
+            style="@style/Widget.Marvel.ScreenTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:id="@+id/trailScroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/space_md"
+            android:layout_weight="1">
+
+            <com.projeto.marvel.ui.battle.TrailView
+                android:id="@+id/trailView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/trailFightButton"
+            style="@style/Widget.Marvel.ComicButton"
+            android:layout_width="match_parent"
+            android:text="@string/trail_fight" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -342,6 +686,18 @@
         android:padding="@dimen/space_lg"
         android:textColor="@color/text_secondary"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- VS antes de cada luta (por cima de tudo). -->
+    <include
+        android:id="@+id/versus"
+        layout="@layout/view_versus"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
