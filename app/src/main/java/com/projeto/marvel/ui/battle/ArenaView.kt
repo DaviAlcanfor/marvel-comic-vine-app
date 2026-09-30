@@ -12,6 +12,9 @@ import com.projeto.marvel.R
  * Fundo 3D da arena (ver [ArenaRenderer]). Observa o ciclo de vida da tela: só desenha enquanto
  * ela está visível (GL contínuo gastaria bateria à toa em segundo plano).
  */
+// O contorno do ringue fica mais grosso que o dos cards: é visto de longe e em perspectiva.
+private const val INK_SCALE = 1.5f
+
 class ArenaView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
@@ -25,10 +28,12 @@ class ArenaView @JvmOverloads constructor(
             post = ContextCompat.getColor(context, R.color.accent),
             ropes = intArrayOf(
                 ContextCompat.getColor(context, R.color.primary),
-                ContextCompat.getColor(context, R.color.text_primary),
+                ContextCompat.getColor(context, R.color.white),
                 ContextCompat.getColor(context, R.color.move_water)
-            )
-        )
+            ),
+            ink = ContextCompat.getColor(context, R.color.ink)
+        ),
+        inkWidth = context.resources.getDimension(R.dimen.ink_width) * INK_SCALE
     )
 
     init {

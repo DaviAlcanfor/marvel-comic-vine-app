@@ -249,8 +249,10 @@ data class Fighter(
     val moves: List<Move>,
     val boss: Boolean = false,
     val level: Int = 1,
-    /** Carta dourada no álbum: +5 em tudo e nome dourado na arena. */
-    val golden: Boolean = false
+    /** Carta dourada no álbum: +5 em tudo e entra na luta com meia ultimate. */
+    val golden: Boolean = false,
+    /** Raridade da figurinha (mesma regra do álbum), mostrada na arena. */
+    val rarity: Rarity = Rarity.COMMON
 )
 
 private const val STAT_BASE = 10
@@ -333,5 +335,12 @@ internal fun CharacterSummary.toFighter(): Fighter {
         .sortedBy { it.type.ordinal }
     val withDamage = if (moves.none { it.type in DAMAGING }) listOf(BASIC_STRIKE) + moves else moves
 
-    return Fighter(id, name, image?.mediumUrl, stats + (Stat.FAME to fame), withDamage.take(MAX_MOVES))
+    return Fighter(
+        id,
+        name,
+        image?.mediumUrl,
+        stats + (Stat.FAME to fame),
+        withDamage.take(MAX_MOVES),
+        rarity = rarity(issueAppearances)
+    )
 }

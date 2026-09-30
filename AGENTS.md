@@ -40,7 +40,8 @@ do Personagem, Times) seguindo um design system dark fornecido em
 - **Progressão** (`data/Progression.kt`): só luta quem você tem no álbum; nível = figurinhas
   repetidas (até 10); cada nível dá 8 pontos que o jogador distribui no painel da carta em 3D
   (`UpgradeStore`; os não distribuídos entram divididos por igual). Carta dourada: sorte no pacote
-  (`goldenChance`) ou evoluir juntando 5 figurinhas (gasta 4), +5 em tudo. A CPU vem 2 níveis abaixo do seu time
+  (`goldenChance`) ou evoluir juntando 5 figurinhas (gasta 4), +5 em tudo e entra na luta com meia
+  ultimate (`GOLDEN_START_ENERGY`). Na arena, a moldura do lutador mostra a raridade (`Fighter.rarity`). A CPU vem 2 níveis abaixo do seu time
   e o chefe da trilha no seu nível. A FAMA acelera a barra da ultimate (`BattleUltimate.kt`).
 - **Missões** (`data/Missions.kt`): 3 diárias + 2 semanais sorteadas pela data, pagam pacotes.
   Telas registram eventos com `context.mission(MissionEvent.X)`; evento novo = entra no enum e numa

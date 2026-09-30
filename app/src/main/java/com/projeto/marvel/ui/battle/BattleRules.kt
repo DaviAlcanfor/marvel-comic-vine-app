@@ -65,7 +65,7 @@ data class Combatant(
     val frozen: Boolean = false,
     val freezeImmuneTurns: Int = 0,
     val healsLeft: Int = HEALS_PER_FIGHT,
-    val energy: Int = 0,
+    val energy: Int = if (fighter.golden) GOLDEN_START_ENERGY else 0,
     val guarding: Boolean = false,
     val dodging: Boolean = false
 ) {

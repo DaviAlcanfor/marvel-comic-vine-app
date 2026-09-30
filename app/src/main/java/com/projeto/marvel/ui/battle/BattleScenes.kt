@@ -33,7 +33,6 @@ import com.projeto.marvel.ui.shake
 import com.projeto.marvel.ui.icon
 import com.projeto.marvel.ui.label
 import com.projeto.marvel.ui.photo.shareImage
-import kotlin.random.Random
 
 // Cenas da Batalha além do golpe em si: botões (golpes e ultimate), legenda de turno, destaque
 // de quem age, cena da ultimate e painel de resultado.
@@ -221,10 +220,9 @@ fun FragmentBattleBinding.showTrail(stage: Stage) {
 
 
 /**
- * Caixa de fala da batalha. Na sua vez, legenda dourada; no fim, verde (vitória) ou vermelha.
- * Durante o turno, cada fala sorteia caixa (legenda, balão, explosão), cor, inclinação e um leve
- * deslocamento para o lado de quem age. O sorteio usa o id do evento como semente: a mesma fala
- * não muda de cara se a tela for redesenhada.
+ * Falas do turno com gramática de HQ fixa: golpe comum é balão branco com o rabinho para quem
+ * age; crítico e ultimate estouram numa explosão na cor do golpe; narração (vez do jogador, fim
+ * de luta) é a legenda. O balão pende um pouco para o lado de quem fala.
  */
 fun FragmentBattleBinding.styleLog(game: BattleUiState.Success) {
     val context = root.context
@@ -240,28 +238,22 @@ fun FragmentBattleBinding.styleLog(game: BattleUiState.Success) {
         logText.animate().rotation(0f).translationX(0f).translationY(0f).setDuration(LOG_MOVE_MILLIS)
         return
     }
-    val random = Random(event.id)
     val cpuActs = event.side == Side.CPU
-    logText.comicBox(
-        style = BoxStyle.entries[random.nextInt(BoxStyle.entries.size)],
-        color = ContextCompat.getColor(context, LOG_COLORS[random.nextInt(LOG_COLORS.size)]),
-        tailOnLeft = cpuActs
-    )
-    val towardActor = (if (cpuActs) -LOG_SHIFT_Y_DP else LOG_SHIFT_Y_DP) * density
+    val impact = event.critical || event.outcome == Outcome.ULTIMATE
+    if (impact) {
+        val color = event.moveType?.color ?: R.color.accent
+        logText.comicBox(BoxStyle.BURST, ContextCompat.getColor(context, color))
+    } else {
+        logText.comicBox(BoxStyle.SPEECH, ContextCompat.getColor(context, R.color.paper), tailOnLeft = cpuActs)
+    }
+    val side = if (cpuActs) -1 else 1
     logText.animate()
-        .rotation(random.nextInt(-LOG_MAX_TILT, LOG_MAX_TILT + 1).toFloat())
-        .translationX(random.nextInt(-LOG_MAX_SHIFT_X_DP, LOG_MAX_SHIFT_X_DP + 1) * density)
-        .translationY(towardActor)
+        .rotation(side * LOG_TILT)
+        .translationX(0f)
+        .translationY(side * LOG_SHIFT_Y_DP * density)
         .setDuration(LOG_MOVE_MILLIS)
 }
 
 private const val LOG_MOVE_MILLIS = 180L
-private const val LOG_MAX_TILT = 4
-private const val LOG_MAX_SHIFT_X_DP = 20
+private const val LOG_TILT = 2f
 private const val LOG_SHIFT_Y_DP = 18f
-
-/** Cores das falas: a paleta dos golpes (já testada em contraste) mais o papel. */
-private val LOG_COLORS = listOf(
-    R.color.move_strike, R.color.move_blast, R.color.move_water, R.color.move_heal, R.color.move_magic,
-    R.color.move_dodge, R.color.move_freeze, R.color.move_poison, R.color.move_drain, R.color.paper
-)

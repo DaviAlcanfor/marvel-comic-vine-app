@@ -82,4 +82,7 @@
     <dimen name="medal_size">60dp</dimen>
     <!-- Folga no fim de telas roláveis para o último item não ficar embaixo do Geek (FAB 56dp + margem). -->
     <dimen name="fab_clearance">88dp</dimen>
+    <!-- Moldura do lutador na cor da raridade (a dourada é mais grossa). -->
+    <dimen name="rarity_ring">6dp</dimen>
+    <dimen name="rarity_ring_golden">9dp</dimen>
 </resources>

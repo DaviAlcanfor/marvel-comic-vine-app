@@ -14,8 +14,9 @@ import kotlin.math.sin
 import kotlin.random.Random
 
 // Ringue octogonal em 3D (OpenGL ES 2.0 do próprio Android: nada de biblioteca 3D, que traria o
-// Compose junto). Piso com retícula de HQ, saia vermelha, postes e cordas; câmera girando devagar
-// em volta e tremendo nos impactos. Os lutadores continuam 2D por cima (não há modelos 3D deles).
+// Compose junto). Piso com retícula de HQ e estrela no centro, saia, postes com almofadas e cordas,
+// tudo contornado de nanquim; câmera girando devagar em volta e tremendo nos impactos. Os
+// lutadores continuam 2D por cima (não há modelos 3D deles).
 
 private const val SIDES = 8
 private const val RING_RADIUS = 3f
@@ -40,16 +41,26 @@ private const val FLOATS_PER_VERTEX = 6
 private const val POSITION_FLOATS = 3
 private const val MATRIX_FLOATS = 16
 private const val BYTES_PER_FLOAT = 4
-private const val CENTER_LIGHTEN = 1.35f
+private const val CENTER_LIGHTEN = 1.6f
+private const val PAD_HEIGHT = 0.22f
+private const val PAD_WIDTH = 0.26f
+private const val STAR_POINTS = 5
+private const val STAR_OUTER = 1.1f
+private const val STAR_INNER = 0.45f
+private const val DECAL_LIFT = 0.01f
 private const val CHANNEL_MAX = 255f
 private const val RED_SHIFT = 16
 private const val GREEN_SHIFT = 8
 private const val CHANNEL_MASK = 0xFF
 
-/** Cores do tema (ARGB) passadas pela View; o renderer não conhece resources. */
-class ArenaColors(val background: Int, val floor: Int, val skirt: Int, val post: Int, val ropes: IntArray)
+/**
+ * Cores do tema (ARGB) passadas pela View; o renderer não conhece resources. A estrela do piso usa
+ * a cor dos postes e as almofadas alternam a primeira e a última corda (canto do jogador / da CPU).
+ */
+class ArenaColors(val background: Int, val floor: Int, val skirt: Int, val post: Int, val ropes: IntArray, val ink: Int)
 
-class ArenaRenderer(private val colors: ArenaColors) : GLSurfaceView.Renderer {
+/** [inkWidth]: espessura do contorno de nanquim, em pixels. */
+class ArenaRenderer(private val colors: ArenaColors, private val inkWidth: Float) : GLSurfaceView.Renderer {
 
     private var program = 0
     private val mvp = FloatArray(MATRIX_FLOATS)
@@ -57,8 +68,12 @@ class ArenaRenderer(private val colors: ArenaColors) : GLSurfaceView.Renderer {
     private val view = FloatArray(MATRIX_FLOATS)
     private lateinit var floor: FloatBuffer
     private lateinit var solids: FloatBuffer
+    private lateinit var star: FloatBuffer
+    private lateinit var outlines: FloatBuffer
     private var floorVertices = 0
     private var solidVertices = 0
+    private var starVertices = 0
+    private var outlineVertices = 0
 
     @Volatile private var shakeUntil = 0L
 
@@ -75,9 +90,16 @@ class ArenaRenderer(private val colors: ArenaColors) : GLSurfaceView.Renderer {
         val floorData = floorFan()
         floor = buffer(floorData)
         floorVertices = floorData.size / FLOATS_PER_VERTEX
-        val solidData = skirt() + posts() + ropes()
+        val solidData = skirt() + posts() + pads() + ropes()
         solids = buffer(solidData)
         solidVertices = solidData.size / FLOATS_PER_VERTEX
+        val starData = starFan(colors.post)
+        star = buffer(starData)
+        starVertices = starData.size / FLOATS_PER_VERTEX
+        val outlineData = outlines(colors.ink)
+        outlines = buffer(outlineData)
+        outlineVertices = outlineData.size / FLOATS_PER_VERTEX
+        GLES20.glLineWidth(inkWidth)
     }
 
     override fun onSurfaceChanged(unused: GL10?, width: Int, height: Int) {
@@ -104,7 +126,9 @@ class ArenaRenderer(private val colors: ArenaColors) : GLSurfaceView.Renderer {
         GLES20.glUniform1f(halftone, 1f)
         draw(floor, GLES20.GL_TRIANGLE_FAN, floorVertices)
         GLES20.glUniform1f(halftone, 0f)
+        draw(star, GLES20.GL_TRIANGLE_FAN, starVertices)
         draw(solids, GLES20.GL_TRIANGLES, solidVertices)
+        draw(outlines, GLES20.GL_LINES, outlineVertices)
     }
 
     private fun draw(data: FloatBuffer, mode: Int, count: Int) {
@@ -143,6 +167,16 @@ class ArenaRenderer(private val colors: ArenaColors) : GLSurfaceView.Renderer {
             quad(floatArrayOf(x, 0f, z - half), floatArrayOf(x, 0f, z + half), POST_HEIGHT, color)
     }.toFloatArray()
 
+    /** Almofada no alto de cada poste, alternando a cor do canto do jogador e da CPU. */
+    private fun pads(): FloatArray = (0 until SIDES).flatMap { i ->
+        val (x, z) = corner(i, RING_RADIUS, 0f).let { it[0] to it[2] }
+        val color = rgb(if (i % 2 == 0) colors.ropes.first() else colors.ropes.last())
+        val half = PAD_WIDTH / 2
+        val bottom = POST_HEIGHT - PAD_HEIGHT
+        quad(floatArrayOf(x - half, bottom, z), floatArrayOf(x + half, bottom, z), PAD_HEIGHT, color) +
+            quad(floatArrayOf(x, bottom, z - half), floatArrayOf(x, bottom, z + half), PAD_HEIGHT, color)
+    }.toFloatArray()
+
     /** Três cordas (cores alternadas) ligando os postes. */
     private fun ropes(): FloatArray = ROPE_HEIGHTS.withIndex().flatMap { (level, height) ->
         val color = rgb(colors.ropes[level % colors.ropes.size])
@@ -153,6 +187,32 @@ class ArenaRenderer(private val colors: ArenaColors) : GLSurfaceView.Renderer {
 }
 
 private const val MILLIS_PER_SECOND = 1000f
+
+/** Estrela no centro do piso (logo do ringue), um pouco acima para não brigar com o piso. */
+private fun starFan(argb: Int): FloatArray {
+    val color = rgb(argb).toList()
+    val points = (0..STAR_POINTS * 2).flatMap { i ->
+        val radius = if (i % 2 == 0) STAR_OUTER else STAR_INNER
+        val angle = i * Math.PI / STAR_POINTS - Math.PI / 2
+        listOf((radius * cos(angle)).toFloat(), DECAL_LIFT, (radius * sin(angle)).toFloat()) + color
+    }
+    return (listOf(0f, DECAL_LIFT, 0f) + color + points).toFloatArray()
+}
+
+/** Contorno de nanquim (pares de pontos, GL_LINES): borda do piso, da saia e dos postes. */
+private fun outlines(argb: Int): FloatArray {
+    val ink = rgb(argb).toList()
+    fun line(a: FloatArray, b: FloatArray) = a.toList() + ink + b.toList() + ink
+    return (0 until SIDES).flatMap { i ->
+        val top = corner(i, RING_RADIUS, DECAL_LIFT)
+        val next = corner(i + 1, RING_RADIUS, DECAL_LIFT)
+        val bottom = corner(i, RING_RADIUS, -SKIRT_DEPTH)
+        val nextBottom = corner(i + 1, RING_RADIUS, -SKIRT_DEPTH)
+        val postTop = corner(i, RING_RADIUS, POST_HEIGHT)
+        line(top, next) + line(bottom, nextBottom) + line(top, bottom) + line(top, postTop)
+    }.toFloatArray()
+}
+
 
 private fun jitter(amount: Float) = if (amount == 0f) 0f else (Random.nextFloat() * 2 - 1) * amount
 

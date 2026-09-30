@@ -212,9 +212,9 @@
     <string name="upgrade_hint">Cada nível dá 8 pontos. Os que você não distribuir entram divididos por igual.</string>
     <string name="upgrade_loading">Carregando atributos…</string>
     <string name="upgrade_evolve">Evoluir para dourada (%1$d figurinhas)</string>
-    <string name="upgrade_evolve_missing">Dourada: %2$d de %1$d figurinhas</string>
-    <string name="upgrade_golden">✦ Dourada: +5 em tudo</string>
-    <string name="upgrade_evolved">✦ %1$s virou dourada!</string>
+    <string name="upgrade_evolve_missing">Dourada (+5 em tudo e meia ultimate): %2$d de %1$d figurinhas</string>
+    <string name="upgrade_golden">✦ Dourada: +5 em tudo e começa a luta com meia ultimate</string>
+    <string name="upgrade_evolved">✦ %1$s virou dourada! +5 em tudo e meia ultimate no começo da luta.</string>
     <string name="mission_section">Missões</string>
     <string name="mission_daily">Hoje</string>
     <string name="mission_weekly">Semana</string>
@@ -371,7 +371,7 @@
     <string name="battle_restart_gauntlet">Recomeçar a trilha</string>
     <string name="battle_stage">Luta %1$d/%2$d</string>
     <string name="battle_stage_boss">Chefe · %1$d/%2$d</string>
-    <string name="battle_boss_name">★ %1$s</string>
+    <string name="battle_boss_name">%1$s (chefe)</string>
     <string name="trail_done">✓ %1$s</string>
     <string name="trail_title">Trilha: %1$s</string>
     <string name="trail_fight">Lutar!</string>

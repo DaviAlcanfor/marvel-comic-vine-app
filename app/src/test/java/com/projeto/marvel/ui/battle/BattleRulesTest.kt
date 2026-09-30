@@ -37,6 +37,12 @@ class BattleRulesTest {
     )
 
     @Test
+    fun `carta dourada entra na luta com meia ultimate`() {
+        assertEquals(ENERGY_MAX / 2, Combatant(fighter().copy(golden = true)).energy)
+        assertEquals(0, Combatant(fighter()).energy)
+    }
+
+    @Test
     fun `soco tira mais dano com mais ataque e defesa vira vida`() {
         // 14 * (100 + 50)% = 21; vida = 100 + DEF
         val result = resolve(punch, Combatant(fighter()), Combatant(fighter(defense = 30)), roll = hitRoll)

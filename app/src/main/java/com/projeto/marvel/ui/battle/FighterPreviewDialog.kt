@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import coil.load
@@ -15,6 +16,9 @@ import com.projeto.marvel.data.Stat
 import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.databinding.DialogFighterPreviewBinding
 import com.projeto.marvel.databinding.ItemStatBarBinding
+import com.projeto.marvel.ui.album.badged
+import com.projeto.marvel.ui.album.rarityRing
+import com.projeto.marvel.ui.album.ringPadding
 import com.projeto.marvel.ui.color
 import com.projeto.marvel.ui.icon
 import com.projeto.marvel.ui.label
@@ -65,6 +69,9 @@ fun Fragment.showFighterPreview(
 
 private fun DialogFighterPreviewBinding.bindFighter(fighter: Fighter) {
     val context = root.context
+    name.text = fighter.badged(name.text.toString())
+    image.background = fighter.rarityRing(context)
+    image.setPadding(fighter.ringPadding(context))
     hp.text = context.getString(R.string.battle_preview_hp, fighter.maxHp())
     stats.removeAllViews()
     SHOWN_STATS.forEach { (stat, labelRes) ->

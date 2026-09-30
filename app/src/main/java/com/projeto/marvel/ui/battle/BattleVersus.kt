@@ -15,6 +15,9 @@ import com.projeto.marvel.R
 import com.projeto.marvel.databinding.FragmentBattleBinding
 import com.projeto.marvel.ui.BoxStyle
 import com.projeto.marvel.ui.BurstDrawable
+import com.projeto.marvel.ui.album.badged
+import com.projeto.marvel.ui.album.cardMetal
+import com.projeto.marvel.ui.album.metalBackground
 import com.projeto.marvel.ui.comicBox
 import com.projeto.marvel.ui.compare.bindComparison
 import com.projeto.marvel.ui.compare.fighterRows
@@ -44,8 +47,15 @@ fun FragmentBattleBinding.showVersus(game: BattleUiState.Success) {
     }
     v.versusLeftImage.load(game.player.fighter.imageUrl) { crossfade(true) }
     v.versusRightImage.load(game.cpu.fighter.imageUrl) { crossfade(true) }
-    v.versusLeftName.text = game.player.fighter.name
-    v.versusRightName.text = game.cpu.fighter.name
+    v.versusLeftName.text = game.player.fighter.badged(game.player.fighter.name)
+    v.versusRightName.text = game.cpu.fighter.badged(game.cpu.fighter.name)
+    // Moldura da carta na raridade (a dourada em ouro), como no álbum.
+    val ring = v.root.resources.getDimensionPixelSize(R.dimen.rarity_ring)
+    val portraits = listOf(v.versusLeftImage to game.player.fighter, v.versusRightImage to game.cpu.fighter)
+    portraits.forEach { (image, fighter) ->
+        image.background = fighter.cardMetal.metalBackground(v.root.context)
+        image.setPadding(ring, ring, ring, ring)
+    }
     v.versusLeftSquad.bindSquad(game.playerBench)
     v.versusRightSquad.bindSquad(game.cpuBench)
     bindComparison(v.versusRows, fighterRows(game.player.fighter, game.cpu.fighter))

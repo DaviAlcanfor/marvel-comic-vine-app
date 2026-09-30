@@ -11,6 +11,9 @@ import com.projeto.marvel.data.Stat
 
 internal const val ENERGY_MAX = 100
 internal const val ENERGY_TAKEN_DIVISOR = 2
+
+/** Carta dourada entra na luta com meia barra: é o que ela tem de próprio, além do +5 em tudo. */
+internal const val GOLDEN_START_ENERGY = ENERGY_MAX / 2
 private const val ULTIMATE_MULTIPLIER = 2
 
 /**

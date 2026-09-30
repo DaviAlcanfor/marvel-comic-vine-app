@@ -7,6 +7,7 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import coil.load
 import com.projeto.marvel.R
+import com.projeto.marvel.data.Fighter
 import com.projeto.marvel.data.Rarity
 import com.projeto.marvel.databinding.ItemTradingCardBinding
 
@@ -39,6 +40,26 @@ fun Rarity.auraColor() = when (this) {
     Rarity.RARE -> R.color.card_rare_light
     Rarity.LEGENDARY -> R.color.card_legendary_light
 }
+
+/** Metal da carta do lutador: a dourada é sempre ouro; as outras, o da raridade. */
+val Fighter.cardMetal get() = if (golden) Rarity.LEGENDARY else rarity
+
+/** Moldura redonda do lutador (arena, prévia): metal da carta com contorno de nanquim. */
+fun Fighter.rarityRing(context: Context) = GradientDrawable().apply {
+    shape = GradientDrawable.OVAL
+    setColor(ContextCompat.getColor(context, cardMetal.metal().first))
+    setStroke(context.resources.getDimensionPixelSize(R.dimen.ink_width), ContextCompat.getColor(context, R.color.ink))
+}
+
+/** Espessura da moldura: a dourada é mais grossa. */
+fun Fighter.ringPadding(context: Context) =
+    context.resources.getDimensionPixelSize(if (golden) R.dimen.rarity_ring_golden else R.dimen.rarity_ring)
+
+/** Selo antes do nome, como no álbum: estrelas da raridade, ou "✦" na dourada. */
+fun Fighter.badged(name: String) = (if (golden) GOLDEN_MARK else STAR.repeat(rarity.ordinal + 1)) + " " + name
+
+private const val GOLDEN_MARK = "✦"
+private const val STAR = "★"
 
 /** Metal da raridade com contorno de nanquim: frente da carta e o verso da carta em 3D. */
 fun Rarity.metalBackground(context: Context): GradientDrawable {
