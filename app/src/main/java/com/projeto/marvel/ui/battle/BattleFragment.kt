@@ -23,7 +23,6 @@ import com.projeto.marvel.data.MoveType
 import com.projeto.marvel.databinding.FragmentBattleBinding
 import com.projeto.marvel.ui.SpeedLinesDrawable
 import com.projeto.marvel.ui.album.badged
-import com.projeto.marvel.ui.album.rarityRing
 import com.projeto.marvel.ui.color
 import com.projeto.marvel.ui.comicInterpolator
 import com.projeto.marvel.ui.fadeVisible
@@ -171,7 +170,8 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
         if (views.image.tag != combatant.fighter.imageUrl) {
             views.image.tag = combatant.fighter.imageUrl
             views.image.load(combatant.fighter.imageUrl) { crossfade(true) }
-            views.image.foreground = combatant.fighter.rarityRing(requireContext())
+            views.aura.setRarity(combatant.fighter.rarity, combatant.fighter.golden)
+            views.aura.follow(views.image)
         }
         val name = if (combatant.fighter.boss) {
             getString(R.string.battle_boss_name, combatant.fighter.name)
@@ -284,6 +284,7 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
 private class FighterViews(private val binding: FragmentBattleBinding, side: Side) {
     private val isPlayer = side == Side.PLAYER
     val image get() = if (isPlayer) binding.playerImage else binding.cpuImage
+    val aura get() = if (isPlayer) binding.playerAura else binding.cpuAura
     val popup get() = if (isPlayer) binding.playerPopup else binding.cpuPopup
     val burst get() = if (isPlayer) binding.playerBurst else binding.cpuBurst
     val name get() = if (isPlayer) binding.playerName else binding.cpuName

@@ -2,7 +2,6 @@ package com.projeto.marvel.ui.album
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.View
@@ -52,30 +51,8 @@ private fun Sticker.badge(context: Context, revealed: Boolean): CharSequence =
 private const val DIVINE_MARK = "✦"
 private const val STAR = "★"
 
-/** Cor da aura atrás da carta em 3D. */
-@ColorRes
-fun Rarity.auraColor() = when (this) {
-    Rarity.COMMON -> R.color.card_common_light
-    Rarity.RARE -> R.color.card_rare_light
-    Rarity.LEGENDARY -> R.color.card_legendary_light
-}
-
 /** Metal da carta do lutador: a Divina é sempre ouro; as outras, o da raridade. */
 val Fighter.cardMetal get() = if (golden) Rarity.LEGENDARY else rarity
-
-/**
- * Anel do lutador POR CIMA da foto (foreground; como fundo + padding a foto quadrada aparece com
- * os cantos): metal da carta por dentro e contorno de nanquim por fora.
- */
-fun Fighter.rarityRing(context: Context): LayerDrawable {
-    val ink = context.resources.getDimensionPixelSize(R.dimen.ink_width)
-    fun ring(color: Int, width: Int) = GradientDrawable().apply {
-        shape = GradientDrawable.OVAL
-        setStroke(width, ContextCompat.getColor(context, color))
-    }
-    val metal = ring(cardMetal.metal().first, context.resources.getDimensionPixelSize(R.dimen.rarity_ring))
-    return LayerDrawable(arrayOf(ring(R.color.ink, ink), metal)).apply { setLayerInset(1, ink, ink, ink, ink) }
-}
 
 /** Nome com o selo de raridade na frente (arena, VS, prévia). */
 fun Fighter.badged(context: Context, name: String) = rarityBadge(context, rarity, golden, name)

@@ -28,6 +28,9 @@ fun ItemStickerBinding.bind(sticker: Sticker) {
     image.visibility = if (owned) View.VISIBLE else View.INVISIBLE
     missing.visibility = if (owned) View.GONE else View.VISIBLE
     if (owned) image.load(sticker.character.image?.mediumUrl) { crossfade(true) } else image.setImageDrawable(null)
+    shine.visibility = if (owned && sticker.golden) View.VISIBLE else View.GONE
+    shine.compact = true
+    shine.setRarity(sticker.rarity, sticker.golden)
     name.text = if (owned) rarityBadge(context, sticker.rarity, sticker.golden, sticker.character.name) else "?"
     number.text = context.getString(R.string.album_number, sticker.number)
     count.visibility = if (sticker.count > 1) View.VISIBLE else View.GONE

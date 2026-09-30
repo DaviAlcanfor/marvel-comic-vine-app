@@ -175,9 +175,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     /** Figurinha tocada na grade: grande, em 3D, com o verso de informações. */
     private fun showCard(binding: FragmentAlbumBinding, sticker: Sticker, animate: Boolean) {
         binding.viewerFront.bind(sticker, revealed = true, large = true)
-        // Aura na cor da carta: Divina/lendária em ouro, rara em azul, comum em prata.
-        val auraMetal = if (sticker.golden) Rarity.LEGENDARY else sticker.rarity
-        binding.aura.setAuraColor(ContextCompat.getColor(requireContext(), auraMetal.auraColor()))
+        binding.aura.setRarity(sticker.rarity, sticker.golden)
         // Verso no mesmo metal da frente, com texto escuro (o metal é claro).
         binding.viewerBack.background = sticker.rarity.metalBackground(requireContext())
         val ink = ContextCompat.getColor(requireContext(), R.color.ink)

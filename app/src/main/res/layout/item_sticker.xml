@@ -31,6 +31,14 @@
             android:textSize="32sp"
             android:textStyle="bold" />
 
+        <!-- Divina: brilhos arco-íris piscando por cima da foto (só nela; em código). -->
+        <com.projeto.marvel.ui.album.AuraView
+            android:id="@+id/shine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no"
+            android:visibility="gone" />
+
         <!-- Número da figurinha no álbum (#07), como nas de banca. -->
         <TextView
             android:id="@+id/number"

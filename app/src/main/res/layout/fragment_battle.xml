@@ -130,6 +130,17 @@
 
     <!-- Adversário: canto superior esquerdo -->
 
+    <!-- Aura da raridade (partículas/raios) em volta do lutador; segue a foto (BattleFragment). -->
+    <com.projeto.marvel.ui.album.AuraView
+        android:id="@+id/cpuAura"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/cpuImage"
         android:layout_width="@dimen/fighter_size"
@@ -236,6 +247,17 @@
         tools:text="Spider-Man usou Wall Crawling! −12" />
 
     <!-- Jogador: canto inferior direito -->
+
+    <!-- Aura da raridade (partículas/raios) em volta do lutador; segue a foto (BattleFragment). -->
+    <com.projeto.marvel.ui.album.AuraView
+        android:id="@+id/playerAura"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/playerImage"
@@ -640,7 +662,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="arena3d,arenaBackdrop,cpuImage,cpuName,cpuHpBar,cpuEnergyBar,cpuHpText,cpuStatus,logText,playerImage,playerName,playerHpBar,playerEnergyBar,playerHpText,playerStatus" />
+        app:constraint_referenced_ids="arena3d,arenaBackdrop,cpuAura,playerAura,cpuImage,cpuName,cpuHpBar,cpuEnergyBar,cpuHpText,cpuStatus,logText,playerImage,playerName,playerHpBar,playerEnergyBar,playerHpText,playerStatus" />
 
     <!-- Trilha do time antes de cada luta: onde você está, quem já caiu e o chefe no topo. -->
     <LinearLayout
