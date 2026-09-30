@@ -350,10 +350,52 @@
 
     <!-- Barra inferior do Design_System.svg: fundo surface, ativo em dourado, sem "pílula" do M3. -->
     <style name="Widget.Marvel.BottomNav" parent="Widget.Material3.BottomNavigationView">
-        <item name="android:background">@color/surface</item>
+        <item name="android:background">@drawable/bg_bottom_nav</item>
+        <!-- Sem o tint de surfaceContainer do M3, que deixava a barra rosada no tema claro. -->
+        <item name="backgroundTint">@null</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.Marvel.NavActive</item>
         <item name="itemIconTint">@color/bottom_nav_item</item>
         <item name="itemTextColor">@color/bottom_nav_item</item>
         <item name="itemActiveIndicatorStyle">@style/Widget.Marvel.BottomNav.ActiveIndicator</item>
+    </style>
+
+    <style name="TextAppearance.Marvel.NavActive" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.04</item>
+    </style>
+
+    <!-- Abas (Descobrir): a ativa é uma plaquinha dourada de HQ, texto em Bebas. -->
+    <style name="Widget.Marvel.Tabs" parent="Widget.Material3.TabLayout">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="tabGravity">start</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabIndicator">@drawable/bg_tab_indicator</item>
+        <!-- Transparente = o TabLayout não tinge o indicador (mantém dourado + nanquim). -->
+        <item name="tabIndicatorColor">@android:color/transparent</item>
+        <item name="tabIndicatorGravity">stretch</item>
+        <item name="tabIndicatorFullWidth">true</item>
+        <item name="tabIndicatorAnimationMode">elastic</item>
+        <item name="tabSelectedTextColor">@color/ink</item>
+        <item name="tabTextColor">@color/text_secondary</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Marvel.Tab</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="tabMinWidth">0dp</item>
+        <!-- Recuo das telas; clipToPadding false: as abas rolam por baixo do recuo. -->
+        <item name="android:paddingStart">@dimen/space_md</item>
+        <item name="android:paddingEnd">@dimen/space_md</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="tabPaddingStart">@dimen/space_md</item>
+        <item name="tabPaddingEnd">@dimen/space_md</item>
+    </style>
+
+    <style name="TextAppearance.Marvel.Tab" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="Widget.Marvel.BottomNav.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">

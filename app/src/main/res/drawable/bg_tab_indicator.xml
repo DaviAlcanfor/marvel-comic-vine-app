@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aba ativa como plaquinha de HQ: dourada com contorno de nanquim (TabLayout estica na aba). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/accent" />
+    <stroke
+        android:width="@dimen/ink_width"
+        android:color="@color/ink" />
+    <corners android:radius="@dimen/radius_small" />
+</shape>
