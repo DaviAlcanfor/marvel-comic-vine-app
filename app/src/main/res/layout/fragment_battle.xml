@@ -540,8 +540,8 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Resultado da luta como página de HQ: título em explosão, confronto numa legenda, os números
-         em quadrinhos coloridos e as conquistas num balão. Compartilhar = ícone no canto de cima,
+    <!-- Resultado da luta num painel padrão (contorno e sombra dura, como os diálogos): título em
+         explosão, confronto numa legenda, os números como os do Perfil e as conquistas num balão. Compartilhar = ícone no canto de cima,
          longe dos botões (tocava sem querer). -->
     <FrameLayout
         android:id="@+id/resultPanel"
@@ -560,7 +560,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_md"
-            android:background="@drawable/bg_result_page"
+            android:background="@drawable/bg_dialog"
             android:clipChildren="false"
             android:gravity="center_horizontal"
             android:orientation="vertical"
@@ -591,7 +591,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <!-- Quadrinhos dos números, 2 por fileira (montados em código). -->
+            <!-- Números, 3 por fileira (montados em código). -->
             <LinearLayout
                 android:id="@+id/resultRows"
                 android:layout_width="match_parent"

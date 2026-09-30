@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Um número do resumo da luta como quadrinho: cor e inclinação em código, contador sobe animado. -->
+<!-- Um número do resumo da luta, no padrão dos números do Perfil: valor dourado em Bebas com o
+     ícone ao lado e o rótulo embaixo. O contador sobe animado (BattleResult.kt). -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/space_xs"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="vertical"
+    style="@style/Widget.Marvel.Stat"
     android:paddingVertical="@dimen/space_sm">
 
     <TextView
         android:id="@+id/value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/bebas_neue"
-        android:textSize="34sp"
+        style="@style/Widget.Marvel.StatValue"
         android:drawablePadding="@dimen/space_xs"
+        android:drawableTint="@color/text_secondary"
         android:gravity="center_vertical"
         tools:text="142" />
 
     <TextView
         android:id="@+id/label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="true"
-        android:textSize="11sp"
-        android:textStyle="bold"
+        style="@style/Widget.Marvel.StatLabel"
+        android:gravity="center"
         tools:text="Dano causado" />
 </LinearLayout>

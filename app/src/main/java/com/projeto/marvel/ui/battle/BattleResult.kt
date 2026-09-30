@@ -1,18 +1,15 @@
 package com.projeto.marvel.ui.battle
 
 import androidx.annotation.DrawableRes
-import android.content.res.ColorStateList
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.graphics.Canvas
-import android.graphics.drawable.GradientDrawable
 import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import androidx.core.animation.doOnEnd
-import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.drawToBitmap
@@ -22,7 +19,6 @@ import com.projeto.marvel.databinding.ItemResultStatBinding
 import com.projeto.marvel.ui.BoxStyle
 import com.projeto.marvel.ui.comicBox
 import com.projeto.marvel.ui.comicInterpolator
-import com.projeto.marvel.ui.detail.contrast
 import com.projeto.marvel.ui.photo.shareImage
 import com.projeto.marvel.ui.profile.title
 
@@ -57,10 +53,10 @@ fun FragmentBattleBinding.showResult(game: BattleUiState.Success) {
     }
     resultAchievements.visibility = if (game.newAchievements.isEmpty()) View.GONE else View.VISIBLE
     // Cara de HQ: título numa explosão torta, confronto numa legenda, conquistas num balão.
-    val titleColor = if (won) R.color.accent else R.color.card_common_light
+    val titleColor = if (won) R.color.accent else R.color.primary
     resultTitle.comicBox(BoxStyle.BURST, ContextCompat.getColor(context, titleColor))
     resultTitle.rotation = TITLE_TILT
-    resultVersus.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.ink))
+    resultVersus.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.accent))
     resultVersus.rotation = -TITLE_TILT / 2
     resultAchievements.comicBox(BoxStyle.SPEECH, ContextCompat.getColor(context, R.color.white))
     resultPanel.alpha = 0f
@@ -103,50 +99,32 @@ fun FragmentBattleBinding.hideResult() {
     confetti.stop()
 }
 
-/** Os números da luta em quadrinhos coloridos (2 por fileira), cada um torto para um lado. */
+/** Os números da luta, 3 por fileira, no padrão dos números do Perfil. */
 private fun FragmentBattleBinding.bindResultRows(game: BattleUiState.Success) {
     val stats = game.stats
     val rows = listOf(
-        ResultRow(R.string.result_dealt, stats.dealt, R.drawable.ic_move_strike, R.color.primary),
-        ResultRow(R.string.result_taken, stats.taken, R.drawable.ic_move_heal, R.color.move_water),
-        ResultRow(R.string.result_biggest, stats.biggestHit, R.drawable.ic_swords, R.color.accent),
-        ResultRow(R.string.result_turns, game.turn, R.drawable.ic_timer, R.color.move_heal),
-        ResultRow(R.string.result_criticals, stats.criticals, R.drawable.ic_bolt, R.color.move_magic),
-        ResultRow(R.string.result_ultimates, stats.ultimates, R.drawable.ic_move_magic, R.color.move_blast)
+        ResultRow(R.string.result_dealt, stats.dealt, R.drawable.ic_move_strike),
+        ResultRow(R.string.result_taken, stats.taken, R.drawable.ic_move_heal),
+        ResultRow(R.string.result_biggest, stats.biggestHit, R.drawable.ic_swords),
+        ResultRow(R.string.result_turns, game.turn, R.drawable.ic_timer),
+        ResultRow(R.string.result_criticals, stats.criticals, R.drawable.ic_bolt),
+        ResultRow(R.string.result_ultimates, stats.ultimates, R.drawable.ic_move_magic)
     )
     resultRows.removeAllViews()
     val context = root.context
     val inflater = LayoutInflater.from(context)
-    rows.chunked(TILES_PER_ROW).forEachIndexed { rowIndex, pair ->
-        val line = LinearLayout(context).apply { clipChildren = false }
-        resultRows.addView(line)
-        pair.forEachIndexed { column, row ->
+    rows.chunked(TILES_PER_ROW).forEachIndexed { rowIndex, line ->
+        val lineView = LinearLayout(context).apply { clipChildren = false }
+        resultRows.addView(lineView)
+        line.forEachIndexed { column, row ->
+            val tile = ItemResultStatBinding.inflate(inflater, lineView, true)
+            tile.label.setText(row.label)
+            tile.value.setCompoundDrawablesRelativeWithIntrinsicBounds(row.icon, 0, 0, 0)
+            tile.value.text = "0"
             val index = rowIndex * TILES_PER_ROW + column
-            val tile = ItemResultStatBinding.inflate(inflater, line, true)
-            tile.paint(row)
-            tile.root.rotation = if (index % 2 == 0) -TILE_TILT else TILE_TILT
             tile.root.countUp(tile, row, RESULT_DELAY_MILLIS + RESULT_MILLIS + index * ROW_STAGGER_MILLIS)
         }
     }
-}
-
-/** Quadrinho na cor da linha, contorno de nanquim e texto que dá leitura sobre a cor. */
-private fun ItemResultStatBinding.paint(row: ResultRow) {
-    val context = root.context
-    val fill = ContextCompat.getColor(context, row.color)
-    val ink = ContextCompat.getColor(context, R.color.ink)
-    root.background = GradientDrawable().apply {
-        setColor(fill)
-        cornerRadius = context.resources.getDimension(R.dimen.radius_small)
-        setStroke(context.resources.getDimensionPixelSize(R.dimen.ink_width), ink)
-    }
-    val text = if (contrast(ink, fill) >= MIN_TEXT_CONTRAST) ink else ContextCompat.getColor(context, R.color.white)
-    value.setTextColor(text)
-    label.setTextColor(text)
-    label.setText(row.label)
-    value.setCompoundDrawablesRelativeWithIntrinsicBounds(row.icon, 0, 0, 0)
-    value.compoundDrawableTintList = ColorStateList.valueOf(text)
-    value.text = "0"
 }
 
 /** Contador sobe de 0 até o valor, e o quadrinho dá um "pulo" ao chegar. */
@@ -166,14 +144,12 @@ private fun View.countUp(tile: ItemResultStatBinding, row: ResultRow, delay: Lon
     }
 }
 
-private class ResultRow(@StringRes val label: Int, val value: Int, @DrawableRes val icon: Int, @ColorRes val color: Int)
+private class ResultRow(@StringRes val label: Int, val value: Int, @DrawableRes val icon: Int)
 
-private const val TILES_PER_ROW = 2
-private const val TILE_TILT = 2f
+private const val TILES_PER_ROW = 3
 private const val TITLE_TILT = -4f
 private const val POP_SCALE = 1.12f
 private const val POP_MILLIS = 120L
-private const val MIN_TEXT_CONTRAST = 4.5
 
 /** Vencedor comemora: dois pulos. */
 private fun View.victoryJump() {
