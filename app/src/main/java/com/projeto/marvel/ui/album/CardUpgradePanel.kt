@@ -10,7 +10,7 @@ import com.projeto.marvel.data.canEvolve
 import com.projeto.marvel.databinding.FragmentAlbumBinding
 import com.projeto.marvel.databinding.ItemUpgradeStatBinding
 
-// Painel de melhorias embaixo da carta em 3D: pontos por atributo (+/–) e evoluir para dourada.
+// Painel de melhorias embaixo da carta em 3D: pontos por atributo (+/–) e evoluir para Divina.
 
 private val LABELS = mapOf(
     Stat.ATTACK to (R.string.stat_attack to R.drawable.ic_move_strike),

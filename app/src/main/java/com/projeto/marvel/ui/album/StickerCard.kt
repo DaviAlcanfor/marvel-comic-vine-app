@@ -2,6 +2,9 @@ package com.projeto.marvel.ui.album
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -21,17 +24,33 @@ private fun Rarity.metal(): Pair<Int, Int> = when (this) {
     Rarity.LEGENDARY -> R.color.card_legendary_light to R.color.card_legendary_dark
 }
 
-/** Cor da moldura simples da grade do álbum. */
+/** Cor da raridade: estrelas e moldura simples (bronze, prata, ouro). */
 @ColorRes
 fun Rarity.frameColor() = when (this) {
-    Rarity.COMMON -> R.color.text_secondary
-    Rarity.RARE -> R.color.move_water
-    Rarity.LEGENDARY -> R.color.accent
+    Rarity.COMMON -> R.color.rarity_common
+    Rarity.RARE -> R.color.rarity_rare
+    Rarity.LEGENDARY -> R.color.rarity_legendary
 }
 
-/** Selo do canto: "✦ DOURADA" na dourada revelada, senão as estrelas da raridade. */
-private fun Sticker.badge(context: Context, revealed: Boolean) =
-    if (golden && revealed) context.getString(R.string.album_golden_badge) else "★".repeat(rarity.ordinal + 1)
+/**
+ * Selo de raridade antes do nome: 1 a 3 estrelas na cor da raridade (bronze, prata, ouro) e, na
+ * carta Divina, um ✦ violeta na frente. Sem [name], só o selo.
+ */
+fun rarityBadge(context: Context, rarity: Rarity, divine: Boolean, name: String? = null): CharSequence {
+    val text = SpannableStringBuilder()
+    fun colored(res: Int) = ForegroundColorSpan(ContextCompat.getColor(context, res))
+    if (divine) text.append(DIVINE_MARK, colored(R.color.rarity_divine), 0)
+    text.append(STAR.repeat(rarity.ordinal + 1), colored(rarity.frameColor()), 0)
+    if (name != null) text.append(" ").append(name)
+    return text
+}
+
+/** Selo do canto da carta: colorido quando revelada; senão só as estrelas. */
+private fun Sticker.badge(context: Context, revealed: Boolean): CharSequence =
+    if (revealed) rarityBadge(context, rarity, golden) else STAR.repeat(rarity.ordinal + 1)
+
+private const val DIVINE_MARK = "✦"
+private const val STAR = "★"
 
 /** Cor da aura atrás da carta em 3D. */
 @ColorRes
@@ -41,25 +60,25 @@ fun Rarity.auraColor() = when (this) {
     Rarity.LEGENDARY -> R.color.card_legendary_light
 }
 
-/** Metal da carta do lutador: a dourada é sempre ouro; as outras, o da raridade. */
+/** Metal da carta do lutador: a Divina é sempre ouro; as outras, o da raridade. */
 val Fighter.cardMetal get() = if (golden) Rarity.LEGENDARY else rarity
 
-/** Moldura redonda do lutador (arena, prévia): metal da carta com contorno de nanquim. */
-fun Fighter.rarityRing(context: Context) = GradientDrawable().apply {
-    shape = GradientDrawable.OVAL
-    setColor(ContextCompat.getColor(context, cardMetal.metal().first))
-    setStroke(context.resources.getDimensionPixelSize(R.dimen.ink_width), ContextCompat.getColor(context, R.color.ink))
+/**
+ * Anel do lutador POR CIMA da foto (foreground; como fundo + padding a foto quadrada aparece com
+ * os cantos): metal da carta por dentro e contorno de nanquim por fora.
+ */
+fun Fighter.rarityRing(context: Context): LayerDrawable {
+    val ink = context.resources.getDimensionPixelSize(R.dimen.ink_width)
+    fun ring(color: Int, width: Int) = GradientDrawable().apply {
+        shape = GradientDrawable.OVAL
+        setStroke(width, ContextCompat.getColor(context, color))
+    }
+    val metal = ring(cardMetal.metal().first, context.resources.getDimensionPixelSize(R.dimen.rarity_ring))
+    return LayerDrawable(arrayOf(ring(R.color.ink, ink), metal)).apply { setLayerInset(1, ink, ink, ink, ink) }
 }
 
-/** Espessura da moldura: a dourada é mais grossa. */
-fun Fighter.ringPadding(context: Context) =
-    context.resources.getDimensionPixelSize(if (golden) R.dimen.rarity_ring_golden else R.dimen.rarity_ring)
-
-/** Selo antes do nome, como no álbum: estrelas da raridade, ou "✦" na dourada. */
-fun Fighter.badged(name: String) = (if (golden) GOLDEN_MARK else STAR.repeat(rarity.ordinal + 1)) + " " + name
-
-private const val GOLDEN_MARK = "✦"
-private const val STAR = "★"
+/** Nome com o selo de raridade na frente (arena, VS, prévia). */
+fun Fighter.badged(context: Context, name: String) = rarityBadge(context, rarity, golden, name)
 
 /** Metal da raridade com contorno de nanquim: frente da carta e o verso da carta em 3D. */
 fun Rarity.metalBackground(context: Context): GradientDrawable {

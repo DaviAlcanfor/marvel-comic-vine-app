@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 // Progressão dos lutadores pelo álbum: só luta quem você tem a figurinha; cada repetida sobe um
-// nível, e cada nível dá pontos para distribuir nos atributos. Carta dourada: variante mais forte
+// nível, e cada nível dá pontos para distribuir nos atributos. Carta Divina: variante mais forte
 // (sorte no pacote ou evoluindo repetidas). Regras puras testadas em ProgressionTest.
 
 const val MAX_LEVEL = 10
@@ -27,7 +27,7 @@ fun pointsFor(level: Int) = (level.coerceIn(1, MAX_LEVEL) - 1) * POINTS_PER_LEVE
 /**
  * Lutador no nível [level], com os pontos distribuídos em [allocation]; o que sobrar sem
  * distribuir entra dividido por igual (quem não mexe não fica para trás). Distribuição que passa
- * dos pontos do nível (o nível caiu ao evoluir) é descartada. Dourada: +[GOLDEN_BONUS] em tudo.
+ * dos pontos do nível (o nível caiu ao evoluir) é descartada. Divina: +[GOLDEN_BONUS] em tudo.
  */
 fun Fighter.upgraded(level: Int, allocation: Map<Stat, Int> = emptyMap(), golden: Boolean = false): Fighter {
     val points = pointsFor(level)
@@ -63,7 +63,7 @@ fun rivalLevel(team: List<Fighter>, boss: Boolean): Int {
     return (if (boss) yours else yours - RIVAL_LEVEL_GAP).coerceIn(1, MAX_LEVEL)
 }
 
-/** Chance (%) de cada figurinha do pacote vir dourada. */
+/** Chance (%) de cada figurinha do pacote vir Divina. */
 @Suppress("MagicNumber") // a tabela de sorte é a própria regra
 fun goldenChance(type: PackType) = when (type) {
     PackType.BASIC -> 3
@@ -71,12 +71,12 @@ fun goldenChance(type: PackType) = when (type) {
     PackType.GOLD -> 12
 }
 
-/** Dá para evoluir: tem [EVOLVE_COST] figurinhas e ainda não é dourada. */
+/** Dá para evoluir: tem [EVOLVE_COST] figurinhas e ainda não é Divina. */
 fun canEvolve(count: Int, golden: Boolean) = !golden && count >= EVOLVE_COST
 
 /**
  * Melhorias de cada personagem no aparelho: pontos distribuídos (id → atributo → pontos) e quais
- * já são douradas.
+ * já são Divinas.
  */
 class UpgradeStore(context: Context) {
 

@@ -2,7 +2,7 @@
 <!-- Retícula (halftone) de papel impresso. Camada própria para poder ir por cima de imagens de
      fundo: começando no mesmo ponto que o fundo da tela, as bolinhas se alinham sem emenda. -->
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:alpha="0.1"
+    android:alpha="0.18"
     android:src="@drawable/halftone_tile"
     android:tileMode="repeat"
     android:tint="@color/halftone" />

@@ -31,7 +31,7 @@ import kotlin.random.Random
 
 /**
  * [number] = posição no álbum (fixa: lendárias primeiro, depois por nome), como em álbum de banca.
- * [golden] = variante dourada (sorte no pacote ou evoluída).
+ * [golden] = variante Divina (sorte no pacote ou evoluída).
  */
 data class Sticker(
     val character: CharacterSummary,
@@ -117,7 +117,7 @@ class AlbumViewModel @JvmOverloads constructor(
         val picks = openPack(pool, { rarity(it.issueAppearances) }, random, type)
         store.add(picks.map { it.id })
         getApplication<Application>().mission(MissionEvent.PACK_OPENED)
-        // Cada figurinha tem uma chancezinha de vir dourada (maior nos pacotes melhores).
+        // Cada figurinha tem uma chancezinha de vir Divina (maior nos pacotes melhores).
         picks.forEach { if (random.nextInt(PERCENT) < goldenChance(type)) upgrades.markGolden(it.id) }
         val album = success()
         val byId = album.stickers.associateBy { it.character.id }
@@ -157,7 +157,7 @@ class AlbumViewModel @JvmOverloads constructor(
         _viewer.value = card.copy(allocation = allocation)
     }
 
-    /** Junta [EVOLVE_COST] figurinhas numa dourada: gasta as repetidas (o nível cai junto). */
+    /** Junta [EVOLVE_COST] figurinhas numa Divina: gasta as repetidas (o nível cai junto). */
     fun evolve() {
         val card = _viewer.value?.takeIf { canEvolve(it.sticker.count, it.sticker.golden) } ?: return
         val id = card.sticker.character.id

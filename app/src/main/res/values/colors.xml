@@ -18,11 +18,12 @@
     <color name="primary_text">#B00E17</color>
     <color name="accent">#E6B800</color>
 
-    <!-- Figurinhas: metal da moldura por raridade (claro, escuro) e papel das páginas do álbum. -->
-    <color name="card_common_light">#D5D9DE</color>
-    <color name="card_common_dark">#7B828C</color>
-    <color name="card_rare_light">#8FD3FF</color>
-    <color name="card_rare_dark">#1F5FAE</color>
+    <!-- Figurinhas: metal da moldura por raridade (claro, escuro) e papel das páginas do álbum.
+         Comum = bronze, rara = prata, lendária = ouro (como os pacotes Básico/Prata/Ouro). -->
+    <color name="card_common_light">#E8B07A</color>
+    <color name="card_common_dark">#8C5A2B</color>
+    <color name="card_rare_light">#E3E7EB</color>
+    <color name="card_rare_dark">#7B828C</color>
     <color name="card_legendary_light">#FFE27A</color>
     <color name="card_legendary_dark">#C27C0E</color>
     <color name="comic_paper">#F3E7C9</color>
@@ -65,4 +66,9 @@
     <color name="overlay">#F2FFF4DC</color>
     <!-- Pontos da retícula (tint do halftone_tile, que é branco). -->
     <color name="halftone">#000000</color>
+    <!-- Estrelas e moldura simples por raridade (bronze, prata, ouro) e o ✦ da carta Divina. -->
+    <color name="rarity_common">#C27A3E</color>
+    <color name="rarity_rare">#A8B0BA</color>
+    <color name="rarity_legendary">#E6B800</color>
+    <color name="rarity_divine">#C77DFF</color>
 </resources>

@@ -19,8 +19,6 @@
     <string name="home_hero_of_the_day">Herói do dia</string>
     <string name="home_your_hero">Seu herói</string>
     <string name="home_continue_reading">Continue lendo</string>
-    <string name="home_shortcuts">Atalhos</string>
-    <string name="home_shelf_short">Estante</string>
     <string name="home_open_profile">Abrir seu perfil</string>
     <string name="home_your_hero_line">Seu herói: %1$s ›</string>
     <string name="home_pick_hero">Escolha seu herói no Perfil ›</string>
@@ -205,16 +203,15 @@
     <string name="album_pack_count">%1$s ×%2$d</string>
     <string name="album_number">#%1$02d</string>
     <string name="album_how_to_open">Gire com o dedo ou inclinando o celular · puxe a faixa de cima para rasgar</string>
-    <string name="album_golden_badge">✦ DOURADA</string>
     <string name="upgrade_open">Editar atributos · %1$d livres</string>
     <string name="upgrade_close">Fechar edição · %1$d livres</string>
     <string name="upgrade_title">Nv %1$d · %2$d de %3$d pontos livres</string>
     <string name="upgrade_hint">Cada nível dá 8 pontos. Os que você não distribuir entram divididos por igual.</string>
     <string name="upgrade_loading">Carregando atributos…</string>
-    <string name="upgrade_evolve">Evoluir para dourada (%1$d figurinhas)</string>
-    <string name="upgrade_evolve_missing">Dourada (+5 em tudo e meia ultimate): %2$d de %1$d figurinhas</string>
-    <string name="upgrade_golden">✦ Dourada: +5 em tudo e começa a luta com meia ultimate</string>
-    <string name="upgrade_evolved">✦ %1$s virou dourada! +5 em tudo e meia ultimate no começo da luta.</string>
+    <string name="upgrade_evolve">Evoluir para Divina (%1$d figurinhas)</string>
+    <string name="upgrade_evolve_missing">Divina (+5 em tudo e meia ultimate): %2$d de %1$d figurinhas</string>
+    <string name="upgrade_golden">✦ Divina: +5 em tudo e começa a luta com meia ultimate</string>
+    <string name="upgrade_evolved">✦ %1$s virou Divina! +5 em tudo e meia ultimate no começo da luta.</string>
     <string name="mission_section">Missões</string>
     <string name="mission_daily">Hoje</string>
     <string name="mission_weekly">Semana</string>
@@ -441,7 +438,6 @@
     <string name="battle_locked">Consiga no Álbum</string>
     <string name="battle_locked_toast">Abra pacotes no Álbum para liberar %1$s.</string>
     <string name="battle_level">Nv %1$d</string>
-    <string name="battle_golden_name">✦ %1$s</string>
     <string name="battle_level_name">%1$s · Nv %2$d</string>
     <string name="battle_lock_hint">Só lutam os heróis do seu Álbum. Figurinha repetida sobe o nível (+2 em tudo).</string>
     <string name="battle_swap">Trocar lutador (gasta a vez)</string>

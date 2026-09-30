@@ -22,19 +22,13 @@ fun ItemStickerBinding.bind(sticker: Sticker) {
     root.background = GradientDrawable().apply {
         cornerRadius = context.resources.getDimension(R.dimen.radius_small)
         setColor(ContextCompat.getColor(context, R.color.surface_variant))
-        val frame = if (sticker.golden) R.color.card_legendary_light else sticker.rarity.frameColor()
+        val frame = if (sticker.golden) R.color.rarity_divine else sticker.rarity.frameColor()
         setStroke((FRAME_DP * density * if (sticker.golden) 2 else 1).toInt(), ContextCompat.getColor(context, frame))
     }
     image.visibility = if (owned) View.VISIBLE else View.INVISIBLE
     missing.visibility = if (owned) View.GONE else View.VISIBLE
     if (owned) image.load(sticker.character.image?.mediumUrl) { crossfade(true) } else image.setImageDrawable(null)
-    name.text = when {
-        !owned -> "?"
-        sticker.golden -> context.getString(R.string.battle_golden_name, sticker.character.name)
-        else -> sticker.character.name
-    }
-    val nameColor = if (sticker.golden) R.color.accent_text else R.color.text_primary
-    name.setTextColor(ContextCompat.getColor(context, nameColor))
+    name.text = if (owned) rarityBadge(context, sticker.rarity, sticker.golden, sticker.character.name) else "?"
     number.text = context.getString(R.string.album_number, sticker.number)
     count.visibility = if (sticker.count > 1) View.VISIBLE else View.GONE
     count.text = context.getString(R.string.album_count, sticker.count)

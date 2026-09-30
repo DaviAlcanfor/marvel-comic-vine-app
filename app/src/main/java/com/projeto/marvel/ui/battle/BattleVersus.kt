@@ -47,9 +47,9 @@ fun FragmentBattleBinding.showVersus(game: BattleUiState.Success) {
     }
     v.versusLeftImage.load(game.player.fighter.imageUrl) { crossfade(true) }
     v.versusRightImage.load(game.cpu.fighter.imageUrl) { crossfade(true) }
-    v.versusLeftName.text = game.player.fighter.badged(game.player.fighter.name)
-    v.versusRightName.text = game.cpu.fighter.badged(game.cpu.fighter.name)
-    // Moldura da carta na raridade (a dourada em ouro), como no álbum.
+    v.versusLeftName.text = game.player.fighter.badged(v.root.context, game.player.fighter.name)
+    v.versusRightName.text = game.cpu.fighter.badged(v.root.context, game.cpu.fighter.name)
+    // Moldura da carta na raridade (a Divina em ouro), como no álbum.
     val ring = v.root.resources.getDimensionPixelSize(R.dimen.rarity_ring)
     val portraits = listOf(v.versusLeftImage to game.player.fighter, v.versusRightImage to game.cpu.fighter)
     portraits.forEach { (image, fighter) ->

@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -25,7 +24,6 @@ import com.projeto.marvel.databinding.FragmentBattleBinding
 import com.projeto.marvel.ui.SpeedLinesDrawable
 import com.projeto.marvel.ui.album.badged
 import com.projeto.marvel.ui.album.rarityRing
-import com.projeto.marvel.ui.album.ringPadding
 import com.projeto.marvel.ui.color
 import com.projeto.marvel.ui.comicInterpolator
 import com.projeto.marvel.ui.fadeVisible
@@ -173,8 +171,7 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
         if (views.image.tag != combatant.fighter.imageUrl) {
             views.image.tag = combatant.fighter.imageUrl
             views.image.load(combatant.fighter.imageUrl) { crossfade(true) }
-            views.image.background = combatant.fighter.rarityRing(requireContext())
-            views.image.setPadding(combatant.fighter.ringPadding(requireContext()))
+            views.image.foreground = combatant.fighter.rarityRing(requireContext())
         }
         val name = if (combatant.fighter.boss) {
             getString(R.string.battle_boss_name, combatant.fighter.name)
@@ -183,7 +180,7 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
         }
         val level = combatant.fighter.level
         val shown = if (level > 1) getString(R.string.battle_level_name, name, level) else name
-        views.name.text = combatant.fighter.badged(shown)
+        views.name.text = combatant.fighter.badged(requireContext(), shown)
         views.name.setTextColor(color(if (combatant.fighter.golden) R.color.accent_text else R.color.text_primary))
         views.hpBar.max = maxHp
         views.hpBar.setProgressCompat(combatant.hp, true)

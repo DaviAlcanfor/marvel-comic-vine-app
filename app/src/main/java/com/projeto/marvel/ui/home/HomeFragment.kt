@@ -17,7 +17,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.palette.graphics.Palette
 import coil.load
-import com.projeto.marvel.MainActivity
 import com.projeto.marvel.R
 import com.projeto.marvel.data.Favorite
 import com.projeto.marvel.data.remote.CharacterSummary
@@ -82,10 +81,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.heroMoviesList.adapter = heroMoviesAdapter
         binding.debutsList.adapter = debutsAdapter
         binding.avatar.setOnClickListener { findNavController().navigate(R.id.profileFragment) }
-        binding.tileBattle.setOnClickListener { selectTab(R.id.battleSelectFragment) }
-        binding.tileGames.setOnClickListener { selectTab(R.id.gamesFragment) }
-        binding.tileAlbum.setOnClickListener { selectTab(R.id.albumFragment) }
-        binding.tileShelf.setOnClickListener { findNavController().navigate(R.id.profileFragment) }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -143,9 +138,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         )
     }
 
-    private fun selectTab(destinationId: Int) {
-        (activity as? MainActivity)?.selectTab(destinationId)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -222,7 +214,6 @@ private fun FragmentHomeBinding.captions() = listOf(
     Triple(debutsTitle, BoxStyle.SPEECH, -1.5f),
     Triple(readingTitle, BoxStyle.CAPTION, 2f),
     Triple(reviewTitle, BoxStyle.SPEECH, -1f),
-    Triple(shortcutsTitle, BoxStyle.CAPTION, 1f),
     Triple(missionsTitle, BoxStyle.BURST, 2.5f)
 )
 

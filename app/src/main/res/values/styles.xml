@@ -83,25 +83,6 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <!-- Bloco de atalho da Início: ícone em cima, rótulo embaixo, 4 por fileira. -->
-    <style name="Widget.Marvel.HomeTile" parent="">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginEnd">@dimen/space_sm</item>
-        <item name="android:background">@drawable/bg_card</item>
-        <item name="android:foreground">?attr/selectableItemBackground</item>
-        <item name="android:gravity">center</item>
-        <item name="android:paddingTop">@dimen/space_md</item>
-        <item name="android:paddingBottom">@dimen/space_sm</item>
-        <item name="android:drawablePadding">@dimen/space_xs</item>
-        <item name="android:drawableTint">@color/accent</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
 
     <!-- Capa de jogo na aba Jogos: banner, como jogar, recorde e o botão. -->
     <style name="Widget.Marvel.GameCard" parent="">

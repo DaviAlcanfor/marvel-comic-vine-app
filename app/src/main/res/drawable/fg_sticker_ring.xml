@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Anel de adesivo POR CIMA da foto (foreground): contorno de nanquim e borda branca. Por cima e
+     não como fundo + padding, senão a foto quadrada aparece com os cantos dentro do círculo. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <stroke
+                android:width="@dimen/ink_width"
+                android:color="@color/ink" />
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/ink_width"
+        android:left="@dimen/ink_width"
+        android:right="@dimen/ink_width"
+        android:top="@dimen/ink_width">
+        <shape android:shape="oval">
+            <stroke
+                android:width="3dp"
+                android:color="@color/white" />
+        </shape>
+    </item>
+</layer-list>

@@ -91,7 +91,7 @@ class StickerStore(context: Context) {
         prefs.edit { putString(KEY_COUNTS, gson.toJson(counts)) }
     }
 
-    /** Gasta [amount] figurinhas de [id] (evoluir para dourada). */
+    /** Gasta [amount] figurinhas de [id] (evoluir para Divina). */
     fun remove(id: Int, amount: Int) {
         val counts = counts().toMutableMap()
         counts[id] = ((counts[id] ?: 0) - amount).coerceAtLeast(0)

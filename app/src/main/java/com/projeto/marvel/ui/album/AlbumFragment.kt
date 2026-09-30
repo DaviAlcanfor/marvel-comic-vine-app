@@ -39,7 +39,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     // Pacotes e missões: primeira linha da grade (a grade rola e recicla as figurinhas).
     private var header: ViewAlbumHeaderBinding? = null
 
-    // Figurinha na carta em 3D (muda ao evoluir para dourada: aí a frente é redesenhada).
+    // Figurinha na carta em 3D (muda ao evoluir para Divina: aí a frente é redesenhada).
     private var shownSticker: Sticker? = null
     private var motion: PackMotion? = null
     private var viewer: CardViewer? = null
@@ -175,7 +175,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     /** Figurinha tocada na grade: grande, em 3D, com o verso de informações. */
     private fun showCard(binding: FragmentAlbumBinding, sticker: Sticker, animate: Boolean) {
         binding.viewerFront.bind(sticker, revealed = true, large = true)
-        // Aura na cor da carta: dourada/lendária em ouro, rara em azul, comum em prata.
+        // Aura na cor da carta: Divina/lendária em ouro, rara em azul, comum em prata.
         val auraMetal = if (sticker.golden) Rarity.LEGENDARY else sticker.rarity
         binding.aura.setAuraColor(ContextCompat.getColor(requireContext(), auraMetal.auraColor()))
         // Verso no mesmo metal da frente, com texto escuro (o metal é claro).

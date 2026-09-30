@@ -249,7 +249,7 @@ data class Fighter(
     val moves: List<Move>,
     val boss: Boolean = false,
     val level: Int = 1,
-    /** Carta dourada no álbum: +5 em tudo e entra na luta com meia ultimate. */
+    /** Carta Divina (`golden` no código, nome antigo): +5 em tudo e entra na luta com meia ultimate. */
     val golden: Boolean = false,
     /** Raridade da figurinha (mesma regra do álbum), mostrada na arena. */
     val rarity: Rarity = Rarity.COMMON
