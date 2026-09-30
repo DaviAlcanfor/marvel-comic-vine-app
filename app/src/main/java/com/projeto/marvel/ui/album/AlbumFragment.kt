@@ -16,6 +16,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.GridLayoutManager
 import com.projeto.marvel.MainActivity
 import com.projeto.marvel.R
 import com.projeto.marvel.data.PackType
@@ -23,6 +25,7 @@ import com.projeto.marvel.data.Rarity
 import com.projeto.marvel.data.levelFor
 import com.projeto.marvel.databinding.FragmentAlbumBinding
 import com.projeto.marvel.databinding.ItemTradingCardBinding
+import com.projeto.marvel.databinding.ViewAlbumHeaderBinding
 import com.projeto.marvel.databinding.ViewPackBinding
 import com.projeto.marvel.ui.detail.TiltController
 import kotlinx.coroutines.launch
@@ -32,6 +35,9 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     private val viewModel: AlbumViewModel by viewModels()
     private var binding: FragmentAlbumBinding? = null
     private val adapter = StickerAdapter { sticker -> viewModel.openViewer(sticker) }
+
+    // Pacotes e missões: primeira linha da grade (a grade rola e recicla as figurinhas).
+    private var header: ViewAlbumHeaderBinding? = null
 
     // Figurinha na carta em 3D (muda ao evoluir para dourada: aí a frente é redesenhada).
     private var shownSticker: Sticker? = null
@@ -51,13 +57,22 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
-        binding.grid.adapter = adapter
+        val header = ViewAlbumHeaderBinding.inflate(layoutInflater, binding.grid, false)
+        this.header = header
+        binding.grid.adapter = ConcatAdapter(SingleViewAdapter(header.root), adapter)
+        binding.grid.layoutManager = GridLayoutManager(requireContext(), COLUMNS).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int) = if (position == 0) COLUMNS else 1
+            }
+        }
         binding.message.setOnClickListener { viewModel.load() }
         viewer = CardViewer(binding.viewerCard, binding.viewerFront, binding.viewerBack)
         binding.viewerClose.setOnClickListener { viewModel.closeViewer() }
         // Inclinar o celular gira o pacote da abertura, as cartas reveladas e a carta em 3D.
         viewLifecycleOwner.lifecycle.addObserver(
             TiltController(requireContext()) { pitch, roll ->
+                // Sem carta em 3D nem pacote na tela, não há o que inclinar (o sensor manda ~50/s).
+                if (!binding.opening.isVisible && !binding.viewer.isVisible) return@TiltController
                 motion?.tilt(pitch, roll)
                 binding.openedCards.rotationX = -pitch * CARDS_TILT
                 binding.openedCards.rotationY = roll * CARDS_TILT
@@ -69,7 +84,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             binding.opening.fadeOut()
             geek(true)
         }
-        binding.tiles().forEach { (type, tile, _) ->
+        header.tiles().forEach { (type, tile, _) ->
             tile.setOnClickListener { viewModel.openPack(type) }
         }
         viewLifecycleOwner.lifecycleScope.launch {
@@ -85,13 +100,15 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         val binding = binding ?: return
         binding.loading.isVisible = state is AlbumUiState.Loading
         binding.message.isVisible = state is AlbumUiState.Error
-        binding.content.isVisible = state is AlbumUiState.Success
+        binding.grid.isVisible = state is AlbumUiState.Success
         if (state is AlbumUiState.Error) {
             binding.message.text = getString(R.string.home_error_retry) + "\n" + state.message
         }
         if (state !is AlbumUiState.Success) return
-        binding.progress.text = getString(R.string.album_progress, state.owned, state.stickers.size)
-        binding.tiles().forEach { (type, tile, pack) ->
+        // Criado junto com a binding (e zerado junto): com a binding viva, o cabeçalho existe.
+        val header = requireNotNull(header)
+        header.progress.text = getString(R.string.album_progress, state.owned, state.stickers.size)
+        header.tiles().forEach { (type, tile, pack) ->
             val count = state.packs[type] ?: 0
             pack.style(type, large = false, art = state.packArt[type])
             tile.isEnabled = count > 0
@@ -100,7 +117,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             if (count > 0) pack.gleam()
         }
         adapter.submitList(state.stickers)
-        binding.missionList.bindMissions(state.missions, viewModel::claim)
+        header.missionList.bindMissions(state.missions, viewModel::claim)
         if (state.openId != shownOpenId && state.opened.isNotEmpty()) {
             shownOpenId = state.openId
             showOpening(binding, state)
@@ -228,6 +245,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         viewer = null
         shownSticker = null
         shownCards.clear()
+        header = null
         binding = null
     }
 
@@ -237,10 +255,11 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         const val CARDS_TILT = 1.2f
         const val POP_SCALE = 0.6f
         const val POP_MILLIS = 350L
+        const val COLUMNS = 3
     }
 }
 
-private fun FragmentAlbumBinding.tiles(): List<Triple<PackType, LinearLayout, ViewPackBinding>> = listOf(
+private fun ViewAlbumHeaderBinding.tiles(): List<Triple<PackType, LinearLayout, ViewPackBinding>> = listOf(
     Triple(PackType.BASIC, tileBasic, packBasic),
     Triple(PackType.SILVER, tileSilver, packSilver),
     Triple(PackType.GOLD, tileGold, packGold)

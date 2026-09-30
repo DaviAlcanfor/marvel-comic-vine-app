@@ -11,136 +11,44 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_screen">
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/space_lg"
+        android:paddingTop="@dimen/space_lg">
 
-        <LinearLayout
+        <TextView
+            style="@style/Widget.Marvel.ScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/space_lg"
-            android:paddingTop="@dimen/space_lg"
-            android:paddingBottom="@dimen/space_xl">
+            android:text="@string/album_title" />
 
-            <TextView
-                style="@style/Widget.Marvel.ScreenTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/album_title" />
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/space_xl" />
 
-            <ProgressBar
-                android:id="@+id/loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/space_xl" />
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xl"
+            android:gravity="center"
+            android:textColor="@color/text_secondary"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_xl"
-                android:gravity="center"
-                android:textColor="@color/text_secondary"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/progress"
-                    style="@style/Widget.Marvel.CaptionBox"
-                    android:layout_marginTop="@dimen/space_sm" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_sm"
-                    android:text="@string/album_packs_hint"
-                    android:textColor="@color/text_secondary" />
-
-                <!-- Pacotes: Básico, Prata e Ouro -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_md"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:id="@+id/tileBasic"
-                        style="@style/Widget.Marvel.PackTile">
-
-                        <include
-                            android:id="@+id/packBasic"
-                            layout="@layout/view_pack"
-                            android:layout_width="@dimen/pack_small_width"
-                            android:layout_height="@dimen/pack_small_height" />
-
-                        <TextView
-                            android:id="@+id/countBasic"
-                            style="@style/Widget.Marvel.PackCount" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/tileSilver"
-                        style="@style/Widget.Marvel.PackTile">
-
-                        <include
-                            android:id="@+id/packSilver"
-                            layout="@layout/view_pack"
-                            android:layout_width="@dimen/pack_small_width"
-                            android:layout_height="@dimen/pack_small_height" />
-
-                        <TextView
-                            android:id="@+id/countSilver"
-                            style="@style/Widget.Marvel.PackCount" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/tileGold"
-                        style="@style/Widget.Marvel.PackTile">
-
-                        <include
-                            android:id="@+id/packGold"
-                            layout="@layout/view_pack"
-                            android:layout_width="@dimen/pack_small_width"
-                            android:layout_height="@dimen/pack_small_height" />
-
-                        <TextView
-                            android:id="@+id/countGold"
-                            style="@style/Widget.Marvel.PackCount" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Missões diárias e semanais: outro jeito de ganhar pacotes. -->
-                <TextView
-                    style="@style/Widget.Marvel.CaptionBox"
-                    android:layout_marginTop="@dimen/space_lg"
-                    android:text="@string/mission_section" />
-
-                <LinearLayout
-                    android:id="@+id/missionList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_xs"
-                    android:orientation="vertical" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/grid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_lg"
-                    android:nestedScrollingEnabled="false"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3" />
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        <!-- A grade rola sozinha e recicla: só monta as figurinhas que aparecem na tela. -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/space_xl"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <!-- Abertura do pacote (por cima de tudo; clicável para nada vazar). -->
     <FrameLayout

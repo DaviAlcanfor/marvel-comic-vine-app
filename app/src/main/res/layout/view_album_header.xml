@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cabeçalho do Álbum (primeira linha da grade): progresso, pacotes e missões. Fica dentro da
+     grade para ela rolar sozinha e reciclar as figurinhas (antes as 255 eram montadas de uma vez). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/space_md">
+
+    <TextView
+        android:id="@+id/progress"
+        style="@style/Widget.Marvel.CaptionBox"
+        android:layout_marginTop="@dimen/space_sm" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:text="@string/album_packs_hint"
+        android:textColor="@color/text_secondary" />
+
+    <!-- Pacotes: Básico, Prata e Ouro -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/tileBasic"
+            style="@style/Widget.Marvel.PackTile">
+
+            <include
+                android:id="@+id/packBasic"
+                layout="@layout/view_pack"
+                android:layout_width="@dimen/pack_small_width"
+                android:layout_height="@dimen/pack_small_height" />
+
+            <TextView
+                android:id="@+id/countBasic"
+                style="@style/Widget.Marvel.PackCount" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tileSilver"
+            style="@style/Widget.Marvel.PackTile">
+
+            <include
+                android:id="@+id/packSilver"
+                layout="@layout/view_pack"
+                android:layout_width="@dimen/pack_small_width"
+                android:layout_height="@dimen/pack_small_height" />
+
+            <TextView
+                android:id="@+id/countSilver"
+                style="@style/Widget.Marvel.PackCount" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tileGold"
+            style="@style/Widget.Marvel.PackTile">
+
+            <include
+                android:id="@+id/packGold"
+                layout="@layout/view_pack"
+                android:layout_width="@dimen/pack_small_width"
+                android:layout_height="@dimen/pack_small_height" />
+
+            <TextView
+                android:id="@+id/countGold"
+                style="@style/Widget.Marvel.PackCount" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Missões diárias e semanais: outro jeito de ganhar pacotes. -->
+    <TextView
+        style="@style/Widget.Marvel.CaptionBox"
+        android:layout_marginTop="@dimen/space_lg"
+        android:text="@string/mission_section" />
+
+    <LinearLayout
+        android:id="@+id/missionList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:orientation="vertical" />
+
+</LinearLayout>
