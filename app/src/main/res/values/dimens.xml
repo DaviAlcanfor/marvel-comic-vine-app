@@ -84,4 +84,8 @@
     <dimen name="fab_clearance">88dp</dimen>
     <!-- Moldura do lutador no metal da raridade. -->
     <dimen name="rarity_ring">4dp</dimen>
+    <!-- Página de missões: sarjeta entre quadros, blocos do progresso e etiqueta do prêmio. -->
+    <dimen name="mission_gutter">3dp</dimen>
+    <dimen name="mission_pip_height">12dp</dimen>
+    <dimen name="mission_tag_height">28dp</dimen>
 </resources>

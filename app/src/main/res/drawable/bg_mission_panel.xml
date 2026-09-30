@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Quadro de uma página de HQ: fundo do painel com contorno de nanquim, cantos quase retos. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/surface_variant" />
+    <stroke
+        android:width="@dimen/ink_width"
+        android:color="@color/ink" />
+    <corners android:radius="@dimen/radius_small" />
+</shape>

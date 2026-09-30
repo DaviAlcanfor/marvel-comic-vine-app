@@ -1,17 +1,24 @@
 package com.projeto.marvel.ui.home
 
+import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import com.projeto.marvel.R
 import com.projeto.marvel.data.Mission
 import com.projeto.marvel.data.MissionProgress
 import com.projeto.marvel.databinding.ItemMissionBinding
+import com.projeto.marvel.ui.BoxStyle
+import com.projeto.marvel.ui.album.colors
 import com.projeto.marvel.ui.album.label
+import com.projeto.marvel.ui.comicBox
 
-// Lista de missões da Início: diárias e semanais, com ícone, progresso e o pacote de prêmio.
+// Missões da Início como página de HQ: diárias e semanais, com ícone, progresso e o pacote de prêmio.
 
 private val TEXTS = mapOf(
     "win3" to (R.string.mission_win3 to R.drawable.ic_swords),
@@ -40,29 +47,76 @@ private fun Mission.text() = TEXTS.getValue(id).first
 private fun Mission.icon() = TEXTS.getValue(id).second
 
 private const val DONE_ALPHA = 0.55f
+private const val MAX_PIPS = 10
+private const val WRAP = LinearLayout.LayoutParams.WRAP_CONTENT
 
+/**
+ * Missões como uma página de HQ: as diárias numa tira de quadros e as semanais noutra. Cada quadro
+ * mostra o progresso em blocos (até [MAX_PIPS]) e o prêmio numa etiqueta no metal do pacote; completa,
+ * a etiqueta vira "PEGAR!" numa explosão.
+ */
 fun LinearLayout.bindMissions(missions: List<MissionProgress>, onClaim: (Mission) -> Unit) {
     removeAllViews()
-    val inflater = LayoutInflater.from(context)
-    missions.forEach { state ->
-        val mission = state.mission
-        ItemMissionBinding.inflate(inflater, this, true).apply {
-            val kind = context.getString(if (mission.weekly) R.string.mission_weekly else R.string.mission_daily)
-            icon.setImageResource(mission.icon())
-            title.text = context.getString(R.string.mission_title, kind, context.getString(mission.text()))
-            bar.max = mission.goal
-            bar.setProgressCompat(state.progress, false)
-            detail.text = context.getString(
-                R.string.mission_detail,
-                state.progress,
-                mission.goal,
-                context.getString(mission.reward.label())
-            )
-            claim.visibility = if (state.done) View.VISIBLE else View.GONE
-            claim.setText(if (state.claimed) R.string.mission_claimed else R.string.mission_claim)
-            claim.isEnabled = state.done && !state.claimed
-            root.alpha = if (state.claimed) DONE_ALPHA else 1f
+    missions.partition { !it.mission.weekly }.toList().filter { it.isNotEmpty() }.forEach { strip ->
+        val row = LinearLayout(context).apply { clipChildren = false }
+        addView(row, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, WRAP))
+        strip.forEach { ItemMissionBinding.inflate(LayoutInflater.from(context), row, true).bind(it, onClaim) }
+    }
+}
+
+private fun ItemMissionBinding.bind(state: MissionProgress, onClaim: (Mission) -> Unit) {
+    val context = root.context
+    val mission = state.mission
+    kind.setText(if (mission.weekly) R.string.mission_weekly else R.string.mission_daily)
+    icon.setImageResource(mission.icon())
+    title.setText(mission.text())
+    count.text = context.getString(R.string.mission_count, state.progress, mission.goal)
+    pips.bindPips(state.progress, mission.goal)
+    root.alpha = if (state.claimed) DONE_ALPHA else 1f
+    claim.setOnClickListener(null)
+    claim.isClickable = false
+    when {
+        state.claimed -> {
+            claim.background = null
+            claim.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            claim.setText(R.string.mission_claimed)
+        }
+        state.done -> {
+            claim.setText(R.string.mission_claim)
+            claim.comicBox(BoxStyle.BURST, ContextCompat.getColor(context, R.color.primary))
+            // Explosão compacta: o quadro é estreito para o padding padrão dela.
+            val pad = context.resources.getDimensionPixelSize(R.dimen.space_md)
+            claim.setPadding(pad, pad / 2, pad, pad / 2)
             claim.setOnClickListener { onClaim(mission) }
         }
+        else -> {
+            claim.text = context.getString(mission.reward.label())
+            claim.setTextColor(ContextCompat.getColor(context, R.color.ink))
+            claim.background = rewardTag(context, mission.reward.colors()[1])
+        }
     }
+}
+
+/** Blocos com contorno de nanquim: cheios em dourado até o progresso. */
+private fun LinearLayout.bindPips(progress: Int, goal: Int) {
+    removeAllViews()
+    val count = goal.coerceIn(1, MAX_PIPS)
+    val filled = progress.coerceAtMost(goal) * count / goal.coerceAtLeast(1)
+    val gap = resources.getDimensionPixelSize(R.dimen.mission_gutter)
+    repeat(count) { i ->
+        val pip = View(context).apply { background = pipDrawable(context, filled = i < filled) }
+        addView(pip, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f).apply { marginEnd = gap })
+    }
+}
+
+private fun pipDrawable(context: Context, filled: Boolean) = GradientDrawable().apply {
+    setColor(ContextCompat.getColor(context, if (filled) R.color.accent else R.color.surface))
+    setStroke(context.resources.getDimensionPixelSize(R.dimen.ink_width), ContextCompat.getColor(context, R.color.ink))
+}
+
+/** Etiqueta do prêmio no metal claro do pacote, contornada de nanquim. */
+private fun rewardTag(context: Context, @ColorRes metal: Int) = GradientDrawable().apply {
+    setColor(ContextCompat.getColor(context, metal))
+    cornerRadius = context.resources.getDimension(R.dimen.radius_small)
+    setStroke(context.resources.getDimensionPixelSize(R.dimen.ink_width), ContextCompat.getColor(context, R.color.ink))
 }

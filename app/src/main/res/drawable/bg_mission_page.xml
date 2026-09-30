@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Página de HQ das missões: papel da superfície, contorno grosso e sombra dura (os quadros
+     ficam dentro, separados pela sarjeta). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="@dimen/hard_shadow"
+        android:top="@dimen/hard_shadow">
+        <shape>
+            <solid android:color="@color/primary_variant" />
+            <corners android:radius="@dimen/radius_small" />
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/hard_shadow"
+        android:right="@dimen/hard_shadow">
+        <shape>
+            <solid android:color="@color/surface" />
+            <stroke
+                android:width="3dp"
+                android:color="@color/ink" />
+            <corners android:radius="@dimen/radius_small" />
+        </shape>
+    </item>
+</layer-list>

@@ -241,12 +241,18 @@
             android:layout_marginTop="@dimen/space_lg"
             android:text="@string/mission_section" />
 
+        <!-- Página de HQ: tira das diárias e tira das semanais (quadros montados em código). -->
         <LinearLayout
             android:id="@+id/missionList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_xs"
-            android:orientation="vertical" />
+            android:layout_marginTop="@dimen/space_sm"
+            android:background="@drawable/bg_mission_page"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/space_xs"
+            android:paddingTop="@dimen/space_xs"
+            android:paddingEnd="@dimen/space_sm"
+            android:paddingBottom="@dimen/space_sm" />
 
     </LinearLayout>
 </ScrollView>

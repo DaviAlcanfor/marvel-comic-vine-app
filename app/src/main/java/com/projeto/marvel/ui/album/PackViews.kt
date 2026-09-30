@@ -34,7 +34,8 @@ fun PackType.info() = when (this) {
     PackType.GOLD -> R.string.pack_gold_info
 }
 
-private fun PackType.colors(): List<Int> = when (this) {
+/** Metal do pacote (início, brilho do meio, fim): pacote e etiqueta de prêmio das missões. */
+fun PackType.colors(): List<Int> = when (this) {
     PackType.BASIC -> listOf(R.color.pack_basic_start, R.color.pack_basic_mid, R.color.pack_basic_end)
     PackType.SILVER -> listOf(R.color.pack_silver_start, R.color.pack_silver_mid, R.color.pack_silver_end)
     PackType.GOLD -> listOf(R.color.pack_gold_start, R.color.pack_gold_mid, R.color.pack_gold_end)

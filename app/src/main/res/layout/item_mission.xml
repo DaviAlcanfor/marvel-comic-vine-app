@@ -1,65 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Uma missão no painel padrão (como os cards de Jogos): ícone, o que fazer, barra de progresso,
-     o pacote que paga e o botão de pegar. -->
+<!-- Um quadro da página de missões (MissionList.kt monta as tiras): plaquinha HOJE/SEMANA, ícone,
+     o que fazer em Bebas, progresso em blocos de nanquim e o prêmio numa etiqueta do metal do
+     pacote — ou "PEGAR!" numa explosão quando completa. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/space_sm"
-    android:background="@drawable/bg_card"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="@dimen/space_md">
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/mission_gutter"
+    android:layout_weight="1"
+    android:background="@drawable/bg_mission_panel"
+    android:clipChildren="false"
+    android:orientation="vertical"
+    android:padding="@dimen/space_sm">
+
+    <TextView
+        android:id="@+id/kind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_caption"
+        android:fontFamily="@font/bebas_neue"
+        android:paddingStart="@dimen/space_sm"
+        android:paddingTop="2dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="6dp"
+        android:rotation="-3"
+        android:textColor="@color/ink"
+        android:textSize="14sp"
+        app:fontFamily="@font/bebas_neue"
+        tools:text="HOJE" />
 
     <ImageView
         android:id="@+id/icon"
         android:layout_width="@dimen/mission_icon_size"
         android:layout_height="@dimen/mission_icon_size"
-        android:layout_marginEnd="@dimen/space_md"
-        android:background="@drawable/bg_circle"
+        android:layout_marginTop="@dimen/space_sm"
         android:importantForAccessibility="no"
-        android:padding="@dimen/space_sm"
-        app:tint="@color/accent" />
+        app:tint="@color/accent_text" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_xs"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_primary"
-            android:textStyle="bold"
-            tools:text="Hoje · Vença 3 batalhas" />
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/bar"
-            style="@style/Widget.Marvel.HpBar"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/space_xs"
-            app:indicatorColor="@color/accent" />
-
-        <TextView
-            android:id="@+id/detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_xs"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp"
-            tools:text="2/3 · prêmio: pacote Prata" />
-    </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/claim"
-        style="@style/Widget.Marvel.ComicButton"
-        android:layout_width="wrap_content"
-        android:layout_marginStart="@dimen/space_sm"
-        android:minWidth="@dimen/touch_target"
-        android:paddingHorizontal="@dimen/space_md"
+        android:fontFamily="@font/bebas_neue"
+        android:letterSpacing="0.03"
+        android:textAllCaps="true"
+        android:textColor="@color/text_primary"
         android:textSize="18sp"
-        tools:text="PEGAR!" />
+        app:fontFamily="@font/bebas_neue"
+        tools:text="Vença 3 batalhas" />
+
+    <!-- Blocos do progresso (montados em código). -->
+    <LinearLayout
+        android:id="@+id/pips"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mission_pip_height"
+        android:layout_marginTop="@dimen/space_sm"
+        android:orientation="horizontal" />
+
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/text_secondary"
+        android:textSize="11sp"
+        tools:text="2/3" />
+
+    <!-- Prêmio (etiqueta no metal do pacote) ou PEGAR! (explosão) ou ✓ já pego. -->
+    <TextView
+        android:id="@+id/claim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:fontFamily="@font/bebas_neue"
+        android:gravity="center"
+        android:letterSpacing="0.04"
+        android:minHeight="@dimen/mission_tag_height"
+        android:paddingHorizontal="@dimen/space_sm"
+        android:textColor="@color/ink"
+        android:textSize="15sp"
+        app:fontFamily="@font/bebas_neue"
+        tools:text="PRATA" />
 </LinearLayout>
