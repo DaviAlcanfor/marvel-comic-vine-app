@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--
-      Design_System.svg só define um tema escuro (sem variante light), então o app
-      fixa Material3 no modo dark em vez de herdar DayNight.
+      Claro ("papel de gibi") e escuro (o do Design_System.svg): as cores vêm de values/colors.xml e
+      values-night/colors.xml. Segue o sistema, ou o que o usuário fixar no Perfil (ThemeStore).
     -->
-    <style name="Base.Theme.Marvel" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Base.Theme.Marvel" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_variant</item>
         <item name="colorSecondary">@color/accent</item>
@@ -15,6 +15,9 @@
         <item name="colorOnPrimary">@color/text_primary</item>
         <item name="android:statusBarColor">@color/background</item>
         <item name="android:navigationBarColor">@color/background</item>
+        <!-- Ícones da barra de status/navegação escuros no tema claro. -->
+        <item name="android:windowLightStatusBar">@bool/light_system_bars</item>
+        <item name="android:windowLightNavigationBar">@bool/light_system_bars</item>
         <!-- Inter como fonte padrão de todo texto; títulos usam Bebas Neue via Widget.Marvel.ScreenTitle. -->
         <item name="android:fontFamily">@font/inter</item>
         <item name="fontFamily">@font/inter</item>

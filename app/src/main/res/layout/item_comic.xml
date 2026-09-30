@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_sm"
             android:layout_marginBottom="@dimen/space_xs"
-            android:textColor="@color/accent"
+            android:textColor="@color/accent_text"
             android:textSize="12sp"
             tools:text="★★★★☆" />
     </LinearLayout>

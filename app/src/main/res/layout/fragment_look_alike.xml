@@ -74,7 +74,7 @@
             android:layout_marginTop="@dimen/space_lg"
             android:gravity="center"
             android:text="@string/look_alike_analyzing"
-            android:textColor="@color/accent"
+            android:textColor="@color/accent_text"
             android:textStyle="bold"
             android:visibility="gone" />
 
@@ -116,7 +116,7 @@
                     android:layout_marginHorizontal="@dimen/space_sm"
                     android:fontFamily="@font/bebas_neue"
                     android:text="≈"
-                    android:textColor="@color/accent"
+                    android:textColor="@color/accent_text"
                     android:textSize="40sp" />
 
                 <ImageView
@@ -148,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_md"
-                android:textColor="@color/accent"
+                android:textColor="@color/accent_text"
                 android:textStyle="bold"
                 tools:text="87% parecido" />
 

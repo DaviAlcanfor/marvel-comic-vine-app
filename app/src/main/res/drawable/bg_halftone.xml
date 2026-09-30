@@ -4,4 +4,5 @@
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
     android:alpha="0.1"
     android:src="@drawable/halftone_tile"
-    android:tileMode="repeat" />
+    android:tileMode="repeat"
+    android:tint="@color/halftone" />

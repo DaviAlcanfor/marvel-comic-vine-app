@@ -124,7 +124,7 @@
 
     <style name="Widget.Marvel.GameStat" parent="Widget.Marvel.GameText">
         <item name="android:layout_marginTop">@dimen/space_sm</item>
-        <item name="android:textColor">@color/accent</item>
+        <item name="android:textColor">@color/accent_text</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -267,7 +267,7 @@
         <item name="android:fontFamily">@font/bebas_neue</item>
         <item name="fontFamily">@font/bebas_neue</item>
         <item name="android:textSize">26sp</item>
-        <item name="android:textColor">@color/accent</item>
+        <item name="android:textColor">@color/accent_text</item>
     </style>
 
     <!-- Biografia/descrição como caixa de narração de HQ: papel e texto de nanquim. -->
@@ -317,7 +317,7 @@
         <item name="fontFamily">@font/bebas_neue</item>
         <item name="android:textSize">20sp</item>
         <item name="backgroundTint">@color/primary</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="cornerRadius">@dimen/radius_small</item>
         <item name="strokeColor">@color/move_magic</item>
         <item name="strokeWidth">@dimen/ink_width</item>
@@ -338,7 +338,7 @@
         <item name="android:fontFamily">@font/bebas_neue</item>
         <item name="fontFamily">@font/bebas_neue</item>
         <item name="android:textSize">28sp</item>
-        <item name="android:textColor">@color/accent</item>
+        <item name="android:textColor">@color/accent_text</item>
     </style>
 
     <style name="Widget.Marvel.StatLabel" parent="">
@@ -373,13 +373,13 @@
         <item name="android:textSize">22sp</item>
         <item name="android:letterSpacing">0.06</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:minHeight">0dp</item>
     </style>
 
     <style name="Widget.Marvel.ComicButton.Secondary">
         <item name="android:background">@drawable/bg_button_comic_secondary</item>
-        <item name="android:textColor">@color/accent</item>
+        <item name="android:textColor">@color/accent_text</item>
     </style>
 
     <!-- Caixa de legenda de HQ: título de seção em dourado, levemente torto. -->

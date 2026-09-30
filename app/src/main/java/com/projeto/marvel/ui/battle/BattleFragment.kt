@@ -184,7 +184,7 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
         val level = combatant.fighter.level
         val shown = if (level > 1) getString(R.string.battle_level_name, name, level) else name
         views.name.text = combatant.fighter.badged(shown)
-        views.name.setTextColor(color(if (combatant.fighter.golden) R.color.accent else R.color.text_primary))
+        views.name.setTextColor(color(if (combatant.fighter.golden) R.color.accent_text else R.color.text_primary))
         views.hpBar.max = maxHp
         views.hpBar.setProgressCompat(combatant.hp, true)
         views.hpBar.setIndicatorColor(color(hpColor(combatant.hp, maxHp)))

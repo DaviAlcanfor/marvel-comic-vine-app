@@ -6,7 +6,7 @@
     android:id="@+id/versusRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F20B0B10"
+    android:background="@color/overlay"
     android:clickable="true"
     android:focusable="true"
     android:visibility="gone">

@@ -33,7 +33,8 @@ fun ItemStickerBinding.bind(sticker: Sticker) {
         sticker.golden -> context.getString(R.string.battle_golden_name, sticker.character.name)
         else -> sticker.character.name
     }
-    name.setTextColor(ContextCompat.getColor(context, if (sticker.golden) R.color.accent else R.color.text_primary))
+    val nameColor = if (sticker.golden) R.color.accent_text else R.color.text_primary
+    name.setTextColor(ContextCompat.getColor(context, nameColor))
     number.text = context.getString(R.string.album_number, sticker.number)
     count.visibility = if (sticker.count > 1) View.VISIBLE else View.GONE
     count.text = context.getString(R.string.album_count, sticker.count)

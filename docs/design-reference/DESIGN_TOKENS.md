@@ -27,6 +27,24 @@ no próprio `Design_System.svg` (seção "Tipografia", visível ao renderizar o 
 | `ink`              | `#000000` | Tema HQ: contornos de nanquim e sombras duras (não está nos SVGs) |
 | `poison`           | `#8E44AD` | Tema HQ: veneno na Batalha, distinto da cura verde (não está nos SVGs) |
 
+### Tema claro ("papel de gibi")
+
+Não está nos SVGs (que só têm o escuro, acima). Valores em `res/values/colors.xml`; o escuro em
+`res/values-night/colors.xml`. `ink`, `paper`, `primary`, `accent`, cartas e pacotes não mudam.
+
+| Token             | Claro       | Escuro      | Uso                                           |
+|-------------------|-------------|-------------|------------------------------------------------|
+| `background`      | `#FFF4DC`   | `#121223`   | Fundo de tela (papel creme + retícula)         |
+| `surface`         | `#FFFFFF`   | `#1A1A2E`   | Cards                                          |
+| `surface_variant` | `#F3E7C9`   | `#22223A`   | Inputs, trilhos de barra                       |
+| `text_primary`    | `#1A1523`   | `#F5F5F7`   | Títulos, nomes                                 |
+| `text_secondary`  | `#5B546A`   | `#A0A0B8`   | Corpo, rótulos                                 |
+| `primary_text`    | `#B00E17`   | `#FF4D55`   | Vermelho como texto                            |
+| `accent_text`     | `#8A6206`   | `#E6B800`   | Dourado como texto (o `accent` fica para fundos) |
+| `overlay`         | `#F2FFF4DC` | `#F20B0B10` | Telas por cima de outras (VS, pacote)          |
+| `halftone`        | `#000000`   | `#FFFFFF`   | Pontos da retícula                             |
+| `move_*`          | versões escuras | claras  | Cor de cada golpe; 4,5:1 sobre `surface` nos dois |
+
 ## Raio de borda
 
 Valores observados variam ligeiramente (9.25–16) por serem mockups desenhados à

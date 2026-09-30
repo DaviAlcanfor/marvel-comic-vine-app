@@ -28,7 +28,7 @@ class ArenaView @JvmOverloads constructor(
             post = ContextCompat.getColor(context, R.color.accent),
             ropes = intArrayOf(
                 ContextCompat.getColor(context, R.color.primary),
-                ContextCompat.getColor(context, R.color.white),
+                ContextCompat.getColor(context, R.color.text_primary),
                 ContextCompat.getColor(context, R.color.move_water)
             ),
             ink = ContextCompat.getColor(context, R.color.ink)

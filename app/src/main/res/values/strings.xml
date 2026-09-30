@@ -487,4 +487,8 @@
     <string name="move_type_drain">Dreno</string>
 
     <string name="content_description_back">Voltar</string>
+    <string name="profile_theme_title">Tema</string>
+    <string name="theme_system">Seguir o sistema</string>
+    <string name="theme_light">Claro (papel de gibi)</string>
+    <string name="theme_dark">Escuro</string>
 </resources>

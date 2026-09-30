@@ -45,6 +45,14 @@
                     android:text="@string/profile_title" />
 
                 <ImageButton
+                    android:id="@+id/themeButton"
+                    android:layout_width="@dimen/touch_target"
+                    android:layout_height="@dimen/touch_target"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/profile_theme_title"
+                    android:src="@drawable/ic_theme" />
+
+                <ImageButton
                     android:id="@+id/shareButton"
                     android:layout_width="@dimen/touch_target"
                     android:layout_height="@dimen/touch_target"

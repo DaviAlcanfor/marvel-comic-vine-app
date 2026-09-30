@@ -195,7 +195,7 @@
     <TextView
         android:id="@+id/cpuStatus"
         style="@style/Widget.Marvel.BattleCaption"
-        android:textColor="@color/accent"
+        android:textColor="@color/accent_text"
         app:layout_constraintStart_toStartOf="@id/cpuName"
         app:layout_constraintTop_toBottomOf="@id/cpuHpText"
         tools:text="Envenenado" />
@@ -303,7 +303,7 @@
     <TextView
         android:id="@+id/playerStatus"
         style="@style/Widget.Marvel.BattleCaption"
-        android:textColor="@color/accent"
+        android:textColor="@color/accent_text"
         app:layout_constraintEnd_toEndOf="@id/playerName"
         app:layout_constraintTop_toBottomOf="@id/playerHpText"
         tools:text="Defendendo" />

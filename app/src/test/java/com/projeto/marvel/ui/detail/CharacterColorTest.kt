@@ -24,4 +24,13 @@ class CharacterColorTest {
         val gold = 0xFFE6B800.toInt()
         assertEquals(gold, readableOn(background, gold))
     }
+
+    @Test
+    fun `no fundo claro a cor clara e escurecida`() {
+        val paper = 0xFFFFF4DC.toInt()
+        val iceman = 0xFFA8E6FF.toInt()
+        val readable = readableOn(paper, iceman)
+        assertTrue(contrast(readable, paper) >= 4.5)
+        assertTrue(luminance(readable) < luminance(iceman))
+    }
 }

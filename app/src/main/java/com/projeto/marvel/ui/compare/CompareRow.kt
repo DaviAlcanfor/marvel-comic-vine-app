@@ -37,7 +37,7 @@ fun bindComparison(container: LinearLayout, rows: List<CompareRow>) {
 /** O maior lado fica colorido; o menor, apagado. Empate: os dois coloridos. */
 private fun ItemCompareStatBinding.bind(row: CompareRow) {
     val max = row.max ?: maxOf(row.left, row.right, 1)
-    val win = ContextCompat.getColor(root.context, R.color.accent)
+    val win = ContextCompat.getColor(root.context, R.color.accent_text)
     val lose = ContextCompat.getColor(root.context, R.color.text_secondary)
     label.setText(row.label)
     val sides = listOf(Triple(leftBar, leftValue, row.left), Triple(rightBar, rightValue, row.right))

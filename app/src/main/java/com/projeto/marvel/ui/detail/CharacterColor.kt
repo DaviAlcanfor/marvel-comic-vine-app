@@ -20,6 +20,8 @@ private const val CONTRAST_OFFSET = 0.05
 private const val RED_SHIFT = 16
 private const val GREEN_SHIFT = 8
 private const val OPAQUE = 0xFF000000.toInt()
+private const val WHITE = 0xFFFFFFFF.toInt()
+private const val BLACK = OPAQUE
 
 /** Luminância relativa (WCAG) de uma cor ARGB. */
 fun luminance(color: Int): Double {
@@ -36,23 +38,26 @@ fun contrast(a: Int, b: Int): Double {
 }
 
 /**
- * [color] clareado (misturado com branco) até ter contraste 4,5:1 com [background] — a cor de
- * um personagem escuro (Venom, Pantera Negra) sumiria no fundo escuro do app.
+ * [color] misturado com branco (fundo escuro) ou preto (fundo claro) até ter contraste 4,5:1 com
+ * [background] — a cor de um personagem escuro (Venom, Pantera Negra) sumiria no tema escuro, e a
+ * de um claro (Homem de Gelo) no tema claro.
  */
 fun readableOn(background: Int, color: Int): Int {
+    val target = if (contrast(WHITE, background) >= contrast(BLACK, background)) WHITE else BLACK
     var amount = 0f
     var result = color or OPAQUE
     while (contrast(result, background) < MIN_CONTRAST && amount < 1f) {
         amount += LIGHTEN_STEP
-        result = mixWithWhite(color, amount)
+        result = mixToward(color, target, amount)
     }
     return result
 }
 
-private fun mixWithWhite(color: Int, amount: Float): Int {
+private fun mixToward(color: Int, target: Int, amount: Float): Int {
     fun mix(shift: Int): Int {
         val c = color shr shift and CHANNEL_MAX
-        return (c + (CHANNEL_MAX - c) * amount).toInt().coerceAtMost(CHANNEL_MAX) shl shift
+        val t = target shr shift and CHANNEL_MAX
+        return (c + (t - c) * amount).toInt().coerceIn(0, CHANNEL_MAX) shl shift
     }
     return OPAQUE or mix(RED_SHIFT) or mix(GREEN_SHIFT) or mix(0)
 }

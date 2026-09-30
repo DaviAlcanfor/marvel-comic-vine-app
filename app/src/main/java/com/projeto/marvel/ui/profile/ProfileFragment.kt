@@ -24,6 +24,8 @@ import com.projeto.marvel.data.Achievement
 import com.projeto.marvel.data.Favorite
 import com.projeto.marvel.data.GENRES
 import com.projeto.marvel.data.ReadingStatus
+import com.projeto.marvel.data.ThemeMode
+import com.projeto.marvel.data.ThemeStore
 import com.projeto.marvel.databinding.FragmentProfileBinding
 import com.projeto.marvel.ui.characters.CharactersFragment
 import com.projeto.marvel.ui.comicDialog
@@ -97,6 +99,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             )
         }
         binding.backButton.setOnClickListener { findNavController().navigateUp() }
+        binding.themeButton.setOnClickListener { pickTheme() }
         binding.shareButton.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch { shareProfileCard(requireContext(), viewModel.state.value) }
         }
@@ -182,6 +185,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         chipStrokeColor = ColorStateList.valueOf(color)
         chipStrokeWidth = resources.getDimension(R.dimen.genre_chip_stroke)
         setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+    }
+
+    private fun pickTheme() {
+        val store = ThemeStore(requireContext())
+        val labels = arrayOf(R.string.theme_system, R.string.theme_light, R.string.theme_dark).map(::getString)
+        requireContext().comicDialog()
+            .setTitle(R.string.profile_theme_title)
+            .setSingleChoiceItems(labels.toTypedArray(), ThemeMode.entries.indexOf(store.get())) { dialog, which ->
+                dialog.dismiss()
+                store.set(ThemeMode.entries[which])
+            }
+            .show()
     }
 
     private fun pickGenres(current: List<String>) {

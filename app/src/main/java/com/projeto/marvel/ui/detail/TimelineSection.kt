@@ -24,7 +24,7 @@ fun FragmentCharacterDetailBinding.bindTimeline(events: List<TimelineEvent>) {
     events.forEach { event ->
         ItemTimelineBinding.inflate(inflater, timelineList, true).apply {
             val (label, color) = when (event.kind) {
-                TimelineKind.DEBUT -> R.string.timeline_debut to R.color.accent
+                TimelineKind.DEBUT -> R.string.timeline_debut to R.color.accent_text
                 TimelineKind.TEAM -> R.string.timeline_team to R.color.move_water
                 TimelineKind.DEATH -> R.string.timeline_death to R.color.primary
             }

@@ -125,8 +125,12 @@ Aplicadas via ferramenta, não de memória:
   SVGs (que são grandes: alguns têm imagens embutidas em base64 e passam de 1MB).
   Os tokens já estão traduzidos para `res/values/colors.xml`, `dimens.xml` e
   `themes.xml`.
-- O design é **dark-only** (os SVGs não têm variante light), por isso o app fixa
-  `Theme.Material3.Dark.NoActionBar` em vez de `DayNight`.
+- Os SVGs só têm o tema escuro; o app tem também um claro ("papel de gibi": fundo creme,
+  retícula e nanquim preto). `Theme.Material3.DayNight.NoActionBar`: o claro fica em
+  `values/colors.xml` e o escuro em `values-night/colors.xml` (só os tokens que mudam). Segue o
+  sistema ou o que o usuário fixar no Perfil (`data/ThemeStore.kt`, aplicado em `MarvelApp`).
+  Cor nova: token nos dois arquivos, nunca hex no layout. Dourado como texto é `accent_text`
+  (o `accent` não dá leitura no papel claro); texto em botão vermelho é sempre `white`.
 
 ## Limitações conhecidas (não mockar dado fake)
 

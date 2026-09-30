@@ -107,7 +107,7 @@ class TrailView @JvmOverloads constructor(
             ContextCompat.getColor(
                 context,
                 when (node.state) {
-                    TrailNode.State.CURRENT -> R.color.accent
+                    TrailNode.State.CURRENT -> R.color.accent_text
                     TrailNode.State.DONE -> R.color.text_primary
                     TrailNode.State.LOCKED -> R.color.text_secondary
                 }
