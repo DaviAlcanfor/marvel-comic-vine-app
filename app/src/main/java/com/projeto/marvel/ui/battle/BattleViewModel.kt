@@ -318,9 +318,10 @@ class BattleViewModel @JvmOverloads constructor(
     }
 
     private companion object {
-        const val STEP_MILLIS = 1_000L
+        // Pausa entre as ações do turno: dá tempo de ver cada golpe e o efeito dele antes do próximo.
+        const val STEP_MILLIS = 1_700L
 
         // A ultimate tem cena própria (tela escurece, quadro do lutador) antes do impacto.
-        const val ULTIMATE_STEP_MILLIS = 2_000L
+        const val ULTIMATE_STEP_MILLIS = ULTIMATE_SCENE_MILLIS + STEP_MILLIS
     }
 }

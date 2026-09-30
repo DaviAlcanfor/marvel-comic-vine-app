@@ -457,6 +457,7 @@
         <item>THWACK!</item>
     </string-array>
     <string name="battle_sfx_miss">WHOOSH!</string>
+    <string name="battle_sfx_ultimate">KA-BOOM!</string>
     <string name="battle_sfx_critical">CRÍTICO!</string>
     <string name="battle_sfx_poison">SPLAT!</string>
     <string name="battle_sfx_poison_tick">SSSS!</string>

@@ -32,13 +32,17 @@ private const val ROW_STAGGER_MILLIS = 180L
 private const val COUNT_MILLIS = 900L
 private const val JUMP_MILLIS = 900L
 private const val JUMP_HEIGHT_FACTOR = 3
+private const val KO_DELAY_MILLIS = 1_100L
 
 /**
- * Painel de fim de luta (entra depois do K.O.): troféu 3D e confete na vitória, e o resumo em
- * linhas com contador que sobe e barra que enche, uma depois da outra.
+ * Fim de luta: o derrotado esmaece, o K.O. estoura e entra o painel — troféu 3D e confete na
+ * vitória, e o resumo em linhas com contador que sobe, uma depois da outra.
  */
 fun FragmentBattleBinding.showResult(game: BattleUiState.Success) {
     val context = root.context
+    (if (game.winner == Side.PLAYER) cpuImage else playerImage).defeat()
+    val koColor = ContextCompat.getColor(context, R.color.primary)
+    koBurst.burst(context.getString(R.string.battle_ko), koColor, KO_DELAY_MILLIS)
     // No PvP sempre há um vencedor para comemorar.
     val won = game.winner == Side.PLAYER || game.pvp
     resultTitle.text = when {

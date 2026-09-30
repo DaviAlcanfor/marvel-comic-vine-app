@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.graphics.ColorUtils
 import android.view.animation.LinearInterpolator
+import com.projeto.marvel.R
 import com.projeto.marvel.ui.SpeedLinesDrawable
 import com.projeto.marvel.ui.comicInterpolator
 
@@ -15,13 +16,16 @@ import com.projeto.marvel.ui.comicInterpolator
 
 private const val SWAY_MILLIS = 1400L
 private const val SWAY_DEGREES = 2.5f
-private const val PROJECTILE_MILLIS = 170L
 private const val SPIN_DEGREES = 720f
 private const val SPIN_SCALE = 1.8f
 private const val FROST_ALPHA = 110
 private const val PUNCH_MILLIS = 240L
 private const val PUNCH_SCALE = 1.05f
 private const val BACKDROP_FPS = 8
+private const val KNOCKBACK_MILLIS = 250L
+private const val KNOCKBACK_HOLD_MILLIS = 300L
+private const val KNOCKBACK_FACTOR = 1.5f
+private const val KNOCKBACK_SCALE = 0.8f
 private const val ONE_SECOND = 1000L
 
 /** "Respiração" de espera: o lutador balança de leve, sem parar, até a View sumir. */
@@ -55,8 +59,8 @@ fun View.fireProjectile(from: View, to: View, startDelay: Long = 0, spin: Boolea
         .scaleX(scale)
         .scaleY(scale)
         .setStartDelay(startDelay)
-        .setDuration(if (spin) PROJECTILE_MILLIS * 2 else PROJECTILE_MILLIS)
-        .setInterpolator(comicInterpolator(PROJECTILE_MILLIS))
+        .setDuration(if (spin) STEP_MILLIS * 2 else STEP_MILLIS)
+        .setInterpolator(comicInterpolator(STEP_MILLIS))
         .withEndAction { visibility = View.INVISIBLE }
 }
 
@@ -69,13 +73,29 @@ fun ImageView.frost(tint: Int?) {
     }
 }
 
-/** Crítico: a cena inteira dá um "soco" de zoom e volta. */
-fun View.punchZoom(startDelay: Long = STEP_MILLIS) {
-    animate().scaleX(PUNCH_SCALE).scaleY(PUNCH_SCALE)
+/** Crítico (e, mais forte, a ultimate): a cena inteira dá um "soco" de zoom e volta. */
+fun View.punchZoom(startDelay: Long = STEP_MILLIS, scale: Float = PUNCH_SCALE) {
+    animate().scaleX(scale).scaleY(scale)
         .setStartDelay(startDelay)
         .setDuration(PUNCH_MILLIS / 2)
         .setInterpolator(comicInterpolator(PUNCH_MILLIS / 2))
         .withEndAction { animate().scaleX(1f).scaleY(1f).setStartDelay(0).setDuration(PUNCH_MILLIS / 2) }
+}
+
+/**
+ * Golpe forte (ultimate): o alvo é arremessado para o fundo (desliza e encolhe) e volta.
+ * Só no eixo Y e na escala: o X é do tremor de dano, a rotação é da respiração.
+ */
+fun View.knockback(direction: Float) {
+    val distance = resources.getDimension(R.dimen.space_xl) * KNOCKBACK_FACTOR * direction
+    animate().translationY(distance).scaleX(KNOCKBACK_SCALE).scaleY(KNOCKBACK_SCALE)
+        .setStartDelay(STEP_MILLIS).setDuration(KNOCKBACK_MILLIS)
+        .setInterpolator(comicInterpolator(KNOCKBACK_MILLIS))
+        .withEndAction {
+            animate().translationY(0f).scaleX(1f).scaleY(1f)
+                .setStartDelay(KNOCKBACK_HOLD_MILLIS).setDuration(KNOCKBACK_MILLIS * 2)
+                .setInterpolator(comicInterpolator(KNOCKBACK_MILLIS * 2))
+        }
 }
 
 /** Fundo da arena: linhas de ação que "vibram" a [BACKDROP_FPS], sem parar, até a View sumir. */

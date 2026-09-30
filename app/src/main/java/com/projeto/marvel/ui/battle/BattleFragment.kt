@@ -136,9 +136,9 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
             event != null && event.id != lastEventId && lastEventId != -1 -> {
                 animate(binding, event)
                 if (winner != null) {
-                    binding.views(if (winner == Side.PLAYER) Side.CPU else Side.PLAYER).image.defeat()
-                    binding.koBurst.burst(getString(R.string.battle_ko), color(R.color.primary), KO_DELAY_MILLIS)
-                    binding.showResult(game)
+                    // Ultimate que derruba: o K.O. espera a cena dela acabar.
+                    val lead = if (event.outcome == Outcome.ULTIMATE) ULTIMATE_SCENE_MILLIS else 0L
+                    binding.root.postDelayed({ this.binding?.showResult(game) }, lead)
                 }
             }
         }
@@ -227,7 +227,7 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
                 binding.animateHit(event, actor, target, direction)
             Outcome.ULTIMATE -> {
                 val fighter = (viewModel.state.value as? BattleUiState.Success)?.combatant(event.side)?.fighter
-                binding.playUltimateScene(fighter?.imageUrl, event.moveName.orEmpty()) {
+                binding.playUltimateScene(fighter?.imageUrl, event.moveName.orEmpty(), typeColor) {
                     binding.animateHit(event, actor, target, direction)
                 }
             }
@@ -294,8 +294,7 @@ private fun FragmentBattleBinding.views(side: Side) = FighterViews(this, side)
 
 private const val PERCENT = 100
 private const val ENERGY_BAR_MAX = 100
-private const val KO_DELAY_MILLIS = 700L
-private const val IMPACT_SHAKE_DELAY_MILLIS = 170L
+private const val ULTIMATE_ZOOM = 1.12f
 private const val IMPACT_SHAKE_MILLIS = 400L
 private const val SWAY_OFFSET_MILLIS = 700L
 private const val HP_HIGH_PERCENT = 50
@@ -363,6 +362,11 @@ private fun FragmentBattleBinding.animateHit(
             target.burst.burst(context.getString(effect), typeColor)
             target.image.glow(typeColor, startDelay = STEP_MILLIS)
         }
+        event.outcome == Outcome.ULTIMATE -> {
+            target.burst.burst(context.getString(R.string.battle_sfx_ultimate), typeColor, big = true)
+            target.image.knockback(-direction)
+            root.punchZoom(scale = ULTIMATE_ZOOM)
+        }
         event.critical -> {
             target.burst.burst(context.getString(R.string.battle_sfx_critical), color(R.color.primary))
             root.punchZoom()
@@ -373,7 +377,7 @@ private fun FragmentBattleBinding.animateHit(
     if (event.heal > 0) drainBack(event.heal, actor, target, typeColor)
     if (event.outcome == Outcome.HIT || event.outcome == Outcome.ULTIMATE) {
         impactFlash.impactFrame()
-        root.shake(IMPACT_SHAKE_DELAY_MILLIS, comicInterpolator(IMPACT_SHAKE_MILLIS))
+        root.shake(STEP_MILLIS, comicInterpolator(IMPACT_SHAKE_MILLIS))
         arena3d.impact()
         // Vibração do sistema (segue a configuração do usuário; sem permissão): forte no crítico.
         val strong = event.critical || event.outcome == Outcome.ULTIMATE

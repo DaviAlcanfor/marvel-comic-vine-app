@@ -8,10 +8,13 @@ import android.graphics.Canvas
 import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.drawToBitmap
 import coil.load
 import com.google.android.material.button.MaterialButton
@@ -22,8 +25,11 @@ import com.projeto.marvel.databinding.FragmentBattleBinding
 import com.projeto.marvel.databinding.ItemResultStatBinding
 import com.projeto.marvel.ui.color
 import com.projeto.marvel.ui.BoxStyle
+import com.projeto.marvel.ui.SpeedLinesDrawable
+import com.projeto.marvel.ui.SteppedInterpolator
 import com.projeto.marvel.ui.comicBox
 import com.projeto.marvel.ui.comicInterpolator
+import com.projeto.marvel.ui.shake
 import com.projeto.marvel.ui.icon
 import com.projeto.marvel.ui.label
 import com.projeto.marvel.ui.photo.shareImage
@@ -36,11 +42,24 @@ private const val BANNER_POP_MILLIS = 220L
 private const val BANNER_HOLD_MILLIS = 900L
 private const val BANNER_START_SCALE = 0.3f
 private const val INACTIVE_ALPHA = 0.55f
-private const val SCRIM_ALPHA = 0.85f
-private const val SCENE_IN_MILLIS = 250L
-private const val SCENE_HOLD_MILLIS = 650L
-private const val SCENE_OUT_MILLIS = 200L
-internal const val RESULT_DELAY_MILLIS = 1_300L
+private const val SCRIM_ALPHA = 0.9f
+private const val SCENE_IN_MILLIS = 320L
+private const val SCENE_HOLD_MILLIS = 1_400L
+private const val SCENE_OUT_MILLIS = 260L
+
+/** Cena inteira da ultimate até o impacto (entrada + pausa + saída). */
+internal const val ULTIMATE_SCENE_MILLIS = SCENE_IN_MILLIS + SCENE_HOLD_MILLIS + SCENE_OUT_MILLIS
+private const val LINES_ALPHA = 0x66
+private const val PANEL_START_SCALE = 3f
+private const val PANEL_END_SCALE = 4f
+private const val PANEL_START_TILT = -12f
+private const val PANEL_TILT = -3f
+private const val PANEL_SLAM_STEPS = 4
+private const val FACE_ZOOM = 1.25f
+private const val STAMP_START_SCALE = 2.2f
+private const val STAMP_DELAY_MILLIS = 180L
+private const val STAMP_MILLIS = 220L
+internal const val RESULT_DELAY_MILLIS = 1_900L
 internal const val RESULT_MILLIS = 350L
 
 /**
@@ -116,23 +135,57 @@ fun FragmentBattleBinding.dimInactive(game: BattleUiState.Success) {
 }
 
 /**
- * Cena da ultimate: a tela escurece, entra o quadro do lutador com o nome do poder e, quando ele
- * sai, [onImpact] roda o golpe em si.
+ * Cena da ultimate, exagerada de propósito: clarão, tela escura com linhas de ação na cor do golpe,
+ * o quadro do lutador desaba na tela (tremor + vibração), o rosto aproxima, o nome do poder carimba
+ * e o quadro explode na direção da câmera. Aí [onImpact] roda o golpe em si. Dura
+ * [ULTIMATE_SCENE_MILLIS] (o ViewModel espera por ela).
  */
-fun FragmentBattleBinding.playUltimateScene(imageUrl: String?, powerName: String, onImpact: () -> Unit) {
+fun FragmentBattleBinding.playUltimateScene(
+    imageUrl: String?,
+    powerName: String,
+    @ColorInt color: Int,
+    onImpact: () -> Unit
+) {
     ultimateImage.load(imageUrl) { crossfade(true) }
     ultimateName.text = powerName
+    impactFlash.impactFrame(startDelay = 0)
+
     ultimateScrim.visibility = View.VISIBLE
-    ultimatePanel.visibility = View.VISIBLE
-    ultimatePanel.translationX = -root.width.toFloat()
     ultimateScrim.animate().alpha(SCRIM_ALPHA).setStartDelay(0).setDuration(SCENE_IN_MILLIS)
-    ultimatePanel.animate().translationX(0f).setStartDelay(0).setDuration(SCENE_IN_MILLIS)
         .setInterpolator(comicInterpolator(SCENE_IN_MILLIS))
+    ultimateLines.visibility = View.VISIBLE
+    ultimateLines.alpha = 1f
+    val lines = ultimateLines.startSpeedLines(SpeedLinesDrawable(ColorUtils.setAlphaComponent(color, LINES_ALPHA)))
+
+    ultimatePanel.visibility = View.VISIBLE
+    ultimatePanel.alpha = 0f
+    ultimatePanel.scaleX = PANEL_START_SCALE
+    ultimatePanel.scaleY = PANEL_START_SCALE
+    ultimatePanel.rotation = PANEL_START_TILT
+    ultimateImage.scaleX = 1f
+    ultimateImage.scaleY = 1f
+    ultimateName.alpha = 0f
+    ultimatePanel.animate().alpha(1f).scaleX(1f).scaleY(1f).rotation(PANEL_TILT)
+        .setStartDelay(0).setDuration(SCENE_IN_MILLIS)
+        .setInterpolator(SteppedInterpolator(PANEL_SLAM_STEPS, OvershootInterpolator()))
         .withEndAction {
-            ultimatePanel.animate().translationX(root.width.toFloat()).setStartDelay(SCENE_HOLD_MILLIS)
-                .setDuration(SCENE_OUT_MILLIS)
+            root.shake(interpolator = comicInterpolator(SCENE_IN_MILLIS))
+            arena3d.impact()
+            root.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+            ultimateImage.animate().scaleX(FACE_ZOOM).scaleY(FACE_ZOOM)
+                .setStartDelay(0).setDuration(SCENE_HOLD_MILLIS).setInterpolator(comicInterpolator(SCENE_HOLD_MILLIS))
+            ultimateName.scaleX = STAMP_START_SCALE
+            ultimateName.scaleY = STAMP_START_SCALE
+            ultimateName.animate().alpha(1f).scaleX(1f).scaleY(1f)
+                .setStartDelay(STAMP_DELAY_MILLIS).setDuration(STAMP_MILLIS)
+                .setInterpolator(comicInterpolator(STAMP_MILLIS))
+            ultimatePanel.animate().alpha(0f).scaleX(PANEL_END_SCALE).scaleY(PANEL_END_SCALE)
+                .setStartDelay(SCENE_HOLD_MILLIS).setDuration(SCENE_OUT_MILLIS)
+                .setInterpolator(comicInterpolator(SCENE_OUT_MILLIS))
                 .withEndAction {
                     ultimatePanel.visibility = View.GONE
+                    lines.cancel()
+                    ultimateLines.visibility = View.GONE
                     ultimateScrim.animate().alpha(0f).setStartDelay(0).setDuration(SCENE_OUT_MILLIS)
                         .withEndAction { ultimateScrim.visibility = View.GONE }
                     onImpact()
