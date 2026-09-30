@@ -13,10 +13,10 @@ import com.projeto.marvel.databinding.ItemUpgradeStatBinding
 // Painel de melhorias embaixo da carta em 3D: pontos por atributo (+/–) e evoluir para dourada.
 
 private val LABELS = mapOf(
-    Stat.ATTACK to R.string.stat_attack,
-    Stat.DEFENSE to R.string.stat_defense,
-    Stat.SPEED to R.string.stat_speed,
-    Stat.INTELLIGENCE to R.string.stat_intelligence
+    Stat.ATTACK to (R.string.stat_attack to R.drawable.ic_move_strike),
+    Stat.DEFENSE to (R.string.stat_defense to R.drawable.ic_move_guard),
+    Stat.SPEED to (R.string.stat_speed to R.drawable.ic_move_dodge),
+    Stat.INTELLIGENCE to (R.string.stat_intelligence to R.drawable.ic_geek)
 )
 
 private const val DISABLED_ALPHA = 0.35f
@@ -61,7 +61,9 @@ fun FragmentAlbumBinding.bindUpgrade(
 
 /** Atributo [stat] com o valor final [total] e os pontos que você pôs nele. */
 private fun ItemUpgradeStatBinding.bindRow(stat: Stat, total: Int, card: CardUpgrade, onAllocate: (Stat, Int) -> Unit) {
-    label.setText(LABELS.getValue(stat))
+    val (text, icon) = LABELS.getValue(stat)
+    label.setText(text)
+    label.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, 0, 0, 0)
     val spent = card.allocation[stat] ?: 0
     value.text = if (spent > 0) "$total (+$spent)" else "$total"
     minus.isEnabled = spent > 0

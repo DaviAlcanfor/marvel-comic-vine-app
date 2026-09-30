@@ -227,7 +227,13 @@
             android:id="@+id/upgradeToggle"
             style="@style/Widget.Marvel.ComicButton.Secondary"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/space_md" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:drawableStart="@drawable/ic_edit"
+            android:drawablePadding="@dimen/space_sm"
+            android:drawableTint="@color/accent"
+            android:minHeight="@dimen/touch_target"
+            android:paddingHorizontal="@dimen/space_md" />
 
         <LinearLayout
             android:id="@+id/upgradePanel"
@@ -266,7 +272,11 @@
                 android:id="@+id/evolveButton"
                 style="@style/Widget.Marvel.ComicButton"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/space_md" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:minHeight="@dimen/touch_target"
+                android:paddingHorizontal="@dimen/space_md"
+                android:paddingVertical="@dimen/space_xs" />
         </LinearLayout>
         </LinearLayout>
         </ScrollView>

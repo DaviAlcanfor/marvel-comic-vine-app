@@ -67,7 +67,7 @@ class GuessFragment : Fragment(R.layout.fragment_guess) {
         binding.options.removeAllViews()
         game.options.forEach { option ->
             ItemQuizAnswerBinding.inflate(layoutInflater, binding.options, true).root.apply {
-                text = if (game.solved && option.id == game.answer.id) "✅ ${option.name}" else option.name
+                text = if (game.solved && option.id == game.answer.id) "✓ ${option.name}" else option.name
                 val out = option.id in game.wrong || (game.solved && option.id != game.answer.id)
                 isEnabled = !out && !game.solved
                 alpha = if (out) DISABLED_ALPHA else 1f

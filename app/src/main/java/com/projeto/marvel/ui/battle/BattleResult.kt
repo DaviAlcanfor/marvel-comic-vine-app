@@ -1,5 +1,7 @@
 package com.projeto.marvel.ui.battle
 
+import androidx.annotation.DrawableRes
+import android.content.res.ColorStateList
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.graphics.Canvas
@@ -47,7 +49,7 @@ fun FragmentBattleBinding.showResult(game: BattleUiState.Success) {
     resultVersus.text = context.getString(R.string.result_versus, game.player.fighter.name, game.cpu.fighter.name)
     shareResultButton.setOnClickListener { shareResult() }
     resultAchievements.text = game.newAchievements.joinToString("\n") {
-        "🏅 " + context.getString(R.string.achievement_unlocked, context.getString(it.title))
+        "★ " + context.getString(R.string.achievement_unlocked, context.getString(it.title))
     }
     resultAchievements.visibility = if (game.newAchievements.isEmpty()) View.GONE else View.VISIBLE
     // Cara de HQ: título numa explosão torta, confronto numa legenda, conquistas num balão.
@@ -101,12 +103,12 @@ fun FragmentBattleBinding.hideResult() {
 private fun FragmentBattleBinding.bindResultRows(game: BattleUiState.Success) {
     val stats = game.stats
     val rows = listOf(
-        ResultRow(R.string.result_dealt, stats.dealt, "💥", R.color.primary),
-        ResultRow(R.string.result_taken, stats.taken, "🩹", R.color.move_water),
-        ResultRow(R.string.result_biggest, stats.biggestHit, "🔥", R.color.accent),
-        ResultRow(R.string.result_turns, game.turn, "⏱", R.color.move_heal),
-        ResultRow(R.string.result_criticals, stats.criticals, "⚡", R.color.move_magic),
-        ResultRow(R.string.result_ultimates, stats.ultimates, "🌟", R.color.move_blast)
+        ResultRow(R.string.result_dealt, stats.dealt, R.drawable.ic_move_strike, R.color.primary),
+        ResultRow(R.string.result_taken, stats.taken, R.drawable.ic_move_heal, R.color.move_water),
+        ResultRow(R.string.result_biggest, stats.biggestHit, R.drawable.ic_swords, R.color.accent),
+        ResultRow(R.string.result_turns, game.turn, R.drawable.ic_timer, R.color.move_heal),
+        ResultRow(R.string.result_criticals, stats.criticals, R.drawable.ic_bolt, R.color.move_magic),
+        ResultRow(R.string.result_ultimates, stats.ultimates, R.drawable.ic_move_magic, R.color.move_blast)
     )
     resultRows.removeAllViews()
     val context = root.context
@@ -138,7 +140,9 @@ private fun ItemResultStatBinding.paint(row: ResultRow) {
     value.setTextColor(text)
     label.setTextColor(text)
     label.setText(row.label)
-    value.text = context.getString(R.string.result_tile, row.emoji, 0)
+    value.setCompoundDrawablesRelativeWithIntrinsicBounds(row.icon, 0, 0, 0)
+    value.compoundDrawableTintList = ColorStateList.valueOf(text)
+    value.text = "0"
 }
 
 /** Contador sobe de 0 até o valor, e o quadrinho dá um "pulo" ao chegar. */
@@ -148,7 +152,7 @@ private fun View.countUp(tile: ItemResultStatBinding, row: ResultRow, delay: Lon
         startDelay = delay
         interpolator = DecelerateInterpolator()
         addUpdateListener {
-            tile.value.text = context.getString(R.string.result_tile, row.emoji, it.animatedValue as Int)
+            tile.value.text = (it.animatedValue as Int).toString()
         }
         doOnEnd {
             animate().scaleX(POP_SCALE).scaleY(POP_SCALE).setDuration(POP_MILLIS)
@@ -158,7 +162,7 @@ private fun View.countUp(tile: ItemResultStatBinding, row: ResultRow, delay: Lon
     }
 }
 
-private class ResultRow(@StringRes val label: Int, val value: Int, val emoji: String, @ColorRes val color: Int)
+private class ResultRow(@StringRes val label: Int, val value: Int, @DrawableRes val icon: Int, @ColorRes val color: Int)
 
 private const val TILES_PER_ROW = 2
 private const val TILE_TILT = 2f

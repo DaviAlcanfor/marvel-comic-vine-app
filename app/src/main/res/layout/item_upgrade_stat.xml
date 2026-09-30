@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Uma linha do painel de melhorias: atributo, valor final (base + pontos) e os botões – / +. -->
+<!-- Uma linha do painel de melhorias: atributo, valor final (base + pontos) e os botões – / +.
+     O valor tem largura fixa para os botões ficarem alinhados em todas as linhas. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,12 +14,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:drawablePadding="@dimen/space_sm"
+        android:drawableTint="@color/text_secondary"
+        android:gravity="center_vertical"
         android:textColor="@color/text_primary"
         tools:text="Ataque" />
 
     <TextView
         android:id="@+id/value"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/upgrade_value_width"
+        android:gravity="end"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/space_sm"
         android:textColor="@color/accent"

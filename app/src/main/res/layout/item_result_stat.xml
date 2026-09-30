@@ -16,7 +16,9 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/bebas_neue"
         android:textSize="34sp"
-        tools:text="💥 142" />
+        android:drawablePadding="@dimen/space_xs"
+        android:gravity="center_vertical"
+        tools:text="142" />
 
     <TextView
         android:id="@+id/label"

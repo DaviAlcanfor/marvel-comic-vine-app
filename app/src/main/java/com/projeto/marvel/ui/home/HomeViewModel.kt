@@ -7,6 +7,9 @@ import com.projeto.marvel.data.AuthRepository
 import com.projeto.marvel.data.CatalogRepository
 import com.projeto.marvel.data.ComicVineRepository
 import com.projeto.marvel.data.Favorite
+import com.projeto.marvel.data.Mission
+import com.projeto.marvel.data.MissionProgress
+import com.projeto.marvel.data.MissionStore
 import com.projeto.marvel.data.ReadComic
 import com.projeto.marvel.data.ReadingStatus
 import com.projeto.marvel.data.ReadingStore
@@ -34,7 +37,8 @@ data class HomeUiState(
     val heroMovies: List<Movie> = emptyList(),
     /** Populares que estrearam nas HQs neste dia do ano. */
     val debutedToday: List<CharacterSummary> = emptyList(),
-    val dailyTrail: DailyTrail? = null
+    val dailyTrail: DailyTrail? = null,
+    val missions: List<MissionProgress> = emptyList()
 )
 
 /** Resenha na Início; [movie] muda o ícone (🎬 × 📚). */
@@ -48,7 +52,8 @@ class HomeViewModel @JvmOverloads constructor(
     private val repository: ComicVineRepository = ComicVineRepository(),
     private val auth: AuthRepository = AuthRepository(),
     private val store: ReadingStore = ReadingStore(application, auth.currentUser?.uid),
-    private val catalog: CatalogRepository = CatalogRepository()
+    private val catalog: CatalogRepository = CatalogRepository(),
+    private val missions: MissionStore = MissionStore(application)
 ) : AndroidViewModel(application) {
 
     private val _state = MutableStateFlow(local())
@@ -66,7 +71,12 @@ class HomeViewModel @JvmOverloads constructor(
         viewModelScope.launch { loadDailyTrail() }
     }
 
-    /** Estante e favorito mudam no Perfil: relê ao voltar para a Home. */
+    /** Pega o pacote de uma missão cumprida (vai para o Álbum). */
+    fun claim(mission: Mission) {
+        if (missions.claim(mission)) refresh()
+    }
+
+    /** Estante, favorito e missões mudam em outras telas: relê ao voltar para a Home. */
     fun refresh() {
         _state.update {
             local().copy(
@@ -105,6 +115,7 @@ class HomeViewModel @JvmOverloads constructor(
             userPhoto = auth.currentUser?.photoUrl,
             reading = shelf.filter { it.status == ReadingStatus.READING },
             favoriteHero = store.preferences().hero,
+            missions = missions.missions(),
             reviews = listOfNotNull(
                 shelf.firstOrNull { it.status == ReadingStatus.READ && !it.review.isNullOrBlank() }
                     ?.let { HomeReview(it.title, it.rating, it.review.orEmpty(), it.coverUrl, movie = false) },

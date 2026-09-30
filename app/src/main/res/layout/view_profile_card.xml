@@ -48,7 +48,7 @@
         android:lineSpacingExtra="4dp"
         android:textColor="@color/text_primary"
         android:textSize="16sp"
-        tools:text="📚 12 HQs lidas\n⚔️ 8V · 3D\n🏅 4/10 conquistas" />
+        tools:text="12 HQs lidas\n8V · 3D\n4/10 conquistas" />
 
     <TextView
         android:id="@+id/genres"

@@ -72,17 +72,4 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Missões diárias e semanais: outro jeito de ganhar pacotes. -->
-    <TextView
-        style="@style/Widget.Marvel.CaptionBox"
-        android:layout_marginTop="@dimen/space_lg"
-        android:text="@string/mission_section" />
-
-    <LinearLayout
-        android:id="@+id/missionList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_xs"
-        android:orientation="vertical" />
-
 </LinearLayout>

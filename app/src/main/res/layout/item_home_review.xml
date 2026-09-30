@@ -25,5 +25,5 @@
         android:layout_weight="1"
         android:ellipsize="end"
         android:maxLines="6"
-        tools:text="🎬 Homem de Ferro ★★★★★\n\nAinda o melhor começo do MCU." />
+        tools:text="Homem de Ferro ★★★★★\n\nAinda o melhor começo do MCU." />
 </LinearLayout>

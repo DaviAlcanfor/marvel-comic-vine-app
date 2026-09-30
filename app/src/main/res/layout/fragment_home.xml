@@ -177,6 +177,20 @@
                 android:text="@string/home_shelf_short" />
         </LinearLayout>
 
+        <!-- Missões diárias e semanais: pagam pacotes, que se abrem no Álbum. -->
+        <TextView
+            android:id="@+id/missionsTitle"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_marginTop="@dimen/space_lg"
+            android:text="@string/mission_section" />
+
+        <LinearLayout
+            android:id="@+id/missionList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xs"
+            android:orientation="vertical" />
+
         <!-- Trilha do dia: time do dia e os adversários em fileira (chefe no fim). -->
         <TextView
             android:id="@+id/dailyTrailTitle"

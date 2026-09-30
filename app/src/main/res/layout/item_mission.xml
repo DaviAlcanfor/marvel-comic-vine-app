@@ -11,6 +11,16 @@
     android:orientation="horizontal"
     android:padding="@dimen/space_sm">
 
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/mission_icon_size"
+        android:layout_height="@dimen/mission_icon_size"
+        android:layout_marginEnd="@dimen/space_sm"
+        android:background="@drawable/bg_circle"
+        android:importantForAccessibility="no"
+        android:padding="@dimen/space_xs"
+        app:tint="@color/accent" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -23,7 +33,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/text_primary"
             android:textStyle="bold"
-            tools:text="⚔️ Vença 3 batalhas" />
+            tools:text="Vença 3 batalhas" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/bar"

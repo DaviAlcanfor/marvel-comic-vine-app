@@ -6,9 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.projeto.marvel.data.ComicVineRepository
 import com.projeto.marvel.data.EVOLVE_COST
 import com.projeto.marvel.data.Fighter
-import com.projeto.marvel.data.Mission
-import com.projeto.marvel.data.MissionProgress
-import com.projeto.marvel.data.MissionStore
 import com.projeto.marvel.data.MissionEvent
 import com.projeto.marvel.data.mission
 import com.projeto.marvel.data.PackType
@@ -67,7 +64,6 @@ sealed interface AlbumUiState {
         val packs: Map<PackType, Int>,
         /** Desenho de cada pacote: um herói da raridade garantida (Ouro = lendário…). */
         val packArt: Map<PackType, String?> = emptyMap(),
-        val missions: List<MissionProgress> = emptyList(),
         val opened: List<Sticker> = emptyList(),
         val openedType: PackType = PackType.BASIC,
         val openId: Int = 0
@@ -90,13 +86,6 @@ class AlbumViewModel @JvmOverloads constructor(
     private val _viewer = MutableStateFlow<CardUpgrade?>(null)
     val viewer: StateFlow<CardUpgrade?> = _viewer.asStateFlow()
     private val bases = mutableMapOf<Int, Fighter>()
-    private val missions = MissionStore(application)
-
-    /** Pega o pacote de uma missão cumprida. */
-    fun claim(mission: Mission) {
-        if (missions.claim(mission)) refresh()
-    }
-
     private val _state = MutableStateFlow<AlbumUiState>(AlbumUiState.Loading)
     val state: StateFlow<AlbumUiState> = _state.asStateFlow()
 
@@ -191,7 +180,7 @@ class AlbumViewModel @JvmOverloads constructor(
         val art = PackType.entries.associateWith { type ->
             stickers.firstOrNull { it.rarity == type.guaranteed }?.character?.image?.mediumUrl
         }
-        return AlbumUiState.Success(stickers, store.packs(LocalDate.now()), art, missions.missions())
+        return AlbumUiState.Success(stickers, store.packs(LocalDate.now()), art)
     }
 }
 

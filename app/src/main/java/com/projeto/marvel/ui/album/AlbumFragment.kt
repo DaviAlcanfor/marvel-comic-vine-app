@@ -57,14 +57,15 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
-        val header = ViewAlbumHeaderBinding.inflate(layoutInflater, binding.grid, false)
-        this.header = header
-        binding.grid.adapter = ConcatAdapter(SingleViewAdapter(header.root), adapter)
+        // Antes de inflar o cabeçalho: a RecyclerView sem LayoutManager não gera LayoutParams (crash).
         binding.grid.layoutManager = GridLayoutManager(requireContext(), COLUMNS).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int) = if (position == 0) COLUMNS else 1
             }
         }
+        val header = ViewAlbumHeaderBinding.inflate(layoutInflater, binding.grid, false)
+        this.header = header
+        binding.grid.adapter = ConcatAdapter(SingleViewAdapter(header.root), adapter)
         binding.message.setOnClickListener { viewModel.load() }
         viewer = CardViewer(binding.viewerCard, binding.viewerFront, binding.viewerBack)
         binding.viewerClose.setOnClickListener { viewModel.closeViewer() }
@@ -117,7 +118,6 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             if (count > 0) pack.gleam()
         }
         adapter.submitList(state.stickers)
-        header.missionList.bindMissions(state.missions, viewModel::claim)
         if (state.openId != shownOpenId && state.opened.isNotEmpty()) {
             shownOpenId = state.openId
             showOpening(binding, state)

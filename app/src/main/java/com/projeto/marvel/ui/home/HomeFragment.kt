@@ -121,6 +121,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         debutsAdapter.submitCarousel(state.debutedToday, binding.debutsList)
         listOf(binding.debutsTitle, binding.debutsList).forEach { it.fadeVisible(state.debutedToday.isNotEmpty()) }
         binding.bindReviews(state.reviews)
+        binding.missionList.bindMissions(state.missions, viewModel::claim)
 
         binding.bindDailyTrail(state.dailyTrail) { trail ->
             findNavController().navigate(
@@ -190,9 +191,7 @@ private fun FragmentHomeBinding.bindReviews(reviews: List<HomeReview>) {
     reviews.forEach { review ->
         ItemHomeReviewBinding.inflate(LayoutInflater.from(context), reviewList, true).apply {
             cover.load(review.imageUrl) { crossfade(true) }
-            val icon = if (review.movie) "🎬" else "📚"
-            val title = "$icon ${review.title}"
-            text.text = context.getString(R.string.home_review, title, stars(review.rating), review.text)
+            text.text = context.getString(R.string.home_review, review.title, stars(review.rating), review.text)
         }
     }
 }
@@ -223,7 +222,8 @@ private fun FragmentHomeBinding.captions() = listOf(
     Triple(debutsTitle, BoxStyle.SPEECH, -1.5f),
     Triple(readingTitle, BoxStyle.CAPTION, 2f),
     Triple(reviewTitle, BoxStyle.SPEECH, -1f),
-    Triple(shortcutsTitle, BoxStyle.CAPTION, 1f)
+    Triple(shortcutsTitle, BoxStyle.CAPTION, 1f),
+    Triple(missionsTitle, BoxStyle.SPEECH, 2.5f)
 )
 
 /**
