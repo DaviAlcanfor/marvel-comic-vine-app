@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Início, de cima para baixo: cabeçalho (saudação, seu herói e o avatar que abre o Perfil), herói do
-  dia com os filmes dele, atalhos em blocos, trilha do dia e o que é seu (leitura, resenha, estreias).
+  dia com os filmes dele, atalhos em blocos, trilha do dia, o que é seu (leitura, resenha, estreias) e, fechando, as missões.
   Sem SVG dedicado: tokens do Design System.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,7 +19,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/space_lg"
         android:paddingTop="@dimen/space_lg"
-        android:paddingBottom="@dimen/space_xl">
+        android:paddingBottom="@dimen/fab_clearance">
 
         <!-- Cabeçalho -->
         <LinearLayout
@@ -177,20 +177,6 @@
                 android:text="@string/home_shelf_short" />
         </LinearLayout>
 
-        <!-- Missões diárias e semanais: pagam pacotes, que se abrem no Álbum. -->
-        <TextView
-            android:id="@+id/missionsTitle"
-            style="@style/Widget.Marvel.CaptionBox"
-            android:layout_marginTop="@dimen/space_lg"
-            android:text="@string/mission_section" />
-
-        <LinearLayout
-            android:id="@+id/missionList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_xs"
-            android:orientation="vertical" />
-
         <!-- Trilha do dia: time do dia e os adversários em fileira (chefe no fim). -->
         <TextView
             android:id="@+id/dailyTrailTitle"
@@ -287,6 +273,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone" />
+
+        <!-- Missões diárias e semanais: pagam pacotes, que se abrem no Álbum. -->
+        <TextView
+            android:id="@+id/missionsTitle"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_marginTop="@dimen/space_lg"
+            android:text="@string/mission_section" />
+
+        <LinearLayout
+            android:id="@+id/missionList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xs"
+            android:orientation="vertical" />
 
     </LinearLayout>
 </ScrollView>

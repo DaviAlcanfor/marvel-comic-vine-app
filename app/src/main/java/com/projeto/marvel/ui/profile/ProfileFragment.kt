@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -19,7 +19,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.chip.Chip
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.projeto.marvel.R
 import com.projeto.marvel.data.Achievement
 import com.projeto.marvel.data.Favorite
@@ -27,14 +26,15 @@ import com.projeto.marvel.data.GENRES
 import com.projeto.marvel.data.ReadingStatus
 import com.projeto.marvel.databinding.FragmentProfileBinding
 import com.projeto.marvel.ui.characters.CharactersFragment
+import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.comics.ComicAdapter
 import com.projeto.marvel.ui.comics.ComicItem
 import com.projeto.marvel.ui.comics.ComicSearchFragment
 import com.projeto.marvel.ui.comics.showComicDialog
 import com.projeto.marvel.ui.info.InfoDetailFragment
-import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Locale
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -186,7 +186,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun pickGenres(current: List<String>) {
         val checked = GENRES.map { it in current }.toBooleanArray()
-        MaterialAlertDialogBuilder(requireContext())
+        requireContext().comicDialog()
             .setTitle(R.string.profile_genres_title)
             .setMultiChoiceItems(GENRES.toTypedArray(), checked) { _, index, isChecked -> checked[index] = isChecked }
             .setPositiveButton(R.string.profile_genres_save) { _, _ ->

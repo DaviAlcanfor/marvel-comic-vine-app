@@ -79,7 +79,8 @@
                 android:layout_width="@dimen/avatar_size_hero"
                 android:layout_height="@dimen/avatar_size_hero"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_sticker"
+                android:padding="@dimen/space_xs"
                 android:clipToOutline="true"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop" />

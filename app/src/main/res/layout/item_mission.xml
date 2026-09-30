@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Uma missão: o que fazer, barra de progresso, o pacote que paga e o botão de pegar. -->
+<!-- Uma missão como caixa de narração de HQ: adesivo com o ícone, o que fazer, barra de progresso,
+     o pacote que paga e o botão de pegar. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/space_sm"
-    android:background="@drawable/bg_card"
+    android:layout_marginTop="@dimen/space_md"
+    android:background="@drawable/bg_narration"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="@dimen/space_sm">
+    android:paddingStart="@dimen/space_sm"
+    android:paddingTop="@dimen/space_sm"
+    android:paddingEnd="@dimen/space_md"
+    android:paddingBottom="@dimen/space_md">
 
     <ImageView
         android:id="@+id/icon"
         android:layout_width="@dimen/mission_icon_size"
         android:layout_height="@dimen/mission_icon_size"
         android:layout_marginEnd="@dimen/space_sm"
-        android:background="@drawable/bg_circle"
+        android:background="@drawable/bg_sticker"
         android:importantForAccessibility="no"
         android:padding="@dimen/space_xs"
-        app:tint="@color/accent" />
+        app:tint="@color/ink" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -31,43 +35,42 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_primary"
-            android:textStyle="bold"
-            tools:text="Vença 3 batalhas" />
+            android:fontFamily="@font/bangers"
+            android:letterSpacing="0.04"
+            android:textColor="@color/ink"
+            android:textSize="18sp"
+            app:fontFamily="@font/bangers"
+            tools:text="Hoje · Vença 3 batalhas" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_xs"
-            app:indicatorColor="@color/accent"
+            app:indicatorColor="@color/primary"
             app:indicatorTrackGapSize="0dp"
-            app:trackColor="@color/surface_variant"
-            app:trackCornerRadius="@dimen/space_xs"
+            app:trackColor="@color/result_track"
+            app:trackCornerRadius="0dp"
             app:trackStopIndicatorSize="0dp"
-            app:trackThickness="6dp" />
+            app:trackThickness="8dp" />
 
         <TextView
             android:id="@+id/detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/ink"
             android:textSize="11sp"
             tools:text="2/3 · prêmio: pacote Prata" />
     </LinearLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/claim"
+        style="@style/Widget.Marvel.ComicButton"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/touch_target"
         android:layout_marginStart="@dimen/space_sm"
-        android:background="@drawable/bg_share_bubble"
-        android:fontFamily="@font/bebas_neue"
-        android:gravity="center"
         android:minWidth="@dimen/touch_target"
         android:paddingHorizontal="@dimen/space_md"
-        android:textColor="@color/ink"
-        android:textSize="16sp"
-        tools:text="PEGAR" />
+        android:textSize="18sp"
+        tools:text="PEGAR!" />
 </LinearLayout>

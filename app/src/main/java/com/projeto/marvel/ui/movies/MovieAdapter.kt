@@ -33,7 +33,7 @@ class MovieAdapter(
             binding.cover.load(movie.image?.mediumUrl) { crossfade(true) }
             binding.rating.text = listOfNotNull(
                 movie.rating?.takeIf { it.isNotBlank() },
-                movie.runtime?.takeIf { it.isNotBlank() && it != "0" }?.let { "$it min" }
+                movie.runtimeLabel
             ).joinToString(" · ")
             binding.root.setOnClickListener { onClick(movie) }
         }

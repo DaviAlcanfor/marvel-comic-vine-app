@@ -2,4 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
     <solid android:color="@color/surface_variant" />
+    <stroke
+        android:width="@dimen/ink_width"
+        android:color="@color/ink" />
 </shape>

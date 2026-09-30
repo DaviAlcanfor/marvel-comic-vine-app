@@ -41,10 +41,13 @@ private fun Mission.icon() = TEXTS.getValue(id).second
 
 private const val DONE_ALPHA = 0.55f
 
+// Painéis levemente tortos, alternando, como quadrinhos colados na página.
+private const val TILT = 0.8f
+
 fun LinearLayout.bindMissions(missions: List<MissionProgress>, onClaim: (Mission) -> Unit) {
     removeAllViews()
     val inflater = LayoutInflater.from(context)
-    missions.forEach { state ->
+    missions.forEachIndexed { index, state ->
         val mission = state.mission
         ItemMissionBinding.inflate(inflater, this, true).apply {
             val kind = context.getString(if (mission.weekly) R.string.mission_weekly else R.string.mission_daily)
@@ -62,6 +65,7 @@ fun LinearLayout.bindMissions(missions: List<MissionProgress>, onClaim: (Mission
             claim.setText(if (state.claimed) R.string.mission_claimed else R.string.mission_claim)
             claim.isEnabled = state.done && !state.claimed
             root.alpha = if (state.claimed) DONE_ALPHA else 1f
+            root.rotation = if (index % 2 == 0) -TILT else TILT
             claim.setOnClickListener { onClaim(mission) }
         }
     }

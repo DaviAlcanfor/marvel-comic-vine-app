@@ -67,7 +67,11 @@ data class Movie(
     @SerializedName("budget") val budget: String? = null,
     @SerializedName("description") val description: String? = null,
     @SerializedName("characters") val characters: List<ResourceRef>? = null
-)
+) {
+    /** A API manda "121", "140 min" ou "2 hr 11 min": só o número puro ganha a unidade. */
+    val runtimeLabel: String?
+        get() = runtime?.takeIf { it.isNotBlank() && it != "0" }?.let { if (it.all(Char::isDigit)) "$it min" else it }
+}
 
 /** Só os filmes de um time (ver [CatalogService.getTeamMovies]). */
 data class TeamMovies(@SerializedName("movies") val movies: List<ResourceRef>?)

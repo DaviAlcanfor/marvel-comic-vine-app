@@ -80,4 +80,6 @@
     <dimen name="game_banner_height">140dp</dimen>
     <dimen name="squad_portrait">28dp</dimen>
     <dimen name="medal_size">60dp</dimen>
+    <!-- Folga no fim de telas roláveis para o último item não ficar embaixo do Geek (FAB 56dp + margem). -->
+    <dimen name="fab_clearance">88dp</dimen>
 </resources>

@@ -2,11 +2,11 @@ package com.projeto.marvel.ui.comics
 
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.projeto.marvel.R
 import com.projeto.marvel.data.ReadComic
 import com.projeto.marvel.data.ReadingStatus
 import com.projeto.marvel.databinding.DialogComicBinding
+import com.projeto.marvel.ui.comicDialog
 
 /**
  * Coloca [item] na estante com um status (quero ler, lendo, já li); em "já li" também dá nota
@@ -33,7 +33,7 @@ fun Fragment.showComicDialog(item: ComicItem, onSave: (ReadComic) -> Unit, onRem
     binding.statusGroup.addOnButtonCheckedListener { _, _, _ -> showReadFields() }
     showReadFields()
 
-    MaterialAlertDialogBuilder(requireContext())
+    requireContext().comicDialog()
         .setTitle(item.comic.title)
         .setView(binding.root)
         .setPositiveButton(if (item.onShelf) R.string.comics_dialog_update else R.string.comics_dialog_save) { _, _ ->

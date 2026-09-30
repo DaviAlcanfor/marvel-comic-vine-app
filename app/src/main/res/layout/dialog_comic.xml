@@ -17,26 +17,17 @@
 
         <Button
             android:id="@+id/wantButton"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/Widget.Marvel.ToggleButton"
             android:text="@string/reading_status_want" />
 
         <Button
             android:id="@+id/readingButton"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/Widget.Marvel.ToggleButton"
             android:text="@string/reading_status_reading" />
 
         <Button
             android:id="@+id/readButton"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/Widget.Marvel.ToggleButton"
             android:text="@string/reading_status_read" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>

@@ -190,7 +190,8 @@
     <!-- Busca recente na Home: mesma pílula da Tag, mas clicável e com X para remover. -->
     <style name="Widget.Marvel.RecentChip" parent="Widget.Material3.Chip.Input">
         <item name="chipBackgroundColor">@color/surface_variant</item>
-        <item name="chipStrokeColor">@color/border</item>
+        <item name="chipStrokeColor">@color/ink</item>
+        <item name="chipStrokeWidth">@dimen/ink_width</item>
         <item name="chipStrokeWidth">1dp</item>
         <item name="chipCornerRadius">100dp</item>
         <item name="android:textColor">@color/text_primary</item>
@@ -241,6 +242,32 @@
         <item name="chipStrokeColor">@color/border</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="checkedIconTint">@color/background</item>
+    </style>
+
+    <!-- Botão de status do diálogo da HQ/filme: mesmo visual do chip de filtro. -->
+    <style name="Widget.Marvel.ToggleButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="backgroundTint">@color/filter_chip_background</item>
+        <item name="android:textColor">@color/toggle_text</item>
+        <item name="android:paddingStart">@dimen/space_xs</item>
+        <item name="android:paddingEnd">@dimen/space_xs</item>
+        <item name="strokeColor">@color/ink</item>
+        <item name="strokeWidth">@dimen/ink_width</item>
+    </style>
+
+    <!-- Diálogos: título em Bebas Neue e botões em dourado; o fundo (bg_dialog) é posto em comicDialog(). -->
+    <style name="ThemeOverlay.Marvel.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/Widget.Marvel.DialogTitle</item>
+        <item name="colorPrimary">@color/accent</item>
+    </style>
+
+    <style name="Widget.Marvel.DialogTitle" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/accent</item>
     </style>
 
     <!-- Biografia/descrição como caixa de narração de HQ: papel e texto de nanquim. -->

@@ -220,7 +220,7 @@
     <string name="mission_weekly">Semana</string>
     <string name="mission_title">%1$s · %2$s</string>
     <string name="mission_detail">%1$d/%2$d · prêmio: pacote %3$s</string>
-    <string name="mission_claim">PEGAR</string>
+    <string name="mission_claim">PEGAR!</string>
     <string name="mission_claimed">✓</string>
     <string name="mission_win3">Vença 3 batalhas</string>
     <string name="mission_ultimate2">Solte 2 ultimates</string>

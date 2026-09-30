@@ -150,7 +150,7 @@ private fun Movie.toInfo() = InfoDetail(
     imageUrl = image?.mediumUrl,
     stats = listOfNotNull(
         rating?.takeIf { it.isNotBlank() }?.let { InfoStat(R.string.info_rating, it) },
-        runtime?.takeIf { it.isNotBlank() && it != "0" }?.let { InfoStat(R.string.info_runtime, "$it min") },
+        runtimeLabel?.let { InfoStat(R.string.info_runtime, it) },
         formatMoney(boxOffice)?.let { InfoStat(R.string.info_box_office, it) },
         formatMoney(budget)?.let { InfoStat(R.string.info_budget, it) }
     ),

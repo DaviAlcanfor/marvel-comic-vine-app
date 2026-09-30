@@ -1,5 +1,6 @@
 package com.projeto.marvel.ui
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.graphics.Paint
@@ -12,6 +13,7 @@ import android.graphics.drawable.LayerDrawable
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.projeto.marvel.R
 import com.projeto.marvel.ui.detail.contrast
 
@@ -146,3 +148,7 @@ class SpeechBubbleDrawable(
     @Deprecated("Deprecated in Java")
     override fun getOpacity() = PixelFormat.TRANSLUCENT
 }
+
+/** Diálogo como painel de HQ: o tema não tem atributo de contorno, então o fundo vai aqui. */
+fun Context.comicDialog(): MaterialAlertDialogBuilder =
+    MaterialAlertDialogBuilder(this).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_dialog))

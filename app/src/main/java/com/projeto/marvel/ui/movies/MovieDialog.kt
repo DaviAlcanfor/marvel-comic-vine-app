@@ -2,10 +2,10 @@ package com.projeto.marvel.ui.movies
 
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.projeto.marvel.R
 import com.projeto.marvel.data.RatedMovie
 import com.projeto.marvel.databinding.DialogComicBinding
+import com.projeto.marvel.ui.comicDialog
 
 /**
  * Avaliar filme (estante de filmes): "quero ver" ou "já vi"; em "já vi", nota e resenha. Mesmo
@@ -32,7 +32,7 @@ fun Fragment.showMovieDialog(
     binding.statusGroup.addOnButtonCheckedListener { _, _, _ -> showWatchedFields() }
     showWatchedFields()
 
-    MaterialAlertDialogBuilder(requireContext())
+    requireContext().comicDialog()
         .setTitle(base.title)
         .setView(binding.root)
         .setPositiveButton(if (current != null) R.string.comics_dialog_update else R.string.movie_dialog_save) { _, _ ->

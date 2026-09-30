@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Texto do botão de status: nanquim sobre o dourado quando marcado. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/ink" android:state_checked="true" />
+    <item android:color="@color/text_primary" />
+</selector>

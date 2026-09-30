@@ -1,5 +1,6 @@
 package com.projeto.marvel.ui.info
 
+import com.projeto.marvel.data.remote.Movie
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -18,5 +19,15 @@ class InfoFormatTest {
         assertEquals("US$ 403,7 mi", formatMoney("403706375"))
         assertEquals(null, formatMoney("0"))
         assertEquals(null, formatMoney(null))
+    }
+
+    @Test
+    fun `duracao so ganha min quando vem numero puro`() {
+        fun label(runtime: String?) = Movie(1, "X", null, null, null, runtime = runtime).runtimeLabel
+        assertEquals("121 min", label("121"))
+        assertEquals("140 min", label("140 min"))
+        assertEquals("2 hr 11 min", label("2 hr 11 min"))
+        assertEquals(null, label("0"))
+        assertEquals(null, label(null))
     }
 }

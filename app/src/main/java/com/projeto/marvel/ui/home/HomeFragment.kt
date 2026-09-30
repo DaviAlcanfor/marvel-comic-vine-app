@@ -223,7 +223,7 @@ private fun FragmentHomeBinding.captions() = listOf(
     Triple(readingTitle, BoxStyle.CAPTION, 2f),
     Triple(reviewTitle, BoxStyle.SPEECH, -1f),
     Triple(shortcutsTitle, BoxStyle.CAPTION, 1f),
-    Triple(missionsTitle, BoxStyle.SPEECH, 2.5f)
+    Triple(missionsTitle, BoxStyle.BURST, 2.5f)
 )
 
 /**

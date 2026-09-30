@@ -138,32 +138,30 @@
 
             </FrameLayout>
 
-            <com.google.android.material.button.MaterialButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/googleButton"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Widget.Marvel.ComicButton.Secondary"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/input_height"
-                android:layout_marginTop="@dimen/space_sm"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/login_google"
-                android:textColor="@color/text_primary"
-                app:cornerRadius="@dimen/radius_large"
-                app:icon="@drawable/ic_google"
-                app:iconGravity="textStart"
-                app:iconTint="@null"
-                app:strokeColor="@color/border" />
+                android:layout_marginTop="@dimen/space_md"
+                android:drawableStart="@drawable/ic_google"
+                android:paddingHorizontal="@dimen/space_md"
+                android:text="@string/login_google" />
 
-            <com.google.android.material.button.MaterialButton
+            <TextView
                 android:id="@+id/signUpButton"
-                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/touch_target"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/space_sm"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="@font/bebas_neue"
+                android:gravity="center"
+                android:letterSpacing="0.04"
+                android:paddingHorizontal="@dimen/space_md"
                 android:text="@string/login_signup"
-                android:textAllCaps="false"
-                android:textColor="@color/accent" />
+                android:textColor="@color/accent"
+                android:textSize="20sp"
+                app:fontFamily="@font/bebas_neue" />
 
         </LinearLayout>
 
