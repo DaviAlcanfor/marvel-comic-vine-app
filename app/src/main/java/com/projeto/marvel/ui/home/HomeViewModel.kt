@@ -32,7 +32,6 @@ data class HomeUiState(
     val reading: List<ReadComic>,
     val favoriteHero: Favorite?,
     /** Últimas resenhas do usuário: a da HQ e a do filme mais recentes (com capa/pôster). */
-    val reviews: List<HomeReview> = emptyList(),
     val heroOfTheDay: CharacterSummary? = null,
     val heroMovies: List<Movie> = emptyList(),
     /** Populares que estrearam nas HQs neste dia do ano. */
@@ -42,7 +41,6 @@ data class HomeUiState(
 )
 
 /** Resenha na Início; [movie] muda o ícone (🎬 × 📚). */
-data class HomeReview(val title: String, val rating: Int, val text: String, val imageUrl: String?, val movie: Boolean)
 
 /** Trilha do dia: um time por dia e os adversários que a trilha vai ter (do menos famoso ao chefe). */
 data class DailyTrail(val teamName: String, val teamUrl: String, val rivals: List<CharacterSummary>)
@@ -115,13 +113,7 @@ class HomeViewModel @JvmOverloads constructor(
             userPhoto = auth.currentUser?.photoUrl,
             reading = shelf.filter { it.status == ReadingStatus.READING },
             favoriteHero = store.preferences().hero,
-            missions = missions.missions(),
-            reviews = listOfNotNull(
-                shelf.firstOrNull { it.status == ReadingStatus.READ && !it.review.isNullOrBlank() }
-                    ?.let { HomeReview(it.title, it.rating, it.review.orEmpty(), it.coverUrl, movie = false) },
-                store.movies().firstOrNull { !it.review.isNullOrBlank() }
-                    ?.let { HomeReview(it.title, it.rating, it.review.orEmpty(), it.posterUrl, movie = true) }
-            )
+            missions = missions.missions()
         )
     }
 

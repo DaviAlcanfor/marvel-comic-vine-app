@@ -7,17 +7,20 @@
     android:background="@drawable/bg_screen"
     android:orientation="vertical">
 
-    <FrameLayout
+    <!-- Título e balão lado a lado (o título encolhe, nunca fica por baixo do balão). -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingHorizontal="@dimen/space_lg"
         android:paddingTop="@dimen/space_lg">
 
         <com.projeto.marvel.ui.LogoTextView
             style="@style/Widget.Marvel.ScreenTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
+            android:layout_weight="1"
             android:text="@string/discover_title" />
 
         <!-- Balão de ação de HQ com a chamada da aba atual (texto e fundo em código). -->
@@ -26,7 +29,7 @@
             android:layout_width="wrap_content"
             android:maxWidth="@dimen/action_balloon_width"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
+            android:layout_marginStart="@dimen/space_sm"
             android:fontFamily="?attr/eraDisplayFont"
             android:gravity="center"
             android:maxLines="3"
@@ -35,7 +38,7 @@
             android:textColor="@color/ink"
             android:textSize="15sp"
             app:fontFamily="?attr/eraDisplayFont" />
-    </FrameLayout>
+    </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

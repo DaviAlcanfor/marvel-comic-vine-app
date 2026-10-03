@@ -150,7 +150,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             getString(if (state.shelf.isEmpty()) R.string.profile_shelf_empty else R.string.profile_shelf_empty_filter)
         binding.emptyText.visibility = if (shelf.isEmpty()) View.VISIBLE else View.GONE
         moviesAdapter.submitList(state.movies)
-        achievementsAdapter.submitList(Achievement.entries.map { Medal(it, state.progress) })
+        // Desbloqueadas primeiro (na ordem da tabela) e o placar no título.
+        val medals = Achievement.entries.map { Medal(it, state.progress) }
+            .sortedBy { !it.achievement.unlocked(it.progress) }
+        achievementsAdapter.submitList(medals)
+        val unlocked = medals.count { it.achievement.unlocked(it.progress) }
+        binding.achievementsTitle.text = getString(R.string.profile_achievements_count, unlocked, medals.size)
         binding.moviesEmpty.visibility = if (state.movies.isEmpty()) View.VISIBLE else View.GONE
     }
 

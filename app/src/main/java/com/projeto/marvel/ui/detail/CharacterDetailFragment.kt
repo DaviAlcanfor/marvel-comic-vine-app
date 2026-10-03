@@ -196,14 +196,14 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
                 ColorStateList.valueOf(ContextCompat.getColor(requireContext(), type.color))
             )
         }
-        bindTags(binding.teamsGroup, teams)
+        bindTeams(teams)
 
         binding.chatButton.text = getString(R.string.detail_chat, character.name)
         binding.chatButton.setOnClickListener {
             findNavController().navigate(R.id.action_detail_to_chat, ChatFragment.args(topic = character.name))
         }
 
-        binding.photoButton.text = getString(R.string.detail_photo, character.name)
+        binding.photoButton.contentDescription = getString(R.string.detail_photo, character.name)
         binding.photoButton.setOnClickListener {
             val args = PhotoFragment.args(character.name, character.image?.mediumUrl)
             findNavController().navigate(R.id.photoFragment, args)
@@ -215,6 +215,21 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
             listOf(binding.teamsTitle, binding.teamsGroup).takeIf { teams.isNotEmpty() }.orEmpty()
         sections.forEach { it.visibility = View.VISIBLE }
         staggerIn(listOf(binding.name, binding.subtitle) + sections)
+    }
+
+    /** Os [TEAMS_PREVIEW] primeiros times e um chip "ver todos (N)" que abre o resto no lugar. */
+    private fun bindTeams(teams: List<String>) {
+        val group = binding?.teamsGroup ?: return
+        if (teams.size <= TEAMS_PREVIEW) {
+            bindTags(group, teams)
+            return
+        }
+        bindTags(group, teams.take(TEAMS_PREVIEW))
+        ItemTagBinding.inflate(layoutInflater, group, true).root.apply {
+            text = getString(R.string.detail_teams_all, teams.size)
+            setTextColor(ContextCompat.getColor(context, R.color.accent_text))
+            setOnClickListener { bindTags(group, teams) }
+        }
     }
 
     private fun bindTags(group: ViewGroup, names: List<String>): List<TextView> {
@@ -310,6 +325,7 @@ private fun FragmentCharacterDetailBinding.bindFacts(character: CharacterSummary
 }
 
 private const val MAX_ALIASES = 6
+private const val TEAMS_PREVIEW = 8
 
 /**
  * 3D pelo giroscópio: o avatar inclina com o celular e o fundo desliza para o lado oposto

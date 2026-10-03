@@ -161,20 +161,31 @@
                 android:layout_marginTop="@dimen/space_lg"
                 android:visibility="gone" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/photoButton"
-                style="@style/Widget.Marvel.ComicButton.Secondary"
+            <!-- Ações secundárias lado a lado (o Geek, acima, é a principal). -->
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_sm"
-                android:visibility="gone" />
+                android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/compareButton"
-                style="@style/Widget.Marvel.ComicButton.Secondary"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/space_sm"
-                android:text="@string/detail_compare"
-                android:visibility="gone" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/photoButton"
+                    style="@style/Widget.Marvel.ComicButton.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="@dimen/space_xs"
+                    android:layout_weight="1"
+                    android:text="@string/detail_photo_short"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/compareButton"
+                    style="@style/Widget.Marvel.ComicButton.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="@dimen/space_xs"
+                    android:layout_weight="1"
+                    android:text="@string/detail_compare_short"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/aboutTitle"
@@ -190,6 +201,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_sm" />
+
+            <TextView
+                android:id="@+id/timelineTitle"
+                android:visibility="gone"
+                style="@style/Widget.Marvel.CaptionBox"
+                android:layout_marginTop="@dimen/space_lg"
+                android:text="@string/detail_section_timeline" />
+
+            <LinearLayout
+                android:id="@+id/timelineList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:orientation="vertical"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/powersTitle"
@@ -272,21 +298,6 @@
                 android:layout_marginTop="@dimen/space_sm"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            <TextView
-                android:id="@+id/timelineTitle"
-                android:visibility="gone"
-                style="@style/Widget.Marvel.CaptionBox"
-                android:layout_marginTop="@dimen/space_lg"
-                android:text="@string/detail_section_timeline" />
-
-            <LinearLayout
-                android:id="@+id/timelineList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_sm"
-                android:orientation="vertical"
-                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/firstIssueTitle"

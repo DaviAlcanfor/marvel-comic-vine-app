@@ -36,7 +36,6 @@ private fun FragmentHomeBinding.sections() = listOf(
     dailyTrailTitle to -3f,
     debutsTitle to -1.5f,
     readingTitle to 2f,
-    reviewTitle to -1f,
     missionsTitle to 2.5f
 )
 

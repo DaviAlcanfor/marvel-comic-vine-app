@@ -22,6 +22,7 @@ import com.projeto.marvel.data.ComicVineRepository
 import com.projeto.marvel.databinding.FragmentGamesBinding
 import com.projeto.marvel.ui.BoxStyle
 import com.projeto.marvel.ui.comicBox
+import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.home.heroOfTheDay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -44,7 +45,7 @@ class GamesFragment : Fragment(R.layout.fragment_games) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
         val context = requireContext()
-        binding.guessCaption.comicBox(BoxStyle.BURST, ContextCompat.getColor(context, R.color.accent))
+        binding.guessCaption.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.accent))
         binding.guessCaption.rotation = -CAPTION_TILT
         binding.quizCaption.comicBox(BoxStyle.SPEECH, ContextCompat.getColor(context, R.color.white))
         binding.quizCaption.rotation = CAPTION_TILT
@@ -52,6 +53,17 @@ class GamesFragment : Fragment(R.layout.fragment_games) {
         binding.quizPlay.setOnClickListener { findNavController().navigate(R.id.quizFragment) }
         binding.lookCaption.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.accent))
         binding.lookPlay.setOnClickListener { findNavController().navigate(R.id.lookAlikeFragment) }
+        // Capa na meia largura da grade: legenda pequena para caber o nome inteiro do jogo.
+        listOf(binding.guessCaption, binding.lookCaption, binding.quizCaption).forEach { it.textSize = TILE_CAPTION_SP }
+        listOf(binding.guessInfo, binding.lookInfo, binding.quizInfo).forEach { info ->
+            info.setOnClickListener {
+                context.comicDialog()
+                    .setTitle(R.string.games_how_to)
+                    .setMessage(info.tag as String)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show()
+            }
+        }
         viewLifecycleOwner.lifecycleScope.launch { loadBanners(binding) }
     }
 
@@ -93,3 +105,5 @@ private fun ImageView.pixelated(bitmap: Bitmap) {
             .apply { paint.isFilterBitmap = false }
     )
 }
+
+private const val TILE_CAPTION_SP = 13f

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Aba Jogos: uma capa de apresentação por jogo (o que é, como joga, seu recorde) e o "Jogar". -->
+<!-- Aba Jogos: grade de capas (o jogo, o seu recorde e o "Jogar"); o "como jogar" abre no ⓘ. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -26,157 +26,190 @@
             android:text="@string/games_intro"
             android:textColor="@color/text_secondary" />
 
-        <!-- Quem é esse herói? -->
-        <LinearLayout
-            android:id="@+id/guessCard"
-            style="@style/Widget.Marvel.GameCard">
+        <!-- Jogos em grade de 2 colunas (capa, recorde e Jogar); o "como jogar" fica no ⓘ. -->
+        <GridLayout
+            android:id="@+id/gamesGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:useDefaultMargins="false">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/game_banner_height">
+            <!-- Quem é esse herói? -->
+            <LinearLayout
+                android:id="@+id/guessCard"
+                style="@style/Widget.Marvel.GameTile">
 
-                <ImageView
-                    android:id="@+id/guessBanner"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/move_water"
-                    android:importantForAccessibility="no"
-                    android:scaleType="centerCrop" />
+                    android:layout_height="@dimen/game_banner_height">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_halftone" />
+                    <ImageView
+                        android:id="@+id/guessBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/move_water"
+                        android:importantForAccessibility="no"
+                        android:scaleType="centerCrop" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_halftone" />
+
+                    <TextView
+                        android:id="@+id/guessCaption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="@dimen/space_md"
+                        android:text="@string/guess_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <!-- Como jogar: num balão, para a capa ficar compacta na grade. -->
+                    <ImageButton
+                        android:id="@+id/guessInfo"
+                        android:layout_width="@dimen/touch_target"
+                        android:layout_height="@dimen/touch_target"
+                        android:layout_gravity="top|end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/games_how_to"
+                        android:src="@drawable/ic_info"
+                        android:tag="@string/games_guess_how"
+                        app:tint="@color/white" />
+                </FrameLayout>
 
                 <TextView
-                    android:id="@+id/guessCaption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|start"
+                    android:id="@+id/guessRecord"
+                    style="@style/Widget.Marvel.GameStat" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/guessPlay"
+                    style="@style/Widget.Marvel.ComicButton"
+                    android:layout_width="match_parent"
                     android:layout_margin="@dimen/space_md"
-                    android:text="@string/guess_title"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
+                    android:text="@string/games_play" />
+            </LinearLayout>
 
-            <TextView
-                style="@style/Widget.Marvel.GameText"
-                android:text="@string/games_guess_how" />
+            <!-- Com qual herói você parece? (aparência, IA) -->
+            <LinearLayout
+                android:id="@+id/lookCard"
+                style="@style/Widget.Marvel.GameTile">
 
-            <TextView
-                android:id="@+id/guessRecord"
-                style="@style/Widget.Marvel.GameStat" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/guessPlay"
-                style="@style/Widget.Marvel.ComicButton"
-                android:layout_width="match_parent"
-                android:layout_margin="@dimen/space_md"
-                android:text="@string/games_play" />
-        </LinearLayout>
-
-        <!-- Com qual herói você parece? (aparência, IA) -->
-        <LinearLayout
-            android:id="@+id/lookCard"
-            style="@style/Widget.Marvel.GameCard">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/game_banner_height">
-
-                <ImageView
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/move_heal"
-                    android:importantForAccessibility="no" />
+                    android:layout_height="@dimen/game_banner_height">
 
-                <View
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/move_heal"
+                        android:importantForAccessibility="no" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_halftone" />
+
+                    <!-- Ícone do jogo: rosto na mira da câmera. -->
+                    <ImageView
+                        android:layout_width="@dimen/game_icon_size"
+                        android:layout_height="@dimen/game_icon_size"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="@dimen/space_sm"
+                        android:layout_marginEnd="@dimen/space_md"
+                        android:importantForAccessibility="no"
+                        android:rotation="-8"
+                        android:src="@drawable/ic_face_scan"
+                        app:tint="@color/ink" />
+
+                    <TextView
+                        android:id="@+id/lookCaption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="@dimen/space_md"
+                        android:text="@string/look_alike_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <!-- Como jogar: num balão, para a capa ficar compacta na grade. -->
+                    <ImageButton
+                        android:id="@+id/lookInfo"
+                        android:layout_width="@dimen/touch_target"
+                        android:layout_height="@dimen/touch_target"
+                        android:layout_gravity="top|end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/games_how_to"
+                        android:src="@drawable/ic_info"
+                        android:tag="@string/games_look_how"
+                        app:tint="@color/white" />
+                </FrameLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/lookPlay"
+                    style="@style/Widget.Marvel.ComicButton"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_halftone" />
+                    android:layout_margin="@dimen/space_md"
+                    android:text="@string/games_play" />
+            </LinearLayout>
 
-                <!-- Ícone do jogo: rosto na mira da câmera. -->
-                <ImageView
-                    android:layout_width="@dimen/game_icon_size"
-                    android:layout_height="@dimen/game_icon_size"
-                    android:layout_gravity="top|end"
-                    android:layout_marginTop="@dimen/space_sm"
-                    android:layout_marginEnd="@dimen/space_md"
-                    android:importantForAccessibility="no"
-                    android:rotation="-8"
-                    android:src="@drawable/ic_face_scan"
-                    app:tint="@color/ink" />
+            <!-- Que herói é você? -->
+            <LinearLayout
+                android:id="@+id/quizCard"
+                style="@style/Widget.Marvel.GameTile">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/game_banner_height">
+
+                    <ImageView
+                        android:id="@+id/quizBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/move_magic"
+                        android:importantForAccessibility="no"
+                        android:scaleType="centerCrop" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_halftone" />
+
+                    <TextView
+                        android:id="@+id/quizCaption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="@dimen/space_md"
+                        android:text="@string/home_quiz"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <!-- Como jogar: num balão, para a capa ficar compacta na grade. -->
+                    <ImageButton
+                        android:id="@+id/quizInfo"
+                        android:layout_width="@dimen/touch_target"
+                        android:layout_height="@dimen/touch_target"
+                        android:layout_gravity="top|end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/games_how_to"
+                        android:src="@drawable/ic_info"
+                        android:tag="@string/games_quiz_how"
+                        app:tint="@color/white" />
+                </FrameLayout>
 
                 <TextView
-                    android:id="@+id/lookCaption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|start"
-                    android:layout_margin="@dimen/space_md"
-                    android:text="@string/look_alike_title"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
+                    android:id="@+id/quizRecord"
+                    style="@style/Widget.Marvel.GameStat" />
 
-            <TextView
-                style="@style/Widget.Marvel.GameText"
-                android:text="@string/games_look_how" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/lookPlay"
-                style="@style/Widget.Marvel.ComicButton"
-                android:layout_width="match_parent"
-                android:layout_margin="@dimen/space_md"
-                android:text="@string/games_play" />
-        </LinearLayout>
-
-        <!-- Que herói é você? -->
-        <LinearLayout
-            android:id="@+id/quizCard"
-            style="@style/Widget.Marvel.GameCard">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/game_banner_height">
-
-                <ImageView
-                    android:id="@+id/quizBanner"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/quizPlay"
+                    style="@style/Widget.Marvel.ComicButton"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/move_magic"
-                    android:importantForAccessibility="no"
-                    android:scaleType="centerCrop" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_halftone" />
-
-                <TextView
-                    android:id="@+id/quizCaption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|start"
                     android:layout_margin="@dimen/space_md"
-                    android:text="@string/home_quiz"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-
-            <TextView
-                style="@style/Widget.Marvel.GameText"
-                android:text="@string/games_quiz_how" />
-
-            <TextView
-                android:id="@+id/quizRecord"
-                style="@style/Widget.Marvel.GameStat" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/quizPlay"
-                style="@style/Widget.Marvel.ComicButton"
-                android:layout_width="match_parent"
-                android:layout_margin="@dimen/space_md"
-                android:text="@string/games_play" />
-        </LinearLayout>
+                    android:text="@string/games_play" />
+            </LinearLayout>
+        </GridLayout>
     </LinearLayout>
 </ScrollView>

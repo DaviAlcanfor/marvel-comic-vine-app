@@ -27,7 +27,6 @@ import com.projeto.marvel.data.levelFor
 import com.projeto.marvel.databinding.FragmentAlbumBinding
 import com.projeto.marvel.databinding.ViewAlbumHeaderBinding
 import com.projeto.marvel.databinding.ViewPackBinding
-import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.detail.TiltController
 import kotlinx.coroutines.launch
 
@@ -95,14 +94,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         header.tiles().forEach { (type, tile, _) ->
             tile.setOnClickListener { viewModel.openPack(type) }
         }
-        header.tradeButton.setOnClickListener {
-            requireContext().comicDialog()
-                .setTitle(R.string.album_trade_title)
-                .setMessage(getString(R.string.album_trade_message, TRADE_COST))
-                .setPositiveButton(R.string.album_trade_confirm) { _, _ -> viewModel.trade() }
-                .setNegativeButton(R.string.album_trade_cancel, null)
-                .show()
-        }
+        header.bindActions(viewModel::trade)
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.refresh()

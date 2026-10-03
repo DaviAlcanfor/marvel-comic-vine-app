@@ -28,6 +28,7 @@
     <string name="versus_fight">LUTAR!</string>
     <string name="nav_album">Álbum</string>
     <string name="games_intro">Teste o quanto você conhece o universo Marvel.</string>
+    <string name="games_how_to">Como jogar</string>
     <string name="games_play">Jogar</string>
     <string name="games_guess_how">A foto começa toda pixelada e vai ficando nítida. Adivinhe entre 4 nomes: quanto mais cedo acertar, mais pontos. Errou, a sequência zera.</string>
     <string name="games_guess_record">Seu recorde: %1$d seguidos</string>
@@ -39,8 +40,6 @@ Nº 1</string>
     <string name="home_hero_of_the_day_retro">Enquanto isso… o herói do dia!</string>
     <string name="home_hero_movies">Filmes do herói do dia</string>
     <string name="home_debuted_today">Estreou neste dia</string>
-    <string name="home_last_reviews">Suas últimas resenhas</string>
-    <string name="home_review">%1$s %2$s\n\n%3$s</string>
     <string name="home_explore">Explorar personagens</string>
     <string name="home_battle">Batalhar</string>
     <string name="home_shelf">Minha estante</string>
@@ -85,6 +84,9 @@ Nº 1</string>
     <string name="look_alike_photo">Sua foto</string>
     <string name="games_look_how">Aparência: tire uma foto ou escolha da galeria e a IA diz com qual herói você mais parece. (O quiz ao lado é o de personalidade.)</string>
     <string name="detail_photo">Tirar foto com %1$s</string>
+    <string name="detail_photo_short">Tirar foto</string>
+    <string name="detail_compare_short">Comparar</string>
+    <string name="detail_teams_all">Ver todos (%1$d) ›</string>
 
     <string name="photo_title">Foto com %1$s</string>
     <string name="photo_caption">Eu &amp; %1$s!</string>
@@ -156,6 +158,7 @@ Nº 1</string>
     <string name="movie_dialog_remove">Tirar da estante</string>
     <string name="profile_movies">Meus filmes</string>
     <string name="profile_achievements">Conquistas</string>
+    <string name="profile_achievements_count">Conquistas · %1$d/%2$d</string>
     <string name="achievement_progress">%1$d/%2$d</string>
     <string name="achievement_unlocked">Conquista desbloqueada: %1$s!</string>
     <string name="achievement_first_win">Primeira vitória</string>
@@ -205,7 +208,8 @@ Nº 1</string>
     <string name="album_packs_hint">Básico: 2 grátis por dia. Prata: cada vitória na Batalha. Ouro: fechar uma trilha ou vencer no 3×3. E tem as missões na Início.</string>
     <string name="album_pack_count">%1$s ×%2$d</string>
     <string name="album_number">#%1$02d</string>
-    <string name="album_trade">Trocar repetidas → Prata · %1$d/%2$d</string>
+    <string name="album_trade">Troca\n%1$d/%2$d → Prata</string>
+    <string name="album_packs_info">Como ganhar pacotes</string>
     <string name="album_trade_title">Trocar repetidas?</string>
     <string name="album_trade_message">Saem %1$d cópias das figurinhas que você tem mais (nunca a última). O nível delas na Batalha cai junto.</string>
     <string name="album_trade_confirm">Trocar</string>
@@ -215,7 +219,7 @@ Nº 1</string>
     <string name="pack_word_divine">DIVINA!</string>
     <string name="album_new">NOVA!</string>
     <string name="album_skip_hint">Toque para ver todas</string>
-    <string name="album_search_hint">Buscar figurinha pelo nome</string>
+    <string name="album_search_hint">Buscar pelo nome</string>
     <string name="album_filter_all">Todas</string>
     <string name="album_filter_owned">Tenho</string>
     <string name="album_filter_missing">Faltam</string>

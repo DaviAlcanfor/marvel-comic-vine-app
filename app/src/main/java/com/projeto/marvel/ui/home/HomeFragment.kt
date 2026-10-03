@@ -21,11 +21,9 @@ import com.projeto.marvel.R
 import com.projeto.marvel.data.Favorite
 import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.databinding.FragmentHomeBinding
-import com.projeto.marvel.databinding.ItemHomeReviewBinding
 import com.projeto.marvel.ui.comics.ComicAdapter
 import com.projeto.marvel.ui.comics.ComicItem
 import com.projeto.marvel.ui.characters.CharacterAdapter
-import com.projeto.marvel.ui.comics.stars
 import com.projeto.marvel.ui.fadeVisible
 import com.projeto.marvel.ui.BoxStyle
 import com.projeto.marvel.ui.comicBox
@@ -115,7 +113,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         listOf(binding.heroMoviesTitle, binding.heroMoviesList).forEach { it.fadeVisible(hasMovies) }
         debutsAdapter.submitCarousel(state.debutedToday, binding.debutsList)
         listOf(binding.debutsTitle, binding.debutsList).forEach { it.fadeVisible(state.debutedToday.isNotEmpty()) }
-        binding.bindReviews(state.reviews)
         binding.missionList.bindMissions(state.missions, viewModel::claim)
 
         binding.bindDailyTrail(state.dailyTrail) { trail ->
@@ -172,21 +169,6 @@ private fun FragmentHomeBinding.bindDailyTrail(trail: DailyTrail?, onStart: (Dai
 }
 
 private const val TRAIL_GAP_DIVISOR = 4
-
-/** Resenhas com a capa da HQ ou o pôster do filme ao lado; só redesenha se mudaram. */
-private fun FragmentHomeBinding.bindReviews(reviews: List<HomeReview>) {
-    listOf(reviewTitle, reviewList).forEach { it.fadeVisible(reviews.isNotEmpty()) }
-    if (reviewList.tag == reviews) return
-    reviewList.tag = reviews
-    reviewList.removeAllViews()
-    val context = root.context
-    reviews.forEach { review ->
-        ItemHomeReviewBinding.inflate(LayoutInflater.from(context), reviewList, true).apply {
-            cover.load(review.imageUrl) { crossfade(true) }
-            text.text = context.getString(R.string.home_review, review.title, stars(review.rating), review.text)
-        }
-    }
-}
 
 /**
  * Cabeçalho: avatar = foto do herói preferido (ou do usuário); a linha abaixo da saudação leva ao

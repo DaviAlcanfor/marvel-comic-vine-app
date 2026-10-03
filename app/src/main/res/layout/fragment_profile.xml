@@ -161,6 +161,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/achievementsTitle"
                 style="@style/Widget.Marvel.CaptionBox"
                 android:layout_marginTop="@dimen/space_lg"
                 android:text="@string/profile_achievements" />

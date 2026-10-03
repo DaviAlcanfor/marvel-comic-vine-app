@@ -8,10 +8,32 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/space_md">
 
-    <TextView
-        android:id="@+id/progress"
-        style="@style/Widget.Marvel.CaptionBox"
-        android:layout_marginTop="@dimen/space_sm" />
+    <!-- Progresso + ⓘ (as regras dos pacotes abrem num balão em vez de um parágrafo fixo). -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/progress"
+            style="@style/Widget.Marvel.CaptionBox" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/packsInfo"
+            android:layout_width="@dimen/touch_target"
+            android:layout_height="@dimen/touch_target"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/album_packs_info"
+            android:src="@drawable/ic_info"
+            app:tint="@color/text_primary" />
+    </LinearLayout>
 
     <!-- Moderno: barra fina no lugar da legenda (AlbumFragment). -->
     <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -24,13 +46,6 @@
         app:trackColor="@color/surface_variant"
         app:trackCornerRadius="2dp"
         app:trackThickness="4dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_sm"
-        android:text="@string/album_packs_hint"
-        android:textColor="@color/text_secondary" />
 
     <!-- Pacotes: Básico, Prata e Ouro -->
     <LinearLayout
@@ -83,19 +98,31 @@
                 android:id="@+id/countGold"
                 style="@style/Widget.Marvel.PackCount" />
         </LinearLayout>
+
+        <!-- Selo de troca: repetidas viram um Prata (desativado sem repetidas suficientes). -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tradeButton"
+            style="@style/Widget.Marvel.ComicButton.Secondary"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/space_sm"
+            android:layout_weight="1"
+            android:lineSpacingMultiplier="0.9"
+            android:paddingHorizontal="@dimen/space_xs"
+            android:textSize="13sp" />
     </LinearLayout>
 
-    <!-- Troca de repetidas por um Prata (desativado sem repetidas suficientes). -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/tradeButton"
-        style="@style/Widget.Marvel.ComicButton"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/space_md" />
-
     <!-- Busca por nome + atalho de filtro + ordem: a grade abaixo mostra só o que passar. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
     <EditText
         android:id="@+id/search"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="@dimen/input_height"
         android:layout_marginTop="@dimen/space_md"
         android:background="@drawable/bg_input"
@@ -109,6 +136,17 @@
         android:paddingHorizontal="@dimen/space_md"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_secondary" />
+
+        <!-- Ordem num chip só: abre um menu (em vez de uma fileira inteira de chips). -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sortChip"
+            style="@style/Widget.Marvel.FilterChip"
+            android:layout_marginStart="@dimen/space_sm"
+            android:layout_marginTop="@dimen/space_md"
+            android:checkable="false"
+            app:chipIcon="@drawable/ic_sort"
+            app:chipIconTint="@color/filter_chip_text" />
+    </LinearLayout>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -125,19 +163,6 @@
             app:singleSelection="true" />
     </HorizontalScrollView>
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/sortGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:selectionRequired="true"
-            app:singleLine="true"
-            app:singleSelection="true" />
-    </HorizontalScrollView>
 
     <TextView
         android:id="@+id/filterCount"

@@ -94,6 +94,14 @@
         <item name="android:orientation">vertical</item>
     </style>
 
+    <!-- Capa compacta na grade de 2 colunas da aba Jogos. -->
+    <style name="Widget.Marvel.GameTile" parent="Widget.Marvel.GameCard">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:layout_margin">@dimen/space_xs</item>
+    </style>
+
     <style name="Widget.Marvel.GameText" parent="">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -374,6 +382,9 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="tabGravity">start</item>
         <item name="tabMode">scrollable</item>
+        <!-- Esmaece a borda: mostra que há mais abas para o lado (Lugares fica fora da tela). -->
+        <item name="android:requiresFadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">40dp</item>
         <item name="tabIndicator">@drawable/bg_tab_indicator</item>
         <!-- Transparente = o TabLayout não tinge o indicador (mantém dourado + nanquim). -->
         <item name="tabIndicatorColor">@android:color/transparent</item>

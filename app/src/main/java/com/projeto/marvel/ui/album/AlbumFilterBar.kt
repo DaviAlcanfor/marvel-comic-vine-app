@@ -3,6 +3,7 @@ package com.projeto.marvel.ui.album
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -10,11 +11,13 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.chip.ChipGroup
 import com.projeto.marvel.R
+import com.projeto.marvel.data.TRADE_COST
 import com.projeto.marvel.databinding.ItemFilterChipBinding
 import com.projeto.marvel.databinding.ViewAlbumHeaderBinding
 import com.projeto.marvel.ui.BoxStyle
 import com.projeto.marvel.ui.Era
 import com.projeto.marvel.ui.comicBox
+import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.era
 
 private val FILTER_LABELS = mapOf(
@@ -50,7 +53,18 @@ fun ViewAlbumHeaderBinding.bindFilters(
         true
     }
     filterGroup.chips(inflater, FILTER_LABELS, current().filter) { onChange(current().copy(filter = it)) }
-    sortGroup.chips(inflater, SORT_LABELS, current().sort) { onChange(current().copy(sort = it)) }
+    sortChip.setText(SORT_LABELS.getValue(current().sort))
+    sortChip.setOnClickListener { chip ->
+        PopupMenu(chip.context, chip).apply {
+            SORT_LABELS.forEach { (sort, label) -> menu.add(0, sort.ordinal, sort.ordinal, label) }
+            setOnMenuItemClickListener { item ->
+                val sort = AlbumSort.entries[item.itemId]
+                sortChip.setText(SORT_LABELS.getValue(sort))
+                onChange(current().copy(sort = sort))
+                true
+            }
+        }.show()
+    }
 }
 
 private fun <T> ChipGroup.chips(inflater: LayoutInflater, labels: Map<T, Int>, selected: T, onPick: (T) -> Unit) {
@@ -88,5 +102,25 @@ fun ViewAlbumHeaderBinding.applyEra() {
             progress.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
         }
+    }
+}
+
+/** ⓘ abre as regras dos pacotes; o selo de troca pede confirmação antes de gastar as repetidas. */
+fun ViewAlbumHeaderBinding.bindActions(onTrade: () -> Unit) {
+    val context = root.context
+    packsInfo.setOnClickListener {
+        context.comicDialog()
+            .setTitle(R.string.album_packs_info)
+            .setMessage(R.string.album_packs_hint)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
+    }
+    tradeButton.setOnClickListener {
+        context.comicDialog()
+            .setTitle(R.string.album_trade_title)
+            .setMessage(context.getString(R.string.album_trade_message, TRADE_COST))
+            .setPositiveButton(R.string.album_trade_confirm) { _, _ -> onTrade() }
+            .setNegativeButton(R.string.album_trade_cancel, null)
+            .show()
     }
 }

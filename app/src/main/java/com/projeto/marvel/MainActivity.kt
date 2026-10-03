@@ -83,7 +83,18 @@ class MainActivity : AppCompatActivity() {
             if (isTab) binding.geekFab.show() else binding.geekFab.hide()
         }
         binding.geekFab.setOnClickListener { navController.navigate(R.id.chatFragment) }
+        // Rolando, a bolha sai da frente (cobria a última figurinha da fileira e as missões);
+        // parou de rolar, ela volta.
+        binding.root.viewTreeObserver.addOnScrollChangedListener {
+            if (!geekWanted || binding.bottomNav.visibility != View.VISIBLE) return@addOnScrollChangedListener
+            binding.geekFab.hide()
+            binding.root.removeCallbacks(showGeek)
+            binding.root.postDelayed(showGeek, GEEK_RETURN_MILLIS)
+        }
     }
+
+    private var geekWanted = true
+    private val showGeek = Runnable { setGeekVisible(geekWanted) }
 
     /** Populares (pool da Início, do Álbum e da Batalha) e a foto do herói do dia, já no cache. */
     private suspend fun preload() {
@@ -94,6 +105,7 @@ class MainActivity : AppCompatActivity() {
 
     /** Telas cheias por cima da aba (carta em 3D, abertura de pacote) escondem a bolha do Geek. */
     fun setGeekVisible(visible: Boolean) {
+        geekWanted = visible
         if (visible && binding.bottomNav.visibility == View.VISIBLE) binding.geekFab.show() else binding.geekFab.hide()
     }
 
@@ -105,3 +117,4 @@ class MainActivity : AppCompatActivity() {
 
 private const val LOADING_MIN_MILLIS = 1_400L
 private const val LOADING_MAX_MILLIS = 3_000L
+private const val GEEK_RETURN_MILLIS = 700L
