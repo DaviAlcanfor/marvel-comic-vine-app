@@ -24,7 +24,12 @@ escuro. Ao entrar numa tela, a época tem de ser reconhecível só pelo traço.
 | Quadro (`bg_card`) | nanquim + sombra dura | moldura neon degradê ciano → magenta → amarelo | fosco, traço fino |
 | Figurinha | margem branca, número em placa preta/amarela | borda foil (arco-íris) | moldura fosca arredondada |
 | Chips | retos, marcado amarelo | canto cortado, contorno ciano, marcado amarelo | pílula, marcado branco |
-| Barra inferior | creme, fio de 3dp, ativo em placa amarela | escura, fio ciano, ativo amarelo | quase preta, ativo vermelho |
+| Barra inferior | creme, fio de 3dp, ativo (ícone + nome) em placa amarela torta | escura, fio ciano, ícones ciano, ativo amarelo | quase preta, ativo vermelho |
+| Ícones da barra | contorno (`nav_*.xml`), iguais nas três | ← | ← |
+| Legendas / rótulos | Comic Neue negrito itálico 14sp | Bungee 13sp | Bebas 18sp |
+| Pacotes (cabeçalho do Álbum) | blocos na cor do pacote com nanquim | metal chanfrado | painel com faixa colorida no topo |
+| Fundo extra | retícula em 2 cores (vermelho + azul deslocado) | faixas diagonais (`StreaksDrawable`) | — |
+| Movimento (`staggerIn` / `eraEnter`) | quadros estouram no lugar com leve giro | entram deslizando de lado com tranco | sobem suave com fade |
 
 ## Onde está no código
 
@@ -50,4 +55,6 @@ escuro. Ao entrar numa tela, a época tem de ser reconhecível só pelo traço.
 4. Cor nova: token nos dois `colors.xml`. Se mudar nos Anos 90, um `nineties_*` + atributo `era*`.
 5. Diferença de layout entre épocas (posição, peça extra): uma função `applyEra()` no pacote da
    tela, chamada uma vez em `onViewCreated`.
-6. Conferir as três épocas no aparelho antes de commitar (Perfil → Época).
+6. Entrada da tela com `eraEnter()` no container (ou `staggerIn(views)`): o movimento já sai da época.
+7. Conferir as três épocas no aparelho antes de commitar (Perfil → Época), lado a lado com as
+   pranchas do canvas quando a tela estiver nele.
