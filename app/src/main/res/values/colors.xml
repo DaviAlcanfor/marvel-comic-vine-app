@@ -66,6 +66,8 @@
     <color name="era_overlay">#F2FFF4DC</color>
     <!-- Pontos da retícula (tint do halftone_tile, que é branco). -->
     <color name="era_halftone">#D63A28</color>
+    <!-- 2ª cor da retícula Ben-Day (deslocada): só no Retrô. -->
+    <color name="era_halftone_alt">#0078BE</color>
     <!-- Estrelas e moldura simples por raridade (bronze, prata, ouro) e o ✦ da carta Divina. -->
     <color name="rarity_common">#C27A3E</color>
     <color name="rarity_rare">#A8B0BA</color>
@@ -93,6 +95,12 @@
     <color name="modern_nav">#0C0C10</color>
     <!-- Amarelo dos letreiros (Retrô e Anos 90). -->
     <color name="logo_yellow">#FFD21F</color>
+    <!-- Caixa de legenda amarela do Retrô ("Enquanto isso…"). -->
+    <color name="caption_yellow">#FFE14D</color>
+    <color name="sfx_blue">#5BC0EB</color>
+    <color name="pack_tile_basic">#2E6FD8</color>
+    <color name="missing_ink">#8A7A5A</color>
+    <color name="pack_tile_silver">#C9CED6</color>
     <!-- Contorno de quadros/botões/campos por época (o nanquim no Retrô). -->
     <color name="era_outline">#141010</color>
     <color name="era_caption_text">#141010</color>

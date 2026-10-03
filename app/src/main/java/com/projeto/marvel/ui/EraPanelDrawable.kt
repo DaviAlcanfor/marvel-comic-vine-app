@@ -35,7 +35,7 @@ import org.xmlpull.v1.XmlPullParser
 @Suppress("TooManyFunctions") // um Drawable de verdade: os overrides (estado, tema, contorno, padding) são obrigatórios
 class EraPanelDrawable() : Drawable() {
 
-    enum class Kind { PANEL, BUTTON, SECONDARY, CAPTION, INPUT, NAV }
+    enum class Kind { PANEL, BUTTON, SECONDARY, CAPTION, INPUT, NAV, NAV_ITEM, CHAMFER_FILL }
 
     /** Feita em código (ex.: legenda do [comicBox]), já no tema de [context]. */
     constructor(context: android.content.Context, kind: Kind, @ColorInt fill: Int? = null) : this() {
@@ -56,6 +56,8 @@ class EraPanelDrawable() : Drawable() {
     private var accentColor = 0
     private var neon = intArrayOf()
     private var pressed = false
+    private var checked = false
+    private var gradient: IntArray? = null
     private var enabled = true
 
     private val fill = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -106,8 +108,16 @@ class EraPanelDrawable() : Drawable() {
             Kind.CAPTION -> CAPTION_FILL.getValue(era)
             Kind.INPUT -> if (era == Era.NINETIES) R.color.nineties_input else R.color.surface
             Kind.NAV -> NAV_FILL.getValue(era)
+            Kind.NAV_ITEM -> R.color.logo_yellow
+            Kind.CHAMFER_FILL -> R.color.surface
         }
     ).let { if (kind == Kind.SECONDARY && era == Era.NINETIES) 0 else it }
+
+    /** Preenchimento em degradê diagonal (metal do pacote nos Anos 90). */
+    fun setGradient(colors: IntArray) {
+        gradient = colors
+        invalidateSelf()
+    }
 
     /** Troca o preenchimento (ex.: legenda na cor do personagem). */
     fun setFill(@ColorInt color: Int) {
@@ -126,6 +136,7 @@ class EraPanelDrawable() : Drawable() {
 
     override fun draw(canvas: Canvas) {
         if (kind == Kind.NAV) return drawNav(canvas)
+        if (kind == Kind.NAV_ITEM) return drawNavItem(canvas)
         val shift = if (pressed && era == Era.RETRO) shadow else 0f
         box.set(bounds.left + shift, bounds.top + shift, bounds.right - shadow + shift, bounds.bottom - shadow + shift)
         shape(box)
@@ -168,6 +179,9 @@ class EraPanelDrawable() : Drawable() {
     private fun paintFill() {
         fill.color = if (!enabled) disabledFill() else fillColor
         if (pressed && era != Era.RETRO) fill.color = ColorUtils.blendARGB(fill.color, Color.BLACK, PRESS_DARKEN)
+        gradient?.let {
+            fill.shader = LinearGradient(box.left, box.top, box.right, box.bottom, it, null, Shader.TileMode.CLAMP)
+        }
         if (era == Era.NINETIES && kind == Kind.BUTTON && enabled) {
             val top = ColorUtils.blendARGB(fill.color, Color.WHITE, BUTTON_SHINE)
             fill.shader = LinearGradient(0f, box.top, 0f, box.bottom, top, fill.color, Shader.TileMode.CLAMP)
@@ -185,11 +199,32 @@ class EraPanelDrawable() : Drawable() {
             }
             era == Era.NINETIES && (kind == Kind.BUTTON || kind == Kind.CAPTION) -> stroke.color = accentColor
             era == Era.MODERN && (kind == Kind.BUTTON || kind == Kind.CAPTION) -> stroke.strokeWidth = 0f
+            kind == Kind.CHAMFER_FILL && era == Era.NINETIES -> stroke.strokeWidth = 0f
             era == Era.RETRO -> stroke.color = inkColor
         }
     }
 
     private fun disabledFill() = ColorUtils.setAlphaComponent(fillColor, DISABLED_ALPHA)
+
+    /** Retrô: placa amarela de nanquim, meio torta, atrás do item ativo da barra. */
+    private fun drawNavItem(canvas: Canvas) {
+        if (!checked || era != Era.RETRO) return
+        val inset = NAV_ITEM_INSET_DP * density
+        val shadow = NAV_ITEM_SHADOW_DP * density
+        box.set(bounds.left + inset, bounds.top + inset, bounds.right - inset - shadow, bounds.bottom - inset - shadow)
+        canvas.save()
+        canvas.rotate(NAV_ITEM_TILT, box.centerX(), box.centerY())
+        fill.shader = null
+        fill.color = inkColor
+        canvas.drawRect(box.left + shadow, box.top + shadow, box.right + shadow, box.bottom + shadow, fill)
+        fill.color = fillColor
+        canvas.drawRect(box, fill)
+        stroke.shader = null
+        stroke.color = inkColor
+        stroke.strokeWidth = ink
+        canvas.drawRect(box, stroke)
+        canvas.restore()
+    }
 
     private fun drawNav(canvas: Canvas) {
         fill.color = fillColor
@@ -208,26 +243,29 @@ class EraPanelDrawable() : Drawable() {
         box.set(bounds.left.toFloat(), bounds.top.toFloat(), bounds.right - shadow, bounds.bottom - shadow)
         shape(box)
         // Retrô: o recorte inclui a sombra (ela fica fora da face, mas dentro da View).
-        if (era == Era.RETRO || kind == Kind.NAV) outline.setRect(bounds) else outline.setPath(path)
+        val square = era == Era.RETRO || kind == Kind.NAV || kind == Kind.NAV_ITEM
+        if (square) outline.setRect(bounds) else outline.setPath(path)
     }
 
     /** Espaço para o traço e a sombra: o conteúdo (foto do quadro, texto do botão) não cobre a borda. */
     override fun getPadding(padding: Rect): Boolean {
-        if (kind == Kind.NAV || kind == Kind.CAPTION) return false
+        if (kind in NO_PADDING) return false
         val edge = if (kind == Kind.PANEL && era == Era.NINETIES) NINETIES_FRAME_DP * density else ink
         val inset = edge.toInt()
         padding.set(inset, inset, inset + shadow.toInt(), inset + shadow.toInt())
         return true
     }
 
-    override fun isStateful() = kind == Kind.BUTTON || kind == Kind.SECONDARY
+    override fun isStateful() = kind == Kind.BUTTON || kind == Kind.SECONDARY || kind == Kind.NAV_ITEM
 
     override fun onStateChange(state: IntArray): Boolean {
         val nowPressed = android.R.attr.state_pressed in state
         val nowEnabled = android.R.attr.state_enabled in state
-        if (nowPressed == pressed && nowEnabled == enabled) return false
+        val nowChecked = android.R.attr.state_checked in state || android.R.attr.state_selected in state
+        if (nowPressed == pressed && nowEnabled == enabled && nowChecked == checked) return false
         pressed = nowPressed
         enabled = nowEnabled
+        checked = nowChecked
         invalidateSelf()
         return true
     }
@@ -256,11 +294,15 @@ class EraPanelDrawable() : Drawable() {
         const val LABEL_RADIUS_DP = 3f
         const val BUTTON_RADIUS_DP = 6f
         const val PANEL_RADIUS_DP = 10f
+        val NO_PADDING = setOf(Kind.NAV, Kind.CAPTION, Kind.NAV_ITEM, Kind.CHAMFER_FILL)
+        const val NAV_ITEM_INSET_DP = 6f
+        const val NAV_ITEM_SHADOW_DP = 3f
+        const val NAV_ITEM_TILT = -3f
         const val DISABLED_ALPHA = 0x73
         const val PRESS_DARKEN = 0.2f
         const val BUTTON_SHINE = 0.25f
         val CAPTION_FILL = mapOf(
-            Era.RETRO to R.color.accent,
+            Era.RETRO to R.color.caption_yellow,
             Era.NINETIES to R.color.nineties_magenta,
             Era.MODERN to R.color.primary
         )

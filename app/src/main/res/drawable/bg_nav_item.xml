@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fundo do item da barra inferior: placa da época quando ativo (ui/EraPanelDrawable.kt, "navItem"). -->
+<com.projeto.marvel.ui.EraPanelDrawable xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:panelKind="navItem" />

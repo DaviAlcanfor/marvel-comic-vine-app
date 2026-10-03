@@ -5,4 +5,5 @@
     <dimen name="era_shadow">0dp</dimen>
     <dimen name="era_radius">10dp</dimen>
     <dimen name="era_radius_small">6dp</dimen>
+    <dimen name="era_caption_size">18sp</dimen>
 </resources>

@@ -26,6 +26,7 @@ import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.home.heroOfTheDay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import com.projeto.marvel.ui.eraEnter
 
 /**
  * Aba Jogos: capa de cada jogo com o que é, como joga e o seu recorde. A capa do "Quem é esse
@@ -65,6 +66,7 @@ class GamesFragment : Fragment(R.layout.fragment_games) {
             }
         }
         viewLifecycleOwner.lifecycleScope.launch { loadBanners(binding) }
+        (binding.root.getChildAt(0) as ViewGroup).eraEnter()
     }
 
     override fun onResume() {

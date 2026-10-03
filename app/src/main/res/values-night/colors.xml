@@ -23,6 +23,7 @@
     <color name="accent_text">#E6B800</color>
     <color name="era_overlay">#F20B0B10</color>
     <color name="era_halftone">#00FFFFFF</color>
+    <color name="era_halftone_alt">#00FFFFFF</color>
     <!-- Moderno: vermelho Marvel, contorno grafite, sem retícula. -->
     <color name="era_primary">#D81F26</color>
     <color name="era_primary_variant">#9E1218</color>

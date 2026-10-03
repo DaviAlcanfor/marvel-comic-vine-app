@@ -2,5 +2,10 @@
 <!-- Fundo de tela do tema HQ: fundo da época (cor ou degradê) + retícula (halftone) sutil, como papel impresso. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="?attr/eraScreen" />
+    <item android:drawable="?attr/eraPattern" />
     <item android:drawable="@drawable/bg_halftone" />
+    <item
+        android:drawable="@drawable/bg_halftone_alt"
+        android:left="4dp"
+        android:top="4dp" />
 </layer-list>

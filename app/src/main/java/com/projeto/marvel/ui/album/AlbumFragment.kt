@@ -5,7 +5,6 @@ import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -26,9 +25,9 @@ import com.projeto.marvel.data.TRADE_COST
 import com.projeto.marvel.data.levelFor
 import com.projeto.marvel.databinding.FragmentAlbumBinding
 import com.projeto.marvel.databinding.ViewAlbumHeaderBinding
-import com.projeto.marvel.databinding.ViewPackBinding
 import com.projeto.marvel.ui.detail.TiltController
 import kotlinx.coroutines.launch
+import com.projeto.marvel.ui.eraEnter
 
 class AlbumFragment : Fragment(R.layout.fragment_album) {
 
@@ -68,6 +67,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         binding.grid.adapter = ConcatAdapter(SingleViewAdapter(header.root), adapter)
         header.bindFilters(layoutInflater, { viewModel.query.value }, viewModel::setQuery)
         header.applyEra()
+        header.root.eraEnter()
         binding.message.setOnClickListener { viewModel.load() }
         viewer = CardViewer(binding.viewerCard, binding.viewerFront, binding.viewerBack)
         binding.viewerClose.setOnClickListener { viewModel.closeViewer() }
@@ -91,7 +91,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             binding.opening.fadeOut()
             geek(true)
         }
-        header.tiles().forEach { (type, tile, _) ->
+        header.tiles().forEach { (type, tile) ->
             tile.setOnClickListener { viewModel.openPack(type) }
         }
         header.bindActions(viewModel::trade)
@@ -124,13 +124,11 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         header.progress.text = getString(R.string.album_progress, state.owned, state.stickers.size)
         header.progressBar.max = state.stickers.size
         header.progressBar.progress = state.owned
-        header.tiles().forEach { (type, tile, pack) ->
+        header.tiles().forEach { (type, tile) ->
             val count = state.packs[type] ?: 0
-            pack.style(type, large = false, art = state.packArt[type])
+            // Cor cheia mesmo com ×0 (como no canvas); só não abre.
             tile.isEnabled = count > 0
-            tile.alpha = if (count > 0) 1f else DISABLED_ALPHA
-            (tile.getChildAt(1) as TextView).text = getString(R.string.album_pack_count, getString(type.label()), count)
-            if (count > 0) pack.gleam()
+            tile.text = getString(R.string.album_pack_tile, getString(type.label()), count)
         }
         header.tradeButton.text = getString(R.string.album_trade, state.tradable.coerceAtMost(TRADE_COST), TRADE_COST)
         header.tradeButton.isEnabled = state.tradable >= TRADE_COST
@@ -250,10 +248,10 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     }
 }
 
-private fun ViewAlbumHeaderBinding.tiles(): List<Triple<PackType, LinearLayout, ViewPackBinding>> = listOf(
-    Triple(PackType.BASIC, tileBasic, packBasic),
-    Triple(PackType.SILVER, tileSilver, packSilver),
-    Triple(PackType.GOLD, tileGold, packGold)
+internal fun ViewAlbumHeaderBinding.tiles(): List<Pair<PackType, TextView>> = listOf(
+    PackType.BASIC to tileBasic,
+    PackType.SILVER to tileSilver,
+    PackType.GOLD to tileGold
 )
 
 private const val FLASH_MILLIS = 360L

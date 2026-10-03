@@ -32,7 +32,7 @@ class AchievementAdapter : ListAdapter<Medal, AchievementAdapter.ViewHolder>(Dif
             val fill = ContextCompat.getColor(context, if (unlocked) achievement.color else R.color.surface_variant)
             val icon = ContextCompat.getColor(context, if (unlocked) R.color.ink else R.color.text_secondary)
             binding.medal.setImageResource(achievement.icon)
-            binding.medal.backgroundTintList = ColorStateList.valueOf(fill)
+            binding.medal.medal(fill)
             binding.medal.imageTintList = ColorStateList.valueOf(icon)
             binding.medal.alpha = if (unlocked) 1f else LOCKED_ALPHA
             binding.name.setText(achievement.title)

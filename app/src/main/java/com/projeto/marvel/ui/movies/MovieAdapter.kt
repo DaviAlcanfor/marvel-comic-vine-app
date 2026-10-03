@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.projeto.marvel.data.remote.Movie
 import com.projeto.marvel.databinding.ItemComicBinding
+import com.projeto.marvel.ui.comics.applyEra
 
 /** Pôster com nome e "PG-13 · 121 min" (mesmo card das capas de HQ). */
 class MovieAdapter(
@@ -18,7 +19,7 @@ class MovieAdapter(
 ) : ListAdapter<Movie, MovieAdapter.ViewHolder>(Diff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemComicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemComicBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply { applyEra() }
         cardWidth?.let { width -> binding.root.updateLayoutParams { this.width = width } }
         return ViewHolder(binding)
     }

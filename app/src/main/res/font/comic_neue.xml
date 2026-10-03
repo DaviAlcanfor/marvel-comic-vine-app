@@ -9,4 +9,8 @@
         android:font="@font/comic_neue_bold"
         android:fontStyle="normal"
         android:fontWeight="700" />
+    <font
+        android:font="@font/comic_neue_bold_italic"
+        android:fontStyle="italic"
+        android:fontWeight="700" />
 </font-family>

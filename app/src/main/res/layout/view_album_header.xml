@@ -20,7 +20,20 @@
             android:id="@+id/progress"
             style="@style/Widget.Marvel.CaptionBox" />
 
+        <!-- Moderno: barra fina no lugar da legenda (AlbumFilterBar.applyEra). -->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:indicatorColor="@color/primary"
+            app:trackColor="@color/surface_variant"
+            app:trackCornerRadius="2dp"
+            app:trackThickness="4dp" />
+
         <Space
+            android:id="@+id/progressSpace"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -35,134 +48,99 @@
             app:tint="@color/text_primary" />
     </LinearLayout>
 
-    <!-- Moderno: barra fina no lugar da legenda (AlbumFragment). -->
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_sm"
-        android:visibility="gone"
-        app:indicatorColor="@color/primary"
-        app:trackColor="@color/surface_variant"
-        app:trackCornerRadius="2dp"
-        app:trackThickness="4dp" />
-
-    <!-- Pacotes: Básico, Prata e Ouro -->
+    <!-- Pacotes: Básico, Prata e Ouro, cada um um bloco na cor do pacote (AlbumFilterBar.applyEra). -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_md"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <TextView
             android:id="@+id/tileBasic"
-            style="@style/Widget.Marvel.PackTile">
+            style="@style/Widget.Marvel.PackTile" />
 
-            <include
-                android:id="@+id/packBasic"
-                layout="@layout/view_pack"
-                android:layout_width="@dimen/pack_small_width"
-                android:layout_height="@dimen/pack_small_height" />
-
-            <TextView
-                android:id="@+id/countBasic"
-                style="@style/Widget.Marvel.PackCount" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:id="@+id/tileSilver"
-            style="@style/Widget.Marvel.PackTile">
+            style="@style/Widget.Marvel.PackTile" />
 
-            <include
-                android:id="@+id/packSilver"
-                layout="@layout/view_pack"
-                android:layout_width="@dimen/pack_small_width"
-                android:layout_height="@dimen/pack_small_height" />
-
-            <TextView
-                android:id="@+id/countSilver"
-                style="@style/Widget.Marvel.PackCount" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:id="@+id/tileGold"
-            style="@style/Widget.Marvel.PackTile">
-
-            <include
-                android:id="@+id/packGold"
-                layout="@layout/view_pack"
-                android:layout_width="@dimen/pack_small_width"
-                android:layout_height="@dimen/pack_small_height" />
-
-            <TextView
-                android:id="@+id/countGold"
-                style="@style/Widget.Marvel.PackCount" />
-        </LinearLayout>
-
-        <!-- Selo de troca: repetidas viram um Prata (desativado sem repetidas suficientes). -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/tradeButton"
-            style="@style/Widget.Marvel.ComicButton.Secondary"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginVertical="@dimen/space_sm"
-            android:layout_weight="1"
-            android:lineSpacingMultiplier="0.9"
-            android:paddingHorizontal="@dimen/space_xs"
-            android:textSize="13sp" />
+            style="@style/Widget.Marvel.PackTile" />
     </LinearLayout>
 
-    <!-- Busca por nome + atalho de filtro + ordem: a grade abaixo mostra só o que passar. -->
-    <LinearLayout
+    <!-- Troca de repetidas por um Prata (desativado sem repetidas suficientes). -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/tradeButton"
+        style="@style/Widget.Marvel.ComicButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginTop="@dimen/space_md" />
 
-    <EditText
-        android:id="@+id/search"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+    <!-- Busca: "BUSCAR:" escrito (Retrô, Anos 90) ou a lupa (Moderno), e o campo. -->
+    <LinearLayout
+        android:id="@+id/searchBox"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/input_height"
         android:layout_marginTop="@dimen/space_md"
         android:background="@drawable/bg_input"
-        android:drawablePadding="@dimen/space_sm"
-        android:drawableStart="@drawable/ic_search"
-        android:hint="@string/album_search_hint"
-        android:imeOptions="actionSearch"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:maxLines="1"
-        android:paddingHorizontal="@dimen/space_md"
-        android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/space_md">
 
-        <!-- Ordem num chip só: abre um menu (em vez de uma fileira inteira de chips). -->
-        <com.google.android.material.chip.Chip
-            android:id="@+id/sortChip"
-            style="@style/Widget.Marvel.FilterChip"
-            android:layout_marginStart="@dimen/space_sm"
-            android:layout_marginTop="@dimen/space_md"
-            android:checkable="false"
-            app:chipIcon="@drawable/ic_sort"
-            app:chipIconTint="@color/filter_chip_text" />
+        <TextView
+            android:id="@+id/searchLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_sm"
+            android:importantForAccessibility="no"
+            android:text="@string/album_search_label"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawablePadding="@dimen/space_sm"
+            android:hint="@string/album_search_hint"
+            android:imeOptions="actionSearch"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary" />
     </LinearLayout>
 
+    <!-- Atalhos de filtro e, no fim da fileira, a ordem (abre um menu). -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_sm"
         android:scrollbars="none">
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/filterGroup"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:selectionRequired="true"
-            app:singleLine="true"
-            app:singleSelection="true" />
-    </HorizontalScrollView>
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/filterGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                app:singleLine="true"
+                app:singleSelection="true" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/sortChip"
+                style="@style/Widget.Marvel.FilterChip"
+                android:layout_marginStart="@dimen/space_sm"
+                android:checkable="false"
+                app:chipIcon="@drawable/ic_sort"
+                app:chipIconTint="@color/filter_chip_text" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <TextView
         android:id="@+id/filterCount"

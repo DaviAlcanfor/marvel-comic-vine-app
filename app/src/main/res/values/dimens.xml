@@ -94,4 +94,6 @@
     <dimen name="era_shadow">4dp</dimen>
     <dimen name="era_radius">0dp</dimen>
     <dimen name="era_radius_small">0dp</dimen>
+    <dimen name="era_caption_size">14sp</dimen>
+    <dimen name="pack_tile_height">64dp</dimen>
 </resources>

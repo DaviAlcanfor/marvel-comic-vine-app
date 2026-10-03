@@ -26,12 +26,15 @@ import com.projeto.marvel.ui.comics.ComicItem
 import com.projeto.marvel.ui.characters.CharacterAdapter
 import com.projeto.marvel.ui.fadeVisible
 import com.projeto.marvel.ui.BoxStyle
+import com.projeto.marvel.ui.Era
 import com.projeto.marvel.ui.comicBox
+import com.projeto.marvel.ui.era
 import com.projeto.marvel.ui.detail.readableOn
 import com.projeto.marvel.ui.info.InfoDetailFragment
 import com.projeto.marvel.ui.movies.MovieAdapter
 import com.projeto.marvel.ui.submitCarousel
 import kotlinx.coroutines.launch
+import com.projeto.marvel.ui.eraEnter
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -75,6 +78,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
         binding.applyEra()
+        (binding.root.getChildAt(0) as ViewGroup).eraEnter()
         binding.readingList.adapter = readingAdapter
         binding.heroMoviesList.adapter = heroMoviesAdapter
         binding.debutsList.adapter = debutsAdapter
@@ -111,6 +115,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         heroMoviesAdapter.submitCarousel(state.heroMovies, binding.heroMoviesList)
         val hasMovies = state.heroMovies.isNotEmpty()
         listOf(binding.heroMoviesTitle, binding.heroMoviesList).forEach { it.fadeVisible(hasMovies) }
+        val roomForSfx = hasMovies && state.heroMovies.size == 1 && requireContext().era() != Era.MODERN
+        binding.heroMoviesSfx.fadeVisible(roomForSfx)
         debutsAdapter.submitCarousel(state.debutedToday, binding.debutsList)
         listOf(binding.debutsTitle, binding.debutsList).forEach { it.fadeVisible(state.debutedToday.isNotEmpty()) }
         binding.missionList.bindMissions(state.missions, viewModel::claim)
@@ -191,6 +197,7 @@ private fun FragmentHomeBinding.bindHeader(state: HomeUiState, onFavorite: (Favo
 private fun FragmentHomeBinding.bindHero(hero: CharacterSummary) {
     heroImage.tag = hero.id
     heroImage.load(hero.image?.mediumUrl) { crossfade(true) }
-    heroName.text = hero.name
+    // Retrô: o nome estoura numa explosão, com exclamação de capa.
+    heroName.text = if (root.context.era() == Era.RETRO) "${hero.name}!" else hero.name
     heroDeck.text = hero.deck.orEmpty()
 }

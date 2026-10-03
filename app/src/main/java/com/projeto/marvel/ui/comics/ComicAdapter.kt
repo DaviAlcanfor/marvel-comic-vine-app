@@ -26,7 +26,7 @@ class ComicAdapter(
     private val flipped = mutableSetOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemComicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemComicBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply { applyEra() }
         cardWidth?.let { width -> binding.root.updateLayoutParams { this.width = width } }
         return ViewHolder(binding)
     }

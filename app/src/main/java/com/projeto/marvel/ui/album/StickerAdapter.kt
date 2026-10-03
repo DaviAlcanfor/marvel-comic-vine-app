@@ -1,6 +1,9 @@
 package com.projeto.marvel.ui.album
 
 import android.content.Context
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
@@ -30,6 +33,27 @@ fun ItemStickerBinding.bind(sticker: Sticker) {
     val context = root.context
     val owned = sticker.count > 0
     val era = context.era()
+    dress(era, owned)
+    image.visibility = if (owned) View.VISIBLE else View.INVISIBLE
+    missing.visibility = if (owned) View.GONE else View.VISIBLE
+    if (owned) image.load(sticker.character.image?.mediumUrl) { crossfade(true) } else image.setImageDrawable(null)
+    shine.visibility = if (owned && sticker.golden) View.VISIBLE else View.GONE
+    shine.compact = true
+    shine.setRarity(sticker.rarity, sticker.golden)
+    name.text = stickerName(context, sticker, era, owned)
+    number.text = context.getString(R.string.album_number, sticker.number)
+    count.visibility = if (sticker.count > 1) View.VISIBLE else View.GONE
+    count.text = context.getString(R.string.album_count, sticker.count)
+    root.contentDescription = if (owned) {
+        context.getString(R.string.album_sticker_description, sticker.character.name, sticker.count)
+    } else {
+        context.getString(R.string.album_missing)
+    }
+}
+
+/** Moldura, placa do número, letra do nome e o vazio da que falta, no traço da época. */
+private fun ItemStickerBinding.dress(era: Era, owned: Boolean) {
+    val context = root.context
     fun color(res: Int) = ContextCompat.getColor(context, res)
     root.background = frame(context, era)
     when (era) {
@@ -39,21 +63,19 @@ fun ItemStickerBinding.bind(sticker: Sticker) {
     }
     name.setTextColor(color(if (era == Era.NINETIES) R.color.logo_yellow else R.color.text_primary))
     name.isAllCaps = era != Era.MODERN
-    image.visibility = if (owned) View.VISIBLE else View.INVISIBLE
-    missing.visibility = if (owned) View.GONE else View.VISIBLE
-    if (owned) image.load(sticker.character.image?.mediumUrl) { crossfade(true) } else image.setImageDrawable(null)
-    shine.visibility = if (owned && sticker.golden) View.VISIBLE else View.GONE
-    shine.compact = true
-    shine.setRarity(sticker.rarity, sticker.golden)
-    name.text = if (owned) rarityBadge(context, sticker.rarity, sticker.golden, sticker.character.name) else "?"
-    number.text = context.getString(R.string.album_number, sticker.number)
-    count.visibility = if (sticker.count > 1) View.VISIBLE else View.GONE
-    count.text = context.getString(R.string.album_count, sticker.count)
-    root.contentDescription = if (owned) {
-        context.getString(R.string.album_sticker_description, sticker.character.name, sticker.count)
-    } else {
-        context.getString(R.string.album_missing)
+    missing.background = when (era) {
+        Era.RETRO -> dashedBox(context)
+        Era.NINETIES -> ContextCompat.getDrawable(context, R.drawable.bg_missing_stripes)
+        Era.MODERN -> null
     }
+    image.foreground = if (era == Era.RETRO && owned) inkLine(context) else null
+}
+
+private fun stickerName(context: Context, sticker: Sticker, era: Era, owned: Boolean): CharSequence = when {
+    owned && era == Era.MODERN -> rarityBadge(context, sticker.rarity, sticker.golden, sticker.character.name)
+    owned -> eraBadge(context, sticker, era)
+    era == Era.MODERN -> context.getString(R.string.album_missing_short)
+    else -> MISSING_NAME
 }
 
 private fun frame(context: Context, era: Era): Drawable = when (era) {
@@ -82,6 +104,34 @@ private val FOIL = listOf(
     R.color.foil_green,
     R.color.nineties_outline
 )
+
+/** Estrelas na tinta da época (vermelho no Retrô, amarelo nos Anos 90) antes do nome; ✦ na Divina. */
+private fun eraBadge(context: Context, sticker: Sticker, era: Era): CharSequence {
+    val ink = ContextCompat.getColor(context, if (era == Era.RETRO) R.color.primary else R.color.logo_yellow)
+    val stars = (if (sticker.golden) "✦" else "") + "★".repeat(sticker.rarity.ordinal + 1)
+    return SpannableStringBuilder()
+        .append(stars, ForegroundColorSpan(ink), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        .append(" ")
+        .append(sticker.character.name)
+}
+
+/** Figurinha que falta no Retrô: caixa tracejada, como o espaço vazio de um álbum de banca. */
+private fun dashedBox(context: Context) = GradientDrawable().apply {
+    val density = context.resources.displayMetrics.density
+    val dash = DASH_DP * density
+    setStroke((DASH_WIDTH_DP * density).toInt(), ContextCompat.getColor(context, R.color.missing_ink), dash, dash)
+}
+
+/** Filete de nanquim em volta da foto (Retrô). */
+private fun inkLine(context: Context) = GradientDrawable().apply {
+    val density = context.resources.displayMetrics.density
+    setStroke((INK_LINE_DP * density).toInt(), ContextCompat.getColor(context, R.color.ink))
+}
+
+private const val MISSING_NAME = "???"
+private const val DASH_WIDTH_DP = 2f
+private const val DASH_DP = 5f
+private const val INK_LINE_DP = 1.5f
 
 private fun TextView.styleNumber(background: Int, text: Int) {
     setBackgroundColor(background)

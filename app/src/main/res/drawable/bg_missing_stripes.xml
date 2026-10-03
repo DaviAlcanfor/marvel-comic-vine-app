@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Anos 90: o vazio da figurinha que falta em listras diagonais (ui/StreaksDrawable.kt, mais densas). -->
+<com.projeto.marvel.ui.StreaksDrawable xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:streakGap="10dp"
+    app:streakColor="@color/nineties_surface_variant" />

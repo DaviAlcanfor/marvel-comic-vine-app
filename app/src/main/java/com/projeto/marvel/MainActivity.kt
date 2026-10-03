@@ -16,6 +16,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import java.time.LocalDate
 import android.view.View
+import android.view.animation.OvershootInterpolator
+import com.projeto.marvel.ui.Era
+import com.projeto.marvel.ui.era
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -80,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             val picking = args?.getString("teamUrl") != null || args?.getBoolean("pickHero") == true
             val isTab = destination.id in tabs && !picking
             binding.bottomNav.visibility = if (isTab) View.VISIBLE else View.GONE
+            if (isTab) binding.bottomNav.findViewById<View>(destination.id)?.hop(era())
             if (isTab) binding.geekFab.show() else binding.geekFab.hide()
         }
         binding.geekFab.setOnClickListener { navController.navigate(R.id.chatFragment) }
@@ -91,6 +95,25 @@ class MainActivity : AppCompatActivity() {
             binding.root.removeCallbacks(showGeek)
             binding.root.postDelayed(showGeek, GEEK_RETURN_MILLIS)
         }
+    }
+
+    /** Item da barra que acabou de ser escolhido "pula" no movimento da época. */
+    private fun View.hop(era: Era) {
+        animate().cancel()
+        when (era) {
+            Era.RETRO -> {
+                rotation = -HOP_TILT
+                scaleX = HOP_SCALE
+                scaleY = HOP_SCALE
+            }
+            Era.NINETIES -> translationY = -HOP_LIFT * resources.displayMetrics.density
+            Era.MODERN -> {
+                scaleX = HOP_SCALE
+                scaleY = HOP_SCALE
+            }
+        }
+        animate().rotation(0f).scaleX(1f).scaleY(1f).translationY(0f).setStartDelay(0)
+            .setDuration(HOP_MILLIS).setInterpolator(OvershootInterpolator(HOP_TENSION))
     }
 
     private var geekWanted = true
@@ -118,3 +141,8 @@ class MainActivity : AppCompatActivity() {
 private const val LOADING_MIN_MILLIS = 1_400L
 private const val LOADING_MAX_MILLIS = 3_000L
 private const val GEEK_RETURN_MILLIS = 700L
+private const val HOP_TILT = 10f
+private const val HOP_SCALE = 1.18f
+private const val HOP_LIFT = 8f
+private const val HOP_MILLIS = 380L
+private const val HOP_TENSION = 2.5f

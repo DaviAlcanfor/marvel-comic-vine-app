@@ -151,15 +151,30 @@
             android:text="@string/home_hero_movies"
             android:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/heroMoviesList"
-            style="@style/Widget.Marvel.Carousel"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_sm"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/heroMoviesList"
+                style="@style/Widget.Marvel.Carousel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <!-- Onomatopeia no espaço que sobra ao lado de um filme só (POW! / SNIKT!, HomeEra.kt). -->
+            <TextView
+                android:id="@+id/heroMoviesSfx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/space_xl"
+                android:importantForAccessibility="no"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <!-- Missões diárias e semanais: pagam pacotes, que se abrem no Álbum. -->
         <TextView

@@ -3,6 +3,9 @@ package com.projeto.marvel.ui
 import android.animation.ObjectAnimator
 import android.animation.TimeInterpolator
 import android.view.View
+import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
+import androidx.core.view.children
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
@@ -59,17 +62,51 @@ fun View.fadeVisible(visible: Boolean) {
     }
 }
 
-/** Views sobem e aparecem uma depois da outra, na ordem da lista. */
+/**
+ * Views entram uma depois da outra, na ordem da lista, no movimento da época ([Era]):
+ * - Retrô: o quadro "estoura" no lugar (cresce passando do ponto, com um leve giro), como página impressa;
+ * - Anos 90: entra deslizando de lado com tranco;
+ * - Moderno: sobe suave com fade.
+ */
 fun staggerIn(views: List<View>) {
-    views.forEachIndexed { index, view ->
-        view.alpha = 0f
-        view.translationY = view.resources.getDimension(R.dimen.space_md)
-        view.animate().alpha(1f).translationY(0f)
-            .setStartDelay(index * STAGGER_MILLIS)
-            .setDuration(ENTER_MILLIS)
-            .setInterpolator(smooth)
+    val era = views.firstOrNull()?.context?.era() ?: return
+    views.forEachIndexed { index, view -> view.enterAs(era, index * STAGGER_MILLIS) }
+}
+
+/** Filhos visíveis do container entram em sequência (abas: Início, Jogos, Perfil…). */
+fun ViewGroup.eraEnter() = staggerIn(children.filter { it.visibility == View.VISIBLE }.toList())
+
+private fun View.enterAs(era: Era, delay: Long) {
+    val rest = rotation
+    alpha = 0f
+    when (era) {
+        Era.RETRO -> {
+            scaleX = POP_FROM
+            scaleY = POP_FROM
+            rotation = rest + if (delay / STAGGER_MILLIS % 2 == 0L) POP_TILT else -POP_TILT
+            animate().alpha(1f).scaleX(1f).scaleY(1f).rotation(rest)
+                .setStartDelay(delay).setDuration(POP_MILLIS).setInterpolator(OvershootInterpolator(POP_TENSION))
+        }
+        Era.NINETIES -> {
+            translationX = -resources.getDimension(R.dimen.space_xl) * SLIDE_FACTOR
+            animate().alpha(1f).translationX(0f)
+                .setStartDelay(delay).setDuration(SLIDE_MILLIS).setInterpolator(OvershootInterpolator(SLIDE_TENSION))
+        }
+        Era.MODERN -> {
+            translationY = resources.getDimension(R.dimen.space_md)
+            animate().alpha(1f).translationY(0f)
+                .setStartDelay(delay).setDuration(ENTER_MILLIS).setInterpolator(smooth)
+        }
     }
 }
+
+private const val POP_FROM = 0.86f
+private const val POP_TILT = 2.5f
+private const val POP_MILLIS = 360L
+private const val POP_TENSION = 2.2f
+private const val SLIDE_FACTOR = 2
+private const val SLIDE_MILLIS = 320L
+private const val SLIDE_TENSION = 1.1f
 
 /** Treme na horizontal: erro (login) ou dano (batalha, que passa o interpolador em degraus). */
 fun View.shake(startDelay: Long = 0, interpolator: TimeInterpolator = smooth) {

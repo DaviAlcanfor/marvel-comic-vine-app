@@ -42,15 +42,20 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Bloco do pacote no cabeçalho do Álbum (fundo e cor do texto por época, em código). -->
     <style name="Widget.Marvel.PackTile" parent="">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">@dimen/pack_tile_height</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:clipChildren">false</item>
+        <item name="android:layout_marginHorizontal">@dimen/space_xs</item>
+        <item name="android:gravity">center</item>
+        <!-- Letreiro do bloco: Bangers (Retrô), Bungee (Anos 90), Bebas (Moderno), como no canvas. -->
+        <item name="android:fontFamily">?attr/eraSfxFont</item>
+        <item name="fontFamily">?attr/eraSfxFont</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingMultiplier">0.9</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
-        <item name="android:paddingVertical">@dimen/space_xs</item>
     </style>
 
     <style name="Widget.Marvel.PackCount" parent="">
@@ -120,13 +125,13 @@
     <style name="Widget.Marvel.ScreenTitle" parent="">
         <item name="android:fontFamily">?attr/eraTitleFont</item>
         <item name="fontFamily">?attr/eraTitleFont</item>
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">40sp</item>
         <item name="android:letterSpacing">0.02</item>
         <item name="android:textColor">?attr/eraTitleColor</item>
         <!-- O letreiro dos Anos 90 (Bungee) é bem mais largo: encolhe até caber numa linha. -->
         <item name="android:autoSizeTextType">uniform</item>
         <item name="android:autoSizeMinTextSize">18sp</item>
-        <item name="android:autoSizeMaxTextSize">32sp</item>
+        <item name="android:autoSizeMaxTextSize">40sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <!-- Letreiro de capa: sombra dura na cor da época (raio ~0 = sem desfoque). -->
@@ -238,7 +243,8 @@
         <item name="android:textColor">@color/filter_chip_text</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
-        <item name="checkedIconTint">?attr/eraChipCheckedText</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <!-- Forma do chip por época: reto (Retrô), canto cortado (Anos 90), pílula (Moderno). -->
@@ -368,6 +374,9 @@
         <item name="itemIconTint">@color/bottom_nav_item</item>
         <item name="itemTextColor">@color/bottom_nav_item</item>
         <item name="itemActiveIndicatorStyle">@style/Widget.Marvel.BottomNav.ActiveIndicator</item>
+        <!-- Retrô: o item ativo inteiro (ícone + nome) numa plaquinha amarela de nanquim. -->
+        <item name="itemBackground">@drawable/bg_nav_item</item>
+        <item name="itemRippleColor">@android:color/transparent</item>
     </style>
 
     <style name="TextAppearance.Marvel.NavActive" parent="TextAppearance.Material3.LabelMedium">
@@ -414,12 +423,7 @@
 
     <!-- Retrô: plaquinha amarela reta atrás do item ativo; nas outras épocas, transparente. -->
     <style name="Widget.Marvel.BottomNav.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">?attr/eraNavIndicator</item>
-        <item name="shapeAppearance">@style/ShapeAppearance.Marvel.NavIndicator</item>
-    </style>
-
-    <style name="ShapeAppearance.Marvel.NavIndicator" parent="">
-        <item name="cornerSize">0dp</item>
+        <item name="android:color">@android:color/transparent</item>
     </style>
 
     <!-- Tema HQ ================================================================= -->
@@ -455,9 +459,9 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:rotation">-2</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:fontFamily">?attr/eraDisplayFont</item>
-        <item name="fontFamily">?attr/eraDisplayFont</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">?attr/eraCaptionFont</item>
+        <item name="fontFamily">?attr/eraCaptionFont</item>
+        <item name="android:textSize">?attr/eraCaptionSize</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:textColor">?attr/eraCaptionText</item>
     </style>

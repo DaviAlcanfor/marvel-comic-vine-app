@@ -50,6 +50,10 @@
         <item name="eraRadiusSmall">@dimen/era_radius_small</item>
         <item name="eraStyle">@integer/era_style</item>
         <item name="eraCaptionText">@color/era_caption_text</item>
+        <item name="eraCaptionFont">@font/era_caption</item>
+        <item name="eraCaptionSize">@dimen/era_caption_size</item>
+        <item name="eraHalftoneAlt">@color/era_halftone_alt</item>
+        <item name="eraPattern">@android:color/transparent</item>
         <item name="eraNavActive">@color/era_nav_active</item>
         <item name="eraNavInactive">@color/era_nav_inactive</item>
         <item name="eraNavIndicator">@color/era_nav_indicator</item>
@@ -76,7 +80,7 @@
         <item name="eraOverlay">@color/nineties_overlay</item>
         <item name="eraScrim">@color/nineties_background</item>
         <item name="eraSpeedLines">@color/nineties_speed_lines</item>
-        <item name="eraHalftone">@color/nineties_halftone</item>
+        <item name="eraHalftone">@android:color/transparent</item>
         <item name="eraScreen">@drawable/bg_nineties</item>
         <item name="eraTitleFont">@font/bungee</item>
         <item name="eraTitleColor">@color/accent</item>
@@ -90,6 +94,10 @@
         <item name="eraRadiusSmall">0dp</item>
         <item name="eraStyle">1</item>
         <item name="eraCaptionText">@color/white</item>
+        <item name="eraCaptionFont">@font/bungee</item>
+        <item name="eraCaptionSize">13sp</item>
+        <item name="eraHalftoneAlt">@android:color/transparent</item>
+        <item name="eraPattern">@drawable/bg_streaks</item>
         <item name="eraNavActive">@color/logo_yellow</item>
         <item name="eraNavInactive">@color/nineties_outline</item>
         <item name="eraNavIndicator">@android:color/transparent</item>

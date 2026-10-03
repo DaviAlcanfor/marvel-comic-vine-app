@@ -27,6 +27,10 @@
     <!-- 0 = Retrô, 1 = Anos 90, 2 = Moderno (ver Era em ui/Era.kt). -->
     <attr name="eraStyle" format="integer" />
     <attr name="eraCaptionText" format="color" />
+    <attr name="eraCaptionFont" format="reference" />
+    <attr name="eraCaptionSize" format="dimension" />
+    <attr name="eraHalftoneAlt" format="color" />
+    <attr name="eraPattern" format="reference" />
     <attr name="eraNavActive" format="color" />
     <attr name="eraNavInactive" format="color" />
     <attr name="eraNavIndicator" format="color" />
@@ -35,6 +39,10 @@
     <attr name="eraChipChecked" format="color" />
     <attr name="eraChipText" format="color" />
     <attr name="eraChipCheckedText" format="color" />
+    <declare-styleable name="StreaksDrawable">
+        <attr name="streakGap" format="dimension" />
+        <attr name="streakColor" format="color" />
+    </declare-styleable>
     <declare-styleable name="EraPanelDrawable">
         <attr name="panelKind" format="enum">
             <enum name="panel" value="0" />
@@ -43,6 +51,7 @@
             <enum name="caption" value="3" />
             <enum name="input" value="4" />
             <enum name="nav" value="5" />
+            <enum name="navItem" value="6" />
         </attr>
         <attr name="panelFill" format="color" />
     </declare-styleable>

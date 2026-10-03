@@ -37,6 +37,7 @@ import com.projeto.marvel.ui.info.InfoDetailFragment
 import java.text.NumberFormat
 import java.util.Locale
 import kotlinx.coroutines.launch
+import com.projeto.marvel.ui.eraEnter
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -85,6 +86,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.shelf.adapter = adapter
         binding.moviesShelf.adapter = moviesAdapter
         binding.achievements.adapter = achievementsAdapter
+        binding.applyEra()
+        (binding.root.getChildAt(0) as ViewGroup).eraEnter()
         binding.addButton.setOnClickListener { findNavController().navigate(R.id.action_profile_to_comic_search) }
         binding.heroCard.setOnClickListener {
             findNavController().navigate(

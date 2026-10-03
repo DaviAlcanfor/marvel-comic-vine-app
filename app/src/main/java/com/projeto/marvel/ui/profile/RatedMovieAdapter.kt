@@ -10,6 +10,7 @@ import coil.load
 import com.projeto.marvel.R
 import com.projeto.marvel.data.RatedMovie
 import com.projeto.marvel.databinding.ItemComicBinding
+import com.projeto.marvel.ui.comics.applyEra
 import com.projeto.marvel.ui.comics.stars
 
 /** Estante de filmes do Perfil: pôster, nome e a sua avaliação (mesmo card das HQs). */
@@ -19,7 +20,7 @@ class RatedMovieAdapter(
 ) : ListAdapter<RatedMovie, RatedMovieAdapter.ViewHolder>(Diff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemComicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemComicBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply { applyEra() }
         binding.root.updateLayoutParams { width = cardWidth }
         return ViewHolder(binding)
     }

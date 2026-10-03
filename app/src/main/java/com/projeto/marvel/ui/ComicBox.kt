@@ -52,7 +52,7 @@ fun TextView.comicBox(style: BoxStyle, @ColorInt color: Int, tailOnLeft: Boolean
         BoxStyle.CAPTION -> setPadding(base, base / 2, base + shadow.toInt(), base)
         BoxStyle.SPEECH -> {
             val tail = (TAIL_HEIGHT_DP * density).toInt()
-            setPadding(base + oval, base / 2 + oval / 2, base + oval + shadow.toInt(), base + tail + oval / 2)
+            setPadding(base + oval, base / 2 + oval / 2, base + oval, base + tail + oval / 2)
         }
         // Retângulo do texto inscrito na elipse: ~30% de folga de cada lado.
         BoxStyle.BURST -> setPadding(base * BURST_PAD_X, base * 2, base * BURST_PAD_X, base * 2)
@@ -79,7 +79,8 @@ class SpeechBubbleDrawable(context: Context, @ColorInt fillColor: Int, private v
 
     private val density = context.resources.displayMetrics.density
     private val era = context.era()
-    private val shadowSize = context.eraDimen(R.attr.eraShadow)
+    // Balão de fala nunca tem sombra dura (no canvas aprovado ele é só traço e papel).
+    private val shadowSize = 0f
 
     private val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = fillColor }
     private val shadow = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = ContextCompat.getColor(context, R.color.ink) }

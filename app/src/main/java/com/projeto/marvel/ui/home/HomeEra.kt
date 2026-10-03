@@ -45,7 +45,9 @@ fun FragmentHomeBinding.applyEra() {
     fun color(res: Int) = ContextCompat.getColor(context, res)
     styleAvatar(era)
     styleHeroCard(era)
+    styleSfx(era)
     sections().forEachIndexed { index, (view, tilt) ->
+        view.sectionType(era)
         when (era) {
             Era.RETRO -> view.comicBox(BoxStyle.SPEECH, color(R.color.white), tailOnLeft = index % 2 == 0)
             Era.NINETIES -> {
@@ -57,9 +59,17 @@ fun FragmentHomeBinding.applyEra() {
         view.rotation = if (era == Era.MODERN) 0f else tilt
     }
     when (era) {
-        Era.RETRO -> favoriteLine.comicBox(BoxStyle.CAPTION, color(R.color.accent))
+        Era.RETRO -> {
+            favoriteLine.comicBox(BoxStyle.CAPTION, color(R.color.caption_yellow))
+            favoriteLine.typeface = ResourcesCompat.getFont(context, R.font.comic_neue_bold_italic)
+            favoriteLine.textSize = RETRO_SMALL_SP
+            favoriteLine.isAllCaps = true
+        }
         Era.NINETIES -> {
             favoriteLine.isAllCaps = true
+            favoriteLine.typeface = ResourcesCompat.getFont(context, R.font.barlow_condensed_bold)
+            favoriteLine.textSize = NINETIES_LINE_SP
+            favoriteLine.letterSpacing = NINETIES_SPACING
             favoriteLine.setTextColor(color(R.color.nineties_text_secondary))
         }
         Era.MODERN -> Unit
@@ -104,6 +114,7 @@ private fun FragmentHomeBinding.styleHeroCard(era: Era) {
             heroFade.visibility = View.GONE
             heroName.comicBox(BoxStyle.BURST, color(R.color.logo_yellow))
             heroName.typeface = ResourcesCompat.getFont(context, R.font.bangers)
+            heroName.textSize = RETRO_NAME_SP
             heroName.updateLayoutParams<LinearLayout.LayoutParams> {
                 width = LinearLayout.LayoutParams.WRAP_CONTENT
                 gravity = Gravity.END
@@ -112,6 +123,7 @@ private fun FragmentHomeBinding.styleHeroCard(era: Era) {
             heroDeck.comicBox(BoxStyle.CAPTION, color(R.color.paper))
             heroDeck.isAllCaps = true
             heroDeck.textSize = RETRO_DECK_SP
+            heroDeck.typeface = ResourcesCompat.getFont(context, R.font.comic_neue_bold)
         }
         Era.NINETIES -> {
             heroCaption.comicBox(BoxStyle.CAPTION, color(R.color.nineties_magenta))
@@ -140,6 +152,43 @@ private fun FragmentHomeBinding.styleHeroCard(era: Era) {
     }
 }
 
+/** Onomatopeia decorativa ao lado do filme: POW! azul na explosão (Retrô) ou SNIKT! em letra 3D (Anos 90). */
+private fun FragmentHomeBinding.styleSfx(era: Era) {
+    val context = root.context
+    fun color(res: Int) = ContextCompat.getColor(context, res)
+    when (era) {
+        Era.RETRO -> {
+            heroMoviesSfx.setText(R.string.home_sfx_retro)
+            heroMoviesSfx.typeface = ResourcesCompat.getFont(context, R.font.bangers)
+            heroMoviesSfx.textSize = SFX_SP
+            heroMoviesSfx.comicBox(BoxStyle.BURST, color(R.color.sfx_blue))
+            heroMoviesSfx.rotation = -SFX_TILT
+        }
+        Era.NINETIES -> {
+            heroMoviesSfx.setText(R.string.home_sfx_nineties)
+            heroMoviesSfx.typeface = ResourcesCompat.getFont(context, R.font.bungee)
+            heroMoviesSfx.textSize = SFX_SP
+            heroMoviesSfx.setTextColor(color(R.color.logo_yellow))
+            val depth = NINETIES_SHADOW_DP * context.resources.displayMetrics.density
+            heroMoviesSfx.setShadowLayer(HARD_SHADOW_RADIUS, depth, depth, color(R.color.nineties_extrusion))
+            heroMoviesSfx.rotation = -SFX_TILT
+        }
+        Era.MODERN -> Unit
+    }
+}
+
+/** Letra dos títulos de seção: de balão (Retrô), condensada itálica (Anos 90), letreiro (Moderno). */
+private fun TextView.sectionType(era: Era) {
+    val (font, size) = when (era) {
+        Era.RETRO -> R.font.comic_neue_bold to RETRO_SECTION_SP
+        Era.NINETIES -> R.font.barlow_condensed_bold_italic to NINETIES_SECTION_SP
+        Era.MODERN -> R.font.bebas_neue to MODERN_SECTION_SP
+    }
+    typeface = ResourcesCompat.getFont(context, font)
+    textSize = size
+    isAllCaps = true
+}
+
 /** Moderno: título de seção sem caixa, em letreiro, com um traço vermelho na frente. */
 private fun TextView.ruleTitle() {
     background = null
@@ -151,6 +200,15 @@ private fun TextView.ruleTitle() {
 
 private const val RETRO_NAME_TILT = 8f
 private const val RETRO_DECK_SP = 12f
+private const val RETRO_NAME_SP = 26f
+private const val SFX_SP = 30f
+private const val SFX_TILT = 9f
+private const val RETRO_SMALL_SP = 13f
+private const val RETRO_SECTION_SP = 15f
+private const val NINETIES_SECTION_SP = 17f
+private const val MODERN_SECTION_SP = 22f
+private const val NINETIES_LINE_SP = 15f
+private const val NINETIES_SPACING = 0.06f
 private const val DECK_LINES = 3
 
 // Raio ~0: sombra dura, sem desfoque (como a extrusão do letreiro).
