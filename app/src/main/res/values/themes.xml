@@ -24,13 +24,54 @@
         <!-- Botões: maiúsculas e semibold, como "ENTRAR" / "CRIAR CONTA" no Design System. -->
         <item name="textAppearanceLabelLarge">@style/TextAppearance.Marvel.Button</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Marvel.Dialog</item>
+        <!-- Tema de época: Retrô (claro) e Moderno (escuro) vêm de values/ e values-night/. -->
+        <item name="eraBackground">@color/era_background</item>
+        <item name="eraSurface">@color/era_surface</item>
+        <item name="eraSurfaceVariant">@color/era_surface_variant</item>
+        <item name="eraBorder">@color/era_border</item>
+        <item name="eraTextSecondary">@color/era_text_secondary</item>
+        <item name="eraPrimary">@color/era_primary</item>
+        <item name="eraPrimaryVariant">@color/era_primary_variant</item>
+        <item name="eraOverlay">@color/era_overlay</item>
+        <item name="eraScrim">@color/era_scrim</item>
+        <item name="eraSpeedLines">@color/era_speed_lines</item>
+        <item name="eraHalftone">@color/era_halftone</item>
+        <item name="eraScreen">@color/era_background</item>
+        <item name="eraTitleFont">@font/era_title</item>
+        <item name="eraTitleColor">@color/text_primary</item>
+        <item name="eraTitleShadow">@color/era_primary</item>
+    </style>
+
+    <!--
+      Anos 90 / 2000 (X-Men '92 e '97, Marvel Knights): aplicado por cima do tema escuro na
+      MainActivity. Roxo profundo com azul-petróleo, magenta no lugar do vermelho e letreiro
+      amarelo com "extrusão" azul.
+    -->
+    <style name="ThemeOverlay.Marvel.Nineties" parent="">
+        <item name="eraBackground">@color/nineties_background</item>
+        <item name="eraSurface">@color/nineties_surface</item>
+        <item name="eraSurfaceVariant">@color/nineties_surface_variant</item>
+        <item name="eraBorder">@color/nineties_border</item>
+        <item name="eraTextSecondary">@color/nineties_text_secondary</item>
+        <item name="eraPrimary">@color/nineties_primary</item>
+        <item name="eraPrimaryVariant">@color/nineties_primary_variant</item>
+        <item name="eraOverlay">@color/nineties_overlay</item>
+        <item name="eraScrim">@color/nineties_background</item>
+        <item name="eraSpeedLines">@color/nineties_speed_lines</item>
+        <item name="eraHalftone">@color/nineties_halftone</item>
+        <item name="eraScreen">@drawable/bg_nineties</item>
+        <item name="eraTitleFont">@font/bebas_neue</item>
+        <item name="eraTitleColor">@color/accent</item>
+        <item name="eraTitleShadow">@color/nineties_extrusion</item>
+        <item name="android:statusBarColor">@color/nineties_background</item>
+        <item name="android:navigationBarColor">@color/nineties_background</item>
     </style>
 
     <style name="Theme.Marvel" parent="Base.Theme.Marvel" />
 
     <!-- Splash: fundo escuro do app e o ícone; depois vira o tema normal (postSplashScreenTheme). -->
     <style name="Theme.Marvel.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/background</item>
+        <item name="windowSplashScreenBackground">@color/era_background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_blank</item>
         <item name="postSplashScreenTheme">@style/Theme.Marvel</item>
     </style>

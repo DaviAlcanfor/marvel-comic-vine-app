@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Token do tema de época: o valor vem do tema (era_text_secondary no Retrô/Moderno, nineties_text_secondary nos Anos 90). -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?attr/eraTextSecondary" />
+</selector>

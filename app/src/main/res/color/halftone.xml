@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Token do tema de época: o valor vem do tema (era_halftone no Retrô/Moderno, nineties_halftone nos Anos 90). -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?attr/eraHalftone" />
+</selector>

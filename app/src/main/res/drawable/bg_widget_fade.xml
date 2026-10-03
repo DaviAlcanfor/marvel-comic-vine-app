@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Igual ao bg_fade_to_background, mas com a cor fixa: o widget roda no launcher, fora do tema
+     do app, e não resolve os tokens de época (?attr). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="270"
+        android:endColor="@color/era_background"
+        android:startColor="@android:color/transparent" />
+</shape>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tema de época (ThemeEra): os tokens que mudam entre Retrô, Anos 90 e Moderno. -->
+<resources>
+    <attr name="eraBackground" format="color" />
+    <attr name="eraSurface" format="color" />
+    <attr name="eraSurfaceVariant" format="color" />
+    <attr name="eraBorder" format="color" />
+    <attr name="eraTextSecondary" format="color" />
+    <attr name="eraPrimary" format="color" />
+    <attr name="eraPrimaryVariant" format="color" />
+    <attr name="eraOverlay" format="color" />
+    <attr name="eraScrim" format="color" />
+    <attr name="eraSpeedLines" format="color" />
+    <attr name="eraHalftone" format="color" />
+    <attr name="eraScreen" format="reference" />
+    <attr name="eraTitleFont" format="reference" />
+    <attr name="eraTitleColor" format="color" />
+    <attr name="eraTitleShadow" format="color" />
+</resources>

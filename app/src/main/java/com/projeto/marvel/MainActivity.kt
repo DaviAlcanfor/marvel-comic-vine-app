@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.projeto.marvel.data.ComicVineRepository
+import com.projeto.marvel.data.ThemeStore
 import com.projeto.marvel.ui.home.heroOfTheDay
 import com.projeto.marvel.ui.finishComicLoading
 import com.projeto.marvel.ui.startComicLoading
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         // até os dados principais chegarem (entre [LOADING_MIN_MILLIS] e [LOADING_MAX_MILLIS]):
         // a Início e o Álbum já abrem prontos, sem esqueleto de carregamento.
         installSplashScreen()
+        if (ThemeStore(this).get().nineties) theme.applyStyle(R.style.ThemeOverlay_Marvel_Nineties, true)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -110,15 +110,15 @@
     </style>
 
     <style name="Widget.Marvel.ScreenTitle" parent="">
-        <item name="android:fontFamily">@font/bebas_neue</item>
-        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:fontFamily">?attr/eraTitleFont</item>
+        <item name="fontFamily">?attr/eraTitleFont</item>
         <item name="android:textSize">32sp</item>
         <item name="android:letterSpacing">0.02</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">?attr/eraTitleColor</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
-        <!-- Letreiro de capa: sombra dura vermelha (raio ~0 = sem desfoque). -->
-        <item name="android:shadowColor">@color/primary</item>
+        <!-- Letreiro de capa: sombra dura na cor da época (raio ~0 = sem desfoque). -->
+        <item name="android:shadowColor">?attr/eraTitleShadow</item>
         <item name="android:shadowDx">3</item>
         <item name="android:shadowDy">3</item>
         <item name="android:shadowRadius">0.01</item>

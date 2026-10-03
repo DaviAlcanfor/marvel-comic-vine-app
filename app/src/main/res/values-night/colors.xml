@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Tema escuro: só os tokens que mudam em relação a values/colors.xml (o claro). -->
 <resources>
-    <color name="background">#121223</color>
-    <color name="surface">#1A1A2E</color>
-    <color name="surface_variant">#22223A</color>
-    <color name="border">#33334D</color>
+    <color name="era_background">#121223</color>
+    <color name="era_surface">#1A1A2E</color>
+    <color name="era_surface_variant">#22223A</color>
+    <color name="era_border">#33334D</color>
     <color name="text_primary">#F5F5F7</color>
-    <color name="text_secondary">#A0A0B8</color>
+    <color name="era_text_secondary">#A0A0B8</color>
     <color name="primary_text">#FF4D55</color>
-    <color name="scrim">#0A0A14</color>
-    <color name="speed_lines">#14E6B800</color>
+    <color name="era_scrim">#0A0A14</color>
+    <color name="era_speed_lines">#14E6B800</color>
     <color name="move_strike">#FF4D55</color>
     <color name="move_blast">#E6B800</color>
     <color name="move_poison">#B97AD6</color>
@@ -21,6 +21,6 @@
     <color name="move_magic">#FF5CD6</color>
     <color name="move_drain">#2EC4B6</color>
     <color name="accent_text">#E6B800</color>
-    <color name="overlay">#F20B0B10</color>
-    <color name="halftone">#FFFFFF</color>
+    <color name="era_overlay">#F20B0B10</color>
+    <color name="era_halftone">#FFFFFF</color>
 </resources>

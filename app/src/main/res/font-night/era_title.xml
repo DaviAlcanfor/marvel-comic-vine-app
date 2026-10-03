@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fonte dos títulos de tela por época. Moderno (escuro): letreiro condensado e limpo. -->
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:font="@font/bebas_neue"
+        android:fontStyle="normal"
+        android:fontWeight="400" />
+</font-family>

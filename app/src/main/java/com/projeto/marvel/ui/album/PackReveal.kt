@@ -38,7 +38,7 @@ private const val WORD_POP_MILLIS = 240L
 private const val WORD_HOLD_MILLIS = 650L
 private const val WORD_START_SCALE = 0.2f
 private const val WORD_TILT = 8f
-private const val LINES_ALPHA = 90
+private const val LINES_ALPHA = 55
 private const val FADE_MILLIS = 250L
 
 /**

@@ -6,14 +6,14 @@
     <!-- Design tokens: docs/design-reference/DESIGN_TOKENS.md. Este arquivo é o tema claro ("papel de
          gibi"); os tokens que mudam no escuro estão em values-night/colors.xml. ink, paper, accent
          (fundos dourados), cartas e pacotes são iguais nos dois temas. -->
-    <color name="background">#FFF4DC</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="surface_variant">#F3E7C9</color>
-    <color name="border">#D9C9A3</color>
+    <color name="era_background">#FFF4DC</color>
+    <color name="era_surface">#FFFFFF</color>
+    <color name="era_surface_variant">#F3E7C9</color>
+    <color name="era_border">#D9C9A3</color>
     <color name="text_primary">#1A1523</color>
-    <color name="text_secondary">#5B546A</color>
-    <color name="primary">#C0101A</color>
-    <color name="primary_variant">#8C0C13</color>
+    <color name="era_text_secondary">#5B546A</color>
+    <color name="era_primary">#C0101A</color>
+    <color name="era_primary_variant">#8C0C13</color>
     <!-- Vermelho só para TEXTO sobre o fundo escuro: o primary dá 2,9:1 (reprova WCAG); este dá 5,7:1. -->
     <color name="primary_text">#B00E17</color>
     <color name="accent">#E6B800</color>
@@ -39,7 +39,7 @@
     <color name="pack_gold_mid">#FFE58A</color>
     <color name="pack_gold_end">#8A6206</color>
     <color name="team_green">#2E7D32</color>
-    <color name="scrim">#FFF4DC</color>
+    <color name="era_scrim">#FFF4DC</color>
     <!-- Tema HQ (não está nos SVGs): "nanquim" dos contornos e sombras duras; texto sobre dourado. -->
     <color name="ink">#000000</color>
     <!-- Papel das caixas de narração. -->
@@ -47,7 +47,7 @@
     <!-- Trilho das barras em cima do papel (resumo da luta). -->
     <color name="result_track">#33000000</color>
     <!-- Linhas de ação ao fundo da arena: dourado bem transparente para não brigar com o conteúdo. -->
-    <color name="speed_lines">#14000000</color>
+    <color name="era_speed_lines">#14000000</color>
     <!-- Um tom por tipo de golpe (ícone, contorno do botão, efeitos). Claros o bastante para
          passar 4,5:1 sobre surface, já que também colorem texto. -->
     <color name="move_strike">#C62828</color>
@@ -63,12 +63,25 @@
     <!-- Dourado como TEXTO: o accent (fundos, legendas) não dá leitura sobre o papel claro. -->
     <color name="accent_text">#8A6206</color>
     <!-- Fundo quase opaco de telas por cima de outras (VS, abertura de pacote). -->
-    <color name="overlay">#F2FFF4DC</color>
+    <color name="era_overlay">#F2FFF4DC</color>
     <!-- Pontos da retícula (tint do halftone_tile, que é branco). -->
-    <color name="halftone">#000000</color>
+    <color name="era_halftone">#000000</color>
     <!-- Estrelas e moldura simples por raridade (bronze, prata, ouro) e o ✦ da carta Divina. -->
     <color name="rarity_common">#C27A3E</color>
     <color name="rarity_rare">#A8B0BA</color>
     <color name="rarity_legendary">#E6B800</color>
     <color name="rarity_divine">#C77DFF</color>
+    <!-- Tema Anos 90 / 2000 (ThemeOverlay.Marvel.Nineties, por cima do escuro). -->
+    <color name="nineties_background">#1B1036</color>
+    <color name="nineties_background_end">#0B2A3A</color>
+    <color name="nineties_surface">#271A4D</color>
+    <color name="nineties_surface_variant">#33215F</color>
+    <color name="nineties_border">#5A3D8A</color>
+    <color name="nineties_text_secondary">#C3B6EC</color>
+    <color name="nineties_primary">#D81B60</color>
+    <color name="nineties_primary_variant">#9C1046</color>
+    <color name="nineties_overlay">#F21B1036</color>
+    <color name="nineties_speed_lines">#1A00E5FF</color>
+    <color name="nineties_halftone">#00E5FF</color>
+    <color name="nineties_extrusion">#1F5FD6</color>
 </resources>

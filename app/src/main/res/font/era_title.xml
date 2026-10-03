@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fonte dos títulos de tela por época. Retrô (claro): letreiro desenhado à mão, como as capas dos anos 60-80. -->
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:font="@font/bangers"
+        android:fontStyle="normal"
+        android:fontWeight="400" />
+</font-family>
