@@ -66,6 +66,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         val header = ViewAlbumHeaderBinding.inflate(layoutInflater, binding.grid, false)
         this.header = header
         binding.grid.adapter = ConcatAdapter(SingleViewAdapter(header.root), adapter)
+        header.bindFilters(layoutInflater, { viewModel.query.value }, viewModel::setQuery)
         binding.message.setOnClickListener { viewModel.load() }
         viewer = CardViewer(binding.viewerCard, binding.viewerFront, binding.viewerBack)
         binding.viewerClose.setOnClickListener { viewModel.closeViewer() }
@@ -92,6 +93,12 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.refresh()
                 launch { viewModel.viewer.collect(::renderViewer) }
+                launch {
+                    viewModel.query.collect { query ->
+                        val album = viewModel.state.value as? AlbumUiState.Success ?: return@collect
+                        this@AlbumFragment.header?.submit(adapter, album.stickers, query)
+                    }
+                }
                 viewModel.state.collect(::render)
             }
         }
@@ -117,7 +124,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             (tile.getChildAt(1) as TextView).text = getString(R.string.album_pack_count, getString(type.label()), count)
             if (count > 0) pack.gleam()
         }
-        adapter.submitList(state.stickers)
+        header.submit(adapter, state.stickers, viewModel.query.value)
         if (state.openId != shownOpenId && state.opened.isNotEmpty()) {
             shownOpenId = state.openId
             showOpening(binding, state)

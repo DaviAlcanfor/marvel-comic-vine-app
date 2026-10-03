@@ -169,7 +169,9 @@ Aplicadas via ferramenta, não de memória:
   serve o que tiver (até 7 dias). Ligado em `MarvelApp` (`ApiClient.init`).
 - Álbum: pacotes Básico (grátis por dia), Prata (vitória) e Ouro (fechar trilha / vencer 3×3),
   com pesos e garantia em `PackType` (`data/Stickers.kt`); número da figurinha = posição fixa no
-  álbum (lendárias primeiro, depois por nome).
+  álbum (lendárias primeiro, depois por nome). Busca, atalho de filtro (raridade, 2×/3×, pode virar
+  Divina…) e ordem da grade são puros em `ui/album/AlbumFilter.kt` (`AlbumFilterTest`); o número não
+  muda ao filtrar.
 - Antes de cada luta, tela de VS com os atributos lado a lado (`ui/battle/BattleVersus.kt`, reusa
   as linhas do Comparar em `ui/compare/CompareRow.kt`).
 - Herói do dia: `heroOfTheDay()` em `ui/home/Debut.kt` é a fonte única (Início, widget, notificação).

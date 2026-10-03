@@ -89,6 +89,10 @@ class AlbumViewModel @JvmOverloads constructor(
     private val _state = MutableStateFlow<AlbumUiState>(AlbumUiState.Loading)
     val state: StateFlow<AlbumUiState> = _state.asStateFlow()
 
+    // Filtro, busca e ordem da grade: fora do Success para não se perder a cada pacote/refresh.
+    private val _query = MutableStateFlow(AlbumQuery())
+    val query: StateFlow<AlbumQuery> = _query.asStateFlow()
+
     private var pool: List<CharacterSummary> = emptyList()
 
     init { load() }
@@ -143,6 +147,10 @@ class AlbumViewModel @JvmOverloads constructor(
 
     fun closeViewer() {
         _viewer.value = null
+    }
+
+    fun setQuery(query: AlbumQuery) {
+        _query.value = query
     }
 
     /** +1/-1 ponto em [stat], sem passar dos pontos do nível nem ficar negativo. */
