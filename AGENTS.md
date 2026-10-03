@@ -172,6 +172,8 @@ Aplicadas via ferramenta, não de memória:
   álbum (lendárias primeiro, depois por nome). Busca, atalho de filtro (raridade, 2×/3×, pode virar
   Divina…) e ordem da grade são puros em `ui/album/AlbumFilter.kt` (`AlbumFilterTest`); o número não
   muda ao filtrar.
+  Abertura do pacote: `PackMotion` (girar/rasgar) e depois `PackReveal` (RIIIP!, cartas em leque,
+  suspense por raridade, NOVA!/×N; um toque pula).
   Troca: `TRADE_COST` repetidas (nunca a última cópia, de quem tem mais: `tradePicks`) viram 1 Prata.
 - Antes de cada luta, tela de VS com os atributos lado a lado (`ui/battle/BattleVersus.kt`, reusa
   as linhas do Comparar em `ui/compare/CompareRow.kt`).

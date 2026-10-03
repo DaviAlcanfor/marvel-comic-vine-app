@@ -207,6 +207,11 @@
     <string name="album_trade_message">Saem %1$d cópias das figurinhas que você tem mais (nunca a última). O nível delas na Batalha cai junto.</string>
     <string name="album_trade_confirm">Trocar</string>
     <string name="album_trade_cancel">Agora não</string>
+    <string name="pack_word_tear">RIIIP!</string>
+    <string name="pack_word_legendary">LENDÁRIA!</string>
+    <string name="pack_word_divine">DIVINA!</string>
+    <string name="album_new">NOVA!</string>
+    <string name="album_skip_hint">Toque para ver todas</string>
     <string name="album_search_hint">Buscar figurinha pelo nome</string>
     <string name="album_filter_all">Todas</string>
     <string name="album_filter_owned">Tenho</string>

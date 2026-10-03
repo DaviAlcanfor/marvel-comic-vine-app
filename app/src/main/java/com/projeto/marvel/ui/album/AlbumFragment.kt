@@ -25,7 +25,6 @@ import com.projeto.marvel.data.Rarity
 import com.projeto.marvel.data.TRADE_COST
 import com.projeto.marvel.data.levelFor
 import com.projeto.marvel.databinding.FragmentAlbumBinding
-import com.projeto.marvel.databinding.ItemTradingCardBinding
 import com.projeto.marvel.databinding.ViewAlbumHeaderBinding
 import com.projeto.marvel.databinding.ViewPackBinding
 import com.projeto.marvel.ui.comicDialog
@@ -45,7 +44,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     private var shownSticker: Sticker? = null
     private var motion: PackMotion? = null
     private var viewer: CardViewer? = null
-    private val shownCards = mutableListOf<ItemTradingCardBinding>()
+    private var reveal: PackReveal? = null
 
     // Pacote já mostrado (a abertura não repete ao voltar para a tela ou girar).
     private var shownOpenId = 0
@@ -80,11 +79,15 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
                 motion?.tilt(pitch, roll)
                 binding.openedCards.rotationX = -pitch * CARDS_TILT
                 binding.openedCards.rotationY = roll * CARDS_TILT
-                shownCards.forEach { it.tilt(pitch, roll) }
+                reveal?.cards?.forEach { it.tilt(pitch, roll) }
                 if (binding.viewer.isVisible) viewer?.tilt(pitch, roll)
             }
         )
+        reveal = PackReveal(binding) { sticker -> viewModel.openViewer(sticker) }
+        binding.opening.setOnClickListener { reveal?.skip() }
         binding.keepButton.setOnClickListener {
+            reveal?.stop()
+            binding.openingAura.alpha = 0f
             binding.opening.fadeOut()
             geek(true)
         }
@@ -152,6 +155,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         pack.style(type, large = true, art = state.packArt[type])
         pack.root.isVisible = true
         binding.openingTitle.setText(type.label())
+        binding.openingHint.setText(R.string.album_how_to_open)
         binding.openingHint.isVisible = true
         binding.openedCards.isVisible = false
         binding.keepButton.isVisible = false
@@ -164,32 +168,9 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             pack.tear {
                 pack.root.isVisible = false
                 binding.flash.flash()
-                revealCards(binding, state.opened)
+                reveal?.start(state.opened, layoutInflater)
             }
         }.also { it.start() }
-    }
-
-    /** As 4 figurinhas (2×2) entram de costas na cor da raridade e viram uma depois da outra. */
-    private fun revealCards(binding: FragmentAlbumBinding, cards: List<Sticker>) {
-        binding.openedCards.isVisible = true
-        listOf(binding.cardsTop, binding.cardsBottom).forEach { it.removeAllViews() }
-        shownCards.clear()
-        cards.forEachIndexed { index, sticker ->
-            val row = if (index < cards.size / 2) binding.cardsTop else binding.cardsBottom
-            val card = ItemTradingCardBinding.inflate(layoutInflater, row, false)
-            row.addView(card.root, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
-            shownCards += card
-            card.bind(sticker, revealed = false)
-            card.root.flipIn(index * STAGGER_MILLIS) {
-                card.bind(sticker, revealed = true, large = true)
-                if (sticker.rarity == Rarity.LEGENDARY) card.root.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
-                // Já virada, a carta abre grande em 3D como as do álbum.
-                card.root.setOnClickListener { viewModel.openViewer(sticker) }
-            }
-        }
-        binding.keepButton.visibility = View.VISIBLE
-        binding.keepButton.alpha = 0f
-        binding.keepButton.animate().alpha(1f).setStartDelay(cards.size * STAGGER_MILLIS)
     }
 
     /** Figurinha tocada na grade: grande, em 3D, com o verso de informações. */
@@ -262,14 +243,14 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         motion = null
         viewer = null
         shownSticker = null
-        shownCards.clear()
+        reveal?.stop()
+        reveal = null
         header = null
         binding = null
     }
 
     private companion object {
         const val DISABLED_ALPHA = 0.45f
-        const val STAGGER_MILLIS = 450L
         const val CARDS_TILT = 1.2f
         const val POP_SCALE = 0.6f
         const val POP_MILLIS = 350L
@@ -283,23 +264,9 @@ private fun ViewAlbumHeaderBinding.tiles(): List<Triple<PackType, LinearLayout, 
     Triple(PackType.GOLD, tileGold, packGold)
 )
 
-private const val QUARTER_TURN = 90f
-private const val CAMERA_DISTANCE = 8_000f
-private const val FLIP_HALF_MILLIS = 200L
 private const val FLASH_MILLIS = 360L
 private const val FLASH_ALPHA = 0.8f
 private const val FADE_MILLIS = 200L
-
-/** Meia volta até ficar de lado, [onEdge] troca a face, e completa a volta. */
-private fun View.flipIn(delay: Long, onEdge: () -> Unit) {
-    cameraDistance = CAMERA_DISTANCE * resources.displayMetrics.density
-    rotationY = 0f
-    animate().rotationY(QUARTER_TURN).setStartDelay(delay).setDuration(FLIP_HALF_MILLIS).withEndAction {
-        onEdge()
-        rotationY = -QUARTER_TURN
-        animate().rotationY(0f).setStartDelay(0).setDuration(FLIP_HALF_MILLIS)
-    }
-}
 
 /** Clarão branco rápido quando o pacote abre. */
 private fun View.flash() {

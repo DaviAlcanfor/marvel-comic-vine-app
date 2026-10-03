@@ -60,6 +60,21 @@
         android:focusable="true"
         android:visibility="gone">
 
+        <!-- Linhas de ação atrás das cartas e aura quando sai lendária/Divina. -->
+        <View
+            android:id="@+id/openingLines"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:importantForAccessibility="no" />
+
+        <com.projeto.marvel.ui.album.AuraView
+            android:id="@+id/openingAura"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:importantForAccessibility="no" />
+
         <View
             android:id="@+id/flash"
             android:layout_width="match_parent"
@@ -113,6 +128,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
         </LinearLayout>
+
+        <!-- Onomatopeia da abertura (RIIIP!, LENDÁRIA!). -->
+        <TextView
+            android:id="@+id/openingWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/bangers"
+            android:importantForAccessibility="no"
+            android:padding="@dimen/space_xl"
+            android:textSize="34sp"
+            android:visibility="gone" />
 
         <!-- Fora do grupo das cartas: elas inclinam com o celular, o botão fica parado. -->
         <androidx.appcompat.widget.AppCompatButton
