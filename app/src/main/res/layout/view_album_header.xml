@@ -73,6 +73,13 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- Troca de repetidas por um Prata (desativado sem repetidas suficientes). -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/tradeButton"
+        style="@style/Widget.Marvel.ComicButton"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/space_md" />
+
     <!-- Busca por nome + atalho de filtro + ordem: a grade abaixo mostra só o que passar. -->
     <EditText
         android:id="@+id/search"

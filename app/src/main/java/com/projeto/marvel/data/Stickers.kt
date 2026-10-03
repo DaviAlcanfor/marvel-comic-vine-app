@@ -66,6 +66,28 @@ private fun weighted(rarities: List<Rarity>, type: PackType, random: Random): Ra
 
 const val FREE_PACKS_PER_DAY = 2
 
+/** Repetidas que viram 1 pacote Prata na troca. */
+const val TRADE_COST = 5
+
+/** Repetidas que dá para trocar: tudo acima da 1ª cópia de cada uma. */
+fun tradableExtras(counts: Map<Int, Int>) = counts.values.sumOf { (it - 1).coerceAtLeast(0) }
+
+/**
+ * Quantas tirar de cada id para pagar [cost] repetidas, sempre de quem tem mais (nunca a última
+ * cópia). Null se não houver repetidas suficientes.
+ */
+fun tradePicks(counts: Map<Int, Int>, cost: Int = TRADE_COST): Map<Int, Int>? {
+    if (tradableExtras(counts) < cost) return null
+    val left = counts.toMutableMap()
+    val taken = mutableMapOf<Int, Int>()
+    repeat(cost) {
+        val id = left.maxBy { it.value }.key
+        left[id] = left.getValue(id) - 1
+        taken[id] = (taken[id] ?: 0) + 1
+    }
+    return taken
+}
+
 /**
  * Básicos grátis que ainda dá para abrir hoje: [FREE_PACKS_PER_DAY] por dia; [usedOn] é o dia em
  * que [used] foram abertos (outro dia = contador zerado).
@@ -137,4 +159,12 @@ class StickerStore(context: Context) {
         const val NEVER = Long.MIN_VALUE
         val MAP_TYPE = object : TypeToken<Map<Int, Int>>() {}.type
     }
+}
+
+/** Troca [TRADE_COST] repetidas por um Prata. False se não havia repetidas suficientes. */
+fun StickerStore.trade(): Boolean {
+    val picks = tradePicks(counts()) ?: return false
+    picks.forEach { (id, amount) -> remove(id, amount) }
+    addPack(PackType.SILVER)
+    return true
 }

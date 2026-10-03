@@ -16,6 +16,8 @@ import com.projeto.marvel.data.goldenChance
 import com.projeto.marvel.data.levelFor
 import com.projeto.marvel.data.pointsFor
 import com.projeto.marvel.data.toFighter
+import com.projeto.marvel.data.trade
+import com.projeto.marvel.data.tradableExtras
 import com.projeto.marvel.data.upgraded
 import com.projeto.marvel.data.Rarity
 import com.projeto.marvel.data.StickerStore
@@ -66,7 +68,9 @@ sealed interface AlbumUiState {
         val packArt: Map<PackType, String?> = emptyMap(),
         val opened: List<Sticker> = emptyList(),
         val openedType: PackType = PackType.BASIC,
-        val openId: Int = 0
+        val openId: Int = 0,
+        /** Repetidas que dá para trocar por pacote (ver `tradePicks`). */
+        val tradable: Int = 0
     ) : AlbumUiState {
         val owned get() = stickers.count { it.count > 0 }
     }
@@ -149,6 +153,11 @@ class AlbumViewModel @JvmOverloads constructor(
         _viewer.value = null
     }
 
+    /** [TRADE_COST] repetidas viram um Prata (o nível de quem perdeu cópia cai junto). */
+    fun trade() {
+        if (store.trade()) refresh()
+    }
+
     fun setQuery(query: AlbumQuery) {
         _query.value = query
     }
@@ -188,7 +197,7 @@ class AlbumViewModel @JvmOverloads constructor(
         val art = PackType.entries.associateWith { type ->
             stickers.firstOrNull { it.rarity == type.guaranteed }?.character?.image?.mediumUrl
         }
-        return AlbumUiState.Success(stickers, store.packs(LocalDate.now()), art)
+        return AlbumUiState.Success(stickers, store.packs(LocalDate.now()), art, tradable = tradableExtras(counts))
     }
 }
 

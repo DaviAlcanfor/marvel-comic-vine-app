@@ -63,4 +63,12 @@ class StickerRulesTest {
         assertEquals(0, freePacksLeft(today, 2, today))
         assertEquals(2, freePacksLeft(today.minusDays(1), 2, today))
     }
+
+    @Test
+    fun `troca tira de quem tem mais e nunca a ultima copia`() {
+        val counts = mapOf(1 to 4, 2 to 3, 3 to 1)
+        assertEquals(5, tradableExtras(counts))
+        assertEquals(mapOf(1 to 3, 2 to 2), tradePicks(counts))
+        assertEquals(null, tradePicks(mapOf(1 to 5, 2 to 1)))
+    }
 }

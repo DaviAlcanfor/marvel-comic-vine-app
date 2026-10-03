@@ -22,11 +22,13 @@ import com.projeto.marvel.MainActivity
 import com.projeto.marvel.R
 import com.projeto.marvel.data.PackType
 import com.projeto.marvel.data.Rarity
+import com.projeto.marvel.data.TRADE_COST
 import com.projeto.marvel.data.levelFor
 import com.projeto.marvel.databinding.FragmentAlbumBinding
 import com.projeto.marvel.databinding.ItemTradingCardBinding
 import com.projeto.marvel.databinding.ViewAlbumHeaderBinding
 import com.projeto.marvel.databinding.ViewPackBinding
+import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.detail.TiltController
 import kotlinx.coroutines.launch
 
@@ -89,6 +91,14 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         header.tiles().forEach { (type, tile, _) ->
             tile.setOnClickListener { viewModel.openPack(type) }
         }
+        header.tradeButton.setOnClickListener {
+            requireContext().comicDialog()
+                .setTitle(R.string.album_trade_title)
+                .setMessage(getString(R.string.album_trade_message, TRADE_COST))
+                .setPositiveButton(R.string.album_trade_confirm) { _, _ -> viewModel.trade() }
+                .setNegativeButton(R.string.album_trade_cancel, null)
+                .show()
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.refresh()
@@ -124,6 +134,9 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             (tile.getChildAt(1) as TextView).text = getString(R.string.album_pack_count, getString(type.label()), count)
             if (count > 0) pack.gleam()
         }
+        header.tradeButton.text = getString(R.string.album_trade, state.tradable.coerceAtMost(TRADE_COST), TRADE_COST)
+        header.tradeButton.isEnabled = state.tradable >= TRADE_COST
+        header.tradeButton.alpha = if (header.tradeButton.isEnabled) 1f else DISABLED_ALPHA
         header.submit(adapter, state.stickers, viewModel.query.value)
         if (state.openId != shownOpenId && state.opened.isNotEmpty()) {
             shownOpenId = state.openId
