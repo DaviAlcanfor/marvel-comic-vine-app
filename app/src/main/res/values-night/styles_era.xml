@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ShapeAppearance.Marvel.Chip.Era" parent="ShapeAppearance.Marvel.Chip.Modern" />
+</resources>

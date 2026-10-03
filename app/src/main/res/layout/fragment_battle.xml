@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/title" />
 
-    <TextView
+    <com.projeto.marvel.ui.LogoTextView
         android:id="@+id/title"
         style="@style/Widget.Marvel.ScreenTitle"
         android:layout_width="0dp"
@@ -545,7 +545,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
+            <com.projeto.marvel.ui.LogoTextView
                 style="@style/Widget.Marvel.ScreenTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -602,7 +602,7 @@
                 android:id="@+id/resultTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/bebas_neue"
+                android:fontFamily="?attr/eraDisplayFont"
                 android:textSize="40sp" />
 
             <TextView
@@ -680,7 +680,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <com.projeto.marvel.ui.LogoTextView
             android:id="@+id/trailTitle"
             style="@style/Widget.Marvel.ScreenTitle"
             android:layout_width="match_parent"

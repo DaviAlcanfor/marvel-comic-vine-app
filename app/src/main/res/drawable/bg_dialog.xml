@@ -2,22 +2,22 @@
 <!-- Diálogo como painel de HQ: contorno de nanquim e sombra dura vermelha (preta sumiria no scrim). -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:left="@dimen/hard_shadow"
-        android:top="@dimen/hard_shadow">
+        android:left="?attr/eraShadow"
+        android:top="?attr/eraShadow">
         <shape>
             <solid android:color="@color/primary_variant" />
-            <corners android:radius="@dimen/radius_large" />
+            <corners android:radius="?attr/eraRadius" />
         </shape>
     </item>
     <item
-        android:bottom="@dimen/hard_shadow"
-        android:right="@dimen/hard_shadow">
+        android:bottom="?attr/eraShadow"
+        android:right="?attr/eraShadow">
         <shape>
             <solid android:color="@color/surface" />
             <stroke
-                android:width="@dimen/ink_width"
-                android:color="@color/ink" />
-            <corners android:radius="@dimen/radius_large" />
+                android:width="?attr/eraInkWidth"
+                android:color="?attr/eraOutline" />
+            <corners android:radius="?attr/eraRadius" />
         </shape>
     </item>
 </layer-list>

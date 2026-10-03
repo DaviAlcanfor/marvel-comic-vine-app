@@ -2,4 +2,5 @@
 <resources>
     <!-- Duração padrão das transições (Material "medium"). -->
     <integer name="motion_duration">300</integer>
+    <integer name="era_style">0</integer>
 </resources>

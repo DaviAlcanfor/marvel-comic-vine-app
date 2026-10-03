@@ -22,7 +22,7 @@
             android:contentDescription="@string/content_description_back"
             android:src="@drawable/ic_arrow_back" />
 
-        <TextView
+        <com.projeto.marvel.ui.LogoTextView
             style="@style/Widget.Marvel.ScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/space_sm"
-                    android:fontFamily="@font/bebas_neue"
+                    android:fontFamily="?attr/eraDisplayFont"
                     android:text="≈"
                     android:textColor="@color/accent_text"
                     android:textSize="40sp" />

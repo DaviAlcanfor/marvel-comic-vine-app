@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Forma do chip da época base: Retrô aqui, Moderno em values-night. -->
+<resources>
+    <style name="ShapeAppearance.Marvel.Chip.Era" parent="ShapeAppearance.Marvel.Chip.Retro" />
+</resources>

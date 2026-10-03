@@ -3,22 +3,22 @@
      ficam dentro, separados pela sarjeta). -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:left="@dimen/hard_shadow"
-        android:top="@dimen/hard_shadow">
+        android:left="?attr/eraShadow"
+        android:top="?attr/eraShadow">
         <shape>
             <solid android:color="@color/primary_variant" />
-            <corners android:radius="@dimen/radius_small" />
+            <corners android:radius="?attr/eraRadiusSmall" />
         </shape>
     </item>
     <item
-        android:bottom="@dimen/hard_shadow"
-        android:right="@dimen/hard_shadow">
+        android:bottom="?attr/eraShadow"
+        android:right="?attr/eraShadow">
         <shape>
             <solid android:color="@color/surface" />
             <stroke
                 android:width="3dp"
-                android:color="@color/ink" />
-            <corners android:radius="@dimen/radius_small" />
+                android:color="?attr/eraOutline" />
+            <corners android:radius="?attr/eraRadiusSmall" />
         </shape>
     </item>
 </layer-list>

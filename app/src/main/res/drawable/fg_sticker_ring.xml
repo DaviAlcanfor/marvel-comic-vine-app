@@ -5,15 +5,15 @@
     <item>
         <shape android:shape="oval">
             <stroke
-                android:width="@dimen/ink_width"
-                android:color="@color/ink" />
+                android:width="?attr/eraInkWidth"
+                android:color="?attr/eraOutline" />
         </shape>
     </item>
     <item
-        android:bottom="@dimen/ink_width"
-        android:left="@dimen/ink_width"
-        android:right="@dimen/ink_width"
-        android:top="@dimen/ink_width">
+        android:bottom="?attr/eraInkWidth"
+        android:left="?attr/eraInkWidth"
+        android:right="?attr/eraInkWidth"
+        android:top="?attr/eraInkWidth">
         <shape android:shape="oval">
             <stroke
                 android:width="3dp"

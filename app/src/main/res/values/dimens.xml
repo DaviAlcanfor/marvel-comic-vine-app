@@ -36,7 +36,7 @@
     <dimen name="member_card_width">120dp</dimen>
     <dimen name="comic_cover_height">150dp</dimen>
     <dimen name="favorite_image_size">72dp</dimen>
-    <dimen name="home_hero_height">240dp</dimen>
+    <dimen name="home_hero_height">264dp</dimen>
     <dimen name="first_issue_width">80dp</dimen>
     <dimen name="first_issue_height">120dp</dimen>
     <dimen name="balloon_radius">18dp</dimen>
@@ -89,4 +89,9 @@
     <dimen name="mission_pip_height">12dp</dimen>
     <dimen name="mission_tag_height">28dp</dimen>
     <dimen name="pack_rip_height">8dp</dimen>
+    <!-- Forma por época (Retrô aqui; Moderno em values-night; Anos 90 no ThemeOverlay). -->
+    <dimen name="era_ink_width">2.5dp</dimen>
+    <dimen name="era_shadow">4dp</dimen>
+    <dimen name="era_radius">0dp</dimen>
+    <dimen name="era_radius_small">0dp</dimen>
 </resources>

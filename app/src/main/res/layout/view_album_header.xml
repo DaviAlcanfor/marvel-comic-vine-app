@@ -13,6 +13,18 @@
         style="@style/Widget.Marvel.CaptionBox"
         android:layout_marginTop="@dimen/space_sm" />
 
+    <!-- Moderno: barra fina no lugar da legenda (AlbumFragment). -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:visibility="gone"
+        app:indicatorColor="@color/primary"
+        app:trackColor="@color/surface_variant"
+        app:trackCornerRadius="2dp"
+        app:trackThickness="4dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

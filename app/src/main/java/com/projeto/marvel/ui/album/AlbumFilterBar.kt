@@ -3,6 +3,7 @@ package com.projeto.marvel.ui.album
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -11,6 +12,10 @@ import com.google.android.material.chip.ChipGroup
 import com.projeto.marvel.R
 import com.projeto.marvel.databinding.ItemFilterChipBinding
 import com.projeto.marvel.databinding.ViewAlbumHeaderBinding
+import com.projeto.marvel.ui.BoxStyle
+import com.projeto.marvel.ui.Era
+import com.projeto.marvel.ui.comicBox
+import com.projeto.marvel.ui.era
 
 private val FILTER_LABELS = mapOf(
     AlbumFilter.ALL to R.string.album_filter_all,
@@ -71,4 +76,17 @@ fun ViewAlbumHeaderBinding.submit(adapter: StickerAdapter, stickers: List<Sticke
         context.getString(R.string.album_filter_count, shown.size, stickers.size)
     }
     adapter.submitList(shown)
+}
+
+/** Progresso no traço da época: legenda amarela (Retrô), etiqueta azul (Anos 90) ou barra fina (Moderno). */
+fun ViewAlbumHeaderBinding.applyEra() {
+    val context = root.context
+    when (context.era()) {
+        Era.RETRO -> Unit
+        Era.NINETIES -> progress.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.nineties_extrusion))
+        Era.MODERN -> {
+            progress.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+        }
+    }
 }

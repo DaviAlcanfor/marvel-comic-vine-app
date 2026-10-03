@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Painel de HQ: contorno de nanquim no lugar da borda fina do Design System. -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/surface" />
-    <stroke
-        android:width="@dimen/ink_width"
-        android:color="@color/ink" />
-    <corners android:radius="@dimen/radius_large" />
-</shape>
+<!-- Quadro de HQ (cards, painéis). Desenho por época em ui/EraPanelDrawable.kt. -->
+<com.projeto.marvel.ui.EraPanelDrawable xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:panelKind="panel" />

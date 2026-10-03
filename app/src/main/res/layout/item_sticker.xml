@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|start"
             android:background="@color/ink"
-            android:fontFamily="@font/bebas_neue"
+            android:fontFamily="?attr/eraDisplayFont"
             android:paddingHorizontal="@dimen/space_xs"
             android:textColor="@color/white"
             android:textSize="13sp"

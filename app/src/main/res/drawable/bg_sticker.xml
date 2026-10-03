@@ -4,6 +4,6 @@
     android:shape="oval">
     <solid android:color="@color/white" />
     <stroke
-        android:width="@dimen/ink_width"
-        android:color="@color/ink" />
+        android:width="?attr/eraInkWidth"
+        android:color="?attr/eraOutline" />
 </shape>

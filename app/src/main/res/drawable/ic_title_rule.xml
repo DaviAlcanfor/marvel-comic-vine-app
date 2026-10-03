@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Moderno: traço vermelho na frente dos títulos de seção. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <size
+        android:width="24dp"
+        android:height="3dp" />
+    <solid android:color="@color/primary" />
+</shape>

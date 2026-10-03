@@ -22,5 +22,18 @@
     <color name="move_drain">#2EC4B6</color>
     <color name="accent_text">#E6B800</color>
     <color name="era_overlay">#F20B0B10</color>
-    <color name="era_halftone">#FFFFFF</color>
+    <color name="era_halftone">#00FFFFFF</color>
+    <!-- Moderno: vermelho Marvel, contorno grafite, sem retícula. -->
+    <color name="era_primary">#D81F26</color>
+    <color name="era_primary_variant">#9E1218</color>
+    <color name="era_outline">#3A3A46</color>
+    <color name="era_caption_text">#FFFFFF</color>
+    <color name="era_nav_active">#FF5A5F</color>
+    <color name="era_nav_inactive">#9A9AA8</color>
+    <color name="era_nav_indicator">#00000000</color>
+    <color name="era_chip_fill">#00000000</color>
+    <color name="era_chip_checked">#F2F2F5</color>
+    <color name="era_chip_checked_text">#101014</color>
+    <color name="modern_vignette_top">#23232C</color>
+    <color name="modern_vignette_bottom">#08080A</color>
 </resources>

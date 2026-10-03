@@ -2,21 +2,21 @@
 <!-- Balão do fã no chat: dourado do tema. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:left="@dimen/hard_shadow"
-        android:top="@dimen/hard_shadow">
+        android:left="?attr/eraShadow"
+        android:top="?attr/eraShadow">
         <shape>
             <solid android:color="@color/ink" />
             <corners android:radius="@dimen/balloon_radius" />
         </shape>
     </item>
     <item
-        android:bottom="@dimen/hard_shadow"
-        android:right="@dimen/hard_shadow">
+        android:bottom="?attr/eraShadow"
+        android:right="?attr/eraShadow">
         <shape>
             <solid android:color="@color/accent" />
             <stroke
-                android:width="@dimen/ink_width"
-                android:color="@color/ink" />
+                android:width="?attr/eraInkWidth"
+                android:color="?attr/eraOutline" />
             <corners android:radius="@dimen/balloon_radius" />
         </shape>
     </item>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fundo do Moderno: grafite com luz vindo de cima, como cena de cinema. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:centerX="0.5"
+        android:centerY="0"
+        android:endColor="@color/modern_vignette_bottom"
+        android:gradientRadius="140%p"
+        android:startColor="@color/modern_vignette_top"
+        android:type="radial" />
+</shape>

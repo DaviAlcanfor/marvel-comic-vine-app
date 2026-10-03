@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/primary"
-                android:fontFamily="@font/bebas_neue"
+                android:fontFamily="?attr/eraDisplayFont"
                 android:paddingHorizontal="@dimen/space_xs"
                 android:text="@string/pack_brand"
                 android:textColor="@color/white" />
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:fontFamily="@font/bebas_neue"
+                android:fontFamily="?attr/eraDisplayFont"
                 android:gravity="center"
                 android:textColor="@color/ink"
                 tools:text="OURO" />

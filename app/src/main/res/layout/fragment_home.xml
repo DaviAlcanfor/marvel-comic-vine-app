@@ -21,8 +21,9 @@
         android:paddingTop="@dimen/space_lg"
         android:paddingBottom="@dimen/fab_clearance">
 
-        <!-- Cabeçalho -->
+        <!-- Cabeçalho (no Retrô o avatar vai para a esquerda, como o canto de uma capa: HomeEra.kt) -->
         <LinearLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -34,7 +35,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
+                <com.projeto.marvel.ui.LogoTextView
                     android:id="@+id/greeting"
                     style="@style/Widget.Marvel.ScreenTitle"
                     android:layout_width="match_parent"
@@ -52,17 +53,39 @@
                     tools:text="Seu herói: Spider-Man" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/avatar"
-                android:layout_width="@dimen/avatar_size"
-                android:layout_height="@dimen/avatar_size"
+            <LinearLayout
+                android:id="@+id/avatarBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_md"
-                android:background="@drawable/bg_sticker"
-                android:clipToOutline="true"
-                android:contentDescription="@string/home_open_profile"
-                android:foreground="@drawable/fg_sticker_ring"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_person" />
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="@dimen/avatar_size"
+                    android:layout_height="@dimen/avatar_size"
+                    android:background="@drawable/bg_sticker"
+                    android:clipToOutline="true"
+                    android:contentDescription="@string/home_open_profile"
+                    android:foreground="@drawable/fg_sticker_ring"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_person" />
+
+                <!-- Retrô: preço e número da edição no canto da capa. -->
+                <TextView
+                    android:id="@+id/coverPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="?attr/eraDisplayFont"
+                    android:gravity="center"
+                    android:importantForAccessibility="no"
+                    android:lineSpacingMultiplier="0.85"
+                    android:text="@string/home_cover_price"
+                    android:textColor="@color/ink"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Herói do dia: imagem grande com o nome por cima; some se a API falhar. -->
@@ -85,6 +108,7 @@
                 android:scaleType="centerCrop" />
 
             <View
+                android:id="@+id/heroFade"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_fade_to_background" />

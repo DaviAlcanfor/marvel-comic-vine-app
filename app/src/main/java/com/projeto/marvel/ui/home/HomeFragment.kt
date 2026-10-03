@@ -76,7 +76,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
-        binding.paintCaptions(listOf(ContextCompat.getColor(requireContext(), R.color.accent)))
+        binding.applyEra()
         binding.readingList.adapter = readingAdapter
         binding.heroMoviesList.adapter = heroMoviesAdapter
         binding.debutsList.adapter = debutsAdapter
@@ -205,53 +205,10 @@ private fun FragmentHomeBinding.bindHeader(state: HomeUiState, onFavorite: (Favo
     favoriteLine.setOnClickListener { onFavorite(favorite) }
 }
 
-/** Formato e inclinação fixos de cada legenda; só a cor muda com o herói do dia. */
-@Suppress("MagicNumber") // a inclinação de cada legenda é a própria tabela
-private fun FragmentHomeBinding.captions() = listOf(
-    Triple(heroCaption, BoxStyle.CAPTION, -2f),
-    Triple(heroMoviesTitle, BoxStyle.SPEECH, 1.5f),
-    Triple(dailyTrailTitle, BoxStyle.BURST, -3f),
-    Triple(debutsTitle, BoxStyle.SPEECH, -1.5f),
-    Triple(readingTitle, BoxStyle.CAPTION, 2f),
-    Triple(reviewTitle, BoxStyle.SPEECH, -1f),
-    Triple(missionsTitle, BoxStyle.BURST, 2.5f)
-)
-
-/**
- * Legendas da Início, cada uma num tom diferente da foto do herói do dia (como o Detalhe faz com o
- * personagem). Tons escuros são clareados para aparecer no fundo; faltando tom, repete.
- */
-private fun FragmentHomeBinding.paintCaptions(colors: List<Int>) {
-    if (colors.isEmpty()) return
-    captions().forEachIndexed { index, (view, style, tilt) ->
-        view.comicBox(style, colors[index % colors.size], tailOnLeft = index % 2 == 0)
-        view.rotation = tilt
-    }
-}
-
-private fun Palette.captionColors(background: Int) =
-    listOfNotNull(vibrantSwatch, lightVibrantSwatch, mutedSwatch, darkVibrantSwatch, lightMutedSwatch, dominantSwatch)
-        .map { readableOn(background, it.rgb) }
-        .distinct()
-
-/**
- * Herói do dia: foto, nome e resumo. A foto vem num bitmap comum (não "hardware") porque a Palette
- * precisa ler os pixels para tirar a cor dele e pintar as legendas da Início.
- */
+/** Herói do dia: foto, nome e resumo. */
 private fun FragmentHomeBinding.bindHero(hero: CharacterSummary) {
     heroImage.tag = hero.id
-    heroImage.load(hero.image?.mediumUrl) {
-        crossfade(true)
-        allowHardware(false)
-        listener(onSuccess = { _, result ->
-            val bitmap = (result.drawable as? BitmapDrawable)?.bitmap ?: return@listener
-            Palette.from(bitmap).generate { palette ->
-                val colors = palette?.captionColors(ContextCompat.getColor(root.context, R.color.background))
-                // A View pode ter sido destruída enquanto a Palette calculava.
-                if (root.isAttachedToWindow && colors != null) paintCaptions(colors)
-            }
-        })
-    }
+    heroImage.load(hero.image?.mediumUrl) { crossfade(true) }
     heroName.text = hero.name
     heroDeck.text = hero.deck.orEmpty()
 }

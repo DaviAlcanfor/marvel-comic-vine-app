@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Caixa de legenda de HQ ("Enquanto isso..."): dourado, contorno de nanquim e sombra dura. -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:left="@dimen/hard_shadow"
-        android:top="@dimen/hard_shadow">
-        <shape>
-            <solid android:color="@color/ink" />
-        </shape>
-    </item>
-    <item
-        android:bottom="@dimen/hard_shadow"
-        android:right="@dimen/hard_shadow">
-        <shape>
-            <solid android:color="@color/accent" />
-            <stroke
-                android:width="@dimen/ink_width"
-                android:color="@color/ink" />
-        </shape>
-    </item>
-</layer-list>
+<!-- Caixa de legenda ("Enquanto isso…") / etiqueta. Desenho por época em ui/EraPanelDrawable.kt. -->
+<com.projeto.marvel.ui.EraPanelDrawable xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:panelKind="caption" />

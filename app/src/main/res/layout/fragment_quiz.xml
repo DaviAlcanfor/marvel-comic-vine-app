@@ -22,7 +22,7 @@
             android:contentDescription="@string/content_description_back"
             android:src="@drawable/ic_arrow_back" />
 
-        <TextView
+        <com.projeto.marvel.ui.LogoTextView
             style="@style/Widget.Marvel.ScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop" />
 
-            <TextView
+            <com.projeto.marvel.ui.LogoTextView
                 android:id="@+id/resultTitle"
                 style="@style/Widget.Marvel.ScreenTitle"
                 android:layout_width="wrap_content"

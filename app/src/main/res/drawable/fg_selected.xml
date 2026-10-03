@@ -5,5 +5,5 @@
     <stroke
         android:width="4dp"
         android:color="@color/accent" />
-    <corners android:radius="@dimen/radius_large" />
+    <corners android:radius="?attr/eraRadius" />
 </shape>

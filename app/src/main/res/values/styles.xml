@@ -19,7 +19,7 @@
     <style name="Widget.Marvel.LoadingWord" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="android:fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textSize">26sp</item>
         <item name="android:alpha">0</item>
     </style>
@@ -69,7 +69,7 @@
         <item name="android:layout_marginTop">@dimen/space_sm</item>
         <item name="android:gravity">center</item>
         <item name="android:maxLines">2</item>
-        <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="android:fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">22sp</item>
     </style>
@@ -115,6 +115,10 @@
         <item name="android:textSize">32sp</item>
         <item name="android:letterSpacing">0.02</item>
         <item name="android:textColor">?attr/eraTitleColor</item>
+        <!-- O letreiro dos Anos 90 (Bungee) é bem mais largo: encolhe até caber numa linha. -->
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">18sp</item>
+        <item name="android:autoSizeMaxTextSize">32sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <!-- Letreiro de capa: sombra dura na cor da época (raio ~0 = sem desfoque). -->
@@ -220,9 +224,27 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="chipBackgroundColor">@color/filter_chip_background</item>
-        <item name="chipStrokeColor">@color/border</item>
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="checkedIconTint">@color/background</item>
+        <item name="chipStrokeColor">?attr/eraOutline</item>
+        <item name="chipStrokeWidth">?attr/eraInkWidth</item>
+        <item name="shapeAppearance">?attr/eraChipShape</item>
+        <item name="android:textColor">@color/filter_chip_text</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="checkedIconTint">?attr/eraChipCheckedText</item>
+    </style>
+
+    <!-- Forma do chip por época: reto (Retrô), canto cortado (Anos 90), pílula (Moderno). -->
+    <style name="ShapeAppearance.Marvel.Chip.Retro" parent="">
+        <item name="cornerSize">0dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Marvel.Chip.Nineties" parent="">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Marvel.Chip.Modern" parent="">
+        <item name="cornerSize">50%</item>
     </style>
 
     <!-- Botão de status do diálogo da HQ/filme: mesmo visual do chip de filtro. -->
@@ -245,8 +267,8 @@
     </style>
 
     <style name="Widget.Marvel.DialogTitle" parent="MaterialAlertDialog.Material3.Title.Text">
-        <item name="android:fontFamily">@font/bebas_neue</item>
-        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:fontFamily">?attr/eraDisplayFont</item>
+        <item name="fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textSize">26sp</item>
         <item name="android:textColor">@color/accent_text</item>
     </style>
@@ -294,8 +316,8 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:fontFamily">@font/bebas_neue</item>
-        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:fontFamily">?attr/eraDisplayFont</item>
+        <item name="fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textSize">20sp</item>
         <item name="backgroundTint">@color/primary</item>
         <item name="android:textColor">@color/white</item>
@@ -316,8 +338,8 @@
     <style name="Widget.Marvel.StatValue" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/bebas_neue</item>
-        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:fontFamily">?attr/eraDisplayFont</item>
+        <item name="fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/accent_text</item>
     </style>
@@ -341,8 +363,8 @@
     </style>
 
     <style name="TextAppearance.Marvel.NavActive" parent="TextAppearance.Material3.LabelMedium">
-        <item name="android:fontFamily">@font/bebas_neue</item>
-        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:fontFamily">?attr/eraDisplayFont</item>
+        <item name="fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.04</item>
     </style>
@@ -372,15 +394,21 @@
     </style>
 
     <style name="TextAppearance.Marvel.Tab" parent="TextAppearance.Material3.TitleSmall">
-        <item name="android:fontFamily">@font/bebas_neue</item>
-        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:fontFamily">?attr/eraDisplayFont</item>
+        <item name="fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <!-- Retrô: plaquinha amarela reta atrás do item ativo; nas outras épocas, transparente. -->
     <style name="Widget.Marvel.BottomNav.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@android:color/transparent</item>
+        <item name="android:color">?attr/eraNavIndicator</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Marvel.NavIndicator</item>
+    </style>
+
+    <style name="ShapeAppearance.Marvel.NavIndicator" parent="">
+        <item name="cornerSize">0dp</item>
     </style>
 
     <!-- Tema HQ ================================================================= -->
@@ -391,8 +419,8 @@
         <item name="android:layout_height">@dimen/touch_target</item>
         <item name="android:background">@drawable/bg_button_comic_primary</item>
         <item name="android:stateListAnimator">@null</item>
-        <item name="android:fontFamily">@font/bebas_neue</item>
-        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:fontFamily">?attr/eraDisplayFont</item>
+        <item name="fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textSize">22sp</item>
         <item name="android:letterSpacing">0.06</item>
         <item name="android:textAllCaps">true</item>
@@ -415,11 +443,12 @@
         <item name="android:paddingTop">6dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:rotation">-2</item>
-        <item name="android:fontFamily">@font/bebas_neue</item>
-        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">?attr/eraDisplayFont</item>
+        <item name="fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textSize">22sp</item>
         <item name="android:letterSpacing">0.04</item>
-        <item name="android:textColor">@color/ink</item>
+        <item name="android:textColor">?attr/eraCaptionText</item>
     </style>
 
     <!-- Onomatopeia ("POW!") sobre BurstDrawable, posto em código. Espaço interno para os picos. -->
@@ -428,8 +457,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingHorizontal">28dp</item>
         <item name="android:paddingVertical">22dp</item>
-        <item name="android:fontFamily">@font/bangers</item>
-        <item name="fontFamily">@font/bangers</item>
+        <item name="android:fontFamily">?attr/eraSfxFont</item>
+        <item name="fontFamily">?attr/eraSfxFont</item>
         <item name="android:textSize">30sp</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:textColor">@color/ink</item>
@@ -454,8 +483,8 @@
         <item name="android:maxLines">2</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:fontFamily">@font/bebas_neue</item>
-        <item name="fontFamily">@font/bebas_neue</item>
+        <item name="android:fontFamily">?attr/eraDisplayFont</item>
+        <item name="fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textSize">17sp</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:textColor">@color/text_primary</item>
@@ -492,8 +521,8 @@
     <style name="Widget.Marvel.BattlePopup" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/bangers</item>
-        <item name="fontFamily">@font/bangers</item>
+        <item name="android:fontFamily">?attr/eraSfxFont</item>
+        <item name="fontFamily">?attr/eraSfxFont</item>
         <item name="android:textSize">32sp</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:shadowColor">@color/ink</item>

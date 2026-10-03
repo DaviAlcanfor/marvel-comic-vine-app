@@ -34,6 +34,9 @@
     <string name="games_quiz_how">5 perguntas sobre como você age numa enrascada. No fim, o herói com os atributos mais parecidos com os seus vira o seu herói do Perfil (se quiser).</string>
     <string name="games_quiz_record">Seu herói hoje: %1$s</string>
     <string name="games_quiz_new">Você ainda não descobriu seu herói</string>
+    <string name="home_cover_price">12¢
+Nº 1</string>
+    <string name="home_hero_of_the_day_retro">Enquanto isso… o herói do dia!</string>
     <string name="home_hero_movies">Filmes do herói do dia</string>
     <string name="home_debuted_today">Estreou neste dia</string>
     <string name="home_last_reviews">Suas últimas resenhas</string>

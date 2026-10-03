@@ -14,7 +14,7 @@
         android:paddingTop="@dimen/space_lg"
         android:paddingBottom="@dimen/space_xl">
 
-        <TextView
+        <com.projeto.marvel.ui.LogoTextView
             style="@style/Widget.Marvel.ScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

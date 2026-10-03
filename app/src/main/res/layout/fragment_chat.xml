@@ -32,7 +32,7 @@
         app:layout_constraintStart_toEndOf="@id/backButton"
         app:layout_constraintTop_toTopOf="@id/backButton" />
 
-    <TextView
+    <com.projeto.marvel.ui.LogoTextView
         android:id="@+id/name"
         style="@style/Widget.Marvel.ScreenTitle"
         android:layout_width="0dp"

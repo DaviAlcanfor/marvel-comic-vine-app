@@ -19,8 +19,8 @@
         <item name="android:windowLightStatusBar">@bool/light_system_bars</item>
         <item name="android:windowLightNavigationBar">@bool/light_system_bars</item>
         <!-- Inter como fonte padrão de todo texto; títulos usam Bebas Neue via Widget.Marvel.ScreenTitle. -->
-        <item name="android:fontFamily">@font/inter</item>
-        <item name="fontFamily">@font/inter</item>
+        <item name="android:fontFamily">@font/era_body</item>
+        <item name="fontFamily">@font/era_body</item>
         <!-- Botões: maiúsculas e semibold, como "ENTRAR" / "CRIAR CONTA" no Design System. -->
         <item name="textAppearanceLabelLarge">@style/TextAppearance.Marvel.Button</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Marvel.Dialog</item>
@@ -36,10 +36,28 @@
         <item name="eraScrim">@color/era_scrim</item>
         <item name="eraSpeedLines">@color/era_speed_lines</item>
         <item name="eraHalftone">@color/era_halftone</item>
-        <item name="eraScreen">@color/era_background</item>
+        <item name="eraScreen">@drawable/bg_era_screen</item>
         <item name="eraTitleFont">@font/era_title</item>
         <item name="eraTitleColor">@color/text_primary</item>
         <item name="eraTitleShadow">@color/era_primary</item>
+        <item name="eraBodyFont">@font/era_body</item>
+        <item name="eraDisplayFont">@font/era_display</item>
+        <item name="eraSfxFont">@font/era_sfx</item>
+        <item name="eraOutline">@color/era_outline</item>
+        <item name="eraInkWidth">@dimen/era_ink_width</item>
+        <item name="eraShadow">@dimen/era_shadow</item>
+        <item name="eraRadius">@dimen/era_radius</item>
+        <item name="eraRadiusSmall">@dimen/era_radius_small</item>
+        <item name="eraStyle">@integer/era_style</item>
+        <item name="eraCaptionText">@color/era_caption_text</item>
+        <item name="eraNavActive">@color/era_nav_active</item>
+        <item name="eraNavInactive">@color/era_nav_inactive</item>
+        <item name="eraNavIndicator">@color/era_nav_indicator</item>
+        <item name="eraChipShape">@style/ShapeAppearance.Marvel.Chip.Era</item>
+        <item name="eraChipFill">@color/era_chip_fill</item>
+        <item name="eraChipChecked">@color/era_chip_checked</item>
+        <item name="eraChipText">@color/text_primary</item>
+        <item name="eraChipCheckedText">@color/era_chip_checked_text</item>
     </style>
 
     <!--
@@ -60,8 +78,28 @@
         <item name="eraSpeedLines">@color/nineties_speed_lines</item>
         <item name="eraHalftone">@color/nineties_halftone</item>
         <item name="eraScreen">@drawable/bg_nineties</item>
-        <item name="eraTitleFont">@font/bebas_neue</item>
+        <item name="eraTitleFont">@font/bungee</item>
         <item name="eraTitleColor">@color/accent</item>
+        <item name="eraBodyFont">@font/barlow_condensed</item>
+        <item name="eraDisplayFont">@font/barlow_condensed_bold_italic</item>
+        <item name="eraSfxFont">@font/bungee</item>
+        <item name="eraOutline">@color/nineties_outline</item>
+        <item name="eraInkWidth">1.5dp</item>
+        <item name="eraShadow">0dp</item>
+        <item name="eraRadius">0dp</item>
+        <item name="eraRadiusSmall">0dp</item>
+        <item name="eraStyle">1</item>
+        <item name="eraCaptionText">@color/white</item>
+        <item name="eraNavActive">@color/logo_yellow</item>
+        <item name="eraNavInactive">@color/nineties_outline</item>
+        <item name="eraNavIndicator">@android:color/transparent</item>
+        <item name="eraChipShape">@style/ShapeAppearance.Marvel.Chip.Nineties</item>
+        <item name="eraChipFill">@color/nineties_input</item>
+        <item name="eraChipChecked">@color/logo_yellow</item>
+        <item name="eraChipText">@color/nineties_chip_text</item>
+        <item name="eraChipCheckedText">@color/nineties_background</item>
+        <item name="android:fontFamily">@font/barlow_condensed</item>
+        <item name="fontFamily">@font/barlow_condensed</item>
         <item name="eraTitleShadow">@color/nineties_extrusion</item>
         <item name="android:statusBarColor">@color/nineties_background</item>
         <item name="android:navigationBarColor">@color/nineties_background</item>

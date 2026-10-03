@@ -37,7 +37,7 @@
                     android:contentDescription="@string/content_description_back"
                     android:src="@drawable/ic_arrow_back" />
 
-                <TextView
+                <com.projeto.marvel.ui.LogoTextView
                     style="@style/Widget.Marvel.ScreenTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

@@ -154,14 +154,14 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/space_sm"
                 android:background="?attr/selectableItemBackground"
-                android:fontFamily="@font/bebas_neue"
+                android:fontFamily="?attr/eraDisplayFont"
                 android:gravity="center"
                 android:letterSpacing="0.04"
                 android:paddingHorizontal="@dimen/space_md"
                 android:text="@string/login_signup"
                 android:textColor="@color/accent_text"
                 android:textSize="20sp"
-                app:fontFamily="@font/bebas_neue" />
+                app:fontFamily="?attr/eraDisplayFont" />
 
         </LinearLayout>
 

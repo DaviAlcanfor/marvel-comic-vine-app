@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
+            <com.projeto.marvel.ui.LogoTextView
                 android:id="@+id/name"
                 style="@style/Widget.Marvel.ScreenTitle"
                 android:layout_width="match_parent"

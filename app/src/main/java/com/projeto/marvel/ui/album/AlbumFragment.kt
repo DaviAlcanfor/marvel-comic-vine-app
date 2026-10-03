@@ -68,6 +68,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         this.header = header
         binding.grid.adapter = ConcatAdapter(SingleViewAdapter(header.root), adapter)
         header.bindFilters(layoutInflater, { viewModel.query.value }, viewModel::setQuery)
+        header.applyEra()
         binding.message.setOnClickListener { viewModel.load() }
         viewer = CardViewer(binding.viewerCard, binding.viewerFront, binding.viewerBack)
         binding.viewerClose.setOnClickListener { viewModel.closeViewer() }
@@ -129,6 +130,8 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         // Criado junto com a binding (e zerado junto): com a binding viva, o cabeçalho existe.
         val header = requireNotNull(header)
         header.progress.text = getString(R.string.album_progress, state.owned, state.stickers.size)
+        header.progressBar.max = state.stickers.size
+        header.progressBar.progress = state.owned
         header.tiles().forEach { (type, tile, pack) ->
             val count = state.packs[type] ?: 0
             pack.style(type, large = false, art = state.packArt[type])

@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_caption"
-        android:fontFamily="@font/bebas_neue"
+        android:fontFamily="?attr/eraDisplayFont"
         android:paddingStart="@dimen/space_sm"
         android:paddingTop="2dp"
         android:paddingEnd="10dp"
@@ -27,7 +27,7 @@
         android:rotation="-3"
         android:textColor="@color/ink"
         android:textSize="14sp"
-        app:fontFamily="@font/bebas_neue"
+        app:fontFamily="?attr/eraDisplayFont"
         tools:text="HOJE" />
 
     <ImageView
@@ -44,12 +44,12 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/space_xs"
         android:layout_weight="1"
-        android:fontFamily="@font/bebas_neue"
+        android:fontFamily="?attr/eraDisplayFont"
         android:letterSpacing="0.03"
         android:textAllCaps="true"
         android:textColor="@color/text_primary"
         android:textSize="18sp"
-        app:fontFamily="@font/bebas_neue"
+        app:fontFamily="?attr/eraDisplayFont"
         tools:text="Vença 3 batalhas" />
 
     <!-- Blocos do progresso (montados em código). -->
@@ -75,13 +75,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_xs"
-        android:fontFamily="@font/bebas_neue"
+        android:fontFamily="?attr/eraDisplayFont"
         android:gravity="center"
         android:letterSpacing="0.04"
         android:minHeight="@dimen/mission_tag_height"
         android:paddingHorizontal="@dimen/space_sm"
         android:textColor="@color/ink"
         android:textSize="15sp"
-        app:fontFamily="@font/bebas_neue"
+        app:fontFamily="?attr/eraDisplayFont"
         tools:text="PRATA" />
 </LinearLayout>

@@ -6,7 +6,7 @@
     <!-- Design tokens: docs/design-reference/DESIGN_TOKENS.md. Este arquivo é o tema claro ("papel de
          gibi"); os tokens que mudam no escuro estão em values-night/colors.xml. ink, paper, accent
          (fundos dourados), cartas e pacotes são iguais nos dois temas. -->
-    <color name="era_background">#FFF4DC</color>
+    <color name="era_background">#F2E3BD</color>
     <color name="era_surface">#FFFFFF</color>
     <color name="era_surface_variant">#F3E7C9</color>
     <color name="era_border">#D9C9A3</color>
@@ -65,7 +65,7 @@
     <!-- Fundo quase opaco de telas por cima de outras (VS, abertura de pacote). -->
     <color name="era_overlay">#F2FFF4DC</color>
     <!-- Pontos da retícula (tint do halftone_tile, que é branco). -->
-    <color name="era_halftone">#000000</color>
+    <color name="era_halftone">#D63A28</color>
     <!-- Estrelas e moldura simples por raridade (bronze, prata, ouro) e o ✦ da carta Divina. -->
     <color name="rarity_common">#C27A3E</color>
     <color name="rarity_rare">#A8B0BA</color>
@@ -84,4 +84,30 @@
     <color name="nineties_speed_lines">#1A00E5FF</color>
     <color name="nineties_halftone">#00E5FF</color>
     <color name="nineties_extrusion">#1F5FD6</color>
+    <color name="nineties_outline">#00E5FF</color>
+    <color name="nineties_extrusion_dark">#0E2C7A</color>
+    <color name="nineties_magenta">#E8318A</color>
+    <color name="nineties_balloon">#F4F0FF</color>
+    <color name="nineties_input">#14FFFFFF</color>
+    <color name="nineties_nav">#D90A061E</color>
+    <color name="modern_nav">#0C0C10</color>
+    <!-- Amarelo dos letreiros (Retrô e Anos 90). -->
+    <color name="logo_yellow">#FFD21F</color>
+    <!-- Contorno de quadros/botões/campos por época (o nanquim no Retrô). -->
+    <color name="era_outline">#141010</color>
+    <color name="era_caption_text">#141010</color>
+    <!-- Barra inferior: Retrô = ativo em nanquim sobre uma plaquinha amarela. -->
+    <color name="era_nav_active">#141010</color>
+    <color name="era_nav_inactive">#141010</color>
+    <color name="era_nav_indicator">#FFD21F</color>
+    <color name="era_chip_fill">#FFFFFF</color>
+    <color name="era_chip_checked">#FFE14D</color>
+    <color name="era_chip_checked_text">#141010</color>
+    <color name="nineties_chip_text">#BDF6FF</color>
+    <!-- Figurinhas por época (StickerAdapter). -->
+    <color name="nineties_card">#140B2E</color>
+    <color name="foil_green">#7CFF6B</color>
+    <color name="modern_number">#B3000000</color>
+    <color name="modern_card">#17171D</color>
+    <color name="modern_card_line">#34343F</color>
 </resources>

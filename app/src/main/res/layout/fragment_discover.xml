@@ -13,7 +13,7 @@
         android:paddingHorizontal="@dimen/space_lg"
         android:paddingTop="@dimen/space_lg">
 
-        <TextView
+        <com.projeto.marvel.ui.LogoTextView
             style="@style/Widget.Marvel.ScreenTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,14 +27,14 @@
             android:maxWidth="@dimen/action_balloon_width"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
-            android:fontFamily="@font/bebas_neue"
+            android:fontFamily="?attr/eraDisplayFont"
             android:gravity="center"
             android:maxLines="3"
             android:paddingHorizontal="@dimen/space_lg"
             android:paddingVertical="@dimen/space_md"
             android:textColor="@color/ink"
             android:textSize="15sp"
-            app:fontFamily="@font/bebas_neue" />
+            app:fontFamily="?attr/eraDisplayFont" />
     </FrameLayout>
 
     <com.google.android.material.tabs.TabLayout

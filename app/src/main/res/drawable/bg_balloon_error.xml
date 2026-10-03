@@ -2,20 +2,20 @@
 <!-- Aviso do sistema no chat (falha da IA): não é fala do personagem. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:left="@dimen/hard_shadow"
-        android:top="@dimen/hard_shadow">
+        android:left="?attr/eraShadow"
+        android:top="?attr/eraShadow">
         <shape>
             <solid android:color="@color/ink" />
             <corners android:radius="@dimen/balloon_radius" />
         </shape>
     </item>
     <item
-        android:bottom="@dimen/hard_shadow"
-        android:right="@dimen/hard_shadow">
+        android:bottom="?attr/eraShadow"
+        android:right="?attr/eraShadow">
         <shape>
             <solid android:color="@color/surface_variant" />
             <stroke
-                android:width="@dimen/ink_width"
+                android:width="?attr/eraInkWidth"
                 android:color="@color/primary_text" />
             <corners android:radius="@dimen/balloon_radius" />
         </shape>

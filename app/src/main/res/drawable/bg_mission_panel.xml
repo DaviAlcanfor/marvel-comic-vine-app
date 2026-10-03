@@ -3,7 +3,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/surface_variant" />
     <stroke
-        android:width="@dimen/ink_width"
-        android:color="@color/ink" />
-    <corners android:radius="@dimen/radius_small" />
+        android:width="?attr/eraInkWidth"
+        android:color="?attr/eraOutline" />
+    <corners android:radius="?attr/eraRadiusSmall" />
 </shape>

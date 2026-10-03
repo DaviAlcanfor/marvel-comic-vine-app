@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Campo de texto como painel de HQ: mesmo contorno de nanquim dos cards. -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/surface_variant" />
-    <stroke
-        android:width="@dimen/ink_width"
-        android:color="@color/ink" />
-    <corners android:radius="@dimen/radius_large" />
-</shape>
+<!-- Campo de texto. Desenho por época em ui/EraPanelDrawable.kt. -->
+<com.projeto.marvel.ui.EraPanelDrawable xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:panelKind="input" />

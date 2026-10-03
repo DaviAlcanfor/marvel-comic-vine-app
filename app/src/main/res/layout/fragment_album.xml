@@ -18,7 +18,7 @@
         android:paddingHorizontal="@dimen/space_lg"
         android:paddingTop="@dimen/space_lg">
 
-        <TextView
+        <com.projeto.marvel.ui.LogoTextView
             style="@style/Widget.Marvel.ScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:alpha="0"
             android:background="@color/white" />
 
-        <TextView
+        <com.projeto.marvel.ui.LogoTextView
             android:id="@+id/openingTitle"
             style="@style/Widget.Marvel.ScreenTitle"
             android:layout_width="match_parent"
@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/bangers"
+            android:fontFamily="?attr/eraSfxFont"
             android:importantForAccessibility="no"
             android:padding="@dimen/space_xl"
             android:textSize="34sp"
@@ -217,7 +217,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/ink"
-                    android:fontFamily="@font/bebas_neue"
+                    android:fontFamily="?attr/eraDisplayFont"
                     android:paddingHorizontal="@dimen/space_sm"
                     android:textColor="@color/accent_text"
                     android:textSize="22sp" />
@@ -276,7 +276,7 @@
                 android:id="@+id/upgradeTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/bebas_neue"
+                android:fontFamily="?attr/eraDisplayFont"
                 android:textColor="@color/accent_text"
                 android:textSize="20sp" />
 

@@ -28,7 +28,7 @@
             android:orientation="vertical"
             android:padding="@dimen/space_lg">
 
-            <TextView
+            <com.projeto.marvel.ui.LogoTextView
                 android:id="@+id/versusTitle"
                 style="@style/Widget.Marvel.ScreenTitle"
                 android:layout_width="match_parent"
@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/versus_badge_top"
-                    android:fontFamily="@font/bebas_neue"
+                    android:fontFamily="?attr/eraDisplayFont"
                     android:text="@string/compare_versus"
                     android:textSize="34sp" />
             </FrameLayout>

@@ -130,11 +130,9 @@ Aplicadas via ferramenta, não de memória:
   retícula e nanquim preto). `Theme.Material3.DayNight.NoActionBar`: o claro fica em
   `values/colors.xml` e o escuro em `values-night/colors.xml` (só os tokens que mudam). Segue o
   sistema ou o que o usuário fixar no Perfil (`data/ThemeStore.kt`, aplicado em `MarvelApp`).
-  **Épocas** (`ThemeMode`): Retrô = claro, Moderno = escuro e Anos 90 = escuro com
-  `ThemeOverlay.Marvel.Nineties` (aplicado na `MainActivity`). Os tokens que mudam por época
-  (`background`, `surface`, `primary`…) são `res/color/<token>.xml` apontando para `?attr/era*`; o
-  valor real é `era_<token>` (values/values-night) ou `nineties_<token>`. Widget e splash rodam fora
-  do tema: usam `era_*` direto. Fonte do título por época em `font/` e `font-night/era_title.xml`.
+  **Épocas** (`ThemeMode`: Retrô = claro, Moderno = escuro, Anos 90 = escuro + `ThemeOverlay.Marvel.Nineties`)
+  — **Design System v2 em [`docs/design-reference/DESIGN_SYSTEM_V2.md`](docs/design-reference/DESIGN_SYSTEM_V2.md)**:
+  tokens `era*`, peças (`EraPanelDrawable`, `LogoTextView`, `comicBox`) e regras para tela nova.
   Cor nova: token nos dois arquivos, nunca hex no layout. Dourado como texto é `accent_text`
   (o `accent` não dá leitura no papel claro); texto em botão vermelho é sempre `white`.
 

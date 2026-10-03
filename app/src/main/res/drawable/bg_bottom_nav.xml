@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Barra inferior: superfície com um fio de nanquim no topo, como a borda de um quadro de HQ. -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/ink" />
-    <item android:top="@dimen/ink_width">
-        <shape>
-            <solid android:color="@color/surface" />
-        </shape>
-    </item>
-</layer-list>
+<!-- Barra inferior: fundo e fio no topo. Desenho por época em ui/EraPanelDrawable.kt. -->
+<com.projeto.marvel.ui.EraPanelDrawable xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:panelKind="nav" />

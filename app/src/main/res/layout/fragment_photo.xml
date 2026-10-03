@@ -22,7 +22,7 @@
             android:contentDescription="@string/content_description_back"
             android:src="@drawable/ic_arrow_back" />
 
-        <TextView
+        <com.projeto.marvel.ui.LogoTextView
             android:id="@+id/title"
             style="@style/Widget.Marvel.ScreenTitle"
             android:layout_width="0dp"
