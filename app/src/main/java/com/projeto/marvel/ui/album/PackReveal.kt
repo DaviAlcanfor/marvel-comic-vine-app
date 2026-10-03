@@ -5,6 +5,8 @@ import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -23,17 +25,24 @@ import com.projeto.marvel.ui.comicBox
 import com.projeto.marvel.ui.shake
 import kotlin.random.Random
 
-private const val DEAL_STAGGER_MILLIS = 110L
-private const val DEAL_MILLIS = 420L
-private const val DEAL_START_SCALE = 0.25f
-private const val DEAL_DROP_DP = 260f
-private const val DEAL_SPIN = 30f
+private const val DEAL_STAGGER_MILLIS = 120L
+private const val RISE_MILLIS = 280L
+private const val SPREAD_MILLIS = 480L
+private const val DEAL_START_SCALE = 0.55f
+private const val RISE_DP = 70f
+private const val DEAL_SPIN = 12f
+private const val SPREAD_TENSION = 0.9f
+private const val PACK_MOUTH = 0.2f
+private const val PACK_EXIT_MILLIS = 450L
+private const val FLIP_LIFT = 1.1f
+private const val FLIP_TENSION = 1.4f
 private const val FLIP_GAP_MILLIS = 260L
 private const val RARE_SUSPENSE_MILLIS = 380L
 private const val LEGENDARY_SUSPENSE_MILLIS = 900L
 private const val QUARTER_TURN = 90f
 private const val CAMERA_DISTANCE = 8_000f
-private const val FLIP_HALF_MILLIS = 200L
+private const val FLIP_IN_MILLIS = 170L
+private const val FLIP_OUT_MILLIS = 280L
 private const val WORD_POP_MILLIS = 240L
 private const val WORD_HOLD_MILLIS = 650L
 private const val WORD_START_SCALE = 0.2f
@@ -42,7 +51,8 @@ private const val LINES_ALPHA = 55
 private const val FADE_MILLIS = 250L
 
 /**
- * Depois do rasgo: RIIIP!, as cartas saem do pacote em leque (de costas) e viram uma a uma. Quanto
+ * Depois do rasgo: RIIIP!, as cartas sobem de dentro do pacote (de costas), se espalham na grade,
+ * o pacote desce e elas viram uma a uma. Quanto
  * mais rara, mais suspense antes de virar (treme, e na lendária/Divina sai LENDÁRIA! e a aura).
  * Repetida mostra ×N; a primeira cópia, NOVA!. Um toque na tela pula para o fim ([skip]).
  */
@@ -53,10 +63,12 @@ class PackReveal(private val binding: FragmentAlbumBinding, private val onOpen: 
     private val revealed = mutableSetOf<Int>()
     private var stickers: List<Sticker> = emptyList()
     private var lines: Animator? = null
+    private var pack: View? = null
     private val context get() = binding.root.context
 
-    fun start(opened: List<Sticker>, inflater: LayoutInflater) {
+    fun start(opened: List<Sticker>, inflater: LayoutInflater, pack: View) {
         stop()
+        this.pack = pack
         stickers = opened
         revealed.clear()
         cards.clear()
@@ -74,14 +86,20 @@ class PackReveal(private val binding: FragmentAlbumBinding, private val onOpen: 
             row.addView(card.root, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
             cards += card
             card.bind(sticker, revealed = false)
-            card.root.deal(index)
+            card.root.alpha = 0f
         }
+        // Depois do layout: cada carta sabe onde fica e sai da "boca" do pacote até lá.
+        binding.openedCards.post { cards.forEachIndexed { index, card -> card.root.dealFrom(pack, index) } }
+        val dealt = opened.size * DEAL_STAGGER_MILLIS + RISE_MILLIS + SPREAD_MILLIS
+        pack.animate().translationY(pack.height.toFloat()).alpha(0f).setStartDelay(opened.size * DEAL_STAGGER_MILLIS)
+            .setDuration(PACK_EXIT_MILLIS).setInterpolator(AccelerateInterpolator())
+            .withEndAction { pack.visibility = View.GONE }
         // Cada carta vira depois da anterior + o suspense da raridade dela.
-        var at = opened.size * DEAL_STAGGER_MILLIS + DEAL_MILLIS
+        var at = dealt
         opened.forEachIndexed { index, sticker ->
             val suspense = sticker.suspense()
             schedule(at) { flip(index, suspense) }
-            at += suspense + FLIP_HALF_MILLIS * 2 + FLIP_GAP_MILLIS
+            at += suspense + FLIP_IN_MILLIS + FLIP_OUT_MILLIS + FLIP_GAP_MILLIS
         }
         schedule(at) { finish() }
     }
@@ -90,6 +108,8 @@ class PackReveal(private val binding: FragmentAlbumBinding, private val onOpen: 
     fun skip() {
         if (pending.isEmpty()) return
         cancelPending()
+        pack?.animate()?.cancel()
+        pack?.visibility = View.GONE
         cards.forEachIndexed { index, card ->
             card.root.animate().cancel()
             card.root.translationX = 0f
@@ -137,11 +157,15 @@ class PackReveal(private val binding: FragmentAlbumBinding, private val onOpen: 
             binding.openingAura.animate().alpha(1f).setDuration(suspense)
         }
         view.cameraDistance = CAMERA_DISTANCE * view.resources.displayMetrics.density
-        view.animate().rotationY(QUARTER_TURN).setStartDelay(suspense).setDuration(FLIP_HALF_MILLIS).withEndAction {
-            show(index)
-            view.rotationY = -QUARTER_TURN
-            view.animate().rotationY(0f).setStartDelay(0).setDuration(FLIP_HALF_MILLIS)
-        }
+        // Levanta um pouco ao virar (profundidade) e assenta com mola.
+        view.animate().rotationY(QUARTER_TURN).scaleX(FLIP_LIFT).scaleY(FLIP_LIFT).setStartDelay(suspense)
+            .setDuration(FLIP_IN_MILLIS).setInterpolator(AccelerateInterpolator())
+            .withEndAction {
+                show(index)
+                view.rotationY = -QUARTER_TURN
+                view.animate().rotationY(0f).scaleX(1f).scaleY(1f).setStartDelay(0).setDuration(FLIP_OUT_MILLIS)
+                    .setInterpolator(OvershootInterpolator(FLIP_TENSION))
+            }
     }
 
     /** Frente da carta + selo NOVA!/×N; lendária e Divina ganham onomatopeia e vibração. */
@@ -182,17 +206,27 @@ private fun Sticker.suspense() = when {
     else -> 0L
 }
 
-/** Sai de dentro do pacote (embaixo, pequena e girada) e pousa no lugar com mola. */
-private fun View.deal(index: Int) {
-    val density = resources.displayMetrics.density
-    translationY = DEAL_DROP_DP * density
+/**
+ * Sai de dentro do [pack]: começa escondida na boca dele (pequena), sobe para fora e depois voa
+ * até o lugar dela na grade, com mola.
+ */
+private fun View.dealFrom(pack: View, index: Int) {
+    val here = IntArray(2).also(::getLocationOnScreen)
+    val from = IntArray(2).also(pack::getLocationOnScreen)
+    val dx = from[0] + pack.width / 2f - (here[0] + width / 2f)
+    val dy = from[1] + pack.height * PACK_MOUTH - (here[1] + height / 2f)
+    val rise = RISE_DP * resources.displayMetrics.density
+    translationX = dx
+    translationY = dy + rise
     scaleX = DEAL_START_SCALE
     scaleY = DEAL_START_SCALE
     rotation = (Random.nextFloat() * 2 - 1) * DEAL_SPIN
-    alpha = 0f
-    animate().translationY(0f).scaleX(1f).scaleY(1f).rotation(0f).alpha(1f)
-        .setStartDelay(index * DEAL_STAGGER_MILLIS).setDuration(DEAL_MILLIS)
-        .setInterpolator(OvershootInterpolator())
+    animate().alpha(1f).translationY(dy - rise).setStartDelay(index * DEAL_STAGGER_MILLIS).setDuration(RISE_MILLIS)
+        .setInterpolator(DecelerateInterpolator())
+        .withEndAction {
+            animate().translationX(0f).translationY(0f).scaleX(1f).scaleY(1f).rotation(0f).setStartDelay(0)
+                .setDuration(SPREAD_MILLIS).setInterpolator(OvershootInterpolator(SPREAD_TENSION))
+        }
 }
 
 /** Onomatopeia estoura no meio da tela, segura e some. */

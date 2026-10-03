@@ -88,4 +88,5 @@
     <dimen name="mission_gutter">3dp</dimen>
     <dimen name="mission_pip_height">12dp</dimen>
     <dimen name="mission_tag_height">28dp</dimen>
+    <dimen name="pack_rip_height">8dp</dimen>
 </resources>

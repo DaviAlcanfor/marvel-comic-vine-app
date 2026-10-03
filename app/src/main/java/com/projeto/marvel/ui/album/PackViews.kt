@@ -1,9 +1,10 @@
 package com.projeto.marvel.ui.album
 
 import android.animation.ValueAnimator
+import android.graphics.Rect
 import android.graphics.drawable.GradientDrawable
 import android.view.View
-import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
@@ -14,11 +15,10 @@ import androidx.core.view.updateLayoutParams
 import com.projeto.marvel.R
 import com.projeto.marvel.data.PackType
 import com.projeto.marvel.databinding.ViewPackBinding
-import com.projeto.marvel.ui.shake
 import kotlin.math.sin
 
 // Pacote de figurinhas "3D": papel metalizado na cor do tipo, balanço em Y com perspectiva,
-// brilho passando e a abertura (a faixa de cima rasga e voa, o corpo cai).
+// brilho passando e a abertura (a faixa de cima descola com o dedo e voa).
 
 @StringRes
 fun PackType.label() = when (this) {
@@ -44,11 +44,10 @@ fun PackType.colors(): List<Int> = when (this) {
 private const val TOP_FRACTION = 0.16f
 private const val CAMERA_DISTANCE = 10_000f
 private const val SHINE_MILLIS = 1_600L
-private const val TEAR_MILLIS = 450L
-private const val TEAR_TILT = -28f
-private const val FALL_SCALE = 0.85f
-private const val SHAKE_MILLIS = 350L
-private const val TILT_DIVISOR = 4
+private const val PEEL_DEGREES = 32f
+private const val PEEL_LIFT = 0.6f
+private const val FLY_DEGREES = 70f
+private const val FLY_MILLIS = 420L
 private const val PLATE_ALPHA = 220
 
 /**
@@ -75,7 +74,13 @@ fun ViewPackBinding.style(type: PackType, large: Boolean, art: String? = null) {
     }
     // Plaquinha do nome na cor do tipo, meio transparente: o desenho aparece por trás.
     packPlate.setBackgroundColor(ColorUtils.setAlphaComponent(mid, PLATE_ALPHA))
-    root.post { packTop.updateLayoutParams { height = (root.height * TOP_FRACTION).toInt() } }
+    val paper = ContextCompat.getColor(context, R.color.comic_paper)
+    packRip.background = RipDrawable(paper, ink, context.resources.displayMetrics.density)
+    root.post {
+        val top = (root.height * TOP_FRACTION).toInt()
+        packTop.updateLayoutParams { height = top }
+        packRip.translationY = top - packRip.height / 2f
+    }
     packName.setText(type.label())
     packInfo.setText(type.info())
     val scale = if (large) LARGE_SCALE else 1f
@@ -99,22 +104,38 @@ fun ViewPackBinding.gleam() {
         .setInterpolator(LinearInterpolator())
 }
 
-/** Treme, a faixa de cima rasga e voa girando, o corpo cai; depois [onOpened]. */
-fun ViewPackBinding.tear(onOpened: () -> Unit) {
-    root.shake()
-    val height = root.height.toFloat()
-    packTop.animate().translationY(-height).translationX(height / TILT_DIVISOR).rotation(TEAR_TILT).alpha(0f)
-        .setStartDelay(SHAKE_MILLIS).setDuration(TEAR_MILLIS)
-        .setInterpolator(AccelerateInterpolator())
-    packBody.animate().translationY(height).scaleX(FALL_SCALE).scaleY(FALL_SCALE).alpha(0f)
-        .setStartDelay(SHAKE_MILLIS + TEAR_MILLIS / 2).setDuration(TEAR_MILLIS)
-        .setInterpolator(AccelerateInterpolator())
-        .withEndAction(onOpened)
+/**
+ * Faixa descolando com o dedo: [progress] 0..1 do rasgo, [direction] +1 puxando para a direita
+ * (a ponta esquerda solta e sobe, a direita segue presa) ou -1. A borda rasgada aparece até onde
+ * o rasgo chegou.
+ */
+fun ViewPackBinding.peel(progress: Float, direction: Int) {
+    val width = packTop.width.toFloat()
+    packTop.pivotX = if (direction > 0) width else 0f
+    packTop.pivotY = packTop.height.toFloat()
+    packTop.rotation = -direction * progress * PEEL_DEGREES
+    packTop.translationY = -progress * packTop.height * PEEL_LIFT
+    packRip.visibility = if (progress > 0f) View.VISIBLE else View.INVISIBLE
+    val torn = (progress * root.width).toInt()
+    packRip.clipBounds = if (direction > 0) {
+        Rect(0, 0, torn, packRip.height)
+    } else {
+        Rect(root.width - torn, 0, root.width, packRip.height)
+    }
+}
+
+/** Rasgo completo: a faixa sai voando para o lado do dedo, girando. */
+fun ViewPackBinding.flyStrip(direction: Int) {
+    val width = root.width.toFloat()
+    packTop.animate().translationX(direction * width).translationY(-width / 2).rotation(-direction * FLY_DEGREES)
+        .alpha(0f).setStartDelay(0).setDuration(FLY_MILLIS).setInterpolator(DecelerateInterpolator())
 }
 
 /** Volta ao estado fechado (para abrir outro). */
 fun ViewPackBinding.reset() {
-    listOf<View>(packTop, packBody).forEach {
+    packRip.visibility = View.INVISIBLE
+    packRip.clipBounds = null
+    listOf<View>(root, packTop, packBody).forEach {
         it.animate().cancel()
         it.translationX = 0f
         it.translationY = 0f

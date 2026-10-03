@@ -147,7 +147,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         }
     }
 
-    /** Pacote grande interativo ([PackMotion]); rasgado, as figurinhas viram uma a uma. */
+    /** Pacote grande interativo ([PackMotion]): rasga com o dedo e as figurinhas saem dele ([PackReveal]). */
     private fun showOpening(binding: FragmentAlbumBinding, state: AlbumUiState.Success) {
         val pack = binding.bigPack
         val type = state.openedType
@@ -162,14 +162,11 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         binding.opening.fadeIn()
         geek(false)
         motion?.stop()
-        motion = PackMotion(pack) {
+        motion = PackMotion(pack) { direction ->
             pack.root.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
-            binding.openingHint.isVisible = false
-            pack.tear {
-                pack.root.isVisible = false
-                binding.flash.flash()
-                reveal?.start(state.opened, layoutInflater)
-            }
+            pack.flyStrip(direction)
+            binding.flash.flash()
+            reveal?.start(state.opened, layoutInflater, pack.root)
         }.also { it.start() }
     }
 

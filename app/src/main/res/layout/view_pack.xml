@@ -79,6 +79,15 @@
             android:scaleY="1.4" />
     </FrameLayout>
 
+    <!-- Borda rasgada (RipDrawable): aparece na linha do rasgo conforme o dedo puxa a faixa. -->
+    <View
+        android:id="@+id/packRip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pack_rip_height"
+        android:layout_gravity="top"
+        android:importantForAccessibility="no"
+        android:visibility="invisible" />
+
     <!-- Faixa serrilhada do topo: é ela que "rasga" na abertura. -->
     <View
         android:id="@+id/packTop"

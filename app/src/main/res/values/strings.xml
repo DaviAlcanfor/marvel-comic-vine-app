@@ -228,7 +228,7 @@
     <string name="album_sort_copies">Ordem: mais repetidas</string>
     <string name="album_filter_count">%1$d de %2$d figurinhas</string>
     <string name="album_filter_empty">Nenhuma figurinha com esse filtro.</string>
-    <string name="album_how_to_open">Gire com o dedo ou inclinando o celular · puxe a faixa de cima para rasgar</string>
+    <string name="album_how_to_open">Deslize o dedo na faixa de cima para rasgar · ou toque no pacote</string>
     <string name="upgrade_open">Editar atributos · %1$d livres</string>
     <string name="upgrade_close">Fechar edição · %1$d livres</string>
     <string name="upgrade_title">Nv %1$d · %2$d de %3$d pontos livres</string>
