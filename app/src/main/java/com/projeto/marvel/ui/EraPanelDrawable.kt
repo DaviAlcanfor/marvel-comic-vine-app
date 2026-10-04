@@ -200,7 +200,7 @@ class EraPanelDrawable() : Drawable() {
             era == Era.NINETIES && (kind == Kind.BUTTON || kind == Kind.CAPTION) -> stroke.color = accentColor
             era == Era.MODERN && (kind == Kind.BUTTON || kind == Kind.CAPTION) -> stroke.strokeWidth = 0f
             kind == Kind.CHAMFER_FILL && era == Era.NINETIES -> stroke.strokeWidth = 0f
-            era == Era.RETRO -> stroke.color = inkColor
+            era == Era.RETRO -> stroke.color = outlineColor
         }
     }
 

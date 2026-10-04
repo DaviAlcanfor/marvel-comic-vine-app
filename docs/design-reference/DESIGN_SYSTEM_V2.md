@@ -4,8 +4,10 @@ Aprovado a partir do canvas "Marvel App — Épocas dos quadrinhos" (proposta co
 kit de peças das três épocas), feito sobre as referências de HQ em `comics_reference.zip`. Substitui o visual único do v1
 (`DESIGN_TOKENS.md` continua valendo para espaçamentos e tamanhos).
 
-O usuário escolhe a época no Perfil (`ThemeMode`); "seguir o sistema" = Retrô no claro, Moderno no
-escuro. Ao entrar numa tela, a época tem de ser reconhecível só pelo traço.
+O usuário escolhe a época no Perfil (`ThemeMode`): Retrô, **Retrô escuro**, Anos 90 ou Moderno;
+"seguir o sistema" = Retrô de dia, Retrô escuro à noite. O Retrô escuro é o Retrô inteiro (formas,
+letras, legendas amarelas) sobre papel envelhecido escuro `#1C1812`, com nanquim claro `#EFE3C6` nos
+contornos (`ThemeOverlay.Marvel.RetroDark`); as figurinhas continuam papel branco com nome em nanquim. Ao entrar numa tela, a época tem de ser reconhecível só pelo traço.
 
 | | Retrô (1962–1985) | Anos 90 / 2000 | Moderno (2010–hoje) |
 |---|---|---|---|

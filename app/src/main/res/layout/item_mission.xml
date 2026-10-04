@@ -59,9 +59,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:importantForAccessibility="no"
+            android:layout_margin="@dimen/space_xs"
             android:maxLines="1"
-            android:rotation="8"
-            android:textSize="12sp"
+            android:rotation="-6"
+            android:textSize="20sp"
             tools:text="POW!" />
     </FrameLayout>
 

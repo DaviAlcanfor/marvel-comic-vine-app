@@ -61,7 +61,16 @@ private fun ItemStickerBinding.dress(era: Era, owned: Boolean) {
         Era.NINETIES -> number.styleNumber(color(R.color.logo_yellow), color(R.color.nineties_background))
         Era.MODERN -> number.styleNumber(color(R.color.modern_number), color(R.color.white))
     }
-    name.setTextColor(color(if (era == Era.NINETIES) R.color.logo_yellow else R.color.text_primary))
+    // Retrô: a figurinha é papel branco (no claro e no escuro), então o nome é sempre nanquim.
+    name.setTextColor(
+        color(
+            when (era) {
+                Era.RETRO -> R.color.ink
+                Era.NINETIES -> R.color.logo_yellow
+                Era.MODERN -> R.color.text_primary
+            }
+        )
+    )
     name.isAllCaps = era != Era.MODERN
     missing.background = when (era) {
         Era.RETRO -> dashedBox(context)

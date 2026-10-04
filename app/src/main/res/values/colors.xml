@@ -73,6 +73,20 @@
     <color name="rarity_rare">#A8B0BA</color>
     <color name="rarity_legendary">#E6B800</color>
     <color name="rarity_divine">#C77DFF</color>
+    <!-- Retrô escuro (ThemeOverlay.Marvel.RetroDark, por cima do escuro): papel de gibi envelhecido
+         no escuro, nanquim claro nos contornos, retícula em tinta fosca. -->
+    <color name="retro_dark_background">#1C1812</color>
+    <color name="retro_dark_surface">#2A241A</color>
+    <color name="retro_dark_surface_variant">#352D20</color>
+    <color name="retro_dark_border">#5A4C36</color>
+    <color name="retro_dark_text_secondary">#C9BC9E</color>
+    <color name="retro_dark_primary">#C8261E</color>
+    <color name="retro_dark_primary_variant">#8E1A14</color>
+    <color name="retro_dark_overlay">#F21C1812</color>
+    <color name="retro_dark_ink">#EFE3C6</color>
+    <color name="retro_dark_halftone">#E04A2E</color>
+    <color name="retro_dark_halftone_alt">#3D8FD0</color>
+    <color name="retro_dark_speed_lines">#1AEFE3C6</color>
     <!-- Tema Anos 90 / 2000 (ThemeOverlay.Marvel.Nineties, por cima do escuro). -->
     <color name="nineties_background">#1B1036</color>
     <color name="nineties_background_end">#0B2A3A</color>

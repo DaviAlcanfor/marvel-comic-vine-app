@@ -20,6 +20,7 @@ import com.projeto.marvel.ui.Era
 import com.projeto.marvel.ui.comicBox
 import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.era
+import com.projeto.marvel.ui.eraOutline
 
 private val FILTER_LABELS = mapOf(
     AlbumFilter.ALL to R.string.album_filter_all,
@@ -120,7 +121,7 @@ fun ViewAlbumHeaderBinding.applyEra() {
             searchLabel.setTextColor(color(R.color.nineties_outline))
             searchLabel.text = context.getString(R.string.album_search_label).trimEnd(':')
         }
-        Era.RETRO -> searchLabel.setTextColor(color(R.color.ink))
+        Era.RETRO -> searchLabel.setTextColor(context.eraOutline())
     }
 }
 

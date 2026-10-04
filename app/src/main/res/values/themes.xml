@@ -65,6 +65,56 @@
     </style>
 
     <!--
+      Retrô escuro: as formas, letras e cores de destaque do Retrô (traço grosso, sombra dura,
+      cantos retos, Bangers e Comic Neue) sobre papel envelhecido escuro, com nanquim claro.
+      Aplicado por cima do tema escuro na MainActivity (ThemeMode.RETRO_DARK, ou Seguir o sistema
+      à noite).
+    -->
+    <style name="ThemeOverlay.Marvel.RetroDark" parent="">
+        <item name="eraBackground">@color/retro_dark_background</item>
+        <item name="eraSurface">@color/retro_dark_surface</item>
+        <item name="eraSurfaceVariant">@color/retro_dark_surface_variant</item>
+        <item name="eraBorder">@color/retro_dark_border</item>
+        <item name="eraTextSecondary">@color/retro_dark_text_secondary</item>
+        <item name="eraPrimary">@color/retro_dark_primary</item>
+        <item name="eraPrimaryVariant">@color/retro_dark_primary_variant</item>
+        <item name="eraOverlay">@color/retro_dark_overlay</item>
+        <item name="eraScrim">@color/retro_dark_surface</item>
+        <item name="eraSpeedLines">@color/retro_dark_speed_lines</item>
+        <item name="eraHalftone">@color/retro_dark_halftone</item>
+        <item name="eraHalftoneAlt">@color/retro_dark_halftone_alt</item>
+        <item name="eraScreen">@color/retro_dark_background</item>
+        <item name="eraPattern">@android:color/transparent</item>
+        <item name="eraTitleFont">@font/bangers</item>
+        <item name="eraTitleColor">@color/logo_yellow</item>
+        <item name="eraBodyFont">@font/comic_neue</item>
+        <item name="eraDisplayFont">@font/bangers</item>
+        <item name="eraSfxFont">@font/bangers</item>
+        <item name="eraCaptionFont">@font/comic_neue_bold_italic</item>
+        <item name="eraCaptionSize">14sp</item>
+        <item name="eraCaptionText">@color/ink</item>
+        <item name="eraOutline">@color/retro_dark_ink</item>
+        <item name="eraInkWidth">2.5dp</item>
+        <item name="eraShadow">4dp</item>
+        <item name="eraRadius">0dp</item>
+        <item name="eraRadiusSmall">0dp</item>
+        <item name="eraStyle">0</item>
+        <item name="eraNavActive">@color/ink</item>
+        <item name="eraNavInactive">@color/retro_dark_ink</item>
+        <item name="eraNavIndicator">@color/logo_yellow</item>
+        <item name="eraChipShape">@style/ShapeAppearance.Marvel.Chip.Retro</item>
+        <item name="eraChipFill">@color/retro_dark_surface</item>
+        <item name="eraChipChecked">@color/caption_yellow</item>
+        <item name="eraChipText">@color/retro_dark_ink</item>
+        <item name="eraChipCheckedText">@color/ink</item>
+        <item name="eraTitleShadow">@color/ink</item>
+        <item name="android:fontFamily">@font/comic_neue</item>
+        <item name="fontFamily">@font/comic_neue</item>
+        <item name="android:statusBarColor">@color/retro_dark_background</item>
+        <item name="android:navigationBarColor">@color/retro_dark_surface</item>
+    </style>
+
+    <!--
       Anos 90 / 2000 (X-Men '92 e '97, Marvel Knights): aplicado por cima do tema escuro na
       MainActivity. Roxo profundo com azul-petróleo, magenta no lugar do vermelho e letreiro
       amarelo com "extrusão" azul.

@@ -137,7 +137,7 @@ Aplicadas via ferramenta, não de memória:
   retícula e nanquim preto). `Theme.Material3.DayNight.NoActionBar`: o claro fica em
   `values/colors.xml` e o escuro em `values-night/colors.xml` (só os tokens que mudam). Segue o
   sistema ou o que o usuário fixar no Perfil (`data/ThemeStore.kt`, aplicado em `MarvelApp`).
-  **Épocas** (`ThemeMode`: Retrô = claro, Moderno = escuro, Anos 90 = escuro + `ThemeOverlay.Marvel.Nineties`)
+  **Épocas** (`ThemeMode`: Retrô = claro, Moderno = escuro, Retrô escuro e Anos 90 = escuro + `ThemeOverlay.Marvel.RetroDark`/`Nineties`; sistema = Retrô de dia, Retrô escuro à noite)
   — **Design System v2 em [`docs/design-reference/DESIGN_SYSTEM_V2.md`](docs/design-reference/DESIGN_SYSTEM_V2.md)**:
   tokens `era*`, peças (`EraPanelDrawable`, `LogoTextView`, `comicBox`) e regras para tela nova.
   Cor nova: token nos dois arquivos, nunca hex no layout. Dourado como texto é `accent_text`

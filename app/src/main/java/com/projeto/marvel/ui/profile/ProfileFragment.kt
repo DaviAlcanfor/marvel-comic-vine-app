@@ -197,7 +197,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun pickTheme() {
         val store = ThemeStore(requireContext())
-        val labels = arrayOf(R.string.theme_system, R.string.theme_light, R.string.theme_nineties, R.string.theme_dark)
+        val labels = arrayOf(
+            R.string.theme_system,
+            R.string.theme_light,
+            R.string.theme_retro_dark,
+            R.string.theme_nineties,
+            R.string.theme_dark
+        )
             .map(::getString)
         requireContext().comicDialog()
             .setTitle(R.string.profile_theme_title)
@@ -205,8 +211,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 dialog.dismiss()
                 val before = store.get()
                 store.set(ThemeMode.entries[which])
-                // Anos 90 é sobreposição de tema, não modo noturno: o AppCompat não recria sozinho.
-                if (before.nineties != ThemeMode.entries[which].nineties) requireActivity().recreate()
+                // Retrô escuro e Anos 90 são sobreposição de tema, não modo noturno: o AppCompat
+                // não recria sozinho quando só ela muda.
+                if (before.overlay != ThemeMode.entries[which].overlay) requireActivity().recreate()
             }
             .setNeutralButton(R.string.opening_pick) { _, _ -> requireContext().pickOpening() }
             .show()

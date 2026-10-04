@@ -586,8 +586,9 @@
 
     <string name="content_description_back">Voltar</string>
     <string name="profile_theme_title">Época</string>
-    <string name="theme_system">Seguir o sistema (Retrô no claro, Moderno no escuro)</string>
+    <string name="theme_system">Seguir o sistema (Retrô claro de dia, Retrô escuro à noite)</string>
     <string name="theme_light">Retrô · anos 60–80 (papel de gibi)</string>
+    <string name="theme_retro_dark">Retrô escuro (papel envelhecido)</string>
     <string name="theme_nineties">Anos 90 / 2000</string>
     <string name="theme_dark">Moderno (escuro)</string>
 </resources>

@@ -52,6 +52,7 @@ private val TEXTS = mapOf(
 private fun Mission.text() = TEXTS.getValue(id)
 
 private const val DONE_ALPHA = 0.55f
+private const val SFX_GLOW_DP = 3f
 private const val MAX_PIPS = 10
 private const val WRAP = LinearLayout.LayoutParams.WRAP_CONTENT
 
@@ -97,10 +98,10 @@ private fun ItemMissionBinding.bind(state: MissionProgress, artPool: List<String
     artPool.takeIf { it.isNotEmpty() }?.let { pool -> art.load(pool[mission.id.hashCode().mod(pool.size)]) }
     sfx.text = SOUNDS[mission.event] ?: "POW!"
     sfx.typeface = context.eraFont(R.attr.eraSfxFont)
-    sfx.comicBox(BoxStyle.BURST, ContextCompat.getColor(context, R.color.logo_yellow))
-    // Explosão pequena: o topo do quadro é baixo para o padding padrão dela.
-    val burstPad = context.resources.getDimensionPixelSize(R.dimen.space_md)
-    sfx.setPadding(burstPad, burstPad / 2, burstPad, burstPad / 2)
+    // Branco com sombra de nanquim: lê em qualquer arte, inclusive nas de fundo claro.
+    val density = context.resources.displayMetrics.density
+    sfx.setTextColor(ContextCompat.getColor(context, R.color.white))
+    sfx.setShadowLayer(SFX_GLOW_DP * density, density, density, ContextCompat.getColor(context, R.color.ink))
     title.setText(mission.text())
     count.text = context.getString(R.string.mission_count, state.progress, mission.goal)
     pips.bindPips(state.progress, mission.goal)
