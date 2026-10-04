@@ -1,5 +1,6 @@
 package com.projeto.marvel.ui.locations
 
+import com.projeto.marvel.ui.dressCard
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -91,7 +92,11 @@ class PlaceAdapter(
 ) : ListAdapter<Place, PlaceAdapter.ViewHolder>(Diff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        ViewHolder(
+            ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply {
+                dressCard(root, thumbnail, name, subtitle)
+            }
+        )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
 

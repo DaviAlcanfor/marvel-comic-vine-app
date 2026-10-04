@@ -102,4 +102,6 @@
     <dimen name="comic_panel_height">200dp</dimen>
     <dimen name="trade_button_height">40dp</dimen>
     <dimen name="mission_art_height">72dp</dimen>
+    <dimen name="versus_name_inset">28dp</dimen>
+    <dimen name="fighter_half">40dp</dimen>
 </resources>

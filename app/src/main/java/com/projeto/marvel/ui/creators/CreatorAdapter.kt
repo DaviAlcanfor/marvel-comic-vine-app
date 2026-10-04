@@ -1,5 +1,6 @@
 package com.projeto.marvel.ui.creators
 
+import com.projeto.marvel.ui.dressCard
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
@@ -19,6 +20,7 @@ class CreatorAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        dressCard(binding.root, binding.thumbnail, binding.name, binding.subtitle)
         cardWidth?.let { width -> binding.root.updateLayoutParams { this.width = width } }
         return ViewHolder(binding)
     }

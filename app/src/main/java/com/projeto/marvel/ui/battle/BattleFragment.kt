@@ -21,6 +21,7 @@ import coil.load
 import com.projeto.marvel.R
 import com.projeto.marvel.data.MoveType
 import com.projeto.marvel.databinding.FragmentBattleBinding
+import com.projeto.marvel.ui.eraAvatar
 import com.projeto.marvel.ui.SpeedLinesDrawable
 import com.projeto.marvel.ui.album.badged
 import com.projeto.marvel.ui.color
@@ -60,6 +61,8 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
         lastEventId = -1
+        binding.cpuImage.eraAvatar()
+        binding.playerImage.eraAvatar()
 
         binding.backButton.setOnClickListener { findNavController().navigateUp() }
         binding.errorText.setOnClickListener { viewModel.load() }

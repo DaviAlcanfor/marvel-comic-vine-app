@@ -7,6 +7,10 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.projeto.marvel.R
+import com.projeto.marvel.ui.Era
+import com.projeto.marvel.ui.era
+import com.projeto.marvel.ui.eraDimen
+import com.projeto.marvel.ui.eraOutline
 
 /**
  * Fundo 3D da arena (ver [ArenaRenderer]). Observa o ciclo de vida da tela: só desenha enquanto
@@ -20,21 +24,7 @@ class ArenaView @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : GLSurfaceView(context, attrs), DefaultLifecycleObserver {
 
-    private val renderer = ArenaRenderer(
-        ArenaColors(
-            background = ContextCompat.getColor(context, R.color.background),
-            floor = ContextCompat.getColor(context, R.color.surface_variant),
-            skirt = ContextCompat.getColor(context, R.color.primary_variant),
-            post = ContextCompat.getColor(context, R.color.accent),
-            ropes = intArrayOf(
-                ContextCompat.getColor(context, R.color.primary),
-                ContextCompat.getColor(context, R.color.text_primary),
-                ContextCompat.getColor(context, R.color.move_water)
-            ),
-            ink = ContextCompat.getColor(context, R.color.ink)
-        ),
-        inkWidth = context.resources.getDimension(R.dimen.ink_width) * INK_SCALE
-    )
+    private val renderer = ArenaRenderer(arenaColors(context), context.eraDimen(R.attr.eraInkWidth) * INK_SCALE)
 
     init {
         setEGLContextClientVersion(2)
@@ -48,4 +38,31 @@ class ArenaView @JvmOverloads constructor(
     override fun onResume(owner: LifecycleOwner) = onResume()
 
     override fun onPause(owner: LifecycleOwner) = onPause()
+}
+
+/**
+ * Ringue no traço da época: cordas vermelho/branco/azul de gibi (Retrô; no escuro, nanquim claro),
+ * neon magenta/ciano/amarelo (Anos 90) ou grafite com cordas vermelhas (Moderno).
+ */
+private fun arenaColors(context: Context): ArenaColors {
+    fun color(res: Int) = ContextCompat.getColor(context, res)
+    val ropes = when (context.era()) {
+        Era.RETRO -> intArrayOf(color(R.color.primary), color(R.color.text_primary), color(R.color.move_water))
+        Era.NINETIES ->
+            intArrayOf(color(R.color.nineties_magenta), color(R.color.nineties_outline), color(R.color.logo_yellow))
+        Era.MODERN -> intArrayOf(color(R.color.primary), color(R.color.primary_variant), color(R.color.text_secondary))
+    }
+    val post = when (context.era()) {
+        Era.RETRO -> color(R.color.accent)
+        Era.NINETIES -> color(R.color.nineties_outline)
+        Era.MODERN -> color(R.color.surface)
+    }
+    return ArenaColors(
+        background = color(R.color.background),
+        floor = color(R.color.surface_variant),
+        skirt = color(R.color.primary_variant),
+        post = post,
+        ropes = ropes,
+        ink = context.eraOutline()
+    )
 }

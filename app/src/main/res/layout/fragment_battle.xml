@@ -141,6 +141,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Placa do lutador (nome, vida, energia) no traço da época: legível por cima do ringue. -->
+    <View
+        android:id="@+id/cpuHud"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/fighter_half"
+        android:background="@drawable/bg_card"
+        app:layout_constraintBottom_toBottomOf="@id/cpuImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/cpuImage"
+        app:layout_constraintTop_toTopOf="@id/cpuImage" />
+
     <ImageView
         android:id="@+id/cpuImage"
         android:layout_width="@dimen/fighter_size"
@@ -169,9 +181,11 @@
         android:layout_marginStart="@dimen/space_md"
         android:ellipsize="end"
         android:maxLines="1"
+        android:layout_marginEnd="@dimen/space_md"
+        android:fontFamily="?attr/eraDisplayFont"
         android:textColor="@color/text_primary"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
+        app:fontFamily="?attr/eraDisplayFont"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cpuImage"
         app:layout_constraintTop_toTopOf="@id/cpuImage"
@@ -259,6 +273,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:id="@+id/playerHud"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/fighter_half"
+        android:background="@drawable/bg_card"
+        app:layout_constraintBottom_toBottomOf="@id/playerImage"
+        app:layout_constraintEnd_toEndOf="@id/playerImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/playerImage" />
+
     <ImageView
         android:id="@+id/playerImage"
         android:layout_width="@dimen/fighter_size"
@@ -288,9 +313,11 @@
         android:ellipsize="end"
         android:gravity="end"
         android:maxLines="1"
+        android:layout_marginStart="@dimen/space_md"
+        android:fontFamily="?attr/eraDisplayFont"
         android:textColor="@color/text_primary"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
+        app:fontFamily="?attr/eraDisplayFont"
         app:layout_constraintEnd_toStartOf="@id/playerImage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/playerImage"

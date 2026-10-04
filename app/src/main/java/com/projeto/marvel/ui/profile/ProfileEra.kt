@@ -12,21 +12,11 @@ import com.projeto.marvel.ui.Era
 import com.projeto.marvel.ui.EraPanelDrawable
 import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.era
+import com.projeto.marvel.ui.eraAvatar
 import com.projeto.marvel.ui.opening.OpeningScript
 
 /** Avatar do Perfil no traço da época, igual ao da Início: quadro de nanquim, moldura neon ou anel vermelho. */
-fun FragmentProfileBinding.applyEra() {
-    val context = root.context
-    when (context.era()) {
-        Era.RETRO, Era.NINETIES -> {
-            avatar.background = EraPanelDrawable(context, EraPanelDrawable.Kind.PANEL)
-            avatar.foreground = null
-            val frame = context.resources.getDimensionPixelSize(R.dimen.space_xs)
-            avatar.setPadding(frame, frame, frame, frame)
-        }
-        Era.MODERN -> avatar.foreground = ContextCompat.getDrawable(context, R.drawable.fg_modern_ring)
-    }
-}
+fun FragmentProfileBinding.applyEra() = avatar.eraAvatar()
 
 /**
  * Medalha de conquista na cor [fill]: círculo com nanquim (Retrô), placa chanfrada (Anos 90) ou
