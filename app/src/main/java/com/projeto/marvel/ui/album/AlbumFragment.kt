@@ -130,13 +130,13 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             val count = state.packs[type] ?: 0
             tile.pack.style(type, large = false, art = state.packArt[type])
             tile.root.isEnabled = count > 0
-            tile.root.alpha = if (count > 0) 1f else DISABLED_ALPHA
+            // Só a arte esmaece: o rótulo "Prata ×0" fica em nanquim, legível no papel claro.
+            tile.pack.root.alpha = if (count > 0) 1f else DISABLED_ALPHA
             tile.count.text = getString(R.string.album_pack_count, getString(type.label()), count)
             if (count > 0) tile.pack.gleam()
         }
         header.tradeButton.text = getString(R.string.album_trade, state.tradable.coerceAtMost(TRADE_COST), TRADE_COST)
         header.tradeButton.isEnabled = state.tradable >= TRADE_COST
-        header.tradeButton.alpha = if (header.tradeButton.isEnabled) 1f else DISABLED_ALPHA
         header.submit(adapter, state.stickers, viewModel.query.value)
         if (state.openId != shownOpenId && state.opened.isNotEmpty()) {
             shownOpenId = state.openId

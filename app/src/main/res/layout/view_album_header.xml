@@ -101,17 +101,16 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Troca de repetidas por um Prata (desativado sem repetidas suficientes). -->
-    <!-- Compacto e à direita: é um atalho, não a ação principal da tela. -->
+    <!-- Troca de repetidas por um Prata (desativado sem repetidas suficientes). Botão vermelho com
+         texto branco na largura da grade: lê em todas as épocas, inclusive desativado. -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/tradeButton"
-        style="@style/Widget.Marvel.ComicButton.Secondary"
-        android:layout_width="wrap_content"
+        style="@style/Widget.Marvel.ComicButton"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/trade_button_height"
-        android:layout_gravity="end"
         android:layout_marginTop="@dimen/space_sm"
         android:paddingHorizontal="@dimen/space_md"
-        android:textSize="15sp" />
+        android:textSize="16sp" />
 
     <!-- Busca: "BUSCAR:" escrito (Retrô, Anos 90) ou a lupa (Moderno), e o campo. -->
     <LinearLayout

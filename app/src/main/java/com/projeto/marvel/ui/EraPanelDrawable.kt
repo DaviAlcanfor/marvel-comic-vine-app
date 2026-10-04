@@ -204,7 +204,8 @@ class EraPanelDrawable() : Drawable() {
         }
     }
 
-    private fun disabledFill() = ColorUtils.setAlphaComponent(fillColor, DISABLED_ALPHA)
+    // Opaco: translúcido deixava a sombra de nanquim aparecer e virava cinza-escuro sob o texto.
+    private fun disabledFill() = ColorUtils.blendARGB(fillColor, android.graphics.Color.GRAY, DISABLED_BLEND)
 
     /** Retrô: placa amarela de nanquim, meio torta, atrás do item ativo da barra. */
     private fun drawNavItem(canvas: Canvas) {
@@ -298,7 +299,7 @@ class EraPanelDrawable() : Drawable() {
         const val NAV_ITEM_INSET_DP = 6f
         const val NAV_ITEM_SHADOW_DP = 3f
         const val NAV_ITEM_TILT = -3f
-        const val DISABLED_ALPHA = 0x73
+        const val DISABLED_BLEND = 0.25f
         const val PRESS_DARKEN = 0.2f
         const val BUTTON_SHINE = 0.25f
         val CAPTION_FILL = mapOf(
