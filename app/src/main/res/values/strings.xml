@@ -188,6 +188,16 @@
     <string name="discover_call_teams">Batalhe agora com as equipes!</string>
     <string name="discover_call_creators">Conheça quem criou tudo!</string>
     <string name="discover_call_movies">Das HQs pro cinema!</string>
+    <string name="discover_releases">Bancas</string>
+    <string name="discover_call_releases">Saiu agora!</string>
+    <string name="releases_intro">HQs da Marvel que chegaram às bancas nesta semana. Toque numa para guardar ou lembrar.</string>
+    <string name="releases_empty">Nenhuma HQ da Marvel nas bancas nesta semana (ainda). Toque para tentar de novo.</string>
+    <string name="releases_want">Quero ler</string>
+    <string name="releases_remind">Lembrar na agenda</string>
+    <string name="releases_added">Guardada em Quero ler.</string>
+    <string name="releases_event">Comprar %1$s</string>
+    <string name="releases_no_calendar">Nenhum app de agenda no celular.</string>
+    <string name="releases_day">Banca %1$s</string>
     <string name="discover_call_locations">Veja no mapa!</string>
     <string name="locations_intro">Cidades reais e lugares fictícios das HQs. Nos reais, dá para abrir no mapa.</string>
     <string name="locations_search_hint">Buscar lugar</string>

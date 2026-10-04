@@ -30,6 +30,24 @@ interface CatalogService {
     @GET
     suspend fun getMovie(@Url url: String, @Query("field_list") fieldList: String? = null): ApiItem<Movie>
 
+    /** Lançamentos: [filter] no formato `store_date:2026-09-28|2026-10-04`. */
+    @GET("issues/")
+    suspend fun getIssues(
+        @Query("filter") filter: String,
+        @Query("offset") offset: Int = 0,
+        @Query("sort") sort: String = "store_date:desc",
+        @Query("limit") limit: Int = 100,
+        @Query("field_list") fieldList: String? = null
+    ): ApiList<Issue>
+
+    /** [filter] no formato `id:1|2|3`; serve para saber a editora de cada volume. */
+    @GET("volumes/")
+    suspend fun getVolumes(
+        @Query("filter") filter: String,
+        @Query("limit") limit: Int = 100,
+        @Query("field_list") fieldList: String = "id,publisher"
+    ): ApiList<VolumePublisher>
+
     /** [filter] no formato `id:1|2|3`. */
     @GET("teams/")
     suspend fun getTeamDebuts(

@@ -24,6 +24,7 @@ import com.projeto.marvel.ui.characters.CharactersFragment
 import com.projeto.marvel.ui.creators.CreatorsFragment
 import com.projeto.marvel.ui.locations.LocationsFragment
 import com.projeto.marvel.ui.movies.MoviesFragment
+import com.projeto.marvel.ui.releases.ReleasesFragment
 import com.projeto.marvel.ui.teams.TeamsFragment
 
 /**
@@ -80,7 +81,8 @@ class DiscoverFragment : Fragment(R.layout.fragment_discover) {
             Call(R.string.discover_call_teams, BoxStyle.SPEECH, R.color.move_water, -2f, -6, 2),
             Call(R.string.discover_call_creators, BoxStyle.CAPTION, R.color.move_heal, 1f, -12, 0),
             Call(R.string.discover_call_movies, BoxStyle.BURST, R.color.move_magic, 2f, -4, -2),
-            Call(R.string.discover_call_locations, BoxStyle.SPEECH, R.color.move_dodge, -1f, -8, 2)
+            Call(R.string.discover_call_locations, BoxStyle.SPEECH, R.color.move_dodge, -1f, -8, 2),
+            Call(R.string.discover_call_releases, BoxStyle.BURST, R.color.move_strike, -2f, -6, 0)
         )
 
         private val PAGES: List<Pair<Int, () -> Fragment>> = listOf(
@@ -88,7 +90,8 @@ class DiscoverFragment : Fragment(R.layout.fragment_discover) {
             R.string.discover_teams to ::TeamsFragment,
             R.string.discover_creators to ::CreatorsFragment,
             R.string.discover_movies to ::MoviesFragment,
-            R.string.discover_locations to ::LocationsFragment
+            R.string.discover_locations to ::LocationsFragment,
+            R.string.discover_releases to ::ReleasesFragment
         )
     }
 }

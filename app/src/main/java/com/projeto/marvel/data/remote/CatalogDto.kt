@@ -88,3 +88,9 @@ data class Location(
     @SerializedName("description") val description: String? = null,
     @SerializedName("first_appeared_in_issue") val firstIssue: IssueRef? = null
 )
+
+/** Volume (série) só com a editora: as edições não dizem de quem são, o volume diz. */
+data class VolumePublisher(
+    @SerializedName("id") val id: Int,
+    @SerializedName("publisher") val publisher: Publisher?
+)

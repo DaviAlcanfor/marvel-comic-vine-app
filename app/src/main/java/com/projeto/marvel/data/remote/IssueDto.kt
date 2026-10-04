@@ -17,7 +17,9 @@ data class Issue(
     @SerializedName("cover_date") val coverDate: String?,
     @SerializedName("description") val description: String?,
     @SerializedName("volume") val volume: Volume?,
-    @SerializedName("image") val image: ComicVineImage?
+    @SerializedName("image") val image: ComicVineImage?,
+    /** Dia em que chegou às bancas (só vem quando pedido no field_list). */
+    @SerializedName("store_date") val storeDate: String? = null
 ) {
     /** "Batman #12" — o `name` da issue costuma vir nulo; o do volume não. */
     val title: String
@@ -26,4 +28,4 @@ data class Issue(
             .ifBlank { "Issue $id" }
 }
 
-data class Volume(@SerializedName("name") val name: String?)
+data class Volume(@SerializedName("name") val name: String?, @SerializedName("id") val id: Int? = null)
