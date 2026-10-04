@@ -43,7 +43,6 @@ private val TEXTS = mapOf(
     "trunfo1" to R.string.mission_trunfo1,
     "memory1" to R.string.mission_memory1,
     "quote5" to R.string.mission_quote5,
-    "comic1" to R.string.mission_comic1,
     "trunfo5" to R.string.mission_trunfo5,
     "memory5" to R.string.mission_memory5
 )
@@ -86,8 +85,7 @@ private val SOUNDS = mapOf(
     MissionEvent.GEEK_QUESTION to "ZZT!",
     MissionEvent.TRUNFO_WIN to "TRUNFO!",
     MissionEvent.MEMORY_DONE to "FLIP!",
-    MissionEvent.QUOTE_RIGHT to "“…!”",
-    MissionEvent.COMIC_MADE to "SKETCH!"
+    MissionEvent.QUOTE_RIGHT to "“…!”"
 )
 
 private fun ItemMissionBinding.bind(state: MissionProgress, artPool: List<String>, onClaim: (Mission) -> Unit) {

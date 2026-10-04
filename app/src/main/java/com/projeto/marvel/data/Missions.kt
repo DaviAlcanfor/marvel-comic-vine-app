@@ -12,7 +12,7 @@ import kotlin.random.Random
 enum class MissionEvent {
     BATTLE_WIN, SQUAD_WIN, GAUNTLET_DONE, PVP_PLAYED, ULTIMATE, PACK_OPENED, UPGRADE_POINT,
     GUESS_RIGHT, QUIZ_DONE, LOOK_ALIKE, REVIEW, GEEK_QUESTION,
-    TRUNFO_WIN, MEMORY_DONE, QUOTE_RIGHT, COMIC_MADE
+    TRUNFO_WIN, MEMORY_DONE, QUOTE_RIGHT
 }
 
 data class Mission(
@@ -38,8 +38,7 @@ val DAILY_MISSIONS = listOf(
     Mission("squad1", MissionEvent.SQUAD_WIN, 1, PackType.SILVER),
     Mission("trunfo1", MissionEvent.TRUNFO_WIN, 1, PackType.SILVER),
     Mission("memory1", MissionEvent.MEMORY_DONE, 1, PackType.BASIC),
-    Mission("quote5", MissionEvent.QUOTE_RIGHT, 5, PackType.BASIC),
-    Mission("comic1", MissionEvent.COMIC_MADE, 1, PackType.SILVER)
+    Mission("quote5", MissionEvent.QUOTE_RIGHT, 5, PackType.BASIC)
 )
 
 @Suppress("MagicNumber")

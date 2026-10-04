@@ -299,10 +299,6 @@
         android:name="com.projeto.marvel.ui.quote.QuoteFragment"
         android:label="Quem disse?" />
 
-    <fragment
-        android:id="@+id/comicMakerFragment"
-        android:name="com.projeto.marvel.ui.comicmaker.ComicMakerFragment"
-        android:label="Monte sua HQ" />
 
     <!-- Quiz "Que herói é você?" (atalho no Início). -->
     <fragment

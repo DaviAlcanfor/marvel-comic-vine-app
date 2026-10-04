@@ -47,8 +47,8 @@ do Personagem, Times) seguindo um design system dark fornecido em
 - **Jogos da aba Jogos** (grade de capas em `ui/games/`): Quem é esse herói? (`ui/guess`), Com qual
   herói você parece? (`ui/lookalike`), Que herói é você? (`ui/quiz`), Super Trunfo (`ui/trunfo`: seu
   baralho = figurinhas que você tem, com nível/pontos/Divina; regras em `TrunfoRules.kt`), Memória
-  (`ui/memory`, `MemoryRules.kt`), Quem disse? (`ui/quote`: resumo com o nome escondido, `maskNames`)
-  e Monte sua HQ (`ui/comicmaker`, exporta com `ui/photo/PhotoExport.kt`). Recordes em
+  (`ui/memory`, `MemoryRules.kt`) e Quem disse? (`ui/quote`: resumo com o nome escondido, `maskNames`).
+  O "Monte sua HQ" foi removido a pedido do usuário. Recordes em
   `data/GameRecords.kt`; cada jogo tem evento de missão e paga pacote.
 - **Missões** (`data/Missions.kt`): 3 diárias + 2 semanais sorteadas pela data, pagam pacotes.
   Telas registram eventos com `context.mission(MissionEvent.X)`; evento novo = entra no enum, numa

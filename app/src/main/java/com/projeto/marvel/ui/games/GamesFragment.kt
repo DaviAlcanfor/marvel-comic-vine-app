@@ -58,22 +58,21 @@ class GamesFragment : Fragment(R.layout.fragment_games) {
         binding.lookPlay.setOnClickListener { findNavController().navigate(R.id.lookAlikeFragment) }
         // Capa na meia largura da grade: legenda pequena para caber o nome inteiro do jogo.
         val accent = ContextCompat.getColor(context, R.color.caption_yellow)
-        listOf(binding.trunfoCaption, binding.memoryCaption, binding.comicCaption)
+        listOf(binding.trunfoCaption, binding.memoryCaption)
             .forEach { it.comicBox(BoxStyle.CAPTION, accent) }
         binding.quoteCaption.comicBox(BoxStyle.SPEECH, ContextCompat.getColor(context, R.color.white))
         listOf(
             binding.guessCaption, binding.lookCaption, binding.quizCaption,
-            binding.trunfoCaption, binding.memoryCaption, binding.quoteCaption, binding.comicCaption
+            binding.trunfoCaption, binding.memoryCaption, binding.quoteCaption
         ).forEach { it.textSize = TILE_CAPTION_SP }
         mapOf(
             binding.trunfoPlay to R.id.trunfoFragment,
             binding.memoryPlay to R.id.memoryFragment,
-            binding.quotePlay to R.id.quoteFragment,
-            binding.comicPlay to R.id.comicMakerFragment
+            binding.quotePlay to R.id.quoteFragment
         ).forEach { (button, destination) -> button.setOnClickListener { findNavController().navigate(destination) } }
         listOf(
             binding.guessInfo, binding.lookInfo, binding.quizInfo,
-            binding.trunfoInfo, binding.memoryInfo, binding.quoteInfo, binding.comicInfo
+            binding.trunfoInfo, binding.memoryInfo, binding.quoteInfo
         ).forEach { info ->
             info.setOnClickListener {
                 context.comicDialog()
@@ -97,7 +96,6 @@ class GamesFragment : Fragment(R.layout.fragment_games) {
         binding.memoryRecord.text = records.best(GameRecord.MEMORY_MOVES)
             ?.let { getString(R.string.games_memory_record, it) } ?: getString(R.string.games_memory_new)
         binding.quoteRecord.text = getString(R.string.games_quote_record, records.best(GameRecord.QUOTE_STREAK) ?: 0)
-        binding.comicRecord.setText(R.string.games_comic_record)
         val hero = ReadingStore(requireContext(), AuthRepository().currentUser?.uid).preferences().hero
         binding.quizRecord.text = hero?.let { getString(R.string.games_quiz_record, it.name) }
             ?: getString(R.string.games_quiz_new)
