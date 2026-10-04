@@ -40,7 +40,8 @@ class MoviesFragment : Fragment(R.layout.fragment_catalog) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
-        binding.intro.setText(R.string.movies_intro)
+        binding.intro.setTextColor(requireContext().getColor(R.color.text_primary))
+        bindMarathon(binding.intro) { (viewModel.state.value as? MoviesUiState.Success)?.movies.orEmpty() }
         binding.searchInput.setHint(R.string.movies_search_hint)
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), GRID_COLUMNS)
         binding.recyclerView.adapter = adapter

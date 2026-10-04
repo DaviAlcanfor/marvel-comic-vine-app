@@ -188,6 +188,11 @@
     <string name="discover_call_teams">Batalhe agora com as equipes!</string>
     <string name="discover_call_creators">Conheça quem criou tudo!</string>
     <string name="discover_call_movies">Das HQs pro cinema!</string>
+    <string name="marathon_title">Maratona do MCU (ordem da história)</string>
+    <string name="marathon_summary">🎬 Maratona do MCU: %1$d de %2$d vistos · faltam %3$d h · próximo: %4$s. Toque para marcar.</string>
+    <string name="marathon_done">🏆 Maratona do MCU completa: %1$d filmes! Toque para rever a lista.</string>
+    <string name="marathon_close">Pronto</string>
+    <string name="marathon_open_next">Ver o próximo</string>
     <string name="discover_releases">Bancas</string>
     <string name="discover_call_releases">Saiu agora!</string>
     <string name="releases_intro">HQs da Marvel que chegaram às bancas nesta semana. Toque numa para guardar ou lembrar.</string>
@@ -363,7 +368,6 @@
     <string name="creators_intro">Conheça quem escreveu e desenhou a Marvel: biografia, datas e os personagens que cada um criou.</string>
     <string name="creators_search_hint">Buscar criador (ex.: Jack Kirby)</string>
     <string name="creators_empty">Nenhum criador encontrado.</string>
-    <string name="movies_intro">Filmes da Marvel: classificação, duração, bilheteria e os personagens que aparecem em cada um.</string>
     <string name="movies_search_hint">Buscar filme</string>
     <string name="movies_empty">Nenhum filme encontrado.</string>
     <string name="info_born">Nascimento</string>
