@@ -126,6 +126,10 @@
     <string name="look_alike_runner_up">Quase deu: %1$s</string>
     <string name="look_alike_photo">Sua foto</string>
     <string name="games_look_how">Aparência: tire uma foto ou escolha da galeria e a IA diz com qual herói você mais parece. (O quiz ao lado é o de personalidade.)</string>
+    <string name="shazam_action">Reconhecer herói pela foto</string>
+    <string name="shazam_working">Olhando a foto…</string>
+    <string name="shazam_sticker">Figurinha de %1$s no álbum! (prêmio do dia)</string>
+    <string name="shazam_pack">Ganhou um pacote Básico! (prêmio do dia)</string>
     <string name="wallpaper_label">Herói do dia (Marvel)</string>
     <string name="wallpaper_description">O herói do dia num quadro de HQ animado, no traço da sua época.</string>
     <string name="wallpaper_use">Papel de parede</string>

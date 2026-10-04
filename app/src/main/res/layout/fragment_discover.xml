@@ -38,6 +38,16 @@
             android:textColor="@color/ink"
             android:textSize="15sp"
             app:fontFamily="?attr/eraDisplayFont" />
+
+        <!-- Shazam de herói: foto de boneco/camiseta/pôster → personagem (Gemini). -->
+        <ImageButton
+            android:id="@+id/shazamButton"
+            android:layout_width="@dimen/touch_target"
+            android:layout_height="@dimen/touch_target"
+            android:layout_marginStart="@dimen/space_xs"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/shazam_action"
+            android:src="@drawable/ic_face_scan" />
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout

@@ -1,6 +1,7 @@
 package com.projeto.marvel.ui.discover
 
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,11 @@ import com.projeto.marvel.ui.teams.TeamsFragment
  */
 class DiscoverFragment : Fragment(R.layout.fragment_discover) {
 
+    // Foto pequena da câmera basta para a IA e dispensa arquivo/FileProvider.
+    private val takePhoto = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { photo ->
+        photo?.let(::recognizeHero)
+    }
+
     private var binding: FragmentDiscoverBinding? = null
 
     override fun onCreateView(
@@ -48,6 +54,7 @@ class DiscoverFragment : Fragment(R.layout.fragment_discover) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
+        binding.shazamButton.setOnClickListener { runCatching { takePhoto.launch(null) } }
         binding.pager.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount() = PAGES.size
             override fun createFragment(position: Int) =
