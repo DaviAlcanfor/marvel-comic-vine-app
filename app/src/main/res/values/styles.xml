@@ -280,6 +280,8 @@
     <style name="ThemeOverlay.Marvel.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/Widget.Marvel.DialogTitle</item>
         <item name="colorPrimary">@color/primary_text</item>
+        <item name="colorSecondary">@color/primary_text</item>
+        <item name="colorAccent">@color/primary_text</item>
         <item name="colorOnSurface">@color/text_primary</item>
         <item name="colorOnSurfaceVariant">@color/text_primary</item>
     </style>
