@@ -191,6 +191,9 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         binding.startReadingButton.setOnClickListener {
             startReading(character.name.orEmpty(), binding.startReadingButton)
         }
+        binding.connectionsButton.setOnClickListener {
+            character.apiDetailUrl?.let { showConnections(it, binding.connectionsButton) }
+        }
 
         bindTags(binding.powersGroup, powers).forEach { tag ->
             val type = moveTypeOf(tag.text.toString()) ?: return@forEach
@@ -215,7 +218,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
         val actions = listOf(binding.stats, binding.chatButton, binding.photoButton, binding.compareButton)
         val sections = actions + listOf(binding.aboutTitle, binding.description) +
-            listOf(binding.bioActions, binding.startReadingButton) +
+            listOf(binding.bioActions, binding.startReadingButton, binding.connectionsButton) +
             listOf(binding.powersTitle, binding.powersGroup).takeIf { powers.isNotEmpty() }.orEmpty() +
             listOf(binding.teamsTitle, binding.teamsGroup).takeIf { teams.isNotEmpty() }.orEmpty()
         sections.forEach { it.visibility = View.VISIBLE }
