@@ -53,7 +53,7 @@
     <dimen name="trophy_size">140dp</dimen>
     <dimen name="result_bar_height">6dp</dimen>
     <dimen name="genre_chip_stroke">1.5dp</dimen>
-    <dimen name="action_balloon_width">190dp</dimen>
+    <dimen name="action_balloon_width">160dp</dimen>
     <dimen name="pack_small_width">64dp</dimen>
     <dimen name="pack_small_height">90dp</dimen>
     <dimen name="pack_large_width">200dp</dimen>
