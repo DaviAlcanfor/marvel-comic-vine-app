@@ -29,6 +29,7 @@ import com.projeto.marvel.data.ThemeStore
 import com.projeto.marvel.databinding.FragmentProfileBinding
 import com.projeto.marvel.ui.characters.CharactersFragment
 import com.projeto.marvel.ui.comicDialog
+import com.projeto.marvel.ui.widget.liveWallpaperIntent
 import com.projeto.marvel.ui.comics.ComicAdapter
 import com.projeto.marvel.ui.comics.ComicItem
 import com.projeto.marvel.ui.comics.ComicSearchFragment
@@ -216,6 +217,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 if (before.overlay != ThemeMode.entries[which].overlay) requireActivity().recreate()
             }
             .setNeutralButton(R.string.opening_pick) { _, _ -> requireContext().pickOpening() }
+            .setPositiveButton(R.string.wallpaper_use) { _, _ ->
+                runCatching { startActivity(liveWallpaperIntent(requireContext())) }
+            }
             .show()
     }
 

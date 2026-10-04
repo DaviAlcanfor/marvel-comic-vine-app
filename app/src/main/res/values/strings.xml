@@ -126,6 +126,9 @@
     <string name="look_alike_runner_up">Quase deu: %1$s</string>
     <string name="look_alike_photo">Sua foto</string>
     <string name="games_look_how">Aparência: tire uma foto ou escolha da galeria e a IA diz com qual herói você mais parece. (O quiz ao lado é o de personalidade.)</string>
+    <string name="wallpaper_label">Herói do dia (Marvel)</string>
+    <string name="wallpaper_description">O herói do dia num quadro de HQ animado, no traço da sua época.</string>
+    <string name="wallpaper_use">Papel de parede</string>
     <string name="connections_open">🕸 Ver a teia de conexões</string>
     <string name="connections_title">Teia de conexões</string>
     <string name="connections_legend">🟡 ele · 🔵 times · 🟢 aliados · 🔴 inimigos · ✏️ criadores. Arraste, aperte para zoom, toque para abrir.</string>

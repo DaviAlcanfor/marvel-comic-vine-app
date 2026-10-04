@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature android:name="android.software.live_wallpaper" android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Herói do clima: cidade aproximada (nunca a precisa), pedida só ao tocar no card. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -39,6 +41,20 @@
         <receiver
             android:name=".ui.widget.HeroNotification"
             android:exported="false" />
+
+        <!-- Papel de parede animado do herói do dia (Perfil → tema → Papel de parede). -->
+        <service
+            android:name=".ui.widget.HeroWallpaperService"
+            android:exported="true"
+            android:label="@string/wallpaper_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/hero_wallpaper" />
+        </service>
 
         <receiver
             android:name=".ui.widget.HeroWidget"
