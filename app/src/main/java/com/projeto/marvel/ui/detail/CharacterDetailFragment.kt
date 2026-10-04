@@ -187,6 +187,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         binding.description.text = character.deck?.takeIf { it.isNotBlank() }
             ?: character.description?.let { HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_COMPACT) }
             ?: getString(R.string.detail_no_description)
+        bindBioActions(character.id, binding.description, binding.translateButton, binding.listenButton)
 
         bindTags(binding.powersGroup, powers).forEach { tag ->
             val type = moveTypeOf(tag.text.toString()) ?: return@forEach
@@ -210,7 +211,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         }
 
         val actions = listOf(binding.stats, binding.chatButton, binding.photoButton, binding.compareButton)
-        val sections = actions + listOf(binding.aboutTitle, binding.description) +
+        val sections = actions + listOf(binding.aboutTitle, binding.description, binding.bioActions) +
             listOf(binding.powersTitle, binding.powersGroup).takeIf { powers.isNotEmpty() }.orEmpty() +
             listOf(binding.teamsTitle, binding.teamsGroup).takeIf { teams.isNotEmpty() }.orEmpty()
         sections.forEach { it.visibility = View.VISIBLE }

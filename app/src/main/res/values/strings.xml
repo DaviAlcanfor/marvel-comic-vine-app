@@ -119,6 +119,11 @@
     <string name="look_alike_runner_up">Quase deu: %1$s</string>
     <string name="look_alike_photo">Sua foto</string>
     <string name="games_look_how">Aparência: tire uma foto ou escolha da galeria e a IA diz com qual herói você mais parece. (O quiz ao lado é o de personalidade.)</string>
+    <string name="detail_translate">Traduzir</string>
+    <string name="detail_translating">Traduzindo…</string>
+    <string name="detail_translated">Em português ✓</string>
+    <string name="detail_listen">Ouvir</string>
+    <string name="detail_stop">Parar</string>
     <string name="detail_photo">Tirar foto com %1$s</string>
     <string name="detail_photo_short">Tirar foto</string>
     <string name="detail_compare_short">Comparar</string>
