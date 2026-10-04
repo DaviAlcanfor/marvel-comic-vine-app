@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Carta do Super Trunfo: foto, nome e 5 atributos (linhas montadas em código). O verso cobre a
+     carta da CPU até a rodada ser jogada. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+
+    <LinearLayout
+        android:id="@+id/front"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card"
+        android:clipToOutline="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/trunfo_image_height"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingHorizontal="@dimen/space_xs"
+            android:paddingTop="@dimen/space_xs"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/space_xs" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_card"
+        android:fontFamily="?attr/eraSfxFont"
+            app:fontFamily="?attr/eraSfxFont"
+        android:gravity="center"
+        android:text="@string/memory_back"
+        android:textColor="@color/accent_text"
+        android:textSize="44sp"
+        android:visibility="gone" />
+</FrameLayout>

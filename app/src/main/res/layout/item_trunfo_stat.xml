@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Linha de atributo do Super Trunfo ("ATAQUE 72"); tocável na sua vez. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="2dp"
+    android:minHeight="@dimen/trunfo_stat_height"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="@dimen/space_sm"
+    android:textAllCaps="true"
+    android:textColor="@color/text_primary"
+    android:textSize="13sp"
+    android:textStyle="bold" />

@@ -210,6 +210,266 @@
                     android:layout_margin="@dimen/space_md"
                     android:text="@string/games_play" />
             </LinearLayout>
+
+            <!-- Super Trunfo (suas figurinhas contra a CPU) -->
+            <LinearLayout
+                android:id="@+id/trunfoCard"
+                style="@style/Widget.Marvel.GameTile">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/game_banner_height">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/move_strike"
+                        android:importantForAccessibility="no" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_halftone" />
+
+                    <ImageView
+                        android:layout_width="@dimen/game_icon_size"
+                        android:layout_height="@dimen/game_icon_size"
+                        android:layout_gravity="top|start"
+                        android:layout_marginStart="@dimen/space_md"
+                        android:layout_marginTop="@dimen/space_sm"
+                        android:importantForAccessibility="no"
+                        android:rotation="-8"
+                        android:src="@drawable/nav_album"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/trunfoCaption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="@dimen/space_md"
+                        android:text="@string/trunfo_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/trunfoInfo"
+                        android:layout_width="@dimen/touch_target"
+                        android:layout_height="@dimen/touch_target"
+                        android:layout_gravity="top|end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/games_how_to"
+                        android:src="@drawable/ic_info"
+                        android:tag="@string/games_trunfo_how"
+                        app:tint="@color/white" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/trunfoRecord"
+                    style="@style/Widget.Marvel.GameStat" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/trunfoPlay"
+                    style="@style/Widget.Marvel.ComicButton"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/space_md"
+                    android:text="@string/games_play" />
+            </LinearLayout>
+
+            <!-- Jogo da Memória (pares de figurinhas) -->
+            <LinearLayout
+                android:id="@+id/memoryCard"
+                style="@style/Widget.Marvel.GameTile">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/game_banner_height">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/move_magic"
+                        android:importantForAccessibility="no" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_halftone" />
+
+                    <ImageView
+                        android:layout_width="@dimen/game_icon_size"
+                        android:layout_height="@dimen/game_icon_size"
+                        android:layout_gravity="top|start"
+                        android:layout_marginStart="@dimen/space_md"
+                        android:layout_marginTop="@dimen/space_sm"
+                        android:importantForAccessibility="no"
+                        android:rotation="-8"
+                        android:src="@drawable/nav_games"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/memoryCaption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="@dimen/space_md"
+                        android:text="@string/memory_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/memoryInfo"
+                        android:layout_width="@dimen/touch_target"
+                        android:layout_height="@dimen/touch_target"
+                        android:layout_gravity="top|end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/games_how_to"
+                        android:src="@drawable/ic_info"
+                        android:tag="@string/games_memory_how"
+                        app:tint="@color/white" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/memoryRecord"
+                    style="@style/Widget.Marvel.GameStat" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/memoryPlay"
+                    style="@style/Widget.Marvel.ComicButton"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/space_md"
+                    android:text="@string/games_play" />
+            </LinearLayout>
+
+            <!-- Quem disse? (resumo com o nome escondido) -->
+            <LinearLayout
+                android:id="@+id/quoteCard"
+                style="@style/Widget.Marvel.GameTile">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/game_banner_height">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/move_water"
+                        android:importantForAccessibility="no" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_halftone" />
+
+                    <ImageView
+                        android:layout_width="@dimen/game_icon_size"
+                        android:layout_height="@dimen/game_icon_size"
+                        android:layout_gravity="top|start"
+                        android:layout_marginStart="@dimen/space_md"
+                        android:layout_marginTop="@dimen/space_sm"
+                        android:importantForAccessibility="no"
+                        android:rotation="-8"
+                        android:src="@drawable/ic_search"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/quoteCaption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="@dimen/space_md"
+                        android:text="@string/quote_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/quoteInfo"
+                        android:layout_width="@dimen/touch_target"
+                        android:layout_height="@dimen/touch_target"
+                        android:layout_gravity="top|end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/games_how_to"
+                        android:src="@drawable/ic_info"
+                        android:tag="@string/games_quote_how"
+                        app:tint="@color/white" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/quoteRecord"
+                    style="@style/Widget.Marvel.GameStat" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/quotePlay"
+                    style="@style/Widget.Marvel.ComicButton"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/space_md"
+                    android:text="@string/games_play" />
+            </LinearLayout>
+
+            <!-- Monte sua HQ (3 quadros, falas e balões) -->
+            <LinearLayout
+                android:id="@+id/comicCard"
+                style="@style/Widget.Marvel.GameTile">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/game_banner_height">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/move_blast"
+                        android:importantForAccessibility="no" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_halftone" />
+
+                    <ImageView
+                        android:layout_width="@dimen/game_icon_size"
+                        android:layout_height="@dimen/game_icon_size"
+                        android:layout_gravity="top|start"
+                        android:layout_marginStart="@dimen/space_md"
+                        android:layout_marginTop="@dimen/space_sm"
+                        android:importantForAccessibility="no"
+                        android:rotation="-8"
+                        android:src="@drawable/ic_edit"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/comicCaption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="@dimen/space_md"
+                        android:text="@string/comic_maker_title"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/comicInfo"
+                        android:layout_width="@dimen/touch_target"
+                        android:layout_height="@dimen/touch_target"
+                        android:layout_gravity="top|end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/games_how_to"
+                        android:src="@drawable/ic_info"
+                        android:tag="@string/games_comic_how"
+                        app:tint="@color/white" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/comicRecord"
+                    style="@style/Widget.Marvel.GameStat" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/comicPlay"
+                    style="@style/Widget.Marvel.ComicButton"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/space_md"
+                    android:text="@string/games_play" />
+            </LinearLayout>
         </GridLayout>
     </LinearLayout>
 </ScrollView>

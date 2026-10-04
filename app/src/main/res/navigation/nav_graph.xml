@@ -283,6 +283,27 @@
         android:name="com.projeto.marvel.ui.guess.GuessFragment"
         android:label="Quem é esse herói?" />
 
+    <!-- Jogos da aba Jogos. -->
+    <fragment
+        android:id="@+id/trunfoFragment"
+        android:name="com.projeto.marvel.ui.trunfo.TrunfoFragment"
+        android:label="Super Trunfo" />
+
+    <fragment
+        android:id="@+id/memoryFragment"
+        android:name="com.projeto.marvel.ui.memory.MemoryFragment"
+        android:label="Jogo da Memória" />
+
+    <fragment
+        android:id="@+id/quoteFragment"
+        android:name="com.projeto.marvel.ui.quote.QuoteFragment"
+        android:label="Quem disse?" />
+
+    <fragment
+        android:id="@+id/comicMakerFragment"
+        android:name="com.projeto.marvel.ui.comicmaker.ComicMakerFragment"
+        android:label="Monte sua HQ" />
+
     <!-- Quiz "Que herói é você?" (atalho no Início). -->
     <fragment
         android:id="@+id/quizFragment"

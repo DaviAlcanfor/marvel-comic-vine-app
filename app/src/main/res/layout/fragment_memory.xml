@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Jogo da Memória: 8 pares de figurinhas viradas; jogadas, recorde e o pacote ganho no fim. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/space_lg"
+        android:paddingTop="@dimen/space_sm"
+        android:paddingBottom="@dimen/space_xl">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="@dimen/touch_target"
+            android:layout_height="@dimen/touch_target"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/content_description_back"
+            android:src="@drawable/ic_arrow_back" />
+
+        <com.projeto.marvel.ui.LogoTextView
+            style="@style/Widget.Marvel.ScreenTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/memory_title" />
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/space_xl" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xl"
+            android:gravity="center"
+            android:textColor="@color/text_secondary"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/moves"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_marginTop="@dimen/space_sm"
+            android:visibility="gone" />
+
+        <GridLayout
+            android:id="@+id/board"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:columnCount="4" />
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:gravity="center"
+            android:textColor="@color/accent_text"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/againButton"
+            style="@style/Widget.Marvel.ComicButton"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/space_md"
+            android:text="@string/memory_again"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

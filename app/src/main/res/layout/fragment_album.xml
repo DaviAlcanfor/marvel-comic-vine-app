@@ -136,6 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="?attr/eraSfxFont"
+            app:fontFamily="?attr/eraSfxFont"
             android:importantForAccessibility="no"
             android:padding="@dimen/space_xl"
             android:textSize="34sp"
@@ -218,6 +219,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/ink"
                     android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
                     android:paddingHorizontal="@dimen/space_sm"
                     android:textColor="@color/accent_text"
                     android:textSize="22sp" />
@@ -277,6 +279,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
                 android:textColor="@color/accent_text"
                 android:textSize="20sp" />
 

@@ -2,6 +2,7 @@
 <!-- Antes de cada luta: os dois lutadores entram dos lados, o VS carimba no meio e os atributos
      aparecem lado a lado. "LUTAR!" fecha e a luta começa. Cobre a arena (clicável: nada vaza). -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/versusRoot"
     android:layout_width="match_parent"
@@ -118,6 +119,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/versus_badge_top"
                     android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
                     android:text="@string/compare_versus"
                     android:textSize="34sp" />
             </FrameLayout>

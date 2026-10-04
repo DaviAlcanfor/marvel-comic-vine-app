@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Carta da Memória: verso (quadro da época com "?") e frente (foto), trocados no meio da virada. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_columnWeight="1"
+    android:layout_margin="@dimen/space_xs">
+
+    <ImageView
+        android:id="@+id/face"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_card"
+        android:clipToOutline="true"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_card"
+        android:fontFamily="?attr/eraSfxFont"
+            app:fontFamily="?attr/eraSfxFont"
+        android:gravity="center"
+        android:text="@string/memory_back"
+        android:textColor="@color/accent_text"
+        android:textSize="30sp" />
+</FrameLayout>

@@ -11,7 +11,8 @@ import kotlin.random.Random
 /** O que acontece no app e conta para as missões. */
 enum class MissionEvent {
     BATTLE_WIN, SQUAD_WIN, GAUNTLET_DONE, PVP_PLAYED, ULTIMATE, PACK_OPENED, UPGRADE_POINT,
-    GUESS_RIGHT, QUIZ_DONE, LOOK_ALIKE, REVIEW, GEEK_QUESTION
+    GUESS_RIGHT, QUIZ_DONE, LOOK_ALIKE, REVIEW, GEEK_QUESTION,
+    TRUNFO_WIN, MEMORY_DONE, QUOTE_RIGHT, COMIC_MADE
 }
 
 data class Mission(
@@ -34,7 +35,11 @@ val DAILY_MISSIONS = listOf(
     Mission("guess5", MissionEvent.GUESS_RIGHT, 5, PackType.SILVER),
     Mission("look1", MissionEvent.LOOK_ALIKE, 1, PackType.SILVER),
     Mission("review1", MissionEvent.REVIEW, 1, PackType.SILVER),
-    Mission("squad1", MissionEvent.SQUAD_WIN, 1, PackType.SILVER)
+    Mission("squad1", MissionEvent.SQUAD_WIN, 1, PackType.SILVER),
+    Mission("trunfo1", MissionEvent.TRUNFO_WIN, 1, PackType.SILVER),
+    Mission("memory1", MissionEvent.MEMORY_DONE, 1, PackType.BASIC),
+    Mission("quote5", MissionEvent.QUOTE_RIGHT, 5, PackType.BASIC),
+    Mission("comic1", MissionEvent.COMIC_MADE, 1, PackType.SILVER)
 )
 
 @Suppress("MagicNumber")
@@ -44,7 +49,9 @@ val WEEKLY_MISSIONS = listOf(
     Mission("guess25", MissionEvent.GUESS_RIGHT, 25, PackType.GOLD, weekly = true),
     Mission("squad3", MissionEvent.SQUAD_WIN, 3, PackType.GOLD, weekly = true),
     Mission("pack10", MissionEvent.PACK_OPENED, 10, PackType.SILVER, weekly = true),
-    Mission("ultimate10", MissionEvent.ULTIMATE, 10, PackType.SILVER, weekly = true)
+    Mission("ultimate10", MissionEvent.ULTIMATE, 10, PackType.SILVER, weekly = true),
+    Mission("trunfo5", MissionEvent.TRUNFO_WIN, 5, PackType.GOLD, weekly = true),
+    Mission("memory5", MissionEvent.MEMORY_DONE, 5, PackType.SILVER, weekly = true)
 )
 
 private const val DAILY_COUNT = 3

@@ -78,6 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
                     android:gravity="center"
                     android:importantForAccessibility="no"
                     android:lineSpacingMultiplier="0.85"

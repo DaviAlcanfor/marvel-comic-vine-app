@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Figurinha do álbum: moldura na cor da raridade (em código), foto, nome, número e "×2" das repetidas. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -47,6 +48,7 @@
             android:layout_gravity="top|start"
             android:background="@color/ink"
             android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
             android:paddingHorizontal="@dimen/space_xs"
             android:textColor="@color/white"
             android:textSize="13sp"

@@ -2,6 +2,7 @@
 <!-- Pacote de figurinhas: corpo metalizado (cor do tipo, em código), faixa de rasgar em cima e um
      brilho que passa. O tamanho vem de quem inclui (miniatura na aba, grande na abertura). -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/primary"
                 android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
                 android:paddingHorizontal="@dimen/space_xs"
                 android:text="@string/pack_brand"
                 android:textColor="@color/white" />
@@ -53,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
                 android:gravity="center"
                 android:textColor="@color/ink"
                 tools:text="OURO" />

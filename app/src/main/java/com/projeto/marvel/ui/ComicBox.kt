@@ -31,6 +31,8 @@ private const val TAIL_TIP_FACTOR = 1.5f
 private const val BURST_PAD_X = 3
 private const val CHAMFER_DP = 10f
 private const val OVAL_TAIL_FACTOR = 1.6f
+private const val OVAL_MAX_HEIGHT_DP = 84f
+private const val LONG_RADIUS_DP = 34f
 
 /**
  * Veste o TextView com a caixa [style] na cor [color]. No balão de fala, [tailOnLeft] escolhe o
@@ -47,7 +49,8 @@ fun TextView.comicBox(style: BoxStyle, @ColorInt color: Int, tailOnLeft: Boolean
         BoxStyle.BURST -> BurstDrawable(color, outline, inkWidth)
     }
     val base = resources.getDimensionPixelSize(R.dimen.space_md)
-    val oval = if (style == BoxStyle.SPEECH && context.era() == Era.RETRO) base / 2 else 0
+    // Texto dentro de uma elipse: os cantos do retângulo do texto saem dela sem esta folga extra.
+    val oval = if (style == BoxStyle.SPEECH && context.era() == Era.RETRO) base else 0
     when (style) {
         BoxStyle.CAPTION -> setPadding(base, base / 2, base + shadow.toInt(), base)
         BoxStyle.SPEECH -> {
@@ -114,14 +117,21 @@ class SpeechBubbleDrawable(context: Context, @ColorInt fillColor: Int, private v
         val radius = SPEECH_RADIUS_DP * density
         path.reset()
         when (era) {
-            Era.RETRO -> path.addOval(body, Path.Direction.CW)
+            // Fala curta: oval de nanquim. Fala longa (3+ linhas): retângulo bem arredondado, senão
+            // os cantos do texto saem da elipse.
+            Era.RETRO -> if (body.height() <= OVAL_MAX_HEIGHT_DP * density) {
+                path.addOval(body, Path.Direction.CW)
+            } else {
+                path.addRoundRect(body, LONG_RADIUS_DP * density, LONG_RADIUS_DP * density, Path.Direction.CW)
+            }
             Era.NINETIES -> chamfer(path, body, CHAMFER_DP * density)
             Era.MODERN -> path.addRoundRect(body, radius, radius, Path.Direction.CW)
         }
         val inset = TAIL_INSET_DP * density
         val width = TAIL_WIDTH_DP * density
         // No oval a base é curva: o rabinho sai mais para dentro, onde a borda ainda está embaixo.
-        val edge = if (era == Era.RETRO) inset * OVAL_TAIL_FACTOR else inset
+        val oval = era == Era.RETRO && body.height() <= OVAL_MAX_HEIGHT_DP * density
+        val edge = if (oval) inset * OVAL_TAIL_FACTOR else inset
         val start = if (tailOnLeft) body.left + edge else body.right - edge - width
         val tip = if (tailOnLeft) start - width / 2 else start + width * TAIL_TIP_FACTOR
         tailPath.reset()

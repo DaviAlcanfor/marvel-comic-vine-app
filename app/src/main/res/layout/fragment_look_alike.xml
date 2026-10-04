@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- "Com qual herói você parece?": foto (câmera ou galeria), análise da IA e o herói com o motivo. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -115,6 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/space_sm"
                     android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
                     android:text="≈"
                     android:textColor="@color/accent_text"
                     android:textSize="40sp" />

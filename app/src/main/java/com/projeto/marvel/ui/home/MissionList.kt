@@ -37,7 +37,13 @@ private val TEXTS = mapOf(
     "guess25" to (R.string.mission_guess25 to R.drawable.ic_search),
     "squad3" to (R.string.mission_squad3 to R.drawable.ic_move_guard),
     "pack10" to (R.string.mission_pack10 to R.drawable.ic_album),
-    "ultimate10" to (R.string.mission_ultimate10 to R.drawable.ic_move_magic)
+    "ultimate10" to (R.string.mission_ultimate10 to R.drawable.ic_move_magic),
+    "trunfo1" to (R.string.mission_trunfo1 to R.drawable.ic_album),
+    "memory1" to (R.string.mission_memory1 to R.drawable.ic_games),
+    "quote5" to (R.string.mission_quote5 to R.drawable.ic_search),
+    "comic1" to (R.string.mission_comic1 to R.drawable.ic_edit),
+    "trunfo5" to (R.string.mission_trunfo5 to R.drawable.ic_album),
+    "memory5" to (R.string.mission_memory5 to R.drawable.ic_games)
 )
 
 @StringRes

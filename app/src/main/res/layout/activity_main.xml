@@ -101,6 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
             android:text="@string/pack_brand"
             android:textSize="54sp" />
 
@@ -111,6 +112,7 @@
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="@dimen/loading_balloon_bottom"
             android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
             android:minWidth="@dimen/loading_balloon_width"
             android:textSize="22sp" />
     </FrameLayout>

@@ -96,4 +96,8 @@
     <dimen name="era_radius_small">0dp</dimen>
     <dimen name="era_caption_size">14sp</dimen>
     <dimen name="pack_tile_height">64dp</dimen>
+    <dimen name="trunfo_image_height">120dp</dimen>
+    <dimen name="trunfo_stat_height">40dp</dimen>
+    <dimen name="quote_min_height">120dp</dimen>
+    <dimen name="comic_panel_height">200dp</dimen>
 </resources>

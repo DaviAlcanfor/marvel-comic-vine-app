@@ -47,7 +47,15 @@ class LogoTextView @JvmOverloads constructor(
             Era.MODERN -> 0f
         }
         val top = if (era == Era.MODERN) ((RULE_HEIGHT_DP + RULE_GAP_DP) * density) else 0f
-        setPadding(paddingLeft, paddingTop + top.toInt(), paddingRight + extra.toInt(), paddingBottom + extra.toInt())
+        // O contorno do Retrô passa meio traço para fora do texto: sem esta folga, a primeira
+        // letra e o topo ficavam cortados.
+        val stroke = if (era == Era.RETRO) (RETRO_STROKE_DP * density).toInt() else 0
+        setPadding(
+            paddingLeft + stroke,
+            paddingTop + top.toInt() + stroke,
+            paddingRight + extra.toInt(),
+            paddingBottom + extra.toInt()
+        )
         if (era == Era.RETRO) rotation = RETRO_TILT
         if (era == Era.NINETIES) paint.textSkewX = NINETIES_SKEW
     }

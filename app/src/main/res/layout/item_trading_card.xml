@@ -4,6 +4,7 @@
   com retícula, brilho holográfico nas raras/lendárias, número, estrelas e plaquinha com o nome.
 -->
 <com.projeto.marvel.ui.album.CardFrame xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -46,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
             android:gravity="center"
             android:textColor="@color/text_secondary"
             android:textSize="34sp"
@@ -58,6 +60,7 @@
             android:layout_gravity="top|start"
             android:background="@color/ink"
             android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
             android:paddingHorizontal="@dimen/space_xs"
             android:textColor="@color/white"
             android:textSize="12sp"
@@ -106,6 +109,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:fontFamily="?attr/eraDisplayFont"
+            app:fontFamily="?attr/eraDisplayFont"
                 android:gravity="center"
                 android:maxLines="1"
                 android:textColor="@color/ink"

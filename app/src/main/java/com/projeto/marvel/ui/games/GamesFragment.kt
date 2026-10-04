@@ -18,6 +18,8 @@ import com.projeto.marvel.R
 import com.projeto.marvel.data.AchievementStore
 import com.projeto.marvel.data.ReadingStore
 import com.projeto.marvel.data.AuthRepository
+import com.projeto.marvel.data.GameRecord
+import com.projeto.marvel.data.GameRecordStore
 import com.projeto.marvel.data.ComicVineRepository
 import com.projeto.marvel.databinding.FragmentGamesBinding
 import com.projeto.marvel.ui.BoxStyle
@@ -55,8 +57,24 @@ class GamesFragment : Fragment(R.layout.fragment_games) {
         binding.lookCaption.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.accent))
         binding.lookPlay.setOnClickListener { findNavController().navigate(R.id.lookAlikeFragment) }
         // Capa na meia largura da grade: legenda pequena para caber o nome inteiro do jogo.
-        listOf(binding.guessCaption, binding.lookCaption, binding.quizCaption).forEach { it.textSize = TILE_CAPTION_SP }
-        listOf(binding.guessInfo, binding.lookInfo, binding.quizInfo).forEach { info ->
+        val accent = ContextCompat.getColor(context, R.color.caption_yellow)
+        listOf(binding.trunfoCaption, binding.memoryCaption, binding.comicCaption)
+            .forEach { it.comicBox(BoxStyle.CAPTION, accent) }
+        binding.quoteCaption.comicBox(BoxStyle.SPEECH, ContextCompat.getColor(context, R.color.white))
+        listOf(
+            binding.guessCaption, binding.lookCaption, binding.quizCaption,
+            binding.trunfoCaption, binding.memoryCaption, binding.quoteCaption, binding.comicCaption
+        ).forEach { it.textSize = TILE_CAPTION_SP }
+        mapOf(
+            binding.trunfoPlay to R.id.trunfoFragment,
+            binding.memoryPlay to R.id.memoryFragment,
+            binding.quotePlay to R.id.quoteFragment,
+            binding.comicPlay to R.id.comicMakerFragment
+        ).forEach { (button, destination) -> button.setOnClickListener { findNavController().navigate(destination) } }
+        listOf(
+            binding.guessInfo, binding.lookInfo, binding.quizInfo,
+            binding.trunfoInfo, binding.memoryInfo, binding.quoteInfo, binding.comicInfo
+        ).forEach { info ->
             info.setOnClickListener {
                 context.comicDialog()
                     .setTitle(R.string.games_how_to)
@@ -74,6 +92,12 @@ class GamesFragment : Fragment(R.layout.fragment_games) {
         val binding = binding ?: return
         val best = AchievementStore(requireContext()).bestGuessStreak()
         binding.guessRecord.text = getString(R.string.games_guess_record, best)
+        val records = GameRecordStore(requireContext())
+        binding.trunfoRecord.text = getString(R.string.games_trunfo_record, records.best(GameRecord.TRUNFO_WINS) ?: 0)
+        binding.memoryRecord.text = records.best(GameRecord.MEMORY_MOVES)
+            ?.let { getString(R.string.games_memory_record, it) } ?: getString(R.string.games_memory_new)
+        binding.quoteRecord.text = getString(R.string.games_quote_record, records.best(GameRecord.QUOTE_STREAK) ?: 0)
+        binding.comicRecord.setText(R.string.games_comic_record)
         val hero = ReadingStore(requireContext(), AuthRepository().currentUser?.uid).preferences().hero
         binding.quizRecord.text = hero?.let { getString(R.string.games_quiz_record, it.name) }
             ?: getString(R.string.games_quiz_new)
