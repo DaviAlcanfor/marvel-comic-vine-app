@@ -44,9 +44,16 @@ do Personagem, Times) seguindo um design system dark fornecido em
   ultimate (`GOLDEN_START_ENERGY`). Raridade: comum bronze (1★), rara prata (2★), lendária ouro (3★), estrelas coloridas via
   `rarityBadge()`; aura de partículas por raridade em `ui/album/AuraView.kt` (álbum e arena, onde segue o lutador). A CPU vem 2 níveis abaixo do seu time
   e o chefe da trilha no seu nível. A FAMA acelera a barra da ultimate (`BattleUltimate.kt`).
+- **Jogos da aba Jogos** (grade de capas em `ui/games/`): Quem é esse herói? (`ui/guess`), Com qual
+  herói você parece? (`ui/lookalike`), Que herói é você? (`ui/quiz`), Super Trunfo (`ui/trunfo`: seu
+  baralho = figurinhas que você tem, com nível/pontos/Divina; regras em `TrunfoRules.kt`), Memória
+  (`ui/memory`, `MemoryRules.kt`), Quem disse? (`ui/quote`: resumo com o nome escondido, `maskNames`)
+  e Monte sua HQ (`ui/comicmaker`, exporta com `ui/photo/PhotoExport.kt`). Recordes em
+  `data/GameRecords.kt`; cada jogo tem evento de missão e paga pacote.
 - **Missões** (`data/Missions.kt`): 3 diárias + 2 semanais sorteadas pela data, pagam pacotes.
-  Telas registram eventos com `context.mission(MissionEvent.X)`; evento novo = entra no enum e numa
-  missão da tabela. Abertura do app: tela de HQ animada (`ui/ComicLoading.kt`), a splash do sistema
+  Telas registram eventos com `context.mission(MissionEvent.X)`; evento novo = entra no enum, numa
+  missão da tabela, no texto e na onomatopeia do quadro (`ui/home/MissionList.kt`: cada quadro tem a
+  arte de um herói e a onomatopeia do tipo de missão, nada de ícone genérico). Abertura do app: tela de HQ animada (`ui/ComicLoading.kt`), a splash do sistema
   fica só com o fundo.
 - **Sem Safe Args.** Argumentos de navegação são lidos via `Bundle`/`SavedStateHandle`
   (ver `CharacterDetailViewModel`) para não adicionar mais um plugin Gradle.

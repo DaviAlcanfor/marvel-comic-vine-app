@@ -6,51 +6,50 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import coil.load
 import com.projeto.marvel.R
 import com.projeto.marvel.data.Mission
+import com.projeto.marvel.data.MissionEvent
 import com.projeto.marvel.data.MissionProgress
 import com.projeto.marvel.databinding.ItemMissionBinding
 import com.projeto.marvel.ui.BoxStyle
 import com.projeto.marvel.ui.album.colors
 import com.projeto.marvel.ui.album.label
 import com.projeto.marvel.ui.comicBox
+import com.projeto.marvel.ui.eraFont
 
 // Missões da Início como página de HQ: diárias e semanais, com ícone, progresso e o pacote de prêmio.
 
 private val TEXTS = mapOf(
-    "win3" to (R.string.mission_win3 to R.drawable.ic_swords),
-    "ultimate2" to (R.string.mission_ultimate2 to R.drawable.ic_move_magic),
-    "pack2" to (R.string.mission_pack2 to R.drawable.ic_album),
-    "upgrade3" to (R.string.mission_upgrade3 to R.drawable.ic_edit),
-    "geek1" to (R.string.mission_geek1 to R.drawable.ic_geek),
-    "quiz1" to (R.string.mission_quiz1 to R.drawable.ic_mask),
-    "pvp1" to (R.string.mission_pvp1 to R.drawable.ic_group),
-    "guess5" to (R.string.mission_guess5 to R.drawable.ic_search),
-    "look1" to (R.string.mission_look1 to R.drawable.ic_face_scan),
-    "review1" to (R.string.mission_review1 to R.drawable.ic_shelf),
-    "squad1" to (R.string.mission_squad1 to R.drawable.ic_move_guard),
-    "win15" to (R.string.mission_win15 to R.drawable.ic_swords),
-    "gauntlet1" to (R.string.mission_gauntlet1 to R.drawable.ic_explore),
-    "guess25" to (R.string.mission_guess25 to R.drawable.ic_search),
-    "squad3" to (R.string.mission_squad3 to R.drawable.ic_move_guard),
-    "pack10" to (R.string.mission_pack10 to R.drawable.ic_album),
-    "ultimate10" to (R.string.mission_ultimate10 to R.drawable.ic_move_magic),
-    "trunfo1" to (R.string.mission_trunfo1 to R.drawable.ic_album),
-    "memory1" to (R.string.mission_memory1 to R.drawable.ic_games),
-    "quote5" to (R.string.mission_quote5 to R.drawable.ic_search),
-    "comic1" to (R.string.mission_comic1 to R.drawable.ic_edit),
-    "trunfo5" to (R.string.mission_trunfo5 to R.drawable.ic_album),
-    "memory5" to (R.string.mission_memory5 to R.drawable.ic_games)
+    "win3" to R.string.mission_win3,
+    "ultimate2" to R.string.mission_ultimate2,
+    "pack2" to R.string.mission_pack2,
+    "upgrade3" to R.string.mission_upgrade3,
+    "geek1" to R.string.mission_geek1,
+    "quiz1" to R.string.mission_quiz1,
+    "pvp1" to R.string.mission_pvp1,
+    "guess5" to R.string.mission_guess5,
+    "look1" to R.string.mission_look1,
+    "review1" to R.string.mission_review1,
+    "squad1" to R.string.mission_squad1,
+    "win15" to R.string.mission_win15,
+    "gauntlet1" to R.string.mission_gauntlet1,
+    "guess25" to R.string.mission_guess25,
+    "squad3" to R.string.mission_squad3,
+    "pack10" to R.string.mission_pack10,
+    "ultimate10" to R.string.mission_ultimate10,
+    "trunfo1" to R.string.mission_trunfo1,
+    "memory1" to R.string.mission_memory1,
+    "quote5" to R.string.mission_quote5,
+    "comic1" to R.string.mission_comic1,
+    "trunfo5" to R.string.mission_trunfo5,
+    "memory5" to R.string.mission_memory5
 )
 
 @StringRes
-private fun Mission.text() = TEXTS.getValue(id).first
-
-@DrawableRes
-private fun Mission.icon() = TEXTS.getValue(id).second
+private fun Mission.text() = TEXTS.getValue(id)
 
 private const val DONE_ALPHA = 0.55f
 private const val MAX_PIPS = 10
@@ -61,20 +60,47 @@ private const val WRAP = LinearLayout.LayoutParams.WRAP_CONTENT
  * mostra o progresso em blocos (até [MAX_PIPS]) e o prêmio numa etiqueta no metal do pacote; completa,
  * a etiqueta vira "PEGAR!" numa explosão.
  */
-fun LinearLayout.bindMissions(missions: List<MissionProgress>, onClaim: (Mission) -> Unit) {
+fun LinearLayout.bindMissions(missions: List<MissionProgress>, art: List<String>, onClaim: (Mission) -> Unit) {
     removeAllViews()
     missions.partition { !it.mission.weekly }.toList().filter { it.isNotEmpty() }.forEach { strip ->
         val row = LinearLayout(context).apply { clipChildren = false }
         addView(row, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, WRAP))
-        strip.forEach { ItemMissionBinding.inflate(LayoutInflater.from(context), row, true).bind(it, onClaim) }
+        strip.forEach { ItemMissionBinding.inflate(LayoutInflater.from(context), row, true).bind(it, art, onClaim) }
     }
 }
 
-private fun ItemMissionBinding.bind(state: MissionProgress, onClaim: (Mission) -> Unit) {
+/** Onomatopeia de cada tipo de missão: o que "soa" quando você faz aquilo. */
+private val SOUNDS = mapOf(
+    MissionEvent.BATTLE_WIN to "POW!",
+    MissionEvent.SQUAD_WIN to "3×3!",
+    MissionEvent.GAUNTLET_DONE to "BOSS!",
+    MissionEvent.PVP_PLAYED to "VS!",
+    MissionEvent.ULTIMATE to "KABOOM!",
+    MissionEvent.PACK_OPENED to "RIIIP!",
+    MissionEvent.UPGRADE_POINT to "+1!",
+    MissionEvent.GUESS_RIGHT to "?!",
+    MissionEvent.QUIZ_DONE to "HMM…",
+    MissionEvent.LOOK_ALIKE to "CLICK!",
+    MissionEvent.REVIEW to "★★★!",
+    MissionEvent.GEEK_QUESTION to "ZZT!",
+    MissionEvent.TRUNFO_WIN to "TRUNFO!",
+    MissionEvent.MEMORY_DONE to "FLIP!",
+    MissionEvent.QUOTE_RIGHT to "“…!”",
+    MissionEvent.COMIC_MADE to "SKETCH!"
+)
+
+private fun ItemMissionBinding.bind(state: MissionProgress, artPool: List<String>, onClaim: (Mission) -> Unit) {
     val context = root.context
     val mission = state.mission
     kind.setText(if (mission.weekly) R.string.mission_weekly else R.string.mission_daily)
-    icon.setImageResource(mission.icon())
+    // Cada missão pega sempre o mesmo herói (pelo id), e missões diferentes, heróis diferentes.
+    artPool.takeIf { it.isNotEmpty() }?.let { pool -> art.load(pool[mission.id.hashCode().mod(pool.size)]) }
+    sfx.text = SOUNDS[mission.event] ?: "POW!"
+    sfx.typeface = context.eraFont(R.attr.eraSfxFont)
+    sfx.comicBox(BoxStyle.BURST, ContextCompat.getColor(context, R.color.logo_yellow))
+    // Explosão pequena: o topo do quadro é baixo para o padding padrão dela.
+    val burstPad = context.resources.getDimensionPixelSize(R.dimen.space_md)
+    sfx.setPadding(burstPad, burstPad / 2, burstPad, burstPad / 2)
     title.setText(mission.text())
     count.text = context.getString(R.string.mission_count, state.progress, mission.goal)
     pips.bindPips(state.progress, mission.goal)

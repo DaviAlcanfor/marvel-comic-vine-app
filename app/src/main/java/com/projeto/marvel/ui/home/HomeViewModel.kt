@@ -31,16 +31,16 @@ data class HomeUiState(
     val userPhoto: String? = null,
     val reading: List<ReadComic>,
     val favoriteHero: Favorite?,
-    /** Últimas resenhas do usuário: a da HQ e a do filme mais recentes (com capa/pôster). */
     val heroOfTheDay: CharacterSummary? = null,
     val heroMovies: List<Movie> = emptyList(),
     /** Populares que estrearam nas HQs neste dia do ano. */
     val debutedToday: List<CharacterSummary> = emptyList(),
     val dailyTrail: DailyTrail? = null,
-    val missions: List<MissionProgress> = emptyList()
+    val missions: List<MissionProgress> = emptyList(),
+    /** Fotos dos famosos para ilustrar os quadros das missões (cada missão pega uma). */
+    val missionArt: List<String> = emptyList()
 )
 
-/** Resenha na Início; [movie] muda o ícone (🎬 × 📚). */
 
 /** Trilha do dia: um time por dia e os adversários que a trilha vai ter (do menos famoso ao chefe). */
 data class DailyTrail(val teamName: String, val teamUrl: String, val rivals: List<CharacterSummary>)
@@ -60,6 +60,7 @@ class HomeViewModel @JvmOverloads constructor(
     init {
         viewModelScope.launch {
             val all = repository.popularCharacters().getOrNull().orEmpty()
+            _state.update { state -> state.copy(missionArt = all.mapNotNull { it.image?.mediumUrl }) }
             val today = LocalDate.now()
             val hero = heroOfTheDay(all, today) ?: return@launch
             val debuted = all.filter { debutedOn(it.birth, today) }
@@ -81,7 +82,8 @@ class HomeViewModel @JvmOverloads constructor(
                 heroOfTheDay = it.heroOfTheDay,
                 heroMovies = it.heroMovies,
                 debutedToday = it.debutedToday,
-                dailyTrail = it.dailyTrail
+                dailyTrail = it.dailyTrail,
+                missionArt = it.missionArt
             )
         }
     }

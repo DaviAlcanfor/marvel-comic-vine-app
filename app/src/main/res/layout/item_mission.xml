@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Um quadro da página de missões (MissionList.kt monta as tiras): plaquinha HOJE/SEMANA, ícone,
-     o que fazer em Bebas, progresso em blocos de nanquim e o prêmio numa etiqueta do metal do
+<!-- Um quadro da página de missões (MissionList.kt monta as tiras): arte de herói com HOJE/SEMANA
+     e a onomatopeia da missão, o que fazer no letreiro, progresso em blocos de nanquim e o prêmio numa etiqueta do metal do
      pacote — ou "PEGAR!" numa explosão quando completa. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,43 +14,75 @@
     android:orientation="vertical"
     android:padding="@dimen/space_sm">
 
-    <TextView
-        android:id="@+id/kind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_caption"
-        android:fontFamily="?attr/eraDisplayFont"
-        android:paddingStart="@dimen/space_sm"
-        android:paddingTop="2dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="6dp"
-        android:rotation="-3"
-        android:textColor="@color/ink"
-        android:textSize="14sp"
-        app:fontFamily="?attr/eraDisplayFont"
-        tools:text="HOJE" />
+    <!-- Topo do quadro: a arte de um herói (cada missão a sua) com retícula, a plaquinha
+         HOJE/SEMANA e a onomatopeia do tipo de missão (POW!, RIIIP!…), no lugar de um ícone. -->
+    <!-- Recorta: a foto em centerCrop é maior que a área e vazaria por cima do título. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mission_art_height"
+        android:clipChildren="true"
+        android:clipToOutline="true">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="@dimen/mission_icon_size"
-        android:layout_height="@dimen/mission_icon_size"
-        android:layout_marginTop="@dimen/space_sm"
-        android:importantForAccessibility="no"
-        app:tint="@color/accent_text" />
+        <ImageView
+            android:id="@+id/art"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/surface_variant"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_halftone" />
+
+        <TextView
+            android:id="@+id/kind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:background="@drawable/bg_caption"
+            android:fontFamily="?attr/eraDisplayFont"
+            android:paddingStart="@dimen/space_sm"
+            android:paddingTop="2dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="6dp"
+            android:rotation="-3"
+            android:textColor="?attr/eraCaptionText"
+            android:textSize="13sp"
+            app:fontFamily="?attr/eraDisplayFont"
+            tools:text="HOJE" />
+
+        <TextView
+            android:id="@+id/sfx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:importantForAccessibility="no"
+            android:maxLines="1"
+            android:rotation="8"
+            android:textSize="12sp"
+            tools:text="POW!" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/space_xs"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
         android:fontFamily="?attr/eraDisplayFont"
         android:letterSpacing="0.03"
         android:textAllCaps="true"
         android:textColor="@color/text_primary"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:fontFamily="?attr/eraDisplayFont"
         tools:text="Vença 3 batalhas" />
+
+    <!-- Empurra progresso e prêmio para o pé do quadro (quadros da tira com a mesma altura). -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <!-- Blocos do progresso (montados em código). -->
     <LinearLayout

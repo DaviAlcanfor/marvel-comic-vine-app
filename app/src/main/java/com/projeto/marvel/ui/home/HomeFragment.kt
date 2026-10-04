@@ -119,7 +119,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.heroMoviesSfx.fadeVisible(roomForSfx)
         debutsAdapter.submitCarousel(state.debutedToday, binding.debutsList)
         listOf(binding.debutsTitle, binding.debutsList).forEach { it.fadeVisible(state.debutedToday.isNotEmpty()) }
-        binding.missionList.bindMissions(state.missions, viewModel::claim)
+        binding.missionList.bindMissions(state.missions, state.missionArt, viewModel::claim)
 
         binding.bindDailyTrail(state.dailyTrail) { trail ->
             findNavController().navigate(
