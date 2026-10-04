@@ -223,12 +223,15 @@ class BattleViewModel @JvmOverloads constructor(
             ?.let { runTurn(start, playerMove = null, cpuChoice = null, swapIn = it) }
     }
 
-    /** Golpe escolhido. No PvP o do P1 fica guardado até o P2 escolher o dele. */
-    fun use(move: Move) {
+    /**
+     * Golpe escolhido; [boost] = carga do sacudir ([shakeBoost], só contra a CPU). No PvP o do P1
+     * fica guardado até o P2 escolher o dele.
+     */
+    fun use(move: Move, boost: Int = 0) {
         val start = _state.value as? BattleUiState.Success ?: return
         if (start.busy || start.winner != null) return
         when {
-            !start.pvp -> runTurn(start, move, cpuChoice = null)
+            !start.pvp -> runTurn(start.copy(player = start.player.copy(charge = boost)), move, cpuChoice = null)
             start.choosing == Side.PLAYER -> {
                 pendingMove = move
                 _state.value = start.copy(choosing = Side.CPU)

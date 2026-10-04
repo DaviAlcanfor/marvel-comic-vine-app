@@ -126,6 +126,13 @@
     <string name="look_alike_runner_up">Quase deu: %1$s</string>
     <string name="look_alike_photo">Sua foto</string>
     <string name="games_look_how">Aparência: tire uma foto ou escolha da galeria e a IA diz com qual herói você mais parece. (O quiz ao lado é o de personalidade.)</string>
+    <string name="battle_voice_prompt">Fale o nome do golpe (ou grite "ultimate"!)</string>
+    <string name="battle_voice_unknown">Não entendi o golpe. Tente o nome que está no botão.</string>
+    <string name="battle_voice_missing">Este celular não tem reconhecimento de voz.</string>
+    <string name="battle_narrator_on">Ligar o locutor</string>
+    <string name="battle_narrator_off">Desligar o locutor</string>
+    <string name="battle_narrator_hello">Senhoras e senhores, começa a luta!</string>
+    <string name="battle_charged">CARREGADO +%1$d!</string>
     <string name="shazam_action">Reconhecer herói pela foto</string>
     <string name="shazam_working">Olhando a foto…</string>
     <string name="shazam_sticker">Figurinha de %1$s no álbum! (prêmio do dia)</string>

@@ -67,7 +67,9 @@ data class Combatant(
     val healsLeft: Int = HEALS_PER_FIGHT,
     val energy: Int = if (fighter.golden) GOLDEN_START_ENERGY else 0,
     val guarding: Boolean = false,
-    val dodging: Boolean = false
+    val dodging: Boolean = false,
+    /** Dano a mais no próximo acerto por ter sacudido o celular ([shakeBoost]); gasto no golpe. */
+    val charge: Int = 0
 ) {
     fun stat(stat: Stat) = fighter.stats.getValue(stat)
 
@@ -244,6 +246,7 @@ fun playTurn(
 ): List<TurnStep> =
     Turn(player, cpu, playerMove, random, cpuChoice).play()
 
+
 /** Estado mutável de um turno em andamento; só existe dentro de [playTurn]. */
 private class Turn(
     private var player: Combatant,
@@ -285,12 +288,19 @@ private class Turn(
         val move = (if (side == Side.PLAYER) playerMove else cpuChoice ?: cpuMove(actor, random.nextInt(PERCENT)))
             ?: return
         val spread = random.nextInt(SPREAD_MIN, SPREAD_MAX + 1)
-        val result = resolve(move, actor, get(other), random.nextInt(PERCENT), spread)
+        val result = boosted(resolve(move, actor, get(other), random.nextInt(PERCENT), spread), actor.charge)
         // Dano carrega as duas barras: quem bate (inteiro) e quem apanha (metade). A ultimate não recarrega.
         val dealt = if (move.ultimate) 0 else result.amount
-        set(side, result.actor.charged(dealt))
+        set(side, result.actor.charged(dealt).copy(charge = 0))
         set(other, result.target.charged(result.amount / ENERGY_TAKEN_DIVISOR))
         steps += TurnStep(player, cpu, side, result.outcome, move, result.amount, result.critical, result.heal, extra)
+    }
+
+    /** Carga do sacudir ([Combatant.charge]) soma no acerto e é gasta no golpe. */
+    private fun boosted(result: Resolution, charge: Int): Resolution {
+        if (result.outcome != Outcome.HIT || charge == 0) return result
+        val extra = charge.coerceAtMost(result.target.hp)
+        return result.copy(target = result.target.copy(hp = result.target.hp - extra), amount = result.amount + extra)
     }
 
     /** Veneno pesa (um passo animado cada) e os efeitos com duração contam um turno (sem passo). */

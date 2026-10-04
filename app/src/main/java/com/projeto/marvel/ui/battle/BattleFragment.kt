@@ -35,6 +35,7 @@ import kotlinx.coroutines.launch
 class BattleFragment : Fragment(R.layout.fragment_battle) {
 
     private val viewModel: BattleViewModel by viewModels()
+    private val senses = BattleSenses(this) { viewModel }
     private var binding: FragmentBattleBinding? = null
 
     // -1 = primeira renderização desta View: sincroniza sem animar (evita repetir a última
@@ -66,6 +67,7 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
 
         binding.backButton.setOnClickListener { findNavController().navigateUp() }
         binding.errorText.setOnClickListener { viewModel.load() }
+        senses.bind(binding)
         binding.rematchButton.setOnClickListener { viewModel.rematch() }
 
         viewLifecycleOwner.lifecycle.addObserver(binding.arena3d)
@@ -108,7 +110,7 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
             getString(R.string.battle_record_description, game.record.wins, game.record.losses)
         bindStage(binding, game)
 
-        binding.bindMoves(game, viewModel::use)
+        binding.bindMoves(game, senses::use)
         binding.bindSquads(game, viewModel::swap)
         binding.dimInactive(game)
 
@@ -139,6 +141,7 @@ class BattleFragment : Fragment(R.layout.fragment_battle) {
             }
             event != null && event.id != lastEventId && lastEventId != -1 -> {
                 animate(binding, event)
+                senses.onEvent(game, event)
                 if (winner != null) {
                     // Ultimate que derruba: o K.O. espera a cena dela acabar.
                     val lead = if (event.outcome == Outcome.ULTIMATE) ULTIMATE_SCENE_MILLIS else 0L

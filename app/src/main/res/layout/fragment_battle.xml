@@ -47,9 +47,32 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_sm"
         android:text="@string/battle_title"
-        app:layout_constraintEnd_toStartOf="@id/recordText"
+        app:layout_constraintEnd_toStartOf="@id/micButton"
         app:layout_constraintStart_toEndOf="@id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Falar o golpe (reconhecimento de voz do sistema) e ligar o locutor (BattleSenses.kt). -->
+    <ImageButton
+        android:id="@+id/micButton"
+        android:layout_width="@dimen/touch_target"
+        android:layout_height="@dimen/touch_target"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/battle_voice_prompt"
+        android:src="@drawable/ic_mic"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintEnd_toStartOf="@id/narratorButton"
+        app:layout_constraintTop_toTopOf="@id/title" />
+
+    <ImageButton
+        android:id="@+id/narratorButton"
+        android:layout_width="@dimen/touch_target"
+        android:layout_height="@dimen/touch_target"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/battle_narrator_on"
+        android:src="@drawable/ic_volume"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintEnd_toStartOf="@id/recordText"
+        app:layout_constraintTop_toTopOf="@id/title" />
 
     <!-- Placar salvo no aparelho (SharedPreferences). -->
     <TextView
