@@ -36,7 +36,7 @@
         android:background="@drawable/bg_badge"
         android:paddingHorizontal="@dimen/space_md"
         android:paddingVertical="@dimen/space_xs"
-        android:textColor="@color/background"
+        android:textColor="@color/ink"
         android:textSize="12sp"
         android:textStyle="bold"
         android:visibility="gone"

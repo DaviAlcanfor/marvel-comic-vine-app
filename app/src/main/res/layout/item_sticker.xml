@@ -61,7 +61,7 @@
             android:layout_gravity="top|end"
             android:background="@drawable/bg_badge"
             android:paddingHorizontal="@dimen/space_xs"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/ink"
             android:textSize="11sp"
             android:textStyle="bold"
             tools:text="×2" />

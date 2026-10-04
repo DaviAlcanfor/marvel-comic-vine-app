@@ -88,7 +88,7 @@
             android:layout_marginTop="@dimen/space_lg"
             android:background="@drawable/bg_badge"
             android:paddingHorizontal="@dimen/space_xs"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/ink"
             android:textSize="10sp"
             android:textStyle="bold"
             tools:text="×2" />

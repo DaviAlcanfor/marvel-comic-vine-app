@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Ficha de lutador (seleção da Batalha): vida, atributos em barras, golpes e o botão de escolher. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -31,11 +32,16 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.projeto.marvel.ui.LogoTextView
+            <!-- Texto comum (não o logotipo amarelo): a ficha é branca e o nome precisa ler. -->
+            <TextView
                 android:id="@+id/name"
-                style="@style/Widget.Marvel.ScreenTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="?attr/eraDisplayFont"
+                android:maxLines="2"
+                android:textColor="@color/text_primary"
+                android:textSize="24sp"
+                app:fontFamily="?attr/eraDisplayFont"
                 tools:text="Spider-Man" />
 
             <TextView
