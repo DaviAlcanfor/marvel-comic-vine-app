@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Herói do clima: cidade aproximada (nunca a precisa), pedida só ao tocar no card. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!-- Foto com o personagem: abrir o app de câmera (sem pedir permissão de câmera ao usuário). -->
     <queries>

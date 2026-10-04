@@ -1,6 +1,9 @@
 package com.projeto.marvel.ui.home
 
+import android.Manifest
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +40,13 @@ import kotlinx.coroutines.launch
 import com.projeto.marvel.ui.eraEnter
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
+
+    private val weatherCard: WeatherCard =
+        WeatherCard(this) { askLocation.launch(Manifest.permission.ACCESS_COARSE_LOCATION) }
+    private val askLocation: ActivityResultLauncher<String> =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            binding?.let { if (granted) weatherCard.load(it) }
+        }
 
     private val viewModel: HomeViewModel by viewModels()
     private var binding: FragmentHomeBinding? = null
@@ -78,6 +88,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
         binding.applyEra()
+        weatherCard.bind(binding)
         (binding.root.getChildAt(0) as ViewGroup).eraEnter()
         binding.readingList.adapter = readingAdapter
         binding.heroMoviesList.adapter = heroMoviesAdapter

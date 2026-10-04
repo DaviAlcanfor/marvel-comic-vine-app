@@ -33,6 +33,7 @@ private const val RULE_GAP_DP = 10f
 @Suppress("MagicNumber") // a inclinação de cada título é a própria tabela
 private fun FragmentHomeBinding.sections() = listOf(
     heroMoviesTitle to 1.5f,
+    weatherTitle to -2f,
     dailyTrailTitle to -3f,
     debutsTitle to -1.5f,
     readingTitle to 2f,

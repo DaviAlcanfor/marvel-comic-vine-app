@@ -177,6 +177,44 @@
                 android:visibility="gone" />
         </FrameLayout>
 
+        <!-- Herói do clima: o tempo de agora na sua cidade vira um herói (WeatherCard.kt). -->
+        <TextView
+            android:id="@+id/weatherTitle"
+            style="@style/Widget.Marvel.CaptionBox"
+            android:layout_marginTop="@dimen/space_lg"
+            android:text="@string/weather_title" />
+
+        <LinearLayout
+            android:id="@+id/weatherCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:background="@drawable/bg_card"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_md">
+
+            <ImageView
+                android:id="@+id/weatherImage"
+                android:layout_width="@dimen/avatar_size"
+                android:layout_height="@dimen/avatar_size"
+                android:background="@drawable/bg_card"
+                android:clipToOutline="true"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_explore" />
+
+            <TextView
+                android:id="@+id/weatherText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_md"
+                android:layout_weight="1"
+                android:text="@string/weather_hint"
+                android:textColor="@color/text_primary" />
+        </LinearLayout>
+
         <!-- Missões diárias e semanais: pagam pacotes, que se abrem no Álbum. -->
         <TextView
             android:id="@+id/missionsTitle"

@@ -74,6 +74,13 @@
     <string name="home_hero_of_the_day_retro">Enquanto isso… o herói do dia!</string>
     <string name="home_sfx_retro">POW!</string>
     <string name="home_sfx_nineties">SNIKT!</string>
+    <string name="weather_title">Herói do clima</string>
+    <string name="weather_hint">Toque para descobrir qual herói combina com o tempo aí agora.</string>
+    <string name="weather_loading">Olhando o céu…</string>
+    <string name="weather_no_location">Não deu para saber onde você está. Ligue a localização e toque de novo.</string>
+    <string name="weather_error">Não deu para ver o tempo agora. Toque para tentar de novo.</string>
+    <string name="weather_here">sua cidade</string>
+    <string name="weather_line">Agora: %1$d° e %2$s em %3$s. Dia de %4$s!</string>
     <string name="home_hero_movies">Filmes do herói do dia</string>
     <string name="home_debuted_today">Estreou neste dia</string>
     <string name="home_explore">Explorar personagens</string>
