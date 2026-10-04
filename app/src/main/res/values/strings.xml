@@ -377,6 +377,13 @@
     <string name="loading_bam">BAM!</string>
     <string name="loading_zap">ZAP!</string>
     <string name="loading_kapow">KAPOW!</string>
+    <string name="opening_meanwhile">Enquanto isso, no Universo Marvel…</string>
+    <string name="opening_title">Abertura do app</string>
+    <string name="opening_pick">Abertura…</string>
+    <string name="opening_auto">Aleatória (sorteia a cada vez)</string>
+    <string name="opening_cover">Capa de HQ abrindo</string>
+    <string name="opening_panels">Quadros caindo</string>
+    <string name="opening_burst">Explosão (KAPOW!)</string>
     <string name="notification_title">Herói do dia: %1$s</string>
     <string name="notification_text">Veja quem é o destaque de hoje no app.</string>
     <string name="widget_label">Herói do dia</string>

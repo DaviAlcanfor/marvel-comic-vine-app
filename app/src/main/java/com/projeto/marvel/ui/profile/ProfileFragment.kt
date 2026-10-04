@@ -208,6 +208,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 // Anos 90 é sobreposição de tema, não modo noturno: o AppCompat não recria sozinho.
                 if (before.nineties != ThemeMode.entries[which].nineties) requireActivity().recreate()
             }
+            .setNeutralButton(R.string.opening_pick) { _, _ -> requireContext().pickOpening() }
             .show()
     }
 

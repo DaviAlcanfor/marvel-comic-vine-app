@@ -30,8 +30,11 @@ private const val EXIT_SCALE = 4f
 @Suppress("MagicNumber") // inclinação de cada onomatopeia (POW, BAM, ZAP)
 private val WORD_TILTS = floatArrayOf(-12f, 9f, -6f)
 
-/** Liga a abertura; devolve quem para as animações (no fim, [finishComicLoading]). */
-fun ActivityMainBinding.startComicLoading(): () -> Unit {
+/**
+ * Liga a abertura de explosão com as onomatopeias [words] (as do seu herói, ou POW/BAM/ZAP);
+ * devolve quem para as animações (no fim, [finishComicLoading]).
+ */
+fun ActivityMainBinding.startComicLoading(words: List<String>): () -> Unit {
     val context = root.context
     fun color(res: Int) = ContextCompat.getColor(context, res)
     loading.visibility = View.VISIBLE
@@ -41,12 +44,13 @@ fun ActivityMainBinding.startComicLoading(): () -> Unit {
     loadingLogo.rotation = LOGO_TILT
     loadingBalloon.comicBox(BoxStyle.SPEECH, color(R.color.white))
 
-    val words = listOf(loadingPow to R.color.accent, loadingBam to R.color.move_water, loadingZap to R.color.move_heal)
-    words.forEachIndexed { index, (word, tint) ->
+    listOf(loadingPow, loadingBam, loadingZap).zip(words).forEach { (view, text) -> view.text = text }
+    val bursts = listOf(loadingPow to R.color.accent, loadingBam to R.color.move_water, loadingZap to R.color.move_heal)
+    bursts.forEachIndexed { index, (word, tint) ->
         word.comicBox(BoxStyle.BURST, color(tint))
         word.rotation = WORD_TILTS[index]
     }
-    val popAll = { words.forEachIndexed { index, (word, _) -> word.pop(index * WORD_STAGGER_MILLIS) } }
+    val popAll = { bursts.forEachIndexed { index, (word, _) -> word.pop(index * WORD_STAGGER_MILLIS) } }
 
     // Um relógio só: pulo do letreiro, reticências do balão e fervura do contorno.
     var cycles = 0

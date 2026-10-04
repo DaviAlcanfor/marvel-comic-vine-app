@@ -1,14 +1,18 @@
 package com.projeto.marvel.ui.profile
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.projeto.marvel.R
+import com.projeto.marvel.data.ThemeStore
 import com.projeto.marvel.databinding.FragmentProfileBinding
 import com.projeto.marvel.ui.Era
 import com.projeto.marvel.ui.EraPanelDrawable
+import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.era
+import com.projeto.marvel.ui.opening.OpeningScript
 
 /** Avatar do Perfil no traço da época, igual ao da Início: quadro de nanquim, moldura neon ou anel vermelho. */
 fun FragmentProfileBinding.applyEra() {
@@ -51,3 +55,18 @@ private fun medalShape(view: ImageView, fill: Int): Drawable {
 }
 
 private const val RETRO_INK_DP = 2.5f
+
+/** Escolha do roteiro da abertura (vale na próxima vez que o app abrir). */
+fun Context.pickOpening() {
+    val store = ThemeStore(this)
+    val labels = listOf(R.string.opening_auto, R.string.opening_cover, R.string.opening_panels, R.string.opening_burst)
+        .map(::getString).toTypedArray()
+    val current = OpeningScript.entries.indexOfFirst { it.name == store.opening() }.coerceAtLeast(0)
+    comicDialog()
+        .setTitle(R.string.opening_title)
+        .setSingleChoiceItems(labels, current) { dialog, which ->
+            store.setOpening(OpeningScript.entries[which].name)
+            dialog.dismiss()
+        }
+        .show()
+}

@@ -7,10 +7,12 @@ import androidx.lifecycle.lifecycleScope
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.projeto.marvel.data.ComicVineRepository
+import com.projeto.marvel.data.AuthRepository
+import com.projeto.marvel.data.ReadingStore
 import com.projeto.marvel.data.ThemeStore
+import com.projeto.marvel.ui.opening.OpeningScript
+import com.projeto.marvel.ui.opening.startOpening
 import com.projeto.marvel.ui.home.heroOfTheDay
-import com.projeto.marvel.ui.finishComicLoading
-import com.projeto.marvel.ui.startComicLoading
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
@@ -46,12 +48,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (savedInstanceState == null) {
-            val stop = binding.startComicLoading()
+            val themes = ThemeStore(this)
+            val script = themes.opening()?.let { name -> OpeningScript.entries.firstOrNull { it.name == name } }
+            val hero = ReadingStore(this, AuthRepository().currentUser?.uid).preferences().hero
+            val finish = binding.startOpening(hero, script ?: OpeningScript.AUTO)
             lifecycleScope.launch {
                 val start = System.currentTimeMillis()
                 withTimeoutOrNull(LOADING_MAX_MILLIS) { preload() }
                 delay((LOADING_MIN_MILLIS - (System.currentTimeMillis() - start)).coerceAtLeast(0))
-                binding.finishComicLoading(stop)
+                finish()
             }
         }
         scheduleHeroNotification(this)

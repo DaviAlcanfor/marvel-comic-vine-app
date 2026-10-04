@@ -1,9 +1,11 @@
 package com.projeto.marvel.ui
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.core.content.res.ResourcesCompat
 import com.projeto.marvel.R
 
 /** Época dos quadrinhos do tema atual (atributo `eraStyle`, ver `ThemeMode`). */
@@ -23,3 +25,7 @@ fun Context.eraOutline(): Int = themeValue(R.attr.eraOutline).data
 fun Context.eraDimen(@AttrRes attr: Int): Float = themeValue(attr).getDimension(resources.displayMetrics)
 
 private fun Context.themeValue(@AttrRes attr: Int) = TypedValue().also { theme.resolveAttribute(attr, it, true) }
+
+/** Fonte da época guardada no atributo [attr] (ex.: [R.attr.eraSfxFont]); null se não houver. */
+fun Context.eraFont(@AttrRes attr: Int): Typeface? =
+    themeValue(attr).resourceId.takeIf { it != 0 }?.let { ResourcesCompat.getFont(this, it) }

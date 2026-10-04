@@ -31,8 +31,14 @@ class ThemeStore(context: Context) {
         AppCompatDelegate.setDefaultNightMode(mode.nightMode)
     }
 
+    /** Roteiro da abertura escolhido no Perfil (nome de `OpeningScript`); null = automático. */
+    fun opening(): String? = prefs.getString(KEY_OPENING, null)
+
+    fun setOpening(name: String) = prefs.edit { putString(KEY_OPENING, name) }
+
     private companion object {
         const val PREFS_NAME = "theme"
         const val KEY_MODE = "mode"
+        const val KEY_OPENING = "opening"
     }
 }
