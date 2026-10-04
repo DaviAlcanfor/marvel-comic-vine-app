@@ -23,6 +23,7 @@ class GeekTools(
     private val comics: ComicVineRepository = ComicVineRepository(),
     private val catalog: CatalogRepository = CatalogRepository(),
     private val timelines: TimelineRepository = TimelineRepository(),
+    private val guide: ReadingGuide = ReadingGuide(),
     private val profile: () -> Map<String, Any?> = { emptyMap() }
 ) {
     private val gson = Gson()
@@ -48,6 +49,11 @@ class GeekTools(
             "Busca HQs (edições) ou séries pelo nome.",
             mapOf("busca" to Schema.string("título"), "series" to Schema.boolean("true = séries")),
             listOf("series")
+        ),
+        FunctionDeclaration(
+            "series_para_comecar",
+            "Séries da Marvel com o nome do personagem (ano, nº de edições): para montar uma ordem de leitura.",
+            mapOf(name)
         ),
         FunctionDeclaration("buscar_criadores", "Busca roteiristas/desenhistas pelo nome.", mapOf(name)),
         FunctionDeclaration("criador", "Detalhe de um criador.", mapOf(url)),
@@ -86,6 +92,9 @@ class GeekTools(
         }
         "buscar_hqs" -> comics.searchComics(args.text("busca"), series = args["series"]?.bool() == true).getOrThrow()
             .take(MAX_ITEMS).map { mapOf("titulo" to it.title, "data" to it.coverDate) }
+        "series_para_comecar" -> guide.series(args.text("nome")).getOrThrow().map {
+            mapOf("nome" to it.name, "ano" to it.startYear, "edicoes" to it.issues, "resumo" to it.deck)
+        }
         "buscar_criadores" -> catalog.creators(args.text("nome")).getOrThrow().take(MAX_ITEMS)
         "criador" -> catalog.creator(args.text("url")).getOrThrow()
         "filmes" -> catalog.marvelMovies().getOrThrow()

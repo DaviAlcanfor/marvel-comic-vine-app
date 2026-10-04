@@ -232,6 +232,16 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/startReadingButton"
+                style="@style/Widget.Marvel.ComicButton.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/trade_button_height"
+                android:layout_marginTop="@dimen/space_sm"
+                android:text="@string/start_reading"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/timelineTitle"
                 android:visibility="gone"

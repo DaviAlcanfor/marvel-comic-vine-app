@@ -40,13 +40,13 @@ interface CatalogService {
         @Query("field_list") fieldList: String? = null
     ): ApiList<Issue>
 
-    /** [filter] no formato `id:1|2|3`; serve para saber a editora de cada volume. */
+    /** [filter] no formato `id:1|2|3` (editora de cada volume) ou `name:wolverine` (séries do herói). */
     @GET("volumes/")
     suspend fun getVolumes(
         @Query("filter") filter: String,
         @Query("limit") limit: Int = 100,
         @Query("field_list") fieldList: String = "id,publisher"
-    ): ApiList<VolumePublisher>
+    ): ApiList<VolumeCard>
 
     /** [filter] no formato `id:1|2|3`. */
     @GET("teams/")

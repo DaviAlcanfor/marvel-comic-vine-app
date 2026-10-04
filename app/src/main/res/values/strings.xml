@@ -126,6 +126,13 @@
     <string name="look_alike_runner_up">Quase deu: %1$s</string>
     <string name="look_alike_photo">Sua foto</string>
     <string name="games_look_how">Aparência: tire uma foto ou escolha da galeria e a IA diz com qual herói você mais parece. (O quiz ao lado é o de personalidade.)</string>
+    <string name="start_reading">📚 Por onde começar a ler?</string>
+    <string name="start_reading_loading">Escolhendo as HQs…</string>
+    <string name="start_reading_title">Comece a ler %1$s por aqui</string>
+    <string name="start_reading_item">%1$d. %2$s (%3$s, %4$d edições)\n%5$s</string>
+    <string name="start_reading_save">Guardar todas em Quero ler</string>
+    <string name="start_reading_saved">%1$d séries guardadas em Quero ler.</string>
+    <string name="start_reading_none">Não achei séries da Marvel com esse nome.</string>
     <string name="detail_translate">Traduzir</string>
     <string name="detail_translating">Traduzindo…</string>
     <string name="detail_translated">Em português ✓</string>

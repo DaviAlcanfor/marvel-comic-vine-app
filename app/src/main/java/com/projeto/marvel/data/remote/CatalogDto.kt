@@ -89,8 +89,16 @@ data class Location(
     @SerializedName("first_appeared_in_issue") val firstIssue: IssueRef? = null
 )
 
-/** Volume (série) só com a editora: as edições não dizem de quem são, o volume diz. */
-data class VolumePublisher(
+/**
+ * Volume (série). Nos Lançamentos só vêm id e editora (as edições não dizem de quem são); no "Por
+ * onde começar a ler?" vem o card inteiro.
+ */
+data class VolumeCard(
     @SerializedName("id") val id: Int,
-    @SerializedName("publisher") val publisher: Publisher?
+    @SerializedName("publisher") val publisher: Publisher?,
+    @SerializedName("name") val name: String? = null,
+    @SerializedName("start_year") val startYear: String? = null,
+    @SerializedName("count_of_issues") val issues: Int? = null,
+    @SerializedName("deck") val deck: String? = null,
+    @SerializedName("image") val image: ComicVineImage? = null
 )
