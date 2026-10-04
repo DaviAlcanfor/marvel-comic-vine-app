@@ -70,6 +70,14 @@ do Personagem, Times) seguindo um design system dark fornecido em
     `ConnectionsView`; aliados/inimigos só vêm no detalhe completo (`full = true`).
   - Papel de parede animado: `ui/widget/HeroWallpaperService.kt` (monta o tema da época na mão, porque
     o serviço não tem Activity); abre pelo diálogo de tema do Perfil.
+  - Shazam de herói (câmera no cabeçalho do Descobrir): `data/HeroShazam.kt` (Gemini Vision; nunca
+    identifica pessoa real) e `ui/discover/ShazamFlow.kt`; o 1º reconhecimento do dia dá a figurinha
+    dele (se estiver no álbum) ou um pacote Básico.
+- **Luta com o corpo e a voz** (`ui/battle/BattleSenses.kt`, regras puras em `BattleSensesRules.kt`,
+  testadas em `BattleSensesTest`): locutor com frases fixas (`commentary`, sem gastar cota) pela voz
+  do Android; sacudir carrega o próximo golpe (`shakeBoost` → `Combatant.charge`, soma só no acerto e
+  é gasta no golpe); microfone usa o reconhecimento de voz do sistema (`RecognizerIntent`, sem
+  permissão de áudio no app) e `moveForSpeech` acha o golpe pelo nome.
 - **Sem Safe Args.** Argumentos de navegação são lidos via `Bundle`/`SavedStateHandle`
   (ver `CharacterDetailViewModel`) para não adicionar mais um plugin Gradle.
 
