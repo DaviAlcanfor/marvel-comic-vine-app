@@ -1,8 +1,6 @@
 package com.projeto.marvel.ui.album
 
 import android.view.LayoutInflater
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -14,13 +12,11 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.chip.ChipGroup
 import com.projeto.marvel.R
-import com.projeto.marvel.data.PackType
 import com.projeto.marvel.data.TRADE_COST
 import com.projeto.marvel.databinding.ItemFilterChipBinding
 import com.projeto.marvel.databinding.ViewAlbumHeaderBinding
 import com.projeto.marvel.ui.BoxStyle
 import com.projeto.marvel.ui.Era
-import com.projeto.marvel.ui.EraPanelDrawable
 import com.projeto.marvel.ui.comicBox
 import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.era
@@ -99,8 +95,7 @@ fun ViewAlbumHeaderBinding.submit(adapter: StickerAdapter, stickers: List<Sticke
 
 /**
  * Cabeçalho no traço da época (canvas "Épocas dos quadrinhos"): legenda amarela (Retrô), etiqueta
- * azul (Anos 90) ou barra fina (Moderno); pacotes como blocos na cor de cada um; busca com
- * "BUSCAR:" escrito (Retrô, Anos 90) ou a lupa (Moderno).
+ * azul (Anos 90) ou barra fina (Moderno); busca com "BUSCAR:" escrito (Retrô, Anos 90) ou a lupa (Moderno).
  */
 fun ViewAlbumHeaderBinding.applyEra() {
     val context = root.context
@@ -115,7 +110,6 @@ fun ViewAlbumHeaderBinding.applyEra() {
             progressBar.visibility = View.VISIBLE
         }
     }
-    tiles().forEach { (type, tile) -> tile.packTile(type, era) }
     when (era) {
         Era.MODERN -> {
             searchLabel.visibility = View.GONE
@@ -130,49 +124,6 @@ fun ViewAlbumHeaderBinding.applyEra() {
     }
 }
 
-/** Bloco do pacote: cor do pacote com nanquim (Retrô), metal chanfrado (Anos 90) ou faixa no topo (Moderno). */
-private fun TextView.packTile(type: PackType, era: Era) {
-    val (start, mid, end) = type.colors().map { ContextCompat.getColor(context, it) }
-    val solid = ContextCompat.getColor(context, PACK_SOLID.getValue(type))
-    val dark = type == PackType.BASIC
-    when (era) {
-        Era.RETRO -> {
-            background = EraPanelDrawable(context, EraPanelDrawable.Kind.PANEL, solid)
-            setTextColor(ContextCompat.getColor(context, if (dark) R.color.white else R.color.ink))
-        }
-        Era.NINETIES -> {
-            background = EraPanelDrawable(context, EraPanelDrawable.Kind.CHAMFER_FILL, mid).apply {
-                setGradient(intArrayOf(start, mid, end))
-            }
-            setTextColor(ContextCompat.getColor(context, if (dark) R.color.white else R.color.nineties_background))
-        }
-        Era.MODERN -> {
-            val density = resources.displayMetrics.density
-            val radius = MODERN_TILE_RADIUS_DP * density
-            val top = GradientDrawable().apply {
-                setColor(solid)
-                cornerRadius = radius
-            }
-            val panel = GradientDrawable().apply {
-                setColor(ContextCompat.getColor(context, R.color.surface))
-                cornerRadius = radius
-                setStroke(density.toInt(), ContextCompat.getColor(context, R.color.border))
-            }
-            background = LayerDrawable(arrayOf(top, panel)).apply {
-                setLayerInset(1, 0, (MODERN_TILE_STRIPE_DP * density).toInt(), 0, 0)
-            }
-            setTextColor(ContextCompat.getColor(context, R.color.text_primary))
-        }
-    }
-}
-
-private val PACK_SOLID = mapOf(
-    PackType.BASIC to R.color.pack_tile_basic,
-    PackType.SILVER to R.color.pack_tile_silver,
-    PackType.GOLD to R.color.logo_yellow
-)
-private const val MODERN_TILE_RADIUS_DP = 8f
-private const val MODERN_TILE_STRIPE_DP = 3f
 
 /** ⓘ abre as regras dos pacotes; o selo de troca pede confirmação antes de gastar as repetidas. */
 fun ViewAlbumHeaderBinding.bindActions(onTrade: () -> Unit) {

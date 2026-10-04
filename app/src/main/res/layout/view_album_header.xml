@@ -48,32 +48,70 @@
             app:tint="@color/text_primary" />
     </LinearLayout>
 
-    <!-- Pacotes: Básico, Prata e Ouro, cada um um bloco na cor do pacote (AlbumFilterBar.applyEra). -->
+    <!-- Pacotes: o desenho de cada um (Básico, Prata, Ouro) e quantos tem, no letreiro da época. -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_md"
         android:orientation="horizontal">
 
-        <TextView
+        <LinearLayout
             android:id="@+id/tileBasic"
-            style="@style/Widget.Marvel.PackTile" />
+            style="@style/Widget.Marvel.PackTile">
 
-        <TextView
+            <include
+                android:id="@+id/packBasic"
+                layout="@layout/view_pack"
+                android:layout_width="@dimen/pack_small_width"
+                android:layout_height="@dimen/pack_small_height" />
+
+            <TextView
+                android:id="@+id/countBasic"
+                style="@style/Widget.Marvel.PackCount" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/tileSilver"
-            style="@style/Widget.Marvel.PackTile" />
+            style="@style/Widget.Marvel.PackTile">
 
-        <TextView
+            <include
+                android:id="@+id/packSilver"
+                layout="@layout/view_pack"
+                android:layout_width="@dimen/pack_small_width"
+                android:layout_height="@dimen/pack_small_height" />
+
+            <TextView
+                android:id="@+id/countSilver"
+                style="@style/Widget.Marvel.PackCount" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/tileGold"
-            style="@style/Widget.Marvel.PackTile" />
+            style="@style/Widget.Marvel.PackTile">
+
+            <include
+                android:id="@+id/packGold"
+                layout="@layout/view_pack"
+                android:layout_width="@dimen/pack_small_width"
+                android:layout_height="@dimen/pack_small_height" />
+
+            <TextView
+                android:id="@+id/countGold"
+                style="@style/Widget.Marvel.PackCount" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Troca de repetidas por um Prata (desativado sem repetidas suficientes). -->
+    <!-- Compacto e à direita: é um atalho, não a ação principal da tela. -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/tradeButton"
-        style="@style/Widget.Marvel.ComicButton"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/space_md" />
+        style="@style/Widget.Marvel.ComicButton.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/trade_button_height"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/space_sm"
+        android:paddingHorizontal="@dimen/space_md"
+        android:textSize="15sp" />
 
     <!-- Busca: "BUSCAR:" escrito (Retrô, Anos 90) ou a lupa (Moderno), e o campo. -->
     <LinearLayout

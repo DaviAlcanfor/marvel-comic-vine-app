@@ -42,20 +42,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Bloco do pacote no cabeçalho do Álbum (fundo e cor do texto por época, em código). -->
+    <!-- Pacote no cabeçalho do Álbum: o desenho e a contagem embaixo. -->
     <style name="Widget.Marvel.PackTile" parent="">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/pack_tile_height</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginHorizontal">@dimen/space_xs</item>
-        <item name="android:gravity">center</item>
-        <!-- Letreiro do bloco: Bangers (Retrô), Bungee (Anos 90), Bebas (Moderno), como no canvas. -->
-        <item name="android:fontFamily">?attr/eraSfxFont</item>
-        <item name="fontFamily">?attr/eraSfxFont</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:lineSpacingMultiplier">0.9</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:clipChildren">false</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:paddingVertical">@dimen/space_xs</item>
     </style>
 
     <style name="Widget.Marvel.PackCount" parent="">
@@ -64,8 +60,10 @@
         <item name="android:layout_marginTop">@dimen/space_sm</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
+        <!-- Letreiro da época (Bangers / Bungee / Bebas), como os blocos do canvas. -->
+        <item name="android:fontFamily">?attr/eraSfxFont</item>
+        <item name="fontFamily">?attr/eraSfxFont</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="Widget.Marvel.VersusName" parent="">

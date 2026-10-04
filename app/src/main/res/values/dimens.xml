@@ -100,4 +100,5 @@
     <dimen name="trunfo_stat_height">40dp</dimen>
     <dimen name="quote_min_height">120dp</dimen>
     <dimen name="comic_panel_height">200dp</dimen>
+    <dimen name="trade_button_height">40dp</dimen>
 </resources>
