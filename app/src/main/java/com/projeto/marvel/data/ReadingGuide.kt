@@ -3,7 +3,9 @@ package com.projeto.marvel.data
 import com.google.firebase.Firebase
 import com.google.firebase.ai.ai
 import com.google.firebase.ai.type.GenerativeBackend
+import com.google.firebase.ai.type.ThinkingLevel
 import com.google.firebase.ai.type.generationConfig
+import com.google.firebase.ai.type.thinkingConfig
 import com.google.gson.Gson
 import com.projeto.marvel.data.remote.ApiClient
 import com.projeto.marvel.data.remote.CatalogService
@@ -13,6 +15,7 @@ import com.projeto.marvel.data.remote.VolumeCard
 data class ReadingPick(val series: VolumeCard, val why: String)
 
 private const val MAX_CANDIDATES = 25
+private const val MAX_DECK = 100
 private const val MAX_PICKS = 5
 private const val VOLUME_FIELDS = "id,name,start_year,count_of_issues,publisher,deck,image"
 
@@ -41,7 +44,11 @@ class ReadingGuide(private val service: CatalogService = ApiClient.catalog) {
     private suspend fun pick(hero: String, candidates: List<VolumeCard>): Result<List<ReadingPick>> =
         withGemini { model ->
             val text = Firebase.ai(backend = GenerativeBackend.googleAI())
-                .generativeModel(modelName = model, generationConfig = generationConfig { responseMimeType = JSON })
+                .generativeModel(modelName = model, generationConfig = generationConfig {
+                    responseMimeType = JSON
+                    // Escolha simples: sem raciocínio longo a resposta vem em segundos, não em minuto.
+                    thinkingConfig = thinkingConfig { thinkingLevel = ThinkingLevel.LOW }
+                })
                 .generateContent(prompt(hero, candidates))
                 .text.orEmpty()
             Gson().fromJson(text, Array<Answer>::class.java).orEmpty()
@@ -60,7 +67,8 @@ class ReadingGuide(private val service: CatalogService = ApiClient.catalog) {
         ${candidates.joinToString("\n", transform = ::line)}
     """.trimIndent()
 
-    private fun line(v: VolumeCard) = "${v.id} | ${v.name} | ${v.startYear} | ${v.issues} | ${v.deck.orEmpty()}"
+    private fun line(v: VolumeCard) =
+        "${v.id} | ${v.name} | ${v.startYear} | ${v.issues} | ${v.deck.orEmpty().take(MAX_DECK)}"
 
     private class Answer(val id: Int? = null, val porque: String? = null)
 

@@ -1,7 +1,6 @@
 package com.projeto.marvel.ui.detail
 
 import android.os.Bundle
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -19,7 +18,6 @@ import kotlinx.coroutines.launch
 private const val MAX_TEAMS = 6
 private const val MAX_ALLIES = 5
 private const val MAX_CREATORS = 3
-private const val HEIGHT_SHARE = 0.65f
 
 // Prefixos de tipo dos ids da Comic Vine: 4005 personagem, 4060 time.
 private fun characterUrl(id: Int?) = id?.let { "https://comicvine.gamespot.com/api/character/4005-$it/" }
@@ -58,10 +56,6 @@ private fun Fragment.openGraph(nodes: List<GraphNode>) {
         }
         findNavController().navigate(destination, args as Bundle)
     }
-    view.layoutParams = ViewGroup.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT,
-        (resources.displayMetrics.heightPixels * HEIGHT_SHARE).toInt()
-    )
     dialog = requireContext().comicDialog()
         .setTitle(R.string.connections_title)
         .setMessage(R.string.connections_legend)

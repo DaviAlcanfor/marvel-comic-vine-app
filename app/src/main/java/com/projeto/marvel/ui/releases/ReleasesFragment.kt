@@ -111,14 +111,15 @@ class ReleasesFragment : Fragment(R.layout.fragment_catalog) {
     private fun offer(issue: Issue) {
         val options = arrayOf(getString(R.string.releases_want), getString(R.string.releases_remind))
         requireContext().comicDialog()
-            .setTitle(issue.title)
+            .setTitle(issue.seriesTitle)
             .setItems(options) { _, which -> if (which == 0) wantToRead(issue) else remind(issue) }
             .show()
     }
 
     private fun wantToRead(issue: Issue) {
         val store = ReadingStore(requireContext(), AuthRepository().currentUser?.uid)
-        store.save(ReadComic(issue.id, issue.title, issue.image?.mediumUrl).withStatus(ReadingStatus.WANT_TO_READ))
+        val comic = ReadComic(issue.id, issue.seriesTitle, issue.image?.mediumUrl)
+        store.save(comic.withStatus(ReadingStatus.WANT_TO_READ))
         Toast.makeText(requireContext(), R.string.releases_added, Toast.LENGTH_SHORT).show()
     }
 
@@ -127,7 +128,7 @@ class ReleasesFragment : Fragment(R.layout.fragment_catalog) {
         val day = issue.storeDate?.let { runCatching { LocalDate.parse(it) }.getOrNull() } ?: LocalDate.now()
         val start = day.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
         val intent = Intent(Intent.ACTION_INSERT, CalendarContract.Events.CONTENT_URI)
-            .putExtra(CalendarContract.Events.TITLE, getString(R.string.releases_event, issue.title))
+            .putExtra(CalendarContract.Events.TITLE, getString(R.string.releases_event, issue.seriesTitle))
             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, start)
             .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
         runCatching { startActivity(intent) }
@@ -156,7 +157,7 @@ private class ReleaseAdapter(private val onClick: (Issue) -> Unit) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val issue = getItem(position)
         val binding = holder.binding
-        binding.title.text = issue.title
+        binding.title.text = issue.seriesTitle
         binding.cover.load(issue.image?.mediumUrl) { crossfade(true) }
         val day = issue.storeDate?.let { runCatching { LocalDate.parse(it).format(DATE) }.getOrNull() }
         binding.rating.text = day?.let { binding.root.context.getString(R.string.releases_day, it) }.orEmpty()

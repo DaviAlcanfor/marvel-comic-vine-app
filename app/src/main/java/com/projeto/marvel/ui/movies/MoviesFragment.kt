@@ -41,6 +41,10 @@ class MoviesFragment : Fragment(R.layout.fragment_catalog) {
         super.onViewCreated(view, savedInstanceState)
         val binding = requireNotNull(binding)
         binding.intro.setTextColor(requireContext().getColor(R.color.text_primary))
+        // Mesmo card do Herói do clima: o resumo da maratona é clicável.
+        val pad = resources.getDimensionPixelSize(R.dimen.space_md)
+        binding.intro.setBackgroundResource(R.drawable.bg_card)
+        binding.intro.setPadding(pad, pad, pad, pad)
         bindMarathon(binding.intro) { (viewModel.state.value as? MoviesUiState.Success)?.movies.orEmpty() }
         binding.searchInput.setHint(R.string.movies_search_hint)
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), GRID_COLUMNS)

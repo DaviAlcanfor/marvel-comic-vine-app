@@ -3,6 +3,9 @@ package com.projeto.marvel.data
 import com.projeto.marvel.data.remote.ApiClient
 import com.projeto.marvel.data.remote.CatalogService
 import com.projeto.marvel.data.remote.Issue
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
@@ -27,19 +30,21 @@ class ReleasesRepository(private val service: CatalogService = ApiClient.catalog
     suspend fun thisWeek(today: LocalDate = LocalDate.now()): Result<List<Issue>> = runCatching {
         val week = weekOf(today)
         val filter = "store_date:${week.start}|${week.endInclusive}"
-        // A semana tem ~200 edições de todas as editoras; a API devolve no máximo 100 por vez.
-        val issues = mutableListOf<Issue>()
-        for (page in 0 until MAX_PAGES) {
-            val batch = service.getIssues(filter, offset = page * PAGE, fieldList = ISSUE_FIELDS).results()
-            issues += batch
-            if (batch.size < PAGE) break
+        // A semana tem ~200 edições de todas as editoras e a API devolve 100 por vez: a 1ª página diz
+        // o total e as outras vão em paralelo (a Comic Vine leva segundos por chamada).
+        coroutineScope {
+            val first = service.getIssues(filter, fieldList = ISSUE_FIELDS)
+            val pages = ((first.total ?: 0) + PAGE - 1) / PAGE
+            val issues = first.results() + (1 until pages.coerceAtMost(MAX_PAGES)).map { page ->
+                async { service.getIssues(filter, offset = page * PAGE, fieldList = ISSUE_FIELDS).results() }
+            }.awaitAll().flatten()
+            val marvel = issues.mapNotNull { it.volume?.id }.distinct().chunked(PAGE).map { chunk ->
+                async { service.getVolumes("id:${chunk.joinToString("|")}").results() }
+            }.awaitAll().flatten()
+                .filter { it.publisher?.name?.contains(MARVEL, ignoreCase = true) == true }
+                .map { it.id }.toSet()
+            issues.filter { it.volume?.id in marvel }
         }
-        val volumes = issues.mapNotNull { it.volume?.id }.distinct()
-        if (volumes.isEmpty()) return@runCatching emptyList()
-        val marvel = volumes.chunked(PAGE).flatMap { chunk ->
-            service.getVolumes("id:${chunk.joinToString("|")}").results()
-        }.filter { it.publisher?.name?.contains(MARVEL, ignoreCase = true) == true }.map { it.id }.toSet()
-        issues.filter { it.volume?.id in marvel }
     }
 
     private companion object {

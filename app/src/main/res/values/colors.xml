@@ -60,8 +60,8 @@
     <color name="move_water">#1565C0</color>
     <color name="move_magic">#AD1457</color>
     <color name="move_drain">#00796B</color>
-    <!-- Dourado como TEXTO: o accent (fundos, legendas) não dá leitura sobre o papel claro. -->
-    <color name="accent_text">#8A6206</color>
+    <!-- Dourado como TEXTO: bronze escuro (contraste ~10:1 no papel/branco). O accent é só para fundos. -->
+    <color name="accent_text">#5C3A00</color>
     <!-- Fundo quase opaco de telas por cima de outras (VS, abertura de pacote). -->
     <color name="era_overlay">#F2FFF4DC</color>
     <!-- Pontos da retícula (tint do halftone_tile, que é branco). -->

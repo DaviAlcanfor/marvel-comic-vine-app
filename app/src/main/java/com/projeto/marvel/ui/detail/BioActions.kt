@@ -32,10 +32,11 @@ fun Fragment.bindBioActions(
     translator.cached(characterId)?.let {
         bio.text = it
         portuguese = true
-        translateButton.isEnabled = false
+        translateButton.isClickable = false
+        translateButton.setText(R.string.detail_translated)
     }
     translateButton.setOnClickListener {
-        translateButton.isEnabled = false
+        translateButton.isClickable = false
         translateButton.setText(R.string.detail_translating)
         viewLifecycleOwner.lifecycleScope.launch {
             translator.translate(characterId, bio.text.toString())
@@ -45,7 +46,7 @@ fun Fragment.bindBioActions(
                     translateButton.setText(R.string.detail_translated)
                 }
                 .onFailure {
-                    translateButton.isEnabled = true
+                    translateButton.isClickable = true
                     translateButton.setText(R.string.detail_translate)
                     Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                 }

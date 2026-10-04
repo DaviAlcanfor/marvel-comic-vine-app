@@ -275,17 +275,20 @@
         <item name="strokeWidth">@dimen/ink_width</item>
     </style>
 
-    <!-- Diálogos: título em Bebas Neue e botões em dourado; o fundo (bg_dialog) é posto em comicDialog(). -->
+    <!-- Diálogos: título na fonte da época e botões em vermelho de texto; o fundo (bg_dialog) é posto em
+         comicDialog(). Nada de amarelo como texto aqui: some no papel/branco do painel. -->
     <style name="ThemeOverlay.Marvel.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/Widget.Marvel.DialogTitle</item>
-        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimary">@color/primary_text</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_primary</item>
     </style>
 
     <style name="Widget.Marvel.DialogTitle" parent="MaterialAlertDialog.Material3.Title.Text">
         <item name="android:fontFamily">?attr/eraDisplayFont</item>
         <item name="fontFamily">?attr/eraDisplayFont</item>
         <item name="android:textSize">26sp</item>
-        <item name="android:textColor">@color/accent_text</item>
+        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <!-- Biografia/descrição como caixa de narração de HQ: papel e texto de nanquim. -->

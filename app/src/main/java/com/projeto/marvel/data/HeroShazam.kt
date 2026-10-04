@@ -6,8 +6,10 @@ import androidx.core.content.edit
 import com.google.firebase.Firebase
 import com.google.firebase.ai.ai
 import com.google.firebase.ai.type.GenerativeBackend
+import com.google.firebase.ai.type.ThinkingLevel
 import com.google.firebase.ai.type.content
 import com.google.firebase.ai.type.generationConfig
+import com.google.firebase.ai.type.thinkingConfig
 import com.google.gson.Gson
 import com.projeto.marvel.data.remote.CharacterSummary
 import java.time.LocalDate
@@ -24,7 +26,11 @@ class HeroShazam(context: Context, private val comics: ComicVineRepository = Com
     suspend fun recognize(photo: Bitmap): Result<CharacterSummary> {
         val name = withGemini { model ->
             val text = Firebase.ai(backend = GenerativeBackend.googleAI())
-                .generativeModel(modelName = model, generationConfig = generationConfig { responseMimeType = JSON })
+                .generativeModel(modelName = model, generationConfig = generationConfig {
+                    responseMimeType = JSON
+                    // Escolha simples: sem raciocínio longo a resposta vem em segundos, não em minuto.
+                    thinkingConfig = thinkingConfig { thinkingLevel = ThinkingLevel.LOW }
+                })
                 .generateContent(
                     content {
                         image(photo)

@@ -21,6 +21,11 @@ data class Issue(
     /** Dia em que chegou às bancas (só vem quando pedido no field_list). */
     @SerializedName("store_date") val storeDate: String? = null
 ) {
+    /** "Amazing Spider-Man #12": como se acha na banca (o `name` da edição às vezes é a lista das histórias). */
+    val seriesTitle: String
+        get() = volume?.name?.let { series -> listOfNotNull(series, issueNumber?.let { "#$it" }).joinToString(" ") }
+            ?: title
+
     /** "Batman #12" — o `name` da issue costuma vir nulo; o do volume não. */
     val title: String
         get() = listOfNotNull(name ?: volume?.name, issueNumber?.let { "#$it" })

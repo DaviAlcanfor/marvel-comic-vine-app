@@ -6,7 +6,8 @@ import com.google.gson.annotations.SerializedName
 /** Envelope de lista da Comic Vine (mesmo formato em todo endpoint de lista). */
 data class ApiList<T>(
     @SerializedName("error") val error: String?,
-    @SerializedName("results") val results: List<T>?
+    @SerializedName("results") val results: List<T>?,
+    @SerializedName("number_of_total_results") val total: Int? = null
 )
 
 /** Time na linha do tempo: a data vem da 1ª edição dele; [members] mede o tamanho/importância. */

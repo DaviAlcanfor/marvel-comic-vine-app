@@ -140,14 +140,14 @@
     <string name="wallpaper_label">Herói do dia (Marvel)</string>
     <string name="wallpaper_description">O herói do dia num quadro de HQ animado, no traço da sua época.</string>
     <string name="wallpaper_use">Papel de parede</string>
-    <string name="connections_open">🕸 Ver a teia de conexões</string>
+    <string name="connections_open">Ver a teia de conexões</string>
     <string name="connections_title">Teia de conexões</string>
-    <string name="connections_legend">🟡 ele · 🔵 times · 🟢 aliados · 🔴 inimigos · ✏️ criadores. Arraste, aperte para zoom, toque para abrir.</string>
+    <string name="connections_legend">🟡 ele · 🔵 times · 🟢 aliados · 🔴 inimigos · 🟣 criadores. Arraste, aperte para zoom, toque para abrir.</string>
     <string name="start_reading">📚 Por onde começar a ler?</string>
     <string name="start_reading_loading">Escolhendo as HQs…</string>
     <string name="start_reading_title">Comece a ler %1$s por aqui</string>
     <string name="start_reading_item">%1$d. %2$s (%3$s, %4$d edições)\n%5$s</string>
-    <string name="start_reading_save">Guardar todas em Quero ler</string>
+    <string name="start_reading_save">Guardar todas</string>
     <string name="start_reading_saved">%1$d séries guardadas em Quero ler.</string>
     <string name="start_reading_none">Não achei séries da Marvel com esse nome.</string>
     <string name="detail_translate">Traduzir</string>
