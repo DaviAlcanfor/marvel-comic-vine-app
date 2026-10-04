@@ -55,6 +55,21 @@ do Personagem, Times) seguindo um design system dark fornecido em
   missão da tabela, no texto e na onomatopeia do quadro (`ui/home/MissionList.kt`: cada quadro tem a
   arte de um herói e a onomatopeia do tipo de missão, nada de ícone genérico). Abertura do app: tela de HQ animada (`ui/ComicLoading.kt`), a splash do sistema
   fica só com o fundo.
+- **Extras fora dos jogos** (todos grátis):
+  - Bio traduzida + Ouvir no Detalhe: `data/BioTranslator.kt` (Gemini, cache por personagem) e
+    `ui/detail/BioActions.kt` (`TextToSpeech`).
+  - Herói do clima na Início: `data/Weather.kt` (Open-Meteo, sem chave; regra `weatherHero` testada) e
+    `ui/home/WeatherCard.kt` (localização aproximada pedida só ao tocar; cidade pelo `Geocoder`).
+  - Bancas (aba do Descobrir): `data/Releases.kt` — edições por `store_date` da semana e editora pelo
+    volume (as edições não dizem a editora); "Lembrar" abre o Calendário por intent, sem permissão.
+  - Maratona do MCU (aba Filmes): tabela curada em `data/Marathon.kt` (ids da Comic Vine + minutos,
+    porque o `runtime` da API vem bagunçado); vistos ficam na estante de filmes.
+  - Por onde começar a ler? (Detalhe e ferramenta `series_para_comecar` do Geek): `data/ReadingGuide.kt`,
+    séries reais com o nome do herói e o Gemini só ordena/explica (`volume_credits` vem vazio na API).
+  - Teia de conexões (Detalhe): física pura em `ui/detail/ForceLayout.kt` (testada) desenhada por
+    `ConnectionsView`; aliados/inimigos só vêm no detalhe completo (`full = true`).
+  - Papel de parede animado: `ui/widget/HeroWallpaperService.kt` (monta o tema da época na mão, porque
+    o serviço não tem Activity); abre pelo diálogo de tema do Perfil.
 - **Sem Safe Args.** Argumentos de navegação são lidos via `Bundle`/`SavedStateHandle`
   (ver `CharacterDetailViewModel`) para não adicionar mais um plugin Gradle.
 
