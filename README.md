@@ -21,7 +21,7 @@
       <a href="docs/media/marvel-app-tour.mp4">
         <img src="docs/media/tour-poster.jpg" width="560" alt="Assistir ao tour completo do app (vídeo)"/>
       </a>
-      <br/><sub>▶ Tour completo (1min12) — clique para assistir</sub>
+      <br/><sub>▶ Tour completo (1min18) — clique para assistir</sub>
     </td>
     <td align="center">
       <img src="docs/media/batalha.gif" width="200" alt="Batalha no ringue 3D"/>
