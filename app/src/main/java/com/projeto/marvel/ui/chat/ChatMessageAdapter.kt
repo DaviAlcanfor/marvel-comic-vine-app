@@ -27,7 +27,7 @@ class ChatMessageAdapter : ListAdapter<ChatMessage, ChatMessageAdapter.ViewHolde
     class ViewHolder(private val binding: ItemChatMessageBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(message: ChatMessage) {
             val context = binding.root.context
-            binding.text.text = message.text
+            binding.text.text = markdownBold(message.text)
             binding.text.setBackgroundResource(
                 when {
                     message.error -> R.drawable.bg_balloon_error
