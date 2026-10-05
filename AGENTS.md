@@ -56,8 +56,8 @@ do Personagem, Times) seguindo um design system dark fornecido em
   arte de um herói e a onomatopeia do tipo de missão, nada de ícone genérico). Abertura do app: tela de HQ animada (`ui/ComicLoading.kt`), a splash do sistema
   fica só com o fundo.
 - **Extras fora dos jogos** (todos grátis):
-  - Bio traduzida + Ouvir no Detalhe: `data/BioTranslator.kt` (Gemini, cache por personagem) e
-    `ui/detail/BioActions.kt` (`TextToSpeech`).
+  - Ouvir a bio no Detalhe: `ui/detail/BioActions.kt` (`TextToSpeech`). A tradução pelo Gemini foi
+    removida a pedido do usuário (lenta demais para o ganho).
   - Herói do clima na Início: `data/Weather.kt` (Open-Meteo, sem chave; regra `weatherHero` testada) e
     `ui/home/WeatherCard.kt` (localização aproximada pedida só ao tocar; cidade pelo `Geocoder`).
   - Bancas (aba do Descobrir): `data/Releases.kt` — edições por `store_date` da semana e editora pelo

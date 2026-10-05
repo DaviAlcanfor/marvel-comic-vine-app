@@ -187,7 +187,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         binding.description.text = character.deck?.takeIf { it.isNotBlank() }
             ?: character.description?.let { HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_COMPACT) }
             ?: getString(R.string.detail_no_description)
-        bindBioActions(character.id, binding.description, binding.translateButton, binding.listenButton)
+        bindBioActions(binding.description, binding.listenButton)
         binding.startReadingButton.setOnClickListener {
             startReading(character.name.orEmpty(), binding.startReadingButton)
         }

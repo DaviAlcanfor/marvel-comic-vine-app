@@ -202,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_sm" />
 
-            <!-- A bio vem em inglês: traduz (Gemini, com cache) e lê em voz alta (voz do Android). -->
+            <!-- A bio lida em voz alta (voz do Android). -->
             <LinearLayout
                 android:id="@+id/bioActions"
                 android:layout_width="match_parent"
@@ -211,22 +211,12 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/translateButton"
-                    style="@style/Widget.Marvel.ComicButton.Secondary"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/trade_button_height"
-                    android:layout_marginEnd="@dimen/space_xs"
-                    android:layout_weight="1"
-                    android:text="@string/detail_translate"
-                    android:textSize="15sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/listenButton"
                     style="@style/Widget.Marvel.ComicButton.Secondary"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/trade_button_height"
-                    android:layout_marginStart="@dimen/space_xs"
                     android:layout_weight="1"
                     android:text="@string/detail_listen"
                     android:textSize="15sp" />

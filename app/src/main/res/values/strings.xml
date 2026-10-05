@@ -150,9 +150,6 @@
     <string name="start_reading_save">Guardar todas</string>
     <string name="start_reading_saved">%1$d séries guardadas em Quero ler.</string>
     <string name="start_reading_none">Não achei séries da Marvel com esse nome.</string>
-    <string name="detail_translate">Traduzir</string>
-    <string name="detail_translating">Traduzindo…</string>
-    <string name="detail_translated">Em português ✓</string>
     <string name="detail_listen">Ouvir</string>
     <string name="detail_stop">Parar</string>
     <string name="detail_photo">Tirar foto com %1$s</string>
