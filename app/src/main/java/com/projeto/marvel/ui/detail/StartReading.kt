@@ -12,6 +12,7 @@ import com.projeto.marvel.data.ReadingPick
 import com.projeto.marvel.data.ReadingStatus
 import com.projeto.marvel.data.ReadingStore
 import com.projeto.marvel.ui.comicDialog
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 /** "Por onde começar a ler?" no Detalhe: até 5 séries em ordem, com o porquê, e "guardar todas". */
@@ -20,11 +21,12 @@ fun Fragment.startReading(hero: String, button: Button) {
     button.setText(R.string.start_reading_loading)
     viewLifecycleOwner.lifecycleScope.launch {
         val result = ReadingGuide().startHere(hero)
+        // runCatching engole o cancelamento (saiu da tela no meio): não é erro e não há mais contexto.
         button.isEnabled = true
         button.setText(R.string.start_reading)
         result.onSuccess { picks ->
             if (picks.isEmpty()) toast(getString(R.string.start_reading_none)) else show(hero, picks)
-        }.onFailure { toast(it.message.orEmpty()) }
+        }.onFailure { if (it !is CancellationException) toast(it.message.orEmpty()) }
     }
 }
 

@@ -13,6 +13,7 @@ import com.projeto.marvel.data.ComicVineRepository
 import com.projeto.marvel.data.remote.CharacterSummary
 import com.projeto.marvel.ui.comicDialog
 import com.projeto.marvel.ui.info.InfoDetailFragment
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 private const val MAX_TEAMS = 6
@@ -39,7 +40,9 @@ fun Fragment.showConnections(apiDetailUrl: String, button: Button) {
         val result = ComicVineRepository().getCharacterDetail(apiDetailUrl, full = true)
         button.isEnabled = true
         result.onSuccess { openGraph(it.connections()) }
-            .onFailure { Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show() }
+            .onFailure {
+                if (it !is CancellationException) Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+            }
     }
 }
 

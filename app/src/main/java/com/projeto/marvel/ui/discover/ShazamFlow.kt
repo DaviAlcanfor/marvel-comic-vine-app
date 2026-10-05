@@ -12,6 +12,7 @@ import com.projeto.marvel.data.HeroShazam
 import com.projeto.marvel.data.PackType
 import com.projeto.marvel.data.StickerStore
 import com.projeto.marvel.data.remote.CharacterSummary
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 /** Foto da câmera → personagem → Detalhe; o 1º reconhecimento do dia vale figurinha (ou pacote). */
@@ -27,7 +28,7 @@ fun Fragment.recognizeHero(photo: Bitmap) {
                     bundleOf("apiDetailUrl" to hero.apiDetailUrl, "characterName" to hero.name)
                 )
             }
-            .onFailure { toast(it.message.orEmpty()) }
+            .onFailure { if (it !is CancellationException) toast(it.message.orEmpty()) }
     }
 }
 
