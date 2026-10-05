@@ -21,6 +21,7 @@ import com.projeto.marvel.data.Stat
 import com.projeto.marvel.databinding.FragmentTrunfoBinding
 import com.projeto.marvel.databinding.ViewTrunfoCardBinding
 import com.projeto.marvel.ui.EraPanelDrawable
+import com.projeto.marvel.ui.tintCaption
 import com.projeto.marvel.ui.album.label
 import com.projeto.marvel.ui.staggerIn
 import kotlinx.coroutines.launch
@@ -143,7 +144,8 @@ class TrunfoFragment : Fragment(R.layout.fragment_trunfo) {
                 val fill = if (winner == side) R.color.caption_yellow else R.color.surface_variant
                 val color = ContextCompat.getColor(context, fill)
                 row.background = EraPanelDrawable(context, EraPanelDrawable.Kind.CAPTION, color)
-                row.setTextColor(ContextCompat.getColor(context, R.color.ink))
+                // Preto no amarelo, branco no papel escuro do perdedor.
+                row.tintCaption(color)
             }
             if (choosing) {
                 row.background = EraPanelDrawable(context, EraPanelDrawable.Kind.SECONDARY)
