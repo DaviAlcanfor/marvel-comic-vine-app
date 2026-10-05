@@ -15,7 +15,6 @@ import com.projeto.marvel.ui.Era
 import com.projeto.marvel.ui.EraPanelDrawable
 import com.projeto.marvel.ui.comicBox
 import com.projeto.marvel.ui.era
-import com.projeto.marvel.ui.retroInk
 
 // A Início vestida de cada época (proposta aprovada no canvas "Épocas dos quadrinhos"):
 // - Retrô: avatar no canto da capa (12¢ · Nº 1), "Enquanto isso…" amarelo, nome do herói numa
@@ -52,7 +51,7 @@ fun FragmentHomeBinding.applyEra() {
     sections().forEachIndexed { index, (view, tilt, retroStyle) ->
         view.sectionType(era)
         when (era) {
-            Era.RETRO -> view.comicBox(retroStyle, context.retroInk(index), tailOnLeft = index % 2 == 0)
+            Era.RETRO -> view.comicBox(retroStyle, retroSectionInk(retroStyle, index), tailOnLeft = index % 2 == 0)
             Era.NINETIES -> {
                 view.comicBox(BoxStyle.SPEECH, color(R.color.nineties_balloon), tailOnLeft = index % 2 == 0)
                 view.isAllCaps = true
@@ -78,6 +77,18 @@ fun FragmentHomeBinding.applyEra() {
         Era.MODERN -> Unit
     }
 }
+
+/** Fala e pensamento são papel (como no gibi); as legendas se revezam nas tintas de cor. */
+private fun FragmentHomeBinding.retroSectionInk(style: BoxStyle, index: Int): Int {
+    val context = root.context
+    return if (style == BoxStyle.CAPTION) {
+        ContextCompat.getColor(context, CAPTION_INKS[index % CAPTION_INKS.size])
+    } else {
+        ContextCompat.getColor(context, R.color.balloon_paper)
+    }
+}
+
+private val CAPTION_INKS = listOf(R.color.caption_yellow, R.color.balloon_red, R.color.balloon_cyan)
 
 private fun FragmentHomeBinding.styleAvatar(era: Era) {
     val context = root.context

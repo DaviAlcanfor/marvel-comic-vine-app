@@ -160,7 +160,7 @@ Aplicadas via ferramenta, não de memória:
   e a época escolhida no Perfil (`data/ThemeStore.kt`) entra por cima. `values/colors.xml` (o antigo
   Retrô claro) só serve ao widget e aos tokens que não mudam. O Retrô claro foi removido a pedido do
   usuário ("tudo muito branco").
-  **Épocas** (`ThemeMode`: Retrô = escuro + `ThemeOverlay.Marvel.RetroDark`, papel sépia com retícula
+  **Épocas** (`ThemeMode`: Retrô = escuro + `ThemeOverlay.Marvel.RetroDark`, azul-noite com retícula
   visível, padrão; Anos 90 = escuro + `Nineties`; Moderno = escuro puro). No Retrô, balões e legendas
   vizinhos alternam as tintas de gráfica `retroInk()` (`ui/ComicBox.kt`) e há balão de pensamento
   (`BoxStyle.THOUGHT`); nada de tudo branco. Diálogos (`comicDialog()`) herdam título em legenda, corpo

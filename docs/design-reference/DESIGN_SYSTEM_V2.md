@@ -6,11 +6,12 @@ kit de peças das três épocas), feito sobre as referências de HQ em `comics_r
 
 O usuário escolhe a época no Perfil (`ThemeMode`): Retrô (padrão), Anos 90 ou Moderno. O Retrô
 claro (papel creme `#F2E3BD`) foi aposentado: o Retrô agora é só escuro — formas, letras e legendas
-amarelas sobre papel sépia `#3A2F22`, claro o bastante para a retícula vermelha/azul aparecer, com
-nanquim claro `#EFE3C6` nos contornos (`ThemeOverlay.Marvel.RetroDark`). Cards de foto são papel creme
-com o nome numa legenda colorida; balões e legendas alternam as tintas de gráfica (`retroInk`:
-amarelo, azul, vermelho, branco, verde, rosa, laranja) e usam formatos diferentes por função (fala,
-pensamento, legenda, explosão). Ao entrar numa tela, a época tem de ser reconhecível só pelo traço.
+amarelas sobre a cena noturna de gibi impresso, azul-noite `#18213A` com retícula vermelha/ciano, e
+nanquim claro `#EFE3C6` nos contornos (`ThemeOverlay.Marvel.RetroDark`). O marrom foi recusado pelo
+usuário. Só as 4 tintas da impressão da época (`retroInk`): papel creme `#F6EEDC` para fala e
+pensamento, amarelo para legenda, vermelho e ciano como destaque. A variedade vem do formato (fala,
+pensamento, legenda, explosão), nunca de mais cores. Cards de foto são papel creme com o nome numa
+legenda nessas tintas. Ao entrar numa tela, a época tem de ser reconhecível só pelo traço.
 
 A tabela abaixo é o canvas original; na coluna Retrô, fundo e balão agora seguem o parágrafo acima.
 
@@ -27,7 +28,7 @@ A tabela abaixo é o canvas original; na coluna Retrô, fundo e balão agora seg
 | Cantos | retos | chanfrados (12dp) | arredondados (10dp quadros, 6dp botões) |
 | Primária | vermelho `#C0101A` | magenta `#D81B60` | vermelho Marvel `#D81F26` |
 | Legenda (`CaptionBox`) | caixa amarela "Enquanto isso…" | etiqueta magenta inclinada | rótulo vermelho |
-| Balão de fala | oval de nanquim em tintas variadas (`retroInk`); nuvem para pensamento | caixa chanfrada lilás `#F4F0FF` | — (títulos de seção com traço vermelho) |
+| Balão de fala | oval de papel creme; nuvem para pensamento; legendas em amarelo/vermelho/ciano | caixa chanfrada lilás `#F4F0FF` | — (títulos de seção com traço vermelho) |
 | Quadro (`bg_card`) | nanquim + sombra dura | moldura neon degradê ciano → magenta → amarelo | fosco, traço fino |
 | Figurinha | margem branca, número em placa preta/amarela | borda foil (arco-íris) | moldura fosca arredondada |
 | Chips | retos, marcado amarelo | canto cortado, contorno ciano, marcado amarelo | pílula, marcado branco |

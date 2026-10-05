@@ -23,15 +23,12 @@ import com.projeto.marvel.ui.detail.contrast
 
 enum class BoxStyle { CAPTION, SPEECH, THOUGHT, BURST }
 
-/** Tintas de gráfica do Retrô: balões e legendas vizinhos alternam cor em vez de ficar tudo branco. */
+/** Tintas de gráfica do Retrô (as 4 da impressão da época): vizinhos alternam, sem virar arco-íris. */
 private val RETRO_INKS = listOf(
     R.color.caption_yellow,
-    R.color.sfx_blue,
+    R.color.balloon_paper,
     R.color.balloon_red,
-    R.color.white,
-    R.color.balloon_green,
-    R.color.balloon_pink,
-    R.color.balloon_orange
+    R.color.balloon_cyan
 )
 
 /** A [index]-ésima tinta de [RETRO_INKS] (dá a volta). */

@@ -73,6 +73,6 @@ private fun Fragment.show(hero: String, picks: List<ReadingPick>) {
         .show()
 }
 
-private const val PICK_INK_SHIFT = 3
+private const val PICK_INK_SHIFT = 2
 
 private fun Fragment.toast(message: String) = Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
