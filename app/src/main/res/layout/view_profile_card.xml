@@ -30,7 +30,7 @@
         android:textColor="@color/text_primary"
         android:textSize="24sp"
         android:textStyle="bold"
-        tools:text="Davi" />
+        tools:text="Leitor" />
 
     <TextView
         android:id="@+id/heroName"
