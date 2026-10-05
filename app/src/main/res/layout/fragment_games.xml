@@ -26,7 +26,8 @@
             android:text="@string/games_intro"
             android:textColor="@color/text_secondary" />
 
-        <!-- Jogos em grade de 2 colunas (capa, recorde e Jogar); o "como jogar" fica no ⓘ. -->
+        <!-- Jogos em grade de 2 colunas (capa, recorde e Jogar); o "como jogar" fica no ⓘ. Cards da
+             mesma linha têm a mesma altura e o recorde ocupa o que sobra: o Jogar fica sempre embaixo. -->
         <GridLayout
             android:id="@+id/gamesGrid"
             android:layout_width="match_parent"
@@ -81,7 +82,8 @@
 
                 <TextView
                     android:id="@+id/guessRecord"
-                    style="@style/Widget.Marvel.GameStat" />
+                    style="@style/Widget.Marvel.GameStat"
+                    android:layout_weight="1" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/guessPlay"
@@ -146,6 +148,12 @@
                         app:tint="@color/white" />
                 </FrameLayout>
 
+                <!-- Sem linha de recorde: o espaço livre fica aqui, para o Jogar alinhar com o vizinho. -->
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/lookPlay"
                     style="@style/Widget.Marvel.ComicButton"
@@ -201,7 +209,8 @@
 
                 <TextView
                     android:id="@+id/quizRecord"
-                    style="@style/Widget.Marvel.GameStat" />
+                    style="@style/Widget.Marvel.GameStat"
+                    android:layout_weight="1" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/quizPlay"
@@ -266,7 +275,8 @@
 
                 <TextView
                     android:id="@+id/trunfoRecord"
-                    style="@style/Widget.Marvel.GameStat" />
+                    style="@style/Widget.Marvel.GameStat"
+                    android:layout_weight="1" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/trunfoPlay"
@@ -331,7 +341,8 @@
 
                 <TextView
                     android:id="@+id/memoryRecord"
-                    style="@style/Widget.Marvel.GameStat" />
+                    style="@style/Widget.Marvel.GameStat"
+                    android:layout_weight="1" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/memoryPlay"
@@ -396,7 +407,8 @@
 
                 <TextView
                     android:id="@+id/quoteRecord"
-                    style="@style/Widget.Marvel.GameStat" />
+                    style="@style/Widget.Marvel.GameStat"
+                    android:layout_weight="1" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/quotePlay"

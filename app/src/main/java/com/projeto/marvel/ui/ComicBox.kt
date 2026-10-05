@@ -16,12 +16,12 @@ import com.projeto.marvel.R
 import com.projeto.marvel.ui.detail.contrast
 
 // Caixas de HQ reaproveitáveis (batalha, Início, Descobrir): legenda retangular, balão de fala com
-// rabinho, balão de pensamento (nuvem com bolinhas) e explosão pontuda. Qualquer cor: o texto vira
+// rabinho, balão de grito (oval com borda de espinhos) e explosão pontuda. Qualquer cor: o texto vira
 // preto ou branco pelo contraste (4,5:1).
 // O traço segue a época ([Era]): Retrô = nanquim grosso, sombra dura e balão oval; Anos 90 = neon,
 // cantos chanfrados; Moderno = traço fino, sem sombra, balão arredondado.
 
-enum class BoxStyle { CAPTION, SPEECH, THOUGHT, BURST }
+enum class BoxStyle { CAPTION, SPEECH, SHOUT, BURST }
 
 /** Tintas de gráfica do Retrô (as 4 da impressão da época): vizinhos alternam, sem virar arco-íris. */
 private val RETRO_INKS = listOf(
@@ -47,11 +47,9 @@ private const val CHAMFER_DP = 10f
 private const val OVAL_TAIL_FACTOR = 1.6f
 private const val OVAL_MAX_HEIGHT_DP = 84f
 private const val LONG_RADIUS_DP = 34f
-private const val CLOUD_BUMP_DP = 9f
-private const val CLOUD_BUMPS = 14
-private const val THOUGHT_BIG_DP = 6f
-private const val THOUGHT_SMALL_DP = 3.5f
-private const val THOUGHT_TAIL_DIVISOR = 4
+private const val SPIKE_DP = 7f
+private const val SPIKE_STEP_DP = 16f
+private const val MIN_SPIKES = 12
 
 /**
  * Veste o TextView com a caixa [style] na cor [color]. No balão de fala, [tailOnLeft] escolhe o
@@ -65,16 +63,20 @@ fun TextView.comicBox(style: BoxStyle, @ColorInt color: Int, tailOnLeft: Boolean
     background = when (style) {
         BoxStyle.CAPTION -> EraPanelDrawable(context, EraPanelDrawable.Kind.CAPTION, color)
         BoxStyle.SPEECH -> SpeechBubbleDrawable(context, color, tailOnLeft)
-        BoxStyle.THOUGHT -> SpeechBubbleDrawable(context, color, tailOnLeft, thought = true)
+        BoxStyle.SHOUT -> SpeechBubbleDrawable(context, color, tailOnLeft, spiky = true)
         BoxStyle.BURST -> BurstDrawable(color, outline, inkWidth)
     }
     val base = resources.getDimensionPixelSize(R.dimen.space_md)
     // Texto dentro de uma elipse: os cantos do retângulo do texto saem dela sem esta folga extra.
-    val round = style == BoxStyle.SPEECH || style == BoxStyle.THOUGHT
-    val oval = if (round && context.era() == Era.RETRO) base else 0
+    // Os espinhos do grito saem da elipse para fora: o texto fica na elipse de dentro.
+    val oval = when {
+        style == BoxStyle.SHOUT -> base + (SPIKE_DP * density).toInt()
+        style == BoxStyle.SPEECH && context.era() == Era.RETRO -> base
+        else -> 0
+    }
     when (style) {
         BoxStyle.CAPTION -> setPadding(base, base / 2, base + shadow.toInt(), base)
-        BoxStyle.SPEECH, BoxStyle.THOUGHT -> {
+        BoxStyle.SPEECH, BoxStyle.SHOUT -> {
             val tail = (TAIL_HEIGHT_DP * density).toInt()
             setPadding(base + oval, base / 2 + oval / 2, base + oval, base + tail + oval / 2)
         }
@@ -97,14 +99,14 @@ private fun TextView.readableTextOn(@ColorInt color: Int): Int {
 
 /**
  * Balão de fala com rabinho embaixo, no traço da [era]: oval de nanquim com sombra dura (Retrô),
- * caixa de cantos chanfrados (Anos 90) ou retângulo arredondado limpo (Moderno). Com [thought], é
- * balão de pensamento: bolinhas no lugar do rabinho e, no Retrô, borda de nuvem.
+ * caixa de cantos chanfrados (Anos 90) ou retângulo arredondado limpo (Moderno). Com [spiky], é
+ * balão de grito: oval com a borda em espinhos, em qualquer época (só o traço muda).
  */
 class SpeechBubbleDrawable(
     context: Context,
     @ColorInt fillColor: Int,
     private val tailOnLeft: Boolean,
-    private val thought: Boolean = false
+    private val spiky: Boolean = false
 ) : Drawable() {
 
     private val density = context.resources.displayMetrics.density
@@ -125,7 +127,7 @@ class SpeechBubbleDrawable(
     private val tailPath = Path()
     private val body = RectF()
 
-    // Recalculado só quando o tamanho muda: a nuvem une várias formas e não precisa sair a cada quadro.
+    // Recalculado só quando o tamanho muda, não a cada quadro.
     override fun onBoundsChange(bounds: android.graphics.Rect) {
         super.onBoundsChange(bounds)
         outline()
@@ -148,8 +150,9 @@ class SpeechBubbleDrawable(
         body.set(bounds.left.toFloat(), bounds.top.toFloat(), bounds.right - shadowSize, bottom)
         val radius = SPEECH_RADIUS_DP * density
         path.reset()
-        if (thought) return thoughtOutline()
-        when (era) {
+        if (spiky) {
+            spikes(body, SPIKE_DP * density)
+        } else when (era) {
             // Fala curta: oval de nanquim. Fala longa (3+ linhas): retângulo bem arredondado, senão
             // os cantos do texto saem da elipse.
             Era.RETRO -> if (body.height() <= OVAL_MAX_HEIGHT_DP * density) {
@@ -163,7 +166,7 @@ class SpeechBubbleDrawable(
         val inset = TAIL_INSET_DP * density
         val width = TAIL_WIDTH_DP * density
         // No oval a base é curva: o rabinho sai mais para dentro, onde a borda ainda está embaixo.
-        val oval = era == Era.RETRO && body.height() <= OVAL_MAX_HEIGHT_DP * density
+        val oval = spiky || era == Era.RETRO && body.height() <= OVAL_MAX_HEIGHT_DP * density
         val edge = if (oval) inset * OVAL_TAIL_FACTOR else inset
         val start = if (tailOnLeft) body.left + edge else body.right - edge - width
         val tip = if (tailOnLeft) start - width / 2 else start + width * TAIL_TIP_FACTOR
@@ -177,43 +180,23 @@ class SpeechBubbleDrawable(
         return path
     }
 
-    /** Nuvem (Retrô) ou a caixa da época, com duas bolinhas descendo até quem pensa. */
-    private fun thoughtOutline(): Path {
-        val radius = SPEECH_RADIUS_DP * density
-        when (era) {
-            Era.RETRO -> cloud(body, CLOUD_BUMP_DP * density)
-            Era.NINETIES -> chamfer(path, body, CHAMFER_DP * density)
-            Era.MODERN -> path.addRoundRect(body, radius, radius, Path.Direction.CW)
+    /** Elipse com espinhos: pontas na borda de [box] e vales [depth] para dentro, alternados. */
+    private fun spikes(box: RectF, depth: Float) {
+        val cx = box.centerX()
+        val cy = box.centerY()
+        val outerX = box.width() / 2
+        val outerY = box.height() / 2
+        // Perímetro aproximado da elipse (Ramanujan simplificado) para os espinhos saírem do mesmo tamanho.
+        val perimeter = Math.PI * (outerX + outerY)
+        val count = maxOf(MIN_SPIKES, (perimeter / (SPIKE_STEP_DP * density)).toInt())
+        for (i in 0 until count * 2) {
+            val angle = Math.PI * i / count
+            val inward = if (i % 2 == 0) 0f else depth
+            val x = cx + ((outerX - inward) * Math.cos(angle)).toFloat()
+            val y = cy + ((outerY - inward) * Math.sin(angle)).toFloat()
+            if (i == 0) path.moveTo(x, y) else path.lineTo(x, y)
         }
-        val big = THOUGHT_BIG_DP * density
-        val small = THOUGHT_SMALL_DP * density
-        val offset = body.width() / THOUGHT_TAIL_DIVISOR
-        val x = if (tailOnLeft) body.left + offset else body.right - offset
-        val step = if (tailOnLeft) -big else big
-        tailPath.reset()
-        tailPath.addCircle(x, body.bottom + big, big, Path.Direction.CW)
-        tailPath.addCircle(x + step * 2, bounds.bottom - small - ink.strokeWidth, small, Path.Direction.CW)
-        path.op(tailPath, Path.Op.UNION)
-        return path
-    }
-
-    /** Borda de nuvem: oval recuada e bolotas em volta dela, unidas num contorno só. */
-    private fun cloud(box: RectF, bump: Float) {
-        val core = RectF(box).apply { inset(bump, bump) }
-        path.addOval(core, Path.Direction.CW)
-        val cx = core.centerX()
-        val cy = core.centerY()
-        repeat(CLOUD_BUMPS) { index ->
-            val angle = index * 2 * Math.PI / CLOUD_BUMPS
-            tailPath.reset()
-            tailPath.addCircle(
-                cx + (core.width() / 2 * Math.cos(angle)).toFloat(),
-                cy + (core.height() / 2 * Math.sin(angle)).toFloat(),
-                bump - ink.strokeWidth / 2,
-                Path.Direction.CW
-            )
-            path.op(tailPath, Path.Op.UNION)
-        }
+        path.close()
     }
 
     private fun chamfer(path: Path, box: RectF, cut: Float) {

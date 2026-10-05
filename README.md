@@ -21,7 +21,7 @@
       <a href="docs/media/marvel-app-tour.mp4">
         <img src="docs/media/tour-poster.jpg" width="560" alt="Assistir ao tour completo do app (vídeo)"/>
       </a>
-      <br/><sub>▶ Tour completo (1min50) — clique para assistir</sub>
+      <br/><sub>▶ Tour completo (1min12) — clique para assistir</sub>
     </td>
     <td align="center">
       <img src="docs/media/batalha.gif" width="200" alt="Batalha no ringue 3D"/>
@@ -35,8 +35,8 @@
 O app consome a [Comic Vine API](https://comicvine.gamespot.com/api/) e transforma os dados reais dos
 personagens em jogo: os atributos de combate, os golpes e a raridade de cada figurinha são
 **derivados** de poderes, aparições e fama de verdade, nada é inventado. Tudo com cara de
-história em quadrinhos: painéis com contorno de nanquim, balões, explosões e onomatopeias, em tema
-**claro** ("papel de gibi") e **escuro**.
+história em quadrinhos: painéis com contorno de nanquim, balões, explosões e onomatopeias, em
+**três épocas de gibi** à escolha: **Retrô** (anos 60–80), **Anos 90** e **Moderno**.
 
 Kotlin puro, UI 100% em Views + XML + ViewBinding (**sem Compose**), single-Activity com Navigation
 Component e MVVM.
@@ -44,12 +44,18 @@ Component e MVVM.
 ## Funcionalidades
 
 **Descobrir**
-- Personagens (filtro por origem), times, criadores, filmes e lugares, com busca e paginação.
+- Personagens (filtro por origem), times, criadores, filmes, lugares e **Bancas** (lançamentos da semana,
+  com lembrete na agenda), com busca e paginação.
 - Lugares reais abrem no app de mapas; os fictícios mostram a ficha do local.
 - Detalhe do personagem com aparições, poderes, times, criadores, filmes e uma **linha do tempo**
   (estreia, times e mortes) montada a partir das edições.
 - **Comparar** dois personagens: atributos lado a lado, poderes e times em comum.
+- **Por onde começar a ler?**: séries reais do herói em ordem de leitura, com o porquê de cada uma (Gemini).
+- **Teia de conexões**: aliados, inimigos, times e criadores num grafo com física de molas (arrastar e zoom).
+- **Ouvir a bio** em voz alta.
 - **Foto com o herói**: tire uma foto (ou escolha da galeria) e arraste o personagem para a cena.
+- **Shazam de herói**: aponte a câmera para uma HQ ou boneco e o app reconhece o personagem.
+- **Maratona do MCU**: os filmes na ordem da história, o próximo da fila e as horas que faltam.
 
 **Álbum de figurinhas**
 - Pacotes Básico (grátis por dia), Prata (vitória) e Ouro (fechar trilha ou vencer o 3×3).
@@ -63,16 +69,20 @@ Component e MVVM.
 - Ringue em **OpenGL ES 2.0** (sem biblioteca 3D), tela de VS, ultimate, golpes críticos, veneno, cura,
   defesa e esquiva, e troféu 3D na vitória.
 - **Trilha do dia**: um time por dia para vencer membro a membro, até o chefe.
+- Luta com o corpo e a voz: **locutor** narrando, **sacudir** o celular carrega o golpe e dá para
+  **falar** o nome do golpe.
 
 **Jogos e IA**
 - **Geek**: um agente com Gemini (function calling) que consulta a Comic Vine antes de responder.
-- **Quem é esse herói?**, **Que herói é você?** (quiz) e **Com qual herói você parece?** (a foto vai só na
-  requisição da IA).
+- Seis jogos: **Quem é esse herói?** (foto pixelada), **Que herói é você?** (quiz), **Com qual herói você
+  parece?** (a foto vai só na requisição da IA), **Super Trunfo** com o seu baralho de figurinhas, **Memória**
+  e **Quem disse?**. Cada um tem recorde e paga pacote.
 
 **Início, perfil e extras**
 - Herói do dia com os filmes dele, missões diárias e semanais que pagam pacotes, trilha, leituras e resenhas.
-- Perfil com conquistas, estante de HQs e filmes (nota e resenha), favoritos e troca de tema.
-- Widget e notificação do **Herói do dia**.
+- **Herói do clima**: o tempo da sua cidade escolhe um herói (Open-Meteo, sem chave).
+- Perfil com conquistas, estante de HQs e filmes (nota e resenha), favoritos e escolha da época.
+- Widget, notificação e **papel de parede animado** do **Herói do dia**.
 
 ## Telas
 
@@ -81,7 +91,7 @@ Component e MVVM.
     <td align="center"><img src="docs/screenshots/01-login.jpg" width="200"/><br/><sub>Login</sub></td>
     <td align="center"><img src="docs/screenshots/02-inicio.jpg" width="200"/><br/><sub>Início</sub></td>
     <td align="center"><img src="docs/screenshots/03-missoes.jpg" width="200"/><br/><sub>Missões</sub></td>
-    <td align="center"><img src="docs/screenshots/16-perfil-claro.jpg" width="200"/><br/><sub>Perfil no tema claro</sub></td>
+    <td align="center"><img src="docs/screenshots/19-maratona.jpg" width="200"/><br/><sub>Maratona do MCU</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="docs/screenshots/04-descobrir.jpg" width="200"/><br/><sub>Descobrir</sub></td>
@@ -101,20 +111,28 @@ Component e MVVM.
     <td align="center"><img src="docs/screenshots/13-versus.jpg" width="200"/><br/><sub>VS</sub></td>
     <td align="center"><img src="docs/screenshots/14-arena.jpg" width="200"/><br/><sub>Batalha</sub></td>
   </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/16-retro.jpg" width="200"/><br/><sub>Época Retrô</sub></td>
+    <td align="center"><img src="docs/screenshots/17-anos-90.jpg" width="200"/><br/><sub>Época Anos 90</sub></td>
+    <td align="center"><img src="docs/screenshots/18-moderno.jpg" width="200"/><br/><sub>Época Moderno</sub></td>
+    <td align="center"><img src="docs/screenshots/20-jogos.jpg" width="200"/><br/><sub>Jogos</sub></td>
+  </tr>
 </table>
 
 ## Design
 
-Segue o design system de [`docs/design-reference/`](docs/design-reference/) (Bebas Neue + Inter) com uma
-camada de **tema de HQ** por cima:
+Parte do design system de [`docs/design-reference/`](docs/design-reference/) e o veste em **três épocas
+de gibi** ([Design System v2](docs/design-reference/DESIGN_SYSTEM_V2.md)), escolhidas no Perfil:
 
-- fundo com retícula, painéis com contorno de nanquim, botões com sombra dura e títulos de seção em
-  caixas de legenda, balões e explosões;
-- na Batalha, movimento em degraus a 24 quadros/s (ar de flipbook), onomatopeias em Bangers
-  ("POW!", "K.O.!"), linhas de ação e tremor de tela;
-- **tema claro e escuro**: segue o sistema ou o que for fixado no Perfil; os tokens de cor ficam em
-  `values/colors.xml` (claro) e `values-night/colors.xml` (escuro), documentados em
-  [`DESIGN_TOKENS.md`](docs/design-reference/DESIGN_TOKENS.md).
+| Retrô (1962–85) | Anos 90 / 2000 | Moderno |
+|---|---|---|
+| Cena noturna impressa: azul-noite com retícula vermelha e ciano, nanquim grosso e sombra dura | Roxo profundo com neon ciano, cantos chanfrados e letreiro com extrusão | Grafite com luz de cima, traço fino e vermelho Marvel |
+| Bangers e Comic Neue | Bungee e Barlow Condensed | Bebas Neue e Inter |
+| Balões de fala e grito em papel creme, legendas em amarelo, vermelho e ciano | Balões chanfrados e etiquetas magenta | Títulos com traço vermelho |
+
+Cada época tem a própria abertura animada (capa, quadros ou explosão), o próprio movimento de entrada
+das telas e o próprio desenho de cartas, botões e diálogos. Na Batalha, movimento em degraus a 24
+quadros/s (ar de flipbook), onomatopeias ("POW!", "K.O.!"), linhas de ação e tremor de tela.
 
 As animações respeitam a opção do sistema de remover animações.
 
@@ -191,13 +209,15 @@ com testes. Detalhes em [`ARCHITECTURE.md`](ARCHITECTURE.md) e [`AGENTS.md`](AGE
   poderes e do número de aparições (`toFighter()` e `ui/battle/BattleRules.kt`).
 - A Comic Vine não separa herói de vilão (o filtro é por origem), não tem coordenadas dos lugares e o
   `release_date` dos filmes é a data de cadastro.
-- A Comic Vine limita as requisições (~200/hora por recurso): as chamadas pedem só os campos usados, a
-  busca espera parar de digitar e o `ApiClient` guarda cache HTTP (6 h, e serve o que tiver sem rede).
+- A Comic Vine limita as requisições (~200/hora por recurso) e, se o uso passa do limite, **bloqueia a
+  chave por 1 hora** (403). As chamadas pedem só os campos usados, a busca espera parar de digitar e o
+  `ApiClient` guarda cache HTTP (6 h); sem rede ou com a chave bloqueada, serve o que tiver guardado
+  (até 7 dias).
 - Progresso (álbum, placar, missões, tema) fica no aparelho, não na conta.
 
 ## Créditos e avisos
 
 Projeto educacional feito para o Marvel API Challenge, **sem afiliação com a Marvel**. Marvel e os
 personagens são marcas de seus respectivos donos; dados e imagens vêm da
-[Comic Vine](https://comicvine.gamespot.com/) e seguem os termos dela. Fontes Bebas Neue, Bangers e Inter
-sob licença OFL.
+[Comic Vine](https://comicvine.gamespot.com/) e seguem os termos dela. Fontes Bebas Neue, Bangers, Inter,
+Comic Neue, Bungee e Barlow Condensed sob licença OFL.

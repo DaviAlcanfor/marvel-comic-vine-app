@@ -12,8 +12,9 @@
 
     <TextView
         android:id="@+id/number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/reading_pick_burst"
+        android:layout_height="@dimen/reading_pick_burst"
+        android:gravity="center"
         android:fontFamily="?attr/eraSfxFont"
         android:textSize="18sp" />
 

@@ -50,7 +50,7 @@ class GamesFragment : Fragment(R.layout.fragment_games) {
         val context = requireContext()
         binding.guessCaption.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.accent))
         binding.guessCaption.rotation = -CAPTION_TILT
-        binding.quizCaption.comicBox(BoxStyle.THOUGHT, ContextCompat.getColor(context, R.color.balloon_paper))
+        binding.quizCaption.comicBox(BoxStyle.SHOUT, ContextCompat.getColor(context, R.color.balloon_paper))
         binding.quizCaption.rotation = CAPTION_TILT
         binding.guessPlay.setOnClickListener { findNavController().navigate(R.id.guessFragment) }
         binding.quizPlay.setOnClickListener { findNavController().navigate(R.id.quizFragment) }

@@ -162,8 +162,8 @@ Aplicadas via ferramenta, não de memória:
   usuário ("tudo muito branco").
   **Épocas** (`ThemeMode`: Retrô = escuro + `ThemeOverlay.Marvel.RetroDark`, azul-noite com retícula
   visível, padrão; Anos 90 = escuro + `Nineties`; Moderno = escuro puro). No Retrô, balões e legendas
-  vizinhos alternam as tintas de gráfica `retroInk()` (`ui/ComicBox.kt`) e há balão de pensamento
-  (`BoxStyle.THOUGHT`); nada de tudo branco. Diálogos (`comicDialog()`) herdam título em legenda, corpo
+  vizinhos alternam as tintas de gráfica `retroInk()` (`ui/ComicBox.kt`) e há balão de grito
+  (`BoxStyle.SHOUT`, oval espetado; a nuvem de pensamento e o tracejado foram recusados); nada de tudo branco. Diálogos (`comicDialog()`) herdam título em legenda, corpo
   e itens de escolha de `ThemeOverlay.Marvel.Dialog`
   — **Design System v2 em [`docs/design-reference/DESIGN_SYSTEM_V2.md`](docs/design-reference/DESIGN_SYSTEM_V2.md)**:
   tokens `era*`, peças (`EraPanelDrawable`, `LogoTextView`, `comicBox`) e regras para tela nova.

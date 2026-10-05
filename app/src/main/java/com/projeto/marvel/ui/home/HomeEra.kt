@@ -19,7 +19,7 @@ import com.projeto.marvel.ui.era
 // A Início vestida de cada época (proposta aprovada no canvas "Épocas dos quadrinhos"):
 // - Retrô: avatar no canto da capa (12¢ · Nº 1), "Enquanto isso…" amarelo, nome do herói numa
 //   explosão, resumo numa caixa de narração e títulos de seção alternando balão de fala, de
-//   pensamento e legenda, cada um numa tinta de gráfica.
+//   grito e legenda, cada um numa tinta de gráfica.
 // - Anos 90: avatar com moldura neon chanfrada, etiqueta magenta, nome com extrusão azul e
 //   títulos em balão "rádio" lilás.
 // - Moderno: avatar redondo com anel vermelho, herói de ponta a ponta (cinema), etiqueta vermelha
@@ -34,10 +34,10 @@ private const val RULE_GAP_DP = 10f
 @Suppress("MagicNumber") // a inclinação de cada título é a própria tabela
 private fun FragmentHomeBinding.sections() = listOf(
     Triple(heroMoviesTitle, 1.5f, BoxStyle.SPEECH),
-    Triple(weatherTitle, -2f, BoxStyle.THOUGHT),
+    Triple(weatherTitle, -2f, BoxStyle.SHOUT),
     Triple(dailyTrailTitle, -3f, BoxStyle.CAPTION),
     Triple(debutsTitle, -1.5f, BoxStyle.SPEECH),
-    Triple(readingTitle, 2f, BoxStyle.THOUGHT),
+    Triple(readingTitle, 2f, BoxStyle.SHOUT),
     Triple(missionsTitle, 2.5f, BoxStyle.CAPTION)
 )
 

@@ -6,6 +6,7 @@ import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -45,21 +46,31 @@ object ApiClient {
             .build()
     }
 
-    // Sem rede, serve o que tiver guardado (até 7 dias) em vez de dar erro.
+    // Sem rede, ou com a Comic Vine recusando (ela bloqueia a chave por 1 h quando o uso passa do
+    // limite: 403, e 429/5xx em pico), serve o que tiver guardado (até 7 dias) em vez de dar erro.
     private val offlineFallback = Interceptor { chain ->
-        try {
+        val response = try {
             chain.proceed(chain.request())
         } catch (e: IOException) {
-            val cached = chain.request().newBuilder()
-                .cacheControl(CacheControl.Builder().onlyIfCached().maxStale(STALE_DAYS, TimeUnit.DAYS).build())
-                .build()
-            val response = chain.proceed(cached)
-            if (!response.isSuccessful) {
-                response.close()
-                throw e
-            }
-            response
+            return@Interceptor fromCache(chain) ?: throw e
         }
+        if (response.isSuccessful || (response.code !in REFUSED_CODES && response.code < SERVER_ERROR)) {
+            return@Interceptor response
+        }
+        // A página de erro é pequena: copia antes de fechar, para devolvê-la se o cache não tiver nada.
+        val refused = response.newBuilder().body(response.peekBody(Long.MAX_VALUE)).build()
+        response.close()
+        fromCache(chain) ?: refused
+    }
+
+    private fun fromCache(chain: Interceptor.Chain): Response? {
+        val request = chain.request().newBuilder()
+            .cacheControl(CacheControl.Builder().onlyIfCached().maxStale(STALE_DAYS, TimeUnit.DAYS).build())
+            .build()
+        val cached = chain.proceed(request)
+        if (cached.isSuccessful) return cached
+        cached.close()
+        return null
     }
 
     private val client by lazy {
@@ -82,6 +93,10 @@ object ApiClient {
 
     private const val CACHE_SECONDS = 6 * 60 * 60
     private const val STALE_DAYS = 7
+    private const val FORBIDDEN = 403
+    private const val TOO_MANY_REQUESTS = 429
+    private val REFUSED_CODES = setOf(FORBIDDEN, TOO_MANY_REQUESTS)
+    private const val SERVER_ERROR = 500
     private const val CACHE_BYTES = 50L * 1024 * 1024
 
     private val retrofit by lazy {

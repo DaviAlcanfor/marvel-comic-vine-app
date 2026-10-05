@@ -39,13 +39,12 @@ fun Fragment.startReading(hero: String, button: Button) {
 private fun Fragment.show(hero: String, picks: List<ReadingPick>) {
     val context = requireContext()
     val list = LinearLayout(context).apply { orientation = LinearLayout.VERTICAL }
-    val burstPad = resources.getDimensionPixelSize(R.dimen.space_md)
     picks.forEachIndexed { index, pick ->
         ItemReadingPickBinding.inflate(layoutInflater, list, true).apply {
             number.text = (index + 1).toString()
             number.comicBox(BoxStyle.BURST, context.retroInk(index))
-            // A folga padrão da explosão é para palavras; para um número só, bem menos.
-            number.setPadding(burstPad, burstPad, burstPad, burstPad)
+            // Tamanho fixo e quadrado no layout: a folga padrão da explosão é para palavras.
+            number.setPadding(0, 0, 0, 0)
             name.text = pick.series.name.orEmpty()
             // Cada série numa tinta diferente da explosão ao lado.
             name.comicBox(BoxStyle.CAPTION, context.retroInk(index + PICK_INK_SHIFT))
