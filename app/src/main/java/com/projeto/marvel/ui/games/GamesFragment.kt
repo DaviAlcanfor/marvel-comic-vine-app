@@ -50,16 +50,15 @@ class GamesFragment : Fragment(R.layout.fragment_games) {
         val context = requireContext()
         binding.guessCaption.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.accent))
         binding.guessCaption.rotation = -CAPTION_TILT
-        binding.quizCaption.comicBox(BoxStyle.SPEECH, ContextCompat.getColor(context, R.color.white))
+        binding.quizCaption.comicBox(BoxStyle.THOUGHT, ContextCompat.getColor(context, R.color.sfx_blue))
         binding.quizCaption.rotation = CAPTION_TILT
         binding.guessPlay.setOnClickListener { findNavController().navigate(R.id.guessFragment) }
         binding.quizPlay.setOnClickListener { findNavController().navigate(R.id.quizFragment) }
-        binding.lookCaption.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.accent))
+        binding.lookCaption.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.balloon_pink))
         binding.lookPlay.setOnClickListener { findNavController().navigate(R.id.lookAlikeFragment) }
         // Capa na meia largura da grade: legenda pequena para caber o nome inteiro do jogo.
-        val accent = ContextCompat.getColor(context, R.color.caption_yellow)
-        listOf(binding.trunfoCaption, binding.memoryCaption)
-            .forEach { it.comicBox(BoxStyle.CAPTION, accent) }
+        binding.trunfoCaption.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.balloon_red))
+        binding.memoryCaption.comicBox(BoxStyle.CAPTION, ContextCompat.getColor(context, R.color.balloon_green))
         binding.quoteCaption.comicBox(BoxStyle.SPEECH, ContextCompat.getColor(context, R.color.white))
         listOf(
             binding.guessCaption, binding.lookCaption, binding.quizCaption,

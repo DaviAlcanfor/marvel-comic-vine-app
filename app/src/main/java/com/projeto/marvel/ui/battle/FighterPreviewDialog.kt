@@ -21,11 +21,12 @@ import com.projeto.marvel.ui.icon
 import com.projeto.marvel.ui.label
 import kotlinx.coroutines.launch
 
+/** Atributo, rótulo e a cor da barra (a do golpe que mais combina com ele). */
 private val SHOWN_STATS = listOf(
-    Stat.ATTACK to R.string.stat_attack,
-    Stat.DEFENSE to R.string.stat_defense,
-    Stat.SPEED to R.string.stat_speed,
-    Stat.INTELLIGENCE to R.string.stat_intelligence
+    Triple(Stat.ATTACK, R.string.stat_attack, R.color.move_strike),
+    Triple(Stat.DEFENSE, R.string.stat_defense, R.color.move_guard),
+    Triple(Stat.SPEED, R.string.stat_speed, R.color.move_dodge),
+    Triple(Stat.INTELLIGENCE, R.string.stat_intelligence, R.color.move_freeze)
 )
 
 /**
@@ -43,6 +44,8 @@ fun Fragment.showFighterPreview(
     val binding = DialogFighterPreviewBinding.inflate(layoutInflater)
     val dialog = BottomSheetDialog(requireContext())
     dialog.setContentView(binding.root)
+    // O painel de HQ é o fundo; a folha arredondada do Material por trás apareceria nos cantos.
+    dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)?.background = null
     binding.name.text = if (level > 1) getString(R.string.battle_level_name, character.name, level) else character.name
     binding.image.load(character.image?.mediumUrl) { crossfade(true) }
     binding.chooseButton.setOnClickListener {
@@ -69,10 +72,11 @@ private fun DialogFighterPreviewBinding.bindFighter(fighter: Fighter) {
     name.text = fighter.badged(context, name.text.toString())
     hp.text = context.getString(R.string.battle_preview_hp, fighter.maxHp())
     stats.removeAllViews()
-    SHOWN_STATS.forEach { (stat, labelRes) ->
+    SHOWN_STATS.forEach { (stat, labelRes, colorRes) ->
         val value = fighter.stats.getValue(stat)
         ItemStatBarBinding.inflate(LayoutInflater.from(context), stats, true).apply {
             label.setText(labelRes)
+            bar.setIndicatorColor(ContextCompat.getColor(context, colorRes))
             bar.progress = value
             this.value.text = value.toString()
         }

@@ -16,10 +16,8 @@ import android.os.Looper
 import android.service.wallpaper.WallpaperService
 import android.view.ContextThemeWrapper
 import android.view.SurfaceHolder
-import androidx.appcompat.app.AppCompatDelegate
 import com.projeto.marvel.R
 import com.projeto.marvel.data.ThemeStore
-import com.projeto.marvel.data.overlayFor
 import com.projeto.marvel.ui.Era
 import com.projeto.marvel.ui.era
 import com.projeto.marvel.ui.eraDimen
@@ -53,19 +51,12 @@ class HeroWallpaperService : WallpaperService() {
     /** O serviço não tem a Activity: monta o tema da época (modo noturno + sobreposição) na mão. */
     private fun eraContext(): Context {
         val mode = ThemeStore(this).get()
-        val systemNight = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
-            Configuration.UI_MODE_NIGHT_YES
-        val night = when (mode.nightMode) {
-            AppCompatDelegate.MODE_NIGHT_YES -> true
-            AppCompatDelegate.MODE_NIGHT_NO -> false
-            else -> systemNight
-        }
         val config = Configuration(resources.configuration).apply {
             uiMode = (uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or
-                if (night) Configuration.UI_MODE_NIGHT_YES else Configuration.UI_MODE_NIGHT_NO
+                Configuration.UI_MODE_NIGHT_YES
         }
         return ContextThemeWrapper(createConfigurationContext(config), R.style.Theme_Marvel).apply {
-            mode.overlayFor(night)?.let { theme.applyStyle(it, true) }
+            mode.overlay?.let { theme.applyStyle(it, true) }
         }
     }
 

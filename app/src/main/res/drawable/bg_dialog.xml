@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Diálogo como painel de HQ: contorno de nanquim e sombra dura vermelha (preta sumiria no scrim). -->
+<!-- Diálogo como painel de HQ: contorno de nanquim, sombra dura vermelha (preta sumiria no scrim) e
+     a retícula da época por cima do papel. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:left="?attr/eraShadow"
@@ -20,4 +21,8 @@
             <corners android:radius="?attr/eraRadius" />
         </shape>
     </item>
+    <item
+        android:bottom="?attr/eraShadow"
+        android:drawable="@drawable/bg_halftone"
+        android:right="?attr/eraShadow" />
 </layer-list>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!--
-      Claro ("papel de gibi") e escuro (o do Design_System.svg): as cores vêm de values/colors.xml e
-      values-night/colors.xml. Segue o sistema, ou o que o usuário fixar no Perfil (ThemeStore).
+      O app roda sempre no modo noturno (MarvelApp): as cores vêm de values-night/colors.xml (Moderno)
+      e a época escolhida no Perfil entra por cima como sobreposição (ThemeStore). values/colors.xml
+      ainda vale para o widget, que segue o modo do launcher.
     -->
     <style name="Base.Theme.Marvel" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
@@ -65,10 +66,9 @@
     </style>
 
     <!--
-      Retrô escuro: as formas, letras e cores de destaque do Retrô (traço grosso, sombra dura,
-      cantos retos, Bangers e Comic Neue) sobre papel envelhecido escuro, com nanquim claro.
-      Aplicado por cima do tema escuro na MainActivity (ThemeMode.RETRO_DARK, ou Seguir o sistema
-      à noite).
+      Retrô: as formas, letras e cores de destaque dos gibis de 1962–85 (traço grosso, sombra dura,
+      cantos retos, Bangers e Comic Neue) sobre papel envelhecido sépia, com nanquim claro.
+      Aplicado por cima do tema escuro na MainActivity (ThemeMode.RETRO, a época padrão).
     -->
     <style name="ThemeOverlay.Marvel.RetroDark" parent="">
         <item name="eraBackground">@color/retro_dark_background</item>
@@ -165,9 +165,9 @@
 
     <style name="Theme.Marvel" parent="Base.Theme.Marvel" />
 
-    <!-- Splash: fundo escuro do app e o ícone; depois vira o tema normal (postSplashScreenTheme). -->
+    <!-- Splash: papel do Retrô (a época padrão) e o ícone; depois vira o tema normal (postSplashScreenTheme). -->
     <style name="Theme.Marvel.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/era_background</item>
+        <item name="windowSplashScreenBackground">@color/retro_dark_background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_blank</item>
         <item name="postSplashScreenTheme">@style/Theme.Marvel</item>
     </style>

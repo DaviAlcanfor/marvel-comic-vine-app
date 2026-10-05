@@ -156,11 +156,15 @@ Aplicadas via ferramenta, não de memória:
   SVGs (que são grandes: alguns têm imagens embutidas em base64 e passam de 1MB).
   Os tokens já estão traduzidos para `res/values/colors.xml`, `dimens.xml` e
   `themes.xml`.
-- Os SVGs só têm o tema escuro; o app tem também um claro ("papel de gibi": fundo creme,
-  retícula e nanquim preto). `Theme.Material3.DayNight.NoActionBar`: o claro fica em
-  `values/colors.xml` e o escuro em `values-night/colors.xml` (só os tokens que mudam). Segue o
-  sistema ou o que o usuário fixar no Perfil (`data/ThemeStore.kt`, aplicado em `MarvelApp`).
-  **Épocas** (`ThemeMode`: Retrô = claro, Moderno = escuro, Retrô escuro e Anos 90 = escuro + `ThemeOverlay.Marvel.RetroDark`/`Nineties`; sistema = Retrô de dia, Retrô escuro à noite)
+- O app roda sempre no modo noturno (`MarvelApp`): os tokens base estão em `values-night/colors.xml`
+  e a época escolhida no Perfil (`data/ThemeStore.kt`) entra por cima. `values/colors.xml` (o antigo
+  Retrô claro) só serve ao widget e aos tokens que não mudam. O Retrô claro foi removido a pedido do
+  usuário ("tudo muito branco").
+  **Épocas** (`ThemeMode`: Retrô = escuro + `ThemeOverlay.Marvel.RetroDark`, papel sépia com retícula
+  visível, padrão; Anos 90 = escuro + `Nineties`; Moderno = escuro puro). No Retrô, balões e legendas
+  vizinhos alternam as tintas de gráfica `retroInk()` (`ui/ComicBox.kt`) e há balão de pensamento
+  (`BoxStyle.THOUGHT`); nada de tudo branco. Diálogos (`comicDialog()`) herdam título em legenda, corpo
+  e itens de escolha de `ThemeOverlay.Marvel.Dialog`
   — **Design System v2 em [`docs/design-reference/DESIGN_SYSTEM_V2.md`](docs/design-reference/DESIGN_SYSTEM_V2.md)**:
   tokens `era*`, peças (`EraPanelDrawable`, `LogoTextView`, `comicBox`) e regras para tela nova.
   Cor nova: token nos dois arquivos, nunca hex no layout. Dourado como texto é `accent_text`

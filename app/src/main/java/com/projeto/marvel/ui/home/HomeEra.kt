@@ -15,10 +15,12 @@ import com.projeto.marvel.ui.Era
 import com.projeto.marvel.ui.EraPanelDrawable
 import com.projeto.marvel.ui.comicBox
 import com.projeto.marvel.ui.era
+import com.projeto.marvel.ui.retroInk
 
 // A Início vestida de cada época (proposta aprovada no canvas "Épocas dos quadrinhos"):
 // - Retrô: avatar no canto da capa (12¢ · Nº 1), "Enquanto isso…" amarelo, nome do herói numa
-//   explosão, resumo numa caixa de narração e títulos de seção em balões brancos ovais.
+//   explosão, resumo numa caixa de narração e títulos de seção alternando balão de fala, de
+//   pensamento e legenda, cada um numa tinta de gráfica.
 // - Anos 90: avatar com moldura neon chanfrada, etiqueta magenta, nome com extrusão azul e
 //   títulos em balão "rádio" lilás.
 // - Moderno: avatar redondo com anel vermelho, herói de ponta a ponta (cinema), etiqueta vermelha
@@ -29,15 +31,15 @@ private const val NINETIES_SHADOW_DP = 3f
 private const val MODERN_NAME_SP = 44f
 private const val RULE_GAP_DP = 10f
 
-/** Títulos de seção e a inclinação de cada um (o formato muda com a época). */
+/** Títulos de seção, a inclinação e o formato no Retrô de cada um (nas outras épocas o formato é fixo). */
 @Suppress("MagicNumber") // a inclinação de cada título é a própria tabela
 private fun FragmentHomeBinding.sections() = listOf(
-    heroMoviesTitle to 1.5f,
-    weatherTitle to -2f,
-    dailyTrailTitle to -3f,
-    debutsTitle to -1.5f,
-    readingTitle to 2f,
-    missionsTitle to 2.5f
+    Triple(heroMoviesTitle, 1.5f, BoxStyle.SPEECH),
+    Triple(weatherTitle, -2f, BoxStyle.THOUGHT),
+    Triple(dailyTrailTitle, -3f, BoxStyle.CAPTION),
+    Triple(debutsTitle, -1.5f, BoxStyle.SPEECH),
+    Triple(readingTitle, 2f, BoxStyle.THOUGHT),
+    Triple(missionsTitle, 2.5f, BoxStyle.CAPTION)
 )
 
 fun FragmentHomeBinding.applyEra() {
@@ -47,10 +49,10 @@ fun FragmentHomeBinding.applyEra() {
     styleAvatar(era)
     styleHeroCard(era)
     styleSfx(era)
-    sections().forEachIndexed { index, (view, tilt) ->
+    sections().forEachIndexed { index, (view, tilt, retroStyle) ->
         view.sectionType(era)
         when (era) {
-            Era.RETRO -> view.comicBox(BoxStyle.SPEECH, color(R.color.white), tailOnLeft = index % 2 == 0)
+            Era.RETRO -> view.comicBox(retroStyle, context.retroInk(index), tailOnLeft = index % 2 == 0)
             Era.NINETIES -> {
                 view.comicBox(BoxStyle.SPEECH, color(R.color.nineties_balloon), tailOnLeft = index % 2 == 0)
                 view.isAllCaps = true

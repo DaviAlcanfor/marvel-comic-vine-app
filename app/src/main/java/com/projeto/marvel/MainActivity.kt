@@ -1,7 +1,6 @@
 package com.projeto.marvel
 
 import android.Manifest
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +10,6 @@ import com.projeto.marvel.data.ComicVineRepository
 import com.projeto.marvel.data.AuthRepository
 import com.projeto.marvel.data.ReadingStore
 import com.projeto.marvel.data.ThemeStore
-import com.projeto.marvel.data.overlayFor
 import com.projeto.marvel.ui.opening.OpeningScript
 import com.projeto.marvel.ui.opening.startOpening
 import com.projeto.marvel.ui.home.heroOfTheDay
@@ -45,9 +43,7 @@ class MainActivity : AppCompatActivity() {
         // até os dados principais chegarem (entre [LOADING_MIN_MILLIS] e [LOADING_MAX_MILLIS]):
         // a Início e o Álbum já abrem prontos, sem esqueleto de carregamento.
         installSplashScreen()
-        val uiMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        val night = uiMode == Configuration.UI_MODE_NIGHT_YES
-        ThemeStore(this).get().overlayFor(night)?.let { theme.applyStyle(it, true) }
+        ThemeStore(this).get().overlay?.let { theme.applyStyle(it, true) }
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

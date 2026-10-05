@@ -146,7 +146,7 @@
     <string name="start_reading">📚 Por onde começar a ler?</string>
     <string name="start_reading_loading">Escolhendo as HQs…</string>
     <string name="start_reading_title">Comece a ler %1$s por aqui</string>
-    <string name="start_reading_item">%1$d. %2$s (%3$s, %4$d edições)\n%5$s</string>
+    <string name="start_reading_meta">%1$s · %2$d edições</string>
     <string name="start_reading_save">Guardar todas</string>
     <string name="start_reading_saved">%1$d séries guardadas em Quero ler.</string>
     <string name="start_reading_none">Não achei séries da Marvel com esse nome.</string>
@@ -615,9 +615,7 @@
 
     <string name="content_description_back">Voltar</string>
     <string name="profile_theme_title">Época</string>
-    <string name="theme_system">Seguir o sistema (Retrô claro de dia, Retrô escuro à noite)</string>
-    <string name="theme_light">Retrô · anos 60–80 (papel de gibi)</string>
-    <string name="theme_retro_dark">Retrô escuro (papel envelhecido)</string>
+    <string name="theme_retro">Retrô · anos 60–80 (papel de gibi)</string>
     <string name="theme_nineties">Anos 90 / 2000</string>
     <string name="theme_dark">Moderno (escuro)</string>
 </resources>

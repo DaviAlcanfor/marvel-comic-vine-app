@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Item de escolha dos diálogos (alertDialogStyle em ThemeOverlay.Marvel.Dialog). -->
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_choice"
+    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+    android:gravity="center_vertical"
+    android:minHeight="52dp"
+    android:paddingStart="?attr/dialogPreferredPadding"
+    android:paddingTop="@dimen/space_sm"
+    android:paddingEnd="?attr/dialogPreferredPadding"
+    android:paddingBottom="@dimen/space_sm"
+    android:textColor="@color/text_primary"
+    android:textSize="16sp" />

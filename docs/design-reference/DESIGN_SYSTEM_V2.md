@@ -4,10 +4,15 @@ Aprovado a partir do canvas "Marvel App — Épocas dos quadrinhos" (proposta co
 kit de peças das três épocas), feito sobre as referências de HQ em `comics_reference.zip`. Substitui o visual único do v1
 (`DESIGN_TOKENS.md` continua valendo para espaçamentos e tamanhos).
 
-O usuário escolhe a época no Perfil (`ThemeMode`): Retrô, **Retrô escuro**, Anos 90 ou Moderno;
-"seguir o sistema" = Retrô de dia, Retrô escuro à noite. O Retrô escuro é o Retrô inteiro (formas,
-letras, legendas amarelas) sobre papel envelhecido escuro `#1C1812`, com nanquim claro `#EFE3C6` nos
-contornos (`ThemeOverlay.Marvel.RetroDark`); as figurinhas continuam papel branco com nome em nanquim. Ao entrar numa tela, a época tem de ser reconhecível só pelo traço.
+O usuário escolhe a época no Perfil (`ThemeMode`): Retrô (padrão), Anos 90 ou Moderno. O Retrô
+claro (papel creme `#F2E3BD`) foi aposentado: o Retrô agora é só escuro — formas, letras e legendas
+amarelas sobre papel sépia `#3A2F22`, claro o bastante para a retícula vermelha/azul aparecer, com
+nanquim claro `#EFE3C6` nos contornos (`ThemeOverlay.Marvel.RetroDark`). Cards de foto são papel creme
+com o nome numa legenda colorida; balões e legendas alternam as tintas de gráfica (`retroInk`:
+amarelo, azul, vermelho, branco, verde, rosa, laranja) e usam formatos diferentes por função (fala,
+pensamento, legenda, explosão). Ao entrar numa tela, a época tem de ser reconhecível só pelo traço.
+
+A tabela abaixo é o canvas original; na coluna Retrô, fundo e balão agora seguem o parágrafo acima.
 
 | | Retrô (1962–1985) | Anos 90 / 2000 | Moderno (2010–hoje) |
 |---|---|---|---|
@@ -22,7 +27,7 @@ contornos (`ThemeOverlay.Marvel.RetroDark`); as figurinhas continuam papel branc
 | Cantos | retos | chanfrados (12dp) | arredondados (10dp quadros, 6dp botões) |
 | Primária | vermelho `#C0101A` | magenta `#D81B60` | vermelho Marvel `#D81F26` |
 | Legenda (`CaptionBox`) | caixa amarela "Enquanto isso…" | etiqueta magenta inclinada | rótulo vermelho |
-| Balão de fala | oval branco de nanquim | caixa chanfrada lilás `#F4F0FF` | — (títulos de seção com traço vermelho) |
+| Balão de fala | oval de nanquim em tintas variadas (`retroInk`); nuvem para pensamento | caixa chanfrada lilás `#F4F0FF` | — (títulos de seção com traço vermelho) |
 | Quadro (`bg_card`) | nanquim + sombra dura | moldura neon degradê ciano → magenta → amarelo | fosco, traço fino |
 | Figurinha | margem branca, número em placa preta/amarela | borda foil (arco-íris) | moldura fosca arredondada |
 | Chips | retos, marcado amarelo | canto cortado, contorno ciano, marcado amarelo | pílula, marcado branco |

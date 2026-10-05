@@ -59,6 +59,7 @@ private const val STAMP_START_SCALE = 2.2f
 private const val STAMP_DELAY_MILLIS = 180L
 private const val STAMP_MILLIS = 220L
 internal const val RESULT_DELAY_MILLIS = 1_900L
+private const val MOVE_WASH_ALPHA = 0x40
 internal const val RESULT_MILLIS = 350L
 
 /**
@@ -93,10 +94,16 @@ private fun FragmentBattleBinding.bindMoveSet(
         button.isEnabled = enabled
         if (move != null) {
             button.text = context.getString(R.string.battle_move, move.name, context.getString(move.type.label))
-            val tint = ColorStateList.valueOf(ContextCompat.getColor(context, move.type.color))
+            val color = ContextCompat.getColor(context, move.type.color)
+            val tint = ColorStateList.valueOf(color)
             button.setIconResource(move.type.icon)
             button.iconTint = tint
             button.strokeColor = tint
+            // Papel da época lavado na cor do golpe: cada botão com a sua, e legível sobre a arena.
+            val paper = ContextCompat.getColor(context, R.color.surface)
+            button.backgroundTintList = ColorStateList.valueOf(
+                ColorUtils.compositeColors(ColorUtils.setAlphaComponent(color, MOVE_WASH_ALPHA), paper)
+            )
             button.setOnClickListener { onUse(move) }
         }
     }

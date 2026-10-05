@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Linha de escolha do diálogo: fio tracejado embaixo (como a pauta da HQ) e o toque da época. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?attr/colorControlHighlight">
+    <item
+        android:left="-2dp"
+        android:right="-2dp"
+        android:top="-2dp">
+        <shape>
+            <stroke
+                android:width="1dp"
+                android:color="@color/border"
+                android:dashGap="3dp"
+                android:dashWidth="5dp" />
+        </shape>
+    </item>
+</ripple>

@@ -2,27 +2,19 @@ package com.projeto.marvel.data
 
 import android.content.Context
 import androidx.annotation.StyleRes
-import androidx.appcompat.app.AppCompatDelegate
 import com.projeto.marvel.R
 import androidx.core.content.edit
 
 /**
- * Tema de época. Retrô é o claro ("papel de gibi") e Moderno o escuro, pelos recursos de
- * values/ e values-night/; Retrô escuro e Anos 90 são o escuro com uma sobreposição ([overlay],
- * aplicada na MainActivity). Sistema = Retrô claro de dia, Retrô escuro à noite.
+ * Tema de época, sempre sobre o tema escuro (values-night/): Retrô e Anos 90 são uma sobreposição
+ * ([overlay], aplicada na MainActivity) e o Moderno é o escuro puro. O Retrô claro (values/) saiu:
+ * quem tinha "claro" ou "sistema" salvo cai no Retrô.
  */
-enum class ThemeMode(val nightMode: Int, @StyleRes val overlay: Int? = null) {
-    SYSTEM(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM),
-    LIGHT(AppCompatDelegate.MODE_NIGHT_NO),
-    RETRO_DARK(AppCompatDelegate.MODE_NIGHT_YES, R.style.ThemeOverlay_Marvel_RetroDark),
-    NINETIES(AppCompatDelegate.MODE_NIGHT_YES, R.style.ThemeOverlay_Marvel_Nineties),
-    DARK(AppCompatDelegate.MODE_NIGHT_YES)
+enum class ThemeMode(@StyleRes val overlay: Int?) {
+    RETRO(R.style.ThemeOverlay_Marvel_RetroDark),
+    NINETIES(R.style.ThemeOverlay_Marvel_Nineties),
+    DARK(null)
 }
-
-/** A sobreposição que vale agora: no "Seguir o sistema" com o celular escuro, o Retrô escuro. */
-@StyleRes
-fun ThemeMode.overlayFor(night: Boolean): Int? =
-    overlay ?: R.style.ThemeOverlay_Marvel_RetroDark.takeIf { this == ThemeMode.SYSTEM && night }
 
 /** Tema escolhido no Perfil, salvo no aparelho; aplicado ao abrir o app (MarvelApp). */
 class ThemeStore(context: Context) {
@@ -31,13 +23,10 @@ class ThemeStore(context: Context) {
 
     fun get(): ThemeMode = prefs.getString(KEY_MODE, null)
         ?.let { name -> ThemeMode.entries.firstOrNull { it.name == name } }
-        ?: ThemeMode.SYSTEM
+        ?: ThemeMode.RETRO
 
-    /** Salva e já aplica o modo noturno; trocar só a sobreposição (Moderno ↔ Anos 90) pede recriar a tela. */
-    fun set(mode: ThemeMode) {
-        prefs.edit { putString(KEY_MODE, mode.name) }
-        AppCompatDelegate.setDefaultNightMode(mode.nightMode)
-    }
+    /** Só salva: a sobreposição vale na próxima criação da Activity (quem troca chama `recreate`). */
+    fun set(mode: ThemeMode) = prefs.edit { putString(KEY_MODE, mode.name) }
 
     /** Roteiro da abertura escolhido no Perfil (nome de `OpeningScript`); null = automático. */
     fun opening(): String? = prefs.getString(KEY_OPENING, null)

@@ -73,19 +73,19 @@
     <color name="rarity_rare">#A8B0BA</color>
     <color name="rarity_legendary">#E6B800</color>
     <color name="rarity_divine">#C77DFF</color>
-    <!-- Retrô escuro (ThemeOverlay.Marvel.RetroDark, por cima do escuro): papel de gibi envelhecido
-         no escuro, nanquim claro nos contornos, retícula em tinta fosca. -->
-    <color name="retro_dark_background">#1C1812</color>
-    <color name="retro_dark_surface">#2A241A</color>
-    <color name="retro_dark_surface_variant">#352D20</color>
-    <color name="retro_dark_border">#5A4C36</color>
-    <color name="retro_dark_text_secondary">#C9BC9E</color>
+    <!-- Retrô (ThemeOverlay.Marvel.RetroDark, por cima do escuro): papel de gibi envelhecido em tom
+         sépia, claro o bastante para a retícula vermelha/azul aparecer; nanquim claro nos contornos. -->
+    <color name="retro_dark_background">#3A2F22</color>
+    <color name="retro_dark_surface">#4A3D2C</color>
+    <color name="retro_dark_surface_variant">#574833</color>
+    <color name="retro_dark_border">#7C6A4C</color>
+    <color name="retro_dark_text_secondary">#E0D3B4</color>
     <color name="retro_dark_primary">#C8261E</color>
     <color name="retro_dark_primary_variant">#8E1A14</color>
-    <color name="retro_dark_overlay">#F21C1812</color>
+    <color name="retro_dark_overlay">#F23A2F22</color>
     <color name="retro_dark_ink">#EFE3C6</color>
-    <color name="retro_dark_halftone">#E04A2E</color>
-    <color name="retro_dark_halftone_alt">#3D8FD0</color>
+    <color name="retro_dark_halftone">#FF5A3C</color>
+    <color name="retro_dark_halftone_alt">#4FA8F0</color>
     <color name="retro_dark_speed_lines">#1AEFE3C6</color>
     <!-- Tema Anos 90 / 2000 (ThemeOverlay.Marvel.Nineties, por cima do escuro). -->
     <color name="nineties_background">#1B1036</color>
@@ -109,6 +109,12 @@
     <color name="modern_nav">#0C0C10</color>
     <!-- Amarelo dos letreiros (Retrô e Anos 90). -->
     <color name="logo_yellow">#FFD21F</color>
+    <!-- Tintas de gráfica dos balões e legendas do Retrô (RETRO_INKS): cada um numa cor, como no
+         gibi impresso, em vez de tudo branco. -->
+    <color name="balloon_red">#EF5B4C</color>
+    <color name="balloon_green">#8BD17C</color>
+    <color name="balloon_pink">#F59AC2</color>
+    <color name="balloon_orange">#F9AE4B</color>
     <!-- Caixa de legenda amarela do Retrô ("Enquanto isso…"). -->
     <color name="caption_yellow">#FFE14D</color>
     <color name="sfx_blue">#5BC0EB</color>

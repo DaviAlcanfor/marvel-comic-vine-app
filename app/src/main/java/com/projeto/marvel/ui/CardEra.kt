@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.doAfterTextChanged
 import com.projeto.marvel.R
 
 private const val PAPER_MARGIN_DP = 5f
@@ -13,8 +14,8 @@ private const val INK_LINE_DP = 1.5f
 
 /**
  * Card com foto (herói, HQ, filme, criador) no traço da época:
- * - Retrô: figurinha de banca — margem de papel branco, filete de nanquim na foto, nome numa caixa
- *   de legenda amarela em letra de balão e o detalhe em itálico (no claro e no escuro: é papel);
+ * - Retrô: figurinha de banca — margem de papel creme, filete de nanquim na foto, nome numa caixa
+ *   de legenda (cada nome numa tinta de [retroInk]) em letra de balão e o detalhe em itálico;
  * - Anos 90: moldura neon chanfrada (o `bg_card` da época) e nome amarelo em itálico condensado;
  * - Moderno: fica como está (limpo).
  */
@@ -23,7 +24,7 @@ fun dressCard(card: View, image: ImageView, title: TextView, detail: TextView? =
     fun color(res: Int) = ContextCompat.getColor(context, res)
     when (context.era()) {
         Era.RETRO -> {
-            card.background = EraPanelDrawable(context, EraPanelDrawable.Kind.PANEL, color(R.color.white))
+            card.background = EraPanelDrawable(context, EraPanelDrawable.Kind.PANEL, color(R.color.comic_paper))
             val margin = (PAPER_MARGIN_DP * context.resources.displayMetrics.density).toInt()
             card.setPadding(margin, margin, margin + margin, margin + margin)
             image.foreground = GradientDrawable().apply {
@@ -31,6 +32,8 @@ fun dressCard(card: View, image: ImageView, title: TextView, detail: TextView? =
             }
             title.background = EraPanelDrawable(context, EraPanelDrawable.Kind.CAPTION, color(R.color.caption_yellow))
             title.setTextColor(color(R.color.ink))
+            // Cada nome na sua tinta (a mesma sempre, mesmo quando a célula é reciclada).
+            title.doAfterTextChanged { text -> title.tintCaption(context.retroInk(text.toString().hashCode())) }
             title.typeface = ResourcesCompat.getFont(context, R.font.comic_neue_bold)
             title.isAllCaps = true
             val gap = context.resources.getDimensionPixelSize(R.dimen.space_xs)

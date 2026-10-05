@@ -279,6 +279,8 @@
          comicDialog(). Nada de amarelo como texto aqui: some no papel/branco do painel. -->
     <style name="ThemeOverlay.Marvel.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/Widget.Marvel.DialogTitle</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/Widget.Marvel.DialogBody</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.Marvel</item>
         <item name="colorPrimary">@color/primary_text</item>
         <item name="colorSecondary">@color/primary_text</item>
         <item name="colorAccent">@color/primary_text</item>
@@ -286,11 +288,29 @@
         <item name="colorOnSurfaceVariant">@color/text_primary</item>
     </style>
 
+    <!-- Título do diálogo numa caixa de legenda da época (amarela no Retrô, etiqueta nas outras). -->
     <style name="Widget.Marvel.DialogTitle" parent="MaterialAlertDialog.Material3.Title.Text">
         <item name="android:fontFamily">?attr/eraDisplayFont</item>
         <item name="fontFamily">?attr/eraDisplayFont</item>
-        <item name="android:textSize">26sp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/eraCaptionText</item>
+        <item name="android:background">@drawable/bg_caption</item>
+        <item name="android:paddingStart">@dimen/space_md</item>
+        <item name="android:paddingEnd">@dimen/space_lg</item>
+        <item name="android:paddingTop">@dimen/space_sm</item>
+        <item name="android:paddingBottom">@dimen/space_md</item>
+    </style>
+
+    <style name="Widget.Marvel.DialogBody" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
         <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- Itens de escolha (maratona, gêneros, época, filtros) na letra da época, com fio entre eles. -->
+    <style name="MaterialAlertDialog.Marvel" parent="MaterialAlertDialog.Material3">
+        <item name="multiChoiceItemLayout">@layout/item_dialog_multi</item>
+        <item name="singleChoiceItemLayout">@layout/item_dialog_single</item>
     </style>
 
     <!-- Biografia/descrição como caixa de narração de HQ: papel e texto de nanquim. -->
@@ -509,8 +529,10 @@
         <item name="android:textSize">17sp</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:textColor">@color/text_primary</item>
-        <item name="cornerRadius">@dimen/radius_small</item>
-        <!-- A cor do contorno é a do tipo do golpe (posta em código); aqui só a espessura de HQ. -->
+        <item name="cornerRadius">?attr/eraRadiusSmall</item>
+        <!-- Fundo e contorno na cor do tipo do golpe (postos em código); aqui o papel e a espessura de HQ.
+             Sem fundo, o botão ficava transparente em cima da arena. -->
+        <item name="backgroundTint">@color/surface</item>
         <item name="strokeColor">@color/border</item>
         <item name="strokeWidth">3dp</item>
         <item name="iconGravity">textStart</item>
